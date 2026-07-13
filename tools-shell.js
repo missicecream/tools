@@ -3,7 +3,7 @@
   const guides = {
     'ClassTimer.html': 'ClassTimer-guide.html',
     'PST-Selector.html': 'PST-Selector-guide.html',
-    'PST-Process-Selector.html': 'Process-Selector-guide.html',
+    'Process-Selector.html': 'Process-Selector-guide.html',
     'Heat-Log.html': 'Heat-Log-guide.html',
     'PST-PSS-Log.html': 'PST-PSS-Log-guide.html',
     'Churning.html': 'Churning-guide.html',
