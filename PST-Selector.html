@@ -1,0 +1,699 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PST Selector · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4ECE0;
+    --card: #FBF6EC;
+    --ink: #2B1F15;
+    --muted: #8C7A66;
+    --muted-soft: #BFB09B;
+    --line: #E5D9C4;
+    --line-soft: #EFE5D2;
+    --accent: #6B8E4E;
+    --accent-deep: #4F6B3A;
+    --rose-deep: #A85B47;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { -webkit-font-smoothing: antialiased; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 44px 20px 56px;
+    background-image:
+      radial-gradient(circle at 15% 5%, rgba(220, 229, 200, 0.50) 0%, transparent 40%),
+      radial-gradient(circle at 88% 95%, rgba(201, 120, 98, 0.10) 0%, transparent 40%);
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 28px;
+    padding: 8px 18px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.22s ease;
+  }
+  .back-link:hover { color: var(--ink); border-color: var(--accent); transform: translateX(-2px); }
+  .back-link .arrow { font-family: 'Fraunces', serif; font-size: 16px; transition: transform 0.22s ease; }
+  .back-link:hover .arrow { transform: translateX(-3px); }
+
+  /* Header */
+  header { text-align: center; margin-bottom: 36px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 12px; font-weight: 500;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(32px, 5vw, 48px); line-height: 1.05;
+    letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  h1 em { font-style: italic; color: var(--accent-deep); font-weight: 400; }
+  .subtitle { color: var(--muted); font-size: 14px; max-width: 520px; margin: 0 auto; line-height: 1.65; }
+
+  /* Step blocks */
+  .step { margin-bottom: 26px; }
+  .step.hidden { display: none; }
+
+  .step-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+  }
+  .step-num {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 22px;
+    color: var(--muted-soft); line-height: 1; flex-shrink: 0;
+  }
+  .step-q {
+    font-family: 'Sarabun', sans-serif; font-size: 16px; font-weight: 600;
+    color: var(--ink); line-height: 1.4;
+  }
+
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opts.one-col { grid-template-columns: 1fr; }
+
+  .opt {
+    text-align: left;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Sarabun', sans-serif;
+    color: var(--ink);
+    box-shadow: 0 4px 22px -18px rgba(43, 31, 21, 0.2);
+  }
+  .opt:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .opt.selected {
+    border-color: var(--accent-deep);
+    background: #F3F6EC;
+    box-shadow: 0 6px 22px -16px rgba(79, 107, 58, 0.45);
+  }
+  .opt .opt-title {
+    font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500;
+    margin-bottom: 5px; line-height: 1.2;
+  }
+  .opt.selected .opt-title { color: var(--accent-deep); }
+  .opt .opt-sub { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+  .opt .opt-eg { font-size: 12px; color: var(--muted-soft); line-height: 1.5; margin-top: 6px; }
+
+  /* Result */
+  .result { margin-top: 8px; }
+  .result.hidden { display: none; }
+
+  .result-card {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 22px;
+    padding: 30px 28px 26px;
+    text-align: center;
+    box-shadow: 0 8px 34px -20px rgba(79, 107, 58, 0.45);
+  }
+
+  .result-badges {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+  }
+  .badge {
+    font-size: 11.5px; font-weight: 500; letter-spacing: 0.02em;
+    padding: 5px 13px; border-radius: 100px;
+    background: var(--line-soft); color: var(--muted);
+  }
+  .badge.grp { background: var(--accent-deep); color: #fff; }
+
+  .result-main {
+    display: flex; justify-content: center; align-items: stretch;
+    gap: 0; flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .metric { padding: 6px 22px; }
+  .metric + .metric { border-left: 1px solid var(--line); }
+  .metric .big {
+    font-family: 'Fraunces', serif; font-weight: 400; font-size: 46px;
+    line-height: 1; color: var(--accent-deep); letter-spacing: -0.01em;
+  }
+  .metric .lbl { font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  .range-note {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 13px; color: var(--muted); margin-top: 12px;
+  }
+
+  /* Notes */
+  .notes {
+    text-align: left; margin-top: 22px; padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .notes h3 {
+    font-family: 'Sarabun', sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--muted); margin-bottom: 12px;
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .notes ul { list-style: none; }
+  .notes li {
+    position: relative; padding-left: 20px; margin-bottom: 10px;
+    font-size: 13.5px; line-height: 1.6; color: var(--ink);
+  }
+  .notes li::before {
+    content: '•'; position: absolute; left: 4px; top: -1px;
+    color: var(--accent); font-size: 15px;
+  }
+  .notes li.warn { color: var(--rose-deep); }
+  .notes li.warn::before { color: var(--rose-deep); }
+
+  .actions { display: flex; justify-content: center; margin-top: 26px; }
+  .btn-reset {
+    padding: 11px 28px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: 'Sarabun', sans-serif; font-size: 13.5px;
+    font-weight: 500; border-radius: 100px; cursor: pointer;
+    transition: all 0.22s ease; letter-spacing: 0.02em;
+  }
+  .btn-reset:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); transform: translateY(-1px); }
+
+  .prompt {
+    text-align: center; color: var(--muted); font-family: 'Fraunces', serif;
+    font-style: italic; font-size: 14px; padding: 14px 0; margin-top: 4px;
+  }
+
+  footer {
+    text-align: center; margin-top: 36px; color: var(--muted);
+    font-size: 12.5px; line-height: 1.8;
+  }
+  footer .brand {
+    margin-top: 6px; font-size: 10.5px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--muted-soft);
+  }
+
+  @media (max-width: 560px) {
+    .opts { grid-template-columns: 1fr; }
+    body { padding: 28px 14px 44px; }
+    .metric { padding: 6px 16px; }
+    .metric .big { font-size: 40px; }
+  }
+
+  /* ตัวจับเวลา PST */
+  .pst-cta { margin: 18px 0 4px; text-align: center; }
+  .timer-open-btn {
+    font-family: 'Sarabun', sans-serif; font-weight: 700; font-size: 14px;
+    color: #fff; background: var(--accent-deep); border: none; border-radius: 100px;
+    padding: 12px 24px; cursor: pointer; transition: all 0.2s ease;
+    box-shadow: 0 4px 14px -8px rgba(79,107,58,.8);
+  }
+  .timer-open-btn:hover { background: var(--accent); transform: translateY(-1px); }
+  .pst-cta-sub { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin: 9px auto 0; max-width: 440px; }
+  .pst-timer{margin:16px auto 4px;max-width:430px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 20px;text-align:center;transition:background .5s ease,border-color .5s ease}
+  .pst-timer.spin{background:#F7F8EC;border-color:#cfe0bf}
+  .pst-timer.rest{background:#F0F5FA;border-color:#b9d3e6}
+  .pst-timer.done{background:#F7F8EC;border-color:#cfe0bf}
+  .pst-timer.warn5{border-color:#e0b8ab}
+  .pt-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:100px;font-size:15px;font-weight:700;font-family:'Sarabun',sans-serif}
+  .pt-chip.spin{background:#EFF3E7;color:var(--accent-deep);border:1px solid #cfe0bf}
+  .pt-chip.rest{background:#EAF1F7;color:#2D5474;border:1px solid #b9d3e6}
+  .pt-chip.idle{background:var(--line-soft);color:var(--muted);border:1px solid var(--line)}
+  .pt-chip.done{background:#EFF3E7;color:var(--accent-deep);border:1px solid #cfe0bf}
+  .pt-dots{font-size:12.5px;color:var(--muted);margin-top:8px}
+  .pt-dots .d{font-size:14px;margin:0 2px}
+  .pt-dots .d.done{color:var(--accent-deep)}
+  .pt-dots .d.cur{color:var(--accent)}
+  .pst-timer.rest .pt-dots .d.cur{color:#3E73A6}
+  .pt-dots .d.up{color:var(--muted-soft)}
+  .pt-ringwrap{position:relative;width:min(200px,58vw);margin:12px auto 2px}
+  .pt-ringwrap svg{width:100%;height:auto;display:block;transform:rotate(-90deg)}
+  .pt-ring-bg{fill:none;stroke:var(--line-soft);stroke-width:10}
+  .pt-ring-fg{fill:none;stroke:var(--muted-soft);stroke-width:10;stroke-linecap:round;stroke-dasharray:578;stroke-dashoffset:0;transition:stroke-dashoffset .22s linear,stroke .4s ease}
+  .pst-timer.spin .pt-ring-fg{stroke:var(--accent)}
+  .pst-timer.rest .pt-ring-fg{stroke:#3E73A6}
+  .pst-timer.done .pt-ring-fg{stroke:var(--accent-deep)}
+  .pst-timer.warn5 .pt-ring-fg{stroke:#A85B47}
+  .pt-ringcenter{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .pt-time{font-family:'Fraunces',serif;font-size:clamp(46px,14vw,68px);line-height:1;color:var(--muted-soft);font-variant-numeric:tabular-nums;transition:color .4s ease}
+  .pst-timer.spin .pt-time{color:var(--accent-deep)}
+  .pst-timer.rest .pt-time{color:#2D5474}
+  .pst-timer.done .pt-time{color:var(--accent-deep)}
+  .pst-timer.warn5 .pt-time{color:#A85B47;animation:ptbeat .9s ease-in-out infinite}
+  @keyframes ptbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .pt-unit{font-size:12px;color:var(--muted)}
+  .pt-endat{display:inline-block;font-size:12.5px;font-weight:600;color:var(--accent-deep);background:#EFF3E7;border:1px solid #cfe0bf;border-radius:100px;padding:4px 13px;margin:9px 0 12px;transition:all .4s ease}
+  .pst-timer.rest .pt-endat{background:#EAF1F7;color:#2D5474;border-color:#b9d3e6}
+  .pt-tl{display:flex;gap:4px;align-items:center;margin:2px 2px 4px}
+  .pt-seg{height:12px;border-radius:100px;background:#F0EBDF;outline:1px solid var(--line);outline-offset:-1px;overflow:hidden}
+  .pt-seg.rest{background:#E3ECF4;outline-color:#b9d3e6}
+  .pt-seg .fl{height:100%;width:0;border-radius:100px;transition:width .25s linear}
+  .pt-seg.spin .fl{background:var(--accent)}
+  .pt-seg.rest .fl{background:#3E73A6}
+  .pt-seg.cur{outline:2px solid var(--accent);outline-offset:-2px}
+  .pt-seg.rest.cur{outline-color:#3E73A6}
+  .pt-tlr{display:flex;gap:4px;font-size:11px;color:var(--muted);margin-bottom:14px}
+  .pt-tlr span{text-align:center}
+  .pt-tlr span.cur{color:var(--accent-deep);font-weight:700}
+  .pst-timer.rest .pt-tlr span.cur{color:#2D5474}
+  .pt-controls{display:flex;flex-direction:column;gap:8px}
+  .pt-btn{padding:9px 16px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;border-radius:100px;cursor:pointer;transition:all .2s}
+  .pt-btn:hover{border-color:var(--accent);color:var(--ink)}
+  .pt-btn.pt-start{background:var(--accent);color:#fff;border:none;font-size:15px;padding:12px;border-radius:100px}
+  .pt-btn.pt-start:hover{background:var(--accent-deep)}
+  .pst-timer.rest .pt-btn.pt-start{background:#3E73A6}
+  .pt-sub{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .pt-hint{font-size:12px;color:var(--muted);line-height:1.5;margin:12px auto 0;max-width:400px}
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+  <div class="container">
+
+    <a class="back-link" href="index.html"><span class="arrow">←</span> กลับหน้าหลัก</a>
+
+    <header>
+      <div class="eyebrow">Miss Icecream · Online Tools</div>
+      <h1>PST <em>Selector</em></h1>
+      <p class="subtitle">Paula’s Spin Technique · ตอบ 2 คำถาม แล้วดูว่าต้องปั่นกี่รอบ รอบละกี่วินาที และพักเท่าไหร่ค่ะ</p>
+    </header>
+
+    <!-- Step 1: recipe group -->
+    <div class="step" id="step1">
+      <div class="step-head">
+        <span class="step-num">1</span>
+        <span class="step-q">ไขมันในสูตรผ่านความร้อนระหว่างการผลิตไหม?</span>
+      </div>
+      <div class="opts">
+        <button class="opt" data-group="1" type="button">
+          <div class="opt-title">ไม่ผ่านความร้อน / ไม่มีไขมัน</div>
+          <div class="opt-sub">เม็ดไขมันยังเล็กอยู่แล้ว PST แค่รักษาสภาพไว้ (กลุ่ม 1)</div>
+          <div class="opt-eg">เช่น เบสทำทานที่เติมครีมแช่เย็นทีหลัง, ซอร์เบต์, เชอร์เบท</div>
+        </button>
+        <button class="opt" data-group="2" type="button">
+          <div class="opt-title">ผ่านความร้อน</div>
+          <div class="opt-sub">เม็ดไขมันรวมตัวใหญ่ขึ้น PST ต้องลดขนาดใหม่ (กลุ่ม 2)</div>
+          <div class="opt-eg">เช่น เบสทำขายทุกชนิด, ช็อกโกแลต/โกโก้, เพสต์ถั่ว, กะทิ, นมพืชเติมน้ำมัน</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: machine -->
+    <div class="step" id="step2">
+      <div class="step-head">
+        <span class="step-num">2</span>
+        <span class="step-q">ใช้เครื่องปั่นชนิดไหน?</span>
+      </div>
+      <div class="opts">
+        <button class="opt" data-machine="commJar" type="button">
+          <div class="opt-title">เครื่องปั่นโถระดับการค้า</div>
+          <div class="opt-sub">แบบที่ใช้ในร้านน้ำปั่น</div>
+        </button>
+        <button class="opt" data-machine="homeJar" type="button">
+          <div class="opt-title">เครื่องปั่นโถครัวเรือน</div>
+          <div class="opt-sub">กำลังต่ำ</div>
+        </button>
+        <button class="opt" data-machine="immMed" type="button">
+          <div class="opt-title">เครื่องปั่นมือถือ (กลาง)</div>
+          <div class="opt-sub">ระดับการค้า · มิกซ์ 5–24 กก.</div>
+        </button>
+        <button class="opt" data-machine="immLarge" type="button">
+          <div class="opt-title">เครื่องปั่นมือถือ (ใหญ่)</div>
+          <div class="opt-sub">ระดับการค้า · มิกซ์ 25–50 กก.</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: batch profile (immersion only) -->
+    <div class="step hidden" id="step3">
+      <div class="step-head">
+        <span class="step-num">3</span>
+        <span class="step-q">ชุดการผลิตเป็นแบบไหน?</span>
+      </div>
+      <div class="opts">
+        <button class="opt" data-profile="low" type="button">
+          <div class="opt-title">ชุดเล็ก / เนื้อใส</div>
+          <div class="opt-sub">ใช้ตัวเลขฝั่งต่ำของช่วง</div>
+        </button>
+        <button class="opt" data-profile="high" type="button">
+          <div class="opt-title">ชุดใหญ่ / เนื้อข้น</div>
+          <div class="opt-sub">ใช้ตัวเลขฝั่งสูงของช่วง</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="prompt" id="prompt">ตอบคำถามด้านบนเพื่อดูคำแนะนำค่ะ</div>
+
+    <!-- Result -->
+    <div class="result hidden" id="result">
+      <div class="result-card">
+        <div class="result-badges" id="badges"></div>
+        <div class="result-main">
+          <div class="metric"><div class="big" id="mRounds">–</div><div class="lbl">รอบ</div></div>
+          <div class="metric"><div class="big" id="mSec">–</div><div class="lbl">วินาที / รอบ</div></div>
+          <div class="metric"><div class="big" id="mRest">–</div><div class="lbl">วินาทีพัก</div></div>
+        </div>
+        <div class="range-note" id="rangeNote"></div>
+
+        <div class="notes">
+          <h3>ข้อควรรู้</h3>
+          <ul id="noteList"></ul>
+        </div>
+      </div>
+
+      <!-- ตัวจับเวลา PST (ปั่น + พัก) -->
+      <div class="pst-cta" id="ptCta">
+        <button class="timer-open-btn" onclick="openPstTimer()">⏱ สร้างตัวจับเวลา PST (ปั่น + พัก) จากค่านี้</button>
+        <p class="pst-cta-sub" id="ptCtaSub"></p>
+      </div>
+      <div class="pst-timer" id="ptPanel" style="display:none">
+        <div><span class="pt-chip idle" id="ptChip" role="status" aria-live="polite">พร้อมเริ่ม</span></div>
+        <div class="pt-dots" id="ptDots">&nbsp;</div>
+        <div class="pt-ringwrap">
+          <svg viewBox="0 0 210 210" aria-hidden="true"><circle class="pt-ring-bg" cx="105" cy="105" r="92"/><circle class="pt-ring-fg" id="ptRing" cx="105" cy="105" r="92"/></svg>
+          <div class="pt-ringcenter"><div class="pt-time" id="ptTime">0</div><div class="pt-unit">วินาที</div></div>
+        </div>
+        <div><span class="pt-endat" id="ptEnd">&nbsp;</span></div>
+        <div class="pt-tl" id="ptTl"></div>
+        <div class="pt-tlr" id="ptTlR"></div>
+        <div class="pt-controls">
+          <button class="pt-btn pt-start" onclick="ptToggle()">▶ เริ่ม</button>
+          <div class="pt-sub">
+            <button class="pt-btn" onclick="ptSkip()">ช่วงนี้เสร็จแล้ว ▸</button>
+            <button class="pt-btn" onclick="ptReset()">⟲ เริ่มรอบ 1 ใหม่</button>
+            <button class="pt-btn" onclick="ptClose()">✕ ปิด</button>
+          </div>
+        </div>
+        <p class="pt-hint">ถ้าเครื่องปั่นตั้งเวลาช่วงปั่นเองได้ พอเครื่องปั่นเสร็จให้กด “ช่วงนี้เสร็จแล้ว” เพื่อข้ามไปจับเวลาช่วงพักต่อทันทีค่ะ</p>
+      </div>
+
+      <div class="actions">
+        <button class="btn-reset" onclick="resetAll()">เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <footer>
+      <p class="brand">Miss Icecream</p>
+    </footer>
+
+  </div>
+
+<script>
+  const DATA = {
+    commJar: {
+      label: 'เครื่องปั่นโถระดับการค้า', type: 'jar',
+      g1: { rounds: '2', sec: '30' },
+      g2: { rounds: '3', sec: '30' },
+      rest: '60'
+    },
+    homeJar: {
+      label: 'เครื่องปั่นโถครัวเรือน (กำลังต่ำ)', type: 'jar',
+      g1: { rounds: '3', sec: '30' },
+      g2: { rounds: '4', sec: '25', note: 'กลุ่ม 2 ลดเวลาต่อรอบเหลือ 25 วินาที เพราะต้องปั่นหลายรอบ ช่วยไม่ให้มอเตอร์กำลังต่ำร้อนสะสมเกินไป' },
+      rest: '60'
+    },
+    immMed: {
+      label: 'เครื่องปั่นมือถือ ระดับการค้า ขนาดกลาง (5–24 กก.)', type: 'imm',
+      g1: { rLow: 3, rHigh: 4, sLow: 45, sHigh: 45 },
+      g2: { rLow: 4, rHigh: 5, sLow: 45, sHigh: 55 },
+      rest: '60'
+    },
+    immLarge: {
+      label: 'เครื่องปั่นมือถือ ระดับการค้า ขนาดใหญ่ (25–50 กก.)', type: 'imm', large: true,
+      g1: { rLow: 4, rHigh: 5, sLow: 70, sHigh: 70 },
+      g2: { rLow: 5, rHigh: 6, sLow: 70, sHigh: 90 },
+      rest: '60'
+    }
+  };
+
+  const state = { group: null, machine: null, profile: null };
+
+  const step3 = document.getElementById('step3');
+  const resultEl = document.getElementById('result');
+  const promptEl = document.getElementById('prompt');
+
+  // ผูกปุ่มตัวเลือก
+  function bindOpts(attr, key) {
+    document.querySelectorAll('[data-' + attr + ']').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-' + attr);
+        state[key] = (attr === 'group') ? Number(val) : val;
+        // ไฮไลต์เฉพาะกลุ่มเดียวกัน
+        btn.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (key === 'machine') {
+          // ถ้าเปลี่ยนเครื่อง รีเซ็ต profile
+          state.profile = null;
+          document.querySelectorAll('[data-profile]').forEach(o => o.classList.remove('selected'));
+        }
+        update();
+      });
+    });
+  }
+  bindOpts('group', 'group');
+  bindOpts('machine', 'machine');
+  bindOpts('profile', 'profile');
+
+  function update() {
+    const m = state.machine ? DATA[state.machine] : null;
+    const needProfile = m && m.type === 'imm';
+
+    // แสดง step 3 เฉพาะเครื่องมือถือ
+    step3.classList.toggle('hidden', !needProfile);
+
+    const ready = state.group && m && (!needProfile || state.profile);
+    if (!ready) {
+      resultEl.classList.add('hidden');
+      promptEl.style.display = 'block';
+      return;
+    }
+    promptEl.style.display = 'none';
+    renderResult(m);
+    resultEl.classList.remove('hidden');
+  }
+
+  function renderResult(m) {
+    const g = state.group === 1 ? m.g1 : m.g2;
+    let rounds, sec, rangeText = '';
+
+    if (m.type === 'jar') {
+      rounds = g.rounds; sec = g.sec;
+    } else {
+      const hi = state.profile === 'high';
+      rounds = hi ? g.rHigh : g.rLow;
+      sec = hi ? g.sHigh : g.sLow;
+      const rangeR = (g.rLow !== g.rHigh) ? (g.rLow + '–' + g.rHigh + ' รอบ') : null;
+      const rangeS = (g.sLow !== g.sHigh) ? (g.sLow + '–' + g.sHigh + ' วินาที') : null;
+      const parts = [rangeR, rangeS].filter(Boolean);
+      if (parts.length) rangeText = 'ช่วงทั้งหมดของเครื่องนี้: ' + parts.join(' · ');
+    }
+
+    document.getElementById('mRounds').textContent = rounds;
+    document.getElementById('mSec').textContent = sec;
+    document.getElementById('mRest').textContent = m.rest;
+    document.getElementById('rangeNote').textContent = rangeText;
+
+    // เก็บค่าไว้สำหรับตัวจับเวลา + รีเซ็ตตัวจับเวลาเมื่อผลเปลี่ยน
+    curR = parseInt(rounds) || 0;
+    curS = parseInt(sec) || 0;
+    curRest = parseInt(m.rest) || 60;
+    ptHardStop();
+    const ctaSub = document.getElementById('ptCtaSub');
+    if (ctaSub) ctaSub.textContent = 'ไล่จับเวลาทีละช่วง: ปั่น ' + curS + ' วินาที → พัก ' + curRest + ' วินาที ครบ ' + curR + ' รอบ · มีเสียงเตือนเมื่อจบแต่ละช่วง และบอกเวลานาฬิกาที่แต่ละช่วงจะครบ';
+    const ptC = document.getElementById('ptCta'); if (ptC) ptC.style.display = 'block';
+    const ptP = document.getElementById('ptPanel'); if (ptP) { ptP.style.display = 'none'; ptP.className = 'pst-timer'; }
+
+    // badges
+    const badges = document.getElementById('badges');
+    badges.innerHTML =
+      '<span class="badge grp">กลุ่ม ' + state.group + '</span>' +
+      '<span class="badge">' + m.label + '</span>';
+
+    // notes
+    const notes = [];
+    notes.push('ปั่นที่อุณหภูมิ 60–65°C — วัดทุกครั้งก่อนเทลงโถ ถ้าเย็นกว่าให้อุ่นก่อน ถ้าสูงกว่าเล็กน้อยเริ่มได้เลย');
+    notes.push('ปั่นแบบสลับพัก (pulsed shear): ปั่นแรงสั้นๆ สลับพัก ไม่ปั่นต่อเนื่องรวดเดียว');
+    if (m.type === 'imm') {
+      notes.push('ไล่หัวปั่นให้ทั่วหม้อ ไม่ปั่นจุดเดียว');
+      notes.push('ใช้ตัวเลขฝั่งสูงเมื่อชุดใหญ่/เนื้อข้น และฝั่งต่ำเมื่อชุดเล็ก/เนื้อใส');
+    }
+    if (m.large) {
+      notes.push('ถ้ามิกซ์ตั้งแต่ 35 กก. ขึ้นไป พักระหว่างรอบได้ถึง 75 วินาที');
+    }
+    if (state.group === 2 && g.note) {
+      notes.push(g.note);
+    }
+    notes.push({ warn: true, text: 'อย่าให้มิกซ์เย็นต่ำกว่า 50°C ระหว่างทำซ้ำ ถ้าใกล้ถึงให้อุ่นกลับก่อนปั่นรอบต่อไป' });
+    notes.push({ warn: true, text: 'ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้นก่อนใช้ เพราะ PST เป็นจุดแรกที่อุปกรณ์สัมผัสมิกซ์หลังพาสเจอร์ไรส์' });
+
+    const ul = document.getElementById('noteList');
+    ul.innerHTML = '';
+    notes.forEach(n => {
+      const li = document.createElement('li');
+      if (typeof n === 'string') { li.textContent = n; }
+      else { li.textContent = n.text; if (n.warn) li.classList.add('warn'); }
+      ul.appendChild(li);
+    });
+  }
+
+  function resetAll() {
+    state.group = null; state.machine = null; state.profile = null;
+    document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    step3.classList.add('hidden');
+    resultEl.classList.add('hidden');
+    promptEl.style.display = 'block';
+    ptHardStop();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ===== ตัวจับเวลา PST (ปั่น + พัก แบบไล่ทีละช่วง) =====
+  let curR = 0, curS = 0, curRest = 60;
+  const PT = { phases: [], idx: 0, endTime: null, remaining: null, running: false, iv: null };
+  let ptAudio = null;
+  function ptUnlock() { try { if (!ptAudio) ptAudio = new (window.AudioContext || window.webkitAudioContext)(); if (ptAudio.state === 'suspended') ptAudio.resume(); } catch (e) {} }
+  function ptBeep() { try { ptUnlock(); if (!ptAudio) return; const t0 = ptAudio.currentTime; for (let i = 0; i < 3; i++) { const st = t0 + i * 0.3; const o = ptAudio.createOscillator(), g = ptAudio.createGain(); o.connect(g); g.connect(ptAudio.destination); o.type = 'square'; o.frequency.value = 880; g.gain.setValueAtTime(0.0001, st); g.gain.exponentialRampToValueAtTime(0.55, st + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, st + 0.25); o.start(st); o.stop(st + 0.27); } } catch (e) {} try { if (navigator.vibrate) navigator.vibrate([220, 110, 220]); } catch (e) {} }
+  function ptFmt(sec) { const m = Math.floor(sec / 60), s = sec % 60; return m + ':' + String(s).padStart(2, '0'); }
+  function ptClock(ms) { const d = new Date(ms); return [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':'); }
+  function ptHardStop() { clearInterval(PT.iv); PT.iv = null; PT.running = false; PT.idx = 0; PT.endTime = null; PT.remaining = null; PT.phases = []; }
+
+  function openPstTimer() {
+    if (!curR || !curS) return;
+    PT.phases = [];
+    for (let n = 1; n <= curR; n++) { PT.phases.push({ round: n, kind: 'spin', dur: curS }); PT.phases.push({ round: n, kind: 'rest', dur: curRest }); }
+    PT.idx = 0; PT.endTime = null; PT.remaining = PT.phases[0].dur; PT.running = false; clearInterval(PT.iv); PT.iv = null;
+    ptUnlock();
+    const cta = document.getElementById('ptCta'); if (cta) cta.style.display = 'none';
+    const panel = document.getElementById('ptPanel'); if (panel) panel.style.display = 'block';
+    ptBuildTl();
+    ptPaint();
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function ptTick() {
+    if (!PT.running || PT.endTime == null) return;
+    const rem = Math.round((PT.endTime - Date.now()) / 1000);
+    if (rem <= 0) {
+      ptBeep(); const prevEnd = PT.endTime; PT.idx++;
+      if (PT.idx >= PT.phases.length) { PT.running = false; clearInterval(PT.iv); PT.iv = null; PT.endTime = null; PT.remaining = 0; ptPaint(); return; }
+      PT.remaining = PT.phases[PT.idx].dur; PT.endTime = prevEnd + PT.remaining * 1000; ptPaint();
+    } else { PT.remaining = rem; ptPaint(); }
+  }
+  function ptResync() {
+    if (!PT.running || PT.endTime == null) return; let guard = 0;
+    while (PT.endTime != null && Date.now() >= PT.endTime && PT.idx < PT.phases.length && guard < 2000) {
+      const prevEnd = PT.endTime; PT.idx++;
+      if (PT.idx >= PT.phases.length) { PT.running = false; clearInterval(PT.iv); PT.iv = null; PT.endTime = null; PT.remaining = 0; break; }
+      PT.remaining = PT.phases[PT.idx].dur; PT.endTime = prevEnd + PT.remaining * 1000; guard++;
+    }
+    ptPaint();
+  }
+  function ptStart() {
+    ptUnlock(); if (PT.running || !PT.phases.length) return;
+    if (PT.idx >= PT.phases.length) { PT.idx = 0; PT.remaining = PT.phases[0].dur; }
+    if (PT.remaining == null || PT.remaining <= 0) PT.remaining = PT.phases[PT.idx].dur;
+    PT.running = true; PT.endTime = Date.now() + PT.remaining * 1000; PT.iv = setInterval(ptTick, 250); ptPaint();
+  }
+  function ptPause() {
+    if (PT.endTime != null) PT.remaining = Math.max(0, Math.round((PT.endTime - Date.now()) / 1000));
+    PT.running = false; clearInterval(PT.iv); PT.iv = null; PT.endTime = null; ptPaint();
+  }
+  function ptToggle() { PT.running ? ptPause() : ptStart(); }
+  function ptSkip() {
+    if (!PT.phases.length || PT.idx >= PT.phases.length) return;
+    const wasRunning = PT.running; clearInterval(PT.iv); PT.iv = null; PT.idx++;
+    if (PT.idx >= PT.phases.length) { PT.running = false; PT.endTime = null; PT.remaining = 0; ptPaint(); return; }
+    PT.remaining = PT.phases[PT.idx].dur;
+    if (wasRunning) { PT.running = true; PT.endTime = Date.now() + PT.remaining * 1000; PT.iv = setInterval(ptTick, 250); } else { PT.endTime = null; }
+    ptPaint();
+  }
+  function ptReset() {
+    clearInterval(PT.iv); PT.iv = null; PT.running = false; PT.idx = 0; PT.endTime = null;
+    PT.remaining = PT.phases.length ? PT.phases[0].dur : 0; ptPaint();
+  }
+  function ptClose() {
+    clearInterval(PT.iv); PT.iv = null; PT.running = false; PT.idx = 0; PT.endTime = null; PT.remaining = null;
+    const panel = document.getElementById('ptPanel'); if (panel) { panel.style.display = 'none'; panel.className = 'pst-timer'; }
+    const cta = document.getElementById('ptCta'); if (cta) cta.style.display = 'block';
+  }
+  function ptBuildTl() {
+    const tl = document.getElementById('ptTl'), tlr = document.getElementById('ptTlR');
+    if (!tl || !PT.phases.length) return;
+    const rounds = PT.phases[PT.phases.length - 1].round;
+    tl.innerHTML = PT.phases.map((p, i) => '<div class="pt-seg ' + p.kind + '" id="ptseg_' + i + '" style="flex:' + p.dur + '"><div class="fl" id="ptfl_' + i + '"></div></div>').join('');
+    const per = {}; PT.phases.forEach(p => { per[p.round] = (per[p.round] || 0) + p.dur; });
+    tlr.innerHTML = Array.from({ length: rounds }, (_, k) => '<span id="ptr_' + (k + 1) + '" style="flex:' + per[k + 1] + '">รอบ ' + (k + 1) + '</span>').join('');
+  }
+  function ptPaint() {
+    const panel = document.getElementById('ptPanel'); if (!panel) return;
+    const chip = document.getElementById('ptChip'), tm = document.getElementById('ptTime'), end = document.getElementById('ptEnd'),
+          ring = document.getElementById('ptRing'), btn = panel.querySelector('.pt-start'), dots = document.getElementById('ptDots');
+    const total = PT.phases.length, rounds = total ? PT.phases[total - 1].round : 0;
+    const doneAll = !total || PT.idx >= total;
+    const ph = doneAll ? null : PT.phases[PT.idx];
+    const rem = (PT.running && PT.endTime != null) ? Math.max(0, Math.round((PT.endTime - Date.now()) / 1000)) : (PT.remaining != null ? PT.remaining : (ph ? ph.dur : 0));
+    const idle = !doneAll && !PT.running && PT.idx === 0 && rem === PT.phases[0].dur;
+    const mode = doneAll ? 'done' : (idle ? 'idle' : ph.kind);
+    const warn5 = PT.running && !doneAll && rem <= 5 && rem > 0;
+    panel.className = 'pst-timer' + (mode === 'spin' || mode === 'rest' || mode === 'done' ? ' ' + mode : '') + (warn5 ? ' warn5' : '');
+    if (mode === 'done') { chip.className = 'pt-chip done'; chip.textContent = '✓ ครบทุกรอบแล้ว 🎉'; }
+    else if (mode === 'idle') { chip.className = 'pt-chip idle'; chip.textContent = 'พร้อมเริ่ม'; }
+    else { chip.className = 'pt-chip ' + ph.kind; chip.textContent = ph.kind === 'spin' ? '🌀 ช่วงปั่น' : '☕ ช่วงพัก'; }
+    const curRound = doneAll ? rounds + 1 : ph.round;
+    let dstr = '';
+    for (let r = 1; r <= rounds; r++) {
+      if (r < curRound) dstr += '<span class="d done">●</span>';
+      else if (r === curRound && mode !== 'idle') dstr += '<span class="d cur">◐</span>';
+      else dstr += '<span class="d up">○</span>';
+    }
+    const tail = doneAll ? ('ครบ ' + rounds + ' รอบ') : (mode === 'idle' ? ('ทั้งหมด ' + rounds + ' รอบ') : ('รอบที่ ' + ph.round + ' / ' + rounds));
+    dots.innerHTML = dstr + ' <span style="margin-left:6px">' + tail + '</span>';
+    let frac;
+    if (mode === 'done') { tm.textContent = '✓'; frac = 1; }
+    else { tm.textContent = rem; frac = ph ? Math.max(0, Math.min(1, rem / ph.dur)) : 1; }
+    if (ring) ring.style.strokeDashoffset = String(Math.round(578 * (1 - frac) * 10) / 10);
+    if (mode === 'done') { end.style.visibility = 'visible'; end.textContent = '🎉 เสร็จเรียบร้อย'; }
+    else if (mode === 'idle') { end.style.visibility = 'hidden'; end.textContent = '—'; }
+    else if (PT.running && PT.endTime != null) { end.style.visibility = 'visible'; end.textContent = '⏰ ช่วงนี้ครบเวลา ' + ptClock(PT.endTime); }
+    else { end.style.visibility = 'visible'; end.textContent = '⏸ พักจับเวลาไว้'; }
+    if (mode === 'done') btn.textContent = '▶ เริ่มรอบ 1 ใหม่';
+    else if (PT.running) btn.textContent = '⏸ หยุด';
+    else if (mode === 'idle') btn.textContent = '▶ เริ่ม';
+    else btn.textContent = '▶ เริ่มต่อ';
+    PT.phases.forEach((p, i) => {
+      const el = document.getElementById('ptseg_' + i), fl = document.getElementById('ptfl_' + i);
+      if (!el || !fl) return;
+      let pct;
+      if (doneAll || i < PT.idx) pct = 100;
+      else if (i === PT.idx && mode !== 'idle') pct = (p.dur - Math.max(0, Math.min(p.dur, rem))) / p.dur * 100;
+      else pct = 0;
+      fl.style.width = Math.max(0, Math.min(100, pct)) + '%';
+      el.classList.toggle('cur', !doneAll && i === PT.idx && mode !== 'idle');
+    });
+    for (let r = 1; r <= rounds; r++) {
+      const l = document.getElementById('ptr_' + r);
+      if (l) l.classList.toggle('cur', !doneAll && mode !== 'idle' && r === curRound);
+    }
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) ptResync(); });
+  window.addEventListener('focus', ptResync);
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>

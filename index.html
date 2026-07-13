@@ -1,0 +1,133 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F4ECE0">
+<meta name="description" content="เครื่องมือออนไลน์สำหรับลูกศิษย์มิสไอศกรีม ครอบคลุมการเรียน การผลิต บันทึกผล และตรวจสอบคุณภาพ">
+<title>Miss Icecream’s Online Tools · เครื่องมือออนไลน์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;padding:42px 18px 48px;background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 15% 4%,rgba(220,229,200,.52) 0%,transparent 38%),radial-gradient(circle at 88% 95%,rgba(201,120,98,.09) 0%,transparent 40%)}
+  .container{max-width:780px;margin:0 auto}
+  header{text-align:center;margin-bottom:32px}
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(37px,7vw,58px);line-height:1.02;letter-spacing:-.03em;margin-bottom:12px}
+  h1 em{font-style:italic;color:var(--accent-deep);font-weight:400}
+  .subtitle{color:var(--muted);font-size:15px;max-width:560px;margin:0 auto;line-height:1.75}
+  .start-note{display:flex;gap:10px;align-items:flex-start;margin:0 auto 30px;padding:14px 16px;max-width:660px;border:1px solid #d7dfc7;border-radius:16px;background:var(--accent-soft);color:var(--accent-deep);font-size:13px;line-height:1.6}
+  .start-note .icon{font-size:18px;line-height:1.35}
+  .category{margin:0 0 30px}
+  .category-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 4px 11px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .category-title{font-family:'Fraunces',serif;font-size:23px;font-weight:500;color:var(--ink)}
+  .category-title span{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:var(--muted);margin-left:8px}
+  .category-num{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted-soft)}
+  .tools{display:grid;gap:11px}
+  .tool-card{display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:14px;min-height:96px;padding:18px 19px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
+  .tool-card:hover{transform:translateY(-2px);border-color:#9aaa78;box-shadow:0 14px 34px -24px rgba(43,31,21,.45)}
+  .tool-icon{display:grid;place-items:center;width:46px;height:46px;border:1px solid #d7dfc7;border-radius:14px;background:var(--accent-soft);font-size:21px}
+  .tool-title{display:block;font-family:'Fraunces',serif;font-size:21px;line-height:1.12;margin-bottom:5px}
+  .tool-title em{font-style:italic;color:var(--accent-deep)}
+  .tool-desc{display:block;font-size:13px;line-height:1.55;color:var(--muted)}
+  .tool-arrow{font-family:'Fraunces',serif;font-size:23px;color:var(--muted-soft)}
+  .coming{cursor:default;opacity:.82}
+  .coming:hover{transform:none;border-color:var(--line);box-shadow:var(--shadow)}
+  .coming .tool-icon{background:#f0eadf;border-color:var(--line)}
+  .badge{display:inline-flex;align-items:center;min-height:25px;margin-top:7px;padding:3px 9px;border-radius:999px;background:#f0eadf;border:1px solid var(--line);font-size:11.5px;font-weight:600;color:var(--rest-deep)}
+  .resource-card{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .resource-card a{display:flex;justify-content:space-between;align-items:center;min-height:50px;padding:12px 15px;border:1px solid var(--line);border-radius:14px;background:rgba(255,250,242,.72);color:var(--accent-deep);text-decoration:none;font-size:13px;font-weight:600}
+  .site-footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--muted);line-height:1.8}
+  .site-footer a{color:var(--accent-deep)}
+  @media(max-width:640px){
+    body{padding:28px 12px 38px}
+    header{margin-bottom:24px}
+    .subtitle{font-size:14px}
+    .start-note{margin-bottom:26px;padding:12px 13px}
+    .category{margin-bottom:26px}
+    .category-title{font-size:21px}
+    .tool-card{grid-template-columns:42px 1fr auto;gap:11px;min-height:92px;padding:15px 13px;border-radius:16px}
+    .tool-icon{width:42px;height:42px;border-radius:12px;font-size:19px}
+    .tool-title{font-size:19px}
+    .tool-desc{font-size:12.5px}
+    .resource-card{grid-template-columns:1fr}
+  }
+  @media(max-width:370px){
+    .tool-card{grid-template-columns:38px 1fr;align-items:start}
+    .tool-icon{width:38px;height:38px}
+    .tool-arrow{display:none}
+  }
+</style>
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div class="eyebrow">Miss Icecream · Online Tools</div>
+      <h1>เครื่องมือ<em>ออนไลน์</em></h1>
+      <p class="subtitle">สำหรับลูกศิษย์มิสไอศกรีม ตั้งแต่ใช้ในคลาส เลือกกระบวนการผลิต บันทึกผล ไปจนถึงตรวจสอบคุณภาพ</p>
+    </header>
+
+    <div class="start-note"><span class="icon" aria-hidden="true">✦</span><span><strong>ออกแบบสำหรับมือถือเป็นหลัก</strong><br>ข้อมูลแบบฟอร์มจะบันทึกไว้ในเบราว์เซอร์เครื่องนี้ และเครื่องมือที่รองรับสามารถพิมพ์หรือแชร์เป็น PDF ได้</span></div>
+
+    <section class="category" aria-labelledby="cat-class">
+      <div class="category-head"><h2 class="category-title" id="cat-class">In Class <span>ในคลาส</span></h2><span class="category-num">01</span></div>
+      <div class="tools">
+        <a class="tool-card" href="ClassTimer.html"><span class="tool-icon" aria-hidden="true">⏱</span><span><span class="tool-title">Class PST <em>Timer</em></span><span class="tool-desc">จับเวลาปั่น–พักทีละช่วง พร้อมเสียงเตือนและสถานะที่อ่านชัดเจน</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-formula">
+      <div class="category-head"><h2 class="category-title" id="cat-formula">Formula Adjustment <span>ปรับสูตร</span></h2><span class="category-num">02</span></div>
+      <div class="tools">
+        <div class="tool-card coming"><span class="tool-icon" aria-hidden="true">⌁</span><span><span class="tool-title">Formula <em>Tools</em></span><span class="tool-desc">พื้นที่สำหรับเครื่องมือปรับสูตรและคำนวณสมดุลสูตรที่จะเพิ่มในลำดับถัดไป</span><span class="badge">กำลังพัฒนา</span></span><span class="tool-arrow" aria-hidden="true">···</span></div>
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-production">
+      <div class="category-head"><h2 class="category-title" id="cat-production">Production <span>การผลิต</span></h2><span class="category-num">03</span></div>
+      <div class="tools">
+        <a class="tool-card" href="PST-Selector.html"><span class="tool-icon" aria-hidden="true">↻</span><span><span class="tool-title">PST <em>Selector</em></span><span class="tool-desc">เลือกชนิดเบสและรูปแบบเครื่อง เพื่อดูรอบปั่น–พักที่เหมาะสม</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        <a class="tool-card" href="PST-Process-Selector.html"><span class="tool-icon" aria-hidden="true">⑪</span><span><span class="tool-title">Process <em>Selector</em></span><span class="tool-desc">ตอบเงื่อนไขการผลิต แล้วรับขั้นตอนทำไอศกรีมเฉพาะกรณีครบ 11 ขั้น</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-records">
+      <div class="category-head"><h2 class="category-title" id="cat-records">Records <span>บันทึกผล</span></h2><span class="category-num">04</span></div>
+      <div class="tools">
+        <a class="tool-card" href="Heat-Log.html"><span class="tool-icon" aria-hidden="true">♨</span><span><span class="tool-title">Heat Process <em>Log</em></span><span class="tool-desc">บันทึกเวลา–อุณหภูมิ กราฟ และรายงาน รองรับหลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        <a class="tool-card" href="PST-PSS-Log.html"><span class="tool-icon" aria-hidden="true">▤</span><span><span class="tool-title">PST &amp; PSS <em>Log</em></span><span class="tool-desc">บันทึกการทดลอง เวลา อุณหภูมิ และ %Overrun รองรับหลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-quality">
+      <div class="category-head"><h2 class="category-title" id="cat-quality">Quality <span>คุณภาพ</span></h2><span class="category-num">05</span></div>
+      <div class="tools">
+        <a class="tool-card" href="Churning.html"><span class="tool-icon" aria-hidden="true">%</span><span><span class="tool-title">Churning <em>Calculator</em></span><span class="tool-desc">คำนวณ %Overrun และเปรียบเทียบผลการปั่นหลายชุดอย่างเป็นระเบียบ</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        <a class="tool-card" href="Meltdown-Test.html"><span class="tool-icon" aria-hidden="true">◒</span><span><span class="tool-title">Meltdown <em>Test</em></span><span class="tool-desc">จับเวลา บันทึกน้ำหนักและลักษณะการละลาย พร้อมกราฟหลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="cat-help">
+      <div class="category-head"><h2 class="category-title" id="cat-help">Help <span>คู่มือและข้อมูล</span></h2><span class="category-num">?</span></div>
+      <div class="resource-card">
+        <a href="guide.html"><span>คู่มือรวมการใช้งาน</span><span aria-hidden="true">→</span></a>
+        <a href="Flowchart-Home.html"><span>แผนผังกระบวนการ</span><span aria-hidden="true">→</span></a>
+        <a href="license.html"><span>เงื่อนไขการใช้งาน</span><span aria-hidden="true">→</span></a>
+        <a href="https://www.missicecream.com" target="_blank" rel="noopener"><span>เว็บไซต์ Miss Icecream</span><span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">สำหรับผู้เรียนในคลาสของอาจารย์พรหล้า ขาวเธียร</span></footer>
+  </main>
+</body>
+</html>

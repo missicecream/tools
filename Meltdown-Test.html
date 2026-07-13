@@ -1,0 +1,780 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meltdown Test · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--muted-soft:#BFB09B;--line:#E5D9C4;--line-soft:#EFE5D2;--accent:#6B8E4E;--accent-deep:#4F6B3A;--blue:#3E73A6;--rose:#A85B47;--gold:#C9A227;--gold-deep:#9A7A1F}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;padding:34px 18px 50px;
+    background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.45)0%,transparent 38%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08)0%,transparent 40%);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{max-width:820px;margin:0 auto}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+  .back-link{display:inline-flex;gap:7px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500}
+  .back-link:hover{color:var(--ink);border-color:var(--accent)}
+  .sound-toggle{display:inline-flex;gap:7px;padding:8px 16px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer}
+  .sound-toggle.off{color:var(--muted-soft)}
+  header{text-align:center;margin-bottom:20px}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:32px;line-height:1.1}
+  h1 em{font-style:italic;color:var(--accent-deep)}
+  .sub{color:var(--muted);font-size:13px;margin-top:6px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6}
+  .rep-head{display:none}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 22px -18px rgba(43,31,21,.25)}
+  .block-t{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--accent-deep);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .block-t .tag{display:inline-flex;align-items:center;justify-content:center;padding:3px 11px;border-radius:100px;color:#fff;font-family:'Fraunces',serif;font-size:13px;background:var(--accent-deep)}
+  .block-t.p1 .tag{background:var(--blue)}
+  .block-t.p2 .tag{background:#8A6BB0}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+  .fld{display:flex;flex-direction:column;gap:4px}
+  .fld label{font-size:12px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%}
+  .fld input:focus,.fld select:focus{border-color:var(--accent);background:#fff}
+  .fld textarea{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%;resize:none;line-height:1.65;min-height:64px;overflow:hidden}
+  .fld textarea:focus{border-color:var(--accent);background:#fff}
+  .derived{font-size:12.5px;color:var(--accent-deep);font-weight:600;min-height:16px}
+  .hint{font-size:12.5px;color:var(--muted);line-height:1.6;background:var(--line-soft);border:1px solid var(--line);border-radius:10px;padding:9px 13px;margin-bottom:12px}
+
+  .btn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:14px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:11px 22px;background:var(--card);color:var(--ink)}
+  .btn.big{display:block;width:100%;color:#fff;border:none;padding:13px;border-radius:12px;font-size:15px}
+  .btn.start1{background:var(--blue)}
+  .btn.start2{background:#8A6BB0}
+  .btn.drop{background:var(--rose)}
+  .btn.print{background:var(--accent-deep);color:#fff;border:none}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn-undo{margin-top:8px;width:100%;padding:8px;border:1px dashed var(--rose);background:#fff;color:var(--rose);font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;border-radius:10px;cursor:pointer}
+  .tbl-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+  .tbl-actions .btn{flex:1;min-width:180px}
+  .btn.stopRec{color:var(--rose);border-color:#e0b8ab}
+  .btn.stopRec:hover{background:#FBEFEC}
+  .et-in{font-family:'Fraunces',serif;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .et-in:focus{border-color:var(--accent);outline:none}
+  .et-ok{padding:7px 12px;border-radius:9px;border:none;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;font-size:12.5px;font-family:'Sarabun',sans-serif;white-space:nowrap}
+  .ed-t{color:var(--blue);cursor:pointer;font-size:12px;border:none;background:none;font-family:'Sarabun',sans-serif;white-space:nowrap}
+  .del-t{color:var(--rose);cursor:pointer;font-size:12px;border:none;background:none;font-family:'Sarabun',sans-serif}
+  .logged{font-family:'Fraunces',serif;font-size:14px;color:var(--accent-deep);margin-top:7px;text-align:center}
+  .logged.empty{color:var(--muted-soft);font-style:italic}
+
+  .countdown{margin-top:12px;background:#EAF1F7;border:1px solid #b9d3e6;border-radius:12px;padding:12px 14px;font-size:14px;color:#2D5474;font-weight:600;text-align:center;line-height:1.5}
+  .countdown .big{font-family:'Fraunces',serif;font-size:34px;font-weight:400;color:var(--blue);display:block;margin:2px 0 4px;font-variant-numeric:tabular-nums}
+  .countdown.warn{background:#FBEFE3;border-color:#E6C09A;color:#9A5B25;animation:cdPulse 1s ease-in-out infinite}
+  .countdown.warn .big{color:#B4672A}
+  .countdown.done{background:#EFF3E7;border-color:#cfe0bf;color:var(--accent-deep)}
+  .countdown.done .big{color:var(--accent-deep)}
+  .countdown.p2{background:#F1ECf8;border-color:#d4c6e8;color:#5F4880}
+  .countdown.p2 .big{font-size:26px;color:#8A6BB0}
+  @keyframes cdPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+  th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+  th{font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;font-weight:600}
+  td.t{font-family:'Fraunces',serif;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  tr.due{background:#FBEFE3}
+  tr.cur{background:#F3F0FA}
+  table input[type=number]{font-family:'Fraunces',serif;font-size:14px;width:110px;padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;text-align:center}
+  table input[type=number]:focus{border-color:var(--accent);outline:none}
+  table select{font-family:'Sarabun',sans-serif;font-size:13px;padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;max-width:170px}
+  table input[type=text]{font-family:'Sarabun',sans-serif;font-size:13px;width:100%;min-width:120px;padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#fff}
+  table input[type=text]:focus,table select:focus{border-color:var(--accent);outline:none}
+  .pct{font-family:'Fraunces',serif;color:var(--accent-deep);white-space:nowrap}
+  .wat{font-family:'Fraunces',serif;color:var(--blue);white-space:nowrap}
+
+  .chartwrap{margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
+  .chartwrap svg{width:100%;height:auto;display:block}
+  .chart-empty{text-align:center;color:var(--muted-soft);font-style:italic;font-family:'Fraunces',serif;padding:26px 0}
+  #summaryBox{font-size:14px;line-height:1.9}
+
+  .actions{display:flex;justify-content:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+  .note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:14px;text-align:center}
+  footer{text-align:center;margin-top:18px;color:var(--muted-soft);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase}
+
+  .batchbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:16px}
+  .batchbar label{font-size:12px;font-weight:600;color:var(--muted)}
+  .batchbar select{flex:1;min-width:140px;font-family:'Sarabun',sans-serif;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .bbtn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:13px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:8px 14px;background:#fff;color:var(--ink)}
+  .bbtn.new{background:var(--accent-deep);color:#fff;border:none}
+  .bbtn.del{color:var(--rose)}
+
+  body.cap .topbar,body.cap .actions,body.cap .note,body.cap .batchbar,body.cap .hint,body.cap .btn,body.cap .btn-undo,body.cap .countdown,body.cap .ed-t,body.cap .et-ok,body.cap .del-t{display:none!important}
+  body.cap .rep-head{display:block!important}
+  body.cap{background:#fff!important;background-image:none!important}
+  body.cap .block{background:#fff!important;border:1px solid #ccc!important;box-shadow:none!important}
+  body.cap .block-t,body.cap .block-t.p1,body.cap .block-t.p2{color:#000!important}
+  body.cap .block-t .tag{background:none!important;color:#000!important;border:1px solid #888!important}
+  body.cap .chartwrap{border:1px solid #ccc!important}
+  body.cap .pct,body.cap .wat,body.cap .derived,body.cap .logged,body.cap #summaryBox b{color:#000!important}
+  body.cap .block.empty-print{display:none!important}
+  body.cap tr.due,body.cap tr.cur{background:none!important}
+
+  #pmbar{display:none}
+  body.printmode{background:#fff!important;background-image:none!important}
+  body.printmode header{display:none}
+  body.printmode #pmbar{display:flex;position:sticky;top:0;z-index:50;gap:10px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid #ccc;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#333}
+  #pmbar .msg{flex:1;min-width:160px}
+  body.printmode .fld input,body.printmode .fld select,body.printmode .fld textarea,body.printmode table input,body.printmode table select{background:none!important}
+  @media print{
+    #pmbar{display:none!important}
+    @page{size:A4 portrait;margin:9mm}
+    body{padding:0;background:#fff;background-image:none;font-size:11px;print-color-adjust:economy;-webkit-print-color-adjust:economy}
+    .sheet{max-width:100%}
+    .topbar,.actions,.note,.batchbar,.hint,.btn,.btn-undo,.countdown,.ed-t,.et-ok,.del-t{display:none!important}
+    header{display:none}
+    .rep-head{display:block;text-align:center;margin-bottom:8px}
+    .rep-head .rt{font-family:'Fraunces',serif;font-size:18px}
+    .rep-head .rs{font-size:10px;color:#555}
+    .block{box-shadow:none;border:1px solid #ccc;border-radius:8px;padding:8px 10px;margin-bottom:7px;break-inside:avoid;page-break-inside:avoid}
+    .block.empty-print{display:none}
+    .block-t,.block-t.p1,.block-t.p2{color:#000;font-size:11px;margin-bottom:6px}
+    .block-t .tag{background:none!important;color:#000;border:1px solid #888;font-size:10px}
+    .fld input,.fld select{border:none;border-bottom:1px solid #ccc;border-radius:0;padding:2px 0;background:none;font-size:11px}
+    .fld textarea{border:1px solid #ccc;border-radius:4px;padding:3px 6px;background:none;font-size:11px;min-height:0}
+    .fld label{font-size:9.5px}
+    table{font-size:10px}
+    th,td{padding:3px 6px}
+    table input,table select{border:none;border-bottom:1px solid #ccc;border-radius:0;background:none;font-size:10px;padding:1px 2px;width:auto;max-width:100px}
+    tr{break-inside:avoid;page-break-inside:avoid}
+    tr.due,tr.cur{background:none}
+    .pct,.wat,.derived,.logged{color:#000}
+    .chartwrap{border:1px solid #ccc;padding:3px}
+    footer{margin-top:6px}
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+<div class="sheet">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+    <button class="sound-toggle" id="soundToggle" type="button">🔔 เสียง: เปิด</button>
+  </div>
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>Meltdown <em>Test</em></h1>
+    <p class="sub">ทดสอบตำหนิการละลายใน 1 ชั่วโมง — ส่วนที่ 1 วัดอัตราการละลาย (ชั่งทุก 5 นาที) และส่วนที่ 2 ดูลักษณะเนื้อที่ละลาย (สังเกตทุก 10 นาที) ทำพร้อมกันได้ ระบบจับเวลาและเตือนให้เองค่ะ</p>
+    <p class="sub guide-link" style="margin-top:7px"><a href="Meltdown-Test-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการทดลองและการใช้งาน</a></p>
+  </header>
+  <div class="rep-head"><div class="rt">รายงานทดสอบการละลาย (Meltdown Test)</div><div class="rs">Miss Icecream</div></div>
+
+  <div class="batchbar">
+    <label>Batch:</label>
+    <select id="batchSel" onchange="switchBatch(this.value)"></select>
+    <button class="bbtn new" onclick="newBatch()">➕ Batch ใหม่</button>
+    <button class="bbtn del" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
+  </div>
+
+  <!-- ข้อมูลทั่วไป -->
+  <div class="block">
+    <div class="block-t"><span class="tag">i</span> ข้อมูลทั่วไป</div>
+    <div class="grid">
+      <div class="fld"><label>รหัส/สูตรไอศกรีม</label><input id="f_recipe" type="text" placeholder="เช่น MKDB11" oninput="setF('recipe',this.value)"></div>
+      <div class="fld"><label>Lot การผลิต</label><input id="f_lot" type="text" placeholder="เช่น L260706-01" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label>วันที่ทดสอบ</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
+      <div class="fld"><label>ผู้ทำการบันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
+      <div class="fld"><label>อุณหภูมิห้อง (°C)</label><input id="f_roomTemp" type="number" step="0.1" placeholder="เช่น 25" oninput="setF('roomTemp',this.value)"></div>
+      <div class="fld"><label>ความชื้น %humidity (ถ้ามี)</label><input id="f_humidity" type="number" step="0.1" placeholder="เช่น 60" oninput="setF('humidity',this.value)"></div>
+    </div>
+  </div>
+
+  <!-- ส่วนที่ 1: เตรียม + เริ่ม -->
+  <div class="block">
+    <div class="block-t p1"><span class="tag">1</span> วัดอัตราการละลาย (Melting Rate) — เตรียมและเริ่ม</div>
+    <div class="hint">ตักไอศกรีม 1 สคูป (80–100 g) ที่ −18 °C (หรือ −14 °C แต่ต้องใช้อุณหภูมิเดียวกันทุกครั้ง) วางบนตะแกรงพาดถ้วยรอง ในห้อง ~25 °C <b>ให้พ้นทางลมแอร์/พัดลม</b></div>
+    <div class="grid">
+      <div class="fld"><label>น้ำหนักถ้วยเปล่า (g)</label><input id="m_cupW" type="number" step="0.1" placeholder="g" oninput="setF('cupW',this.value)"><div class="derived" id="d_cup">&nbsp;</div></div>
+      <div class="fld"><label>น้ำหนักถ้วย + ตะแกรง (g)</label><input id="m_cupGridW" type="number" step="0.1" placeholder="g" oninput="setF('cupGridW',this.value)"><div class="derived" id="d_grid">&nbsp;</div></div>
+      <div class="fld"><label>อุณหภูมิเนื้อไอศกรีมตอนเริ่ม (°C)</label><input id="m_iceTemp" type="number" step="0.1" placeholder="เช่น -18" oninput="setF('iceTemp',this.value)"></div>
+      <div class="fld"><label>น้ำหนักถ้วย + ตะแกรง + ไอศกรีม (g)</label><input id="m_totalW" type="number" step="0.1" placeholder="g" oninput="setF('totalW',this.value)"><div class="derived" id="d_ice">&nbsp;</div></div>
+    </div>
+    <button class="btn big start1" id="btnStart1" style="margin-top:14px" onclick="startPart1()">▶ เริ่มทดสอบส่วนที่ 1 — จับเวลา</button>
+    <div class="logged empty" id="lg_mStart">ยังไม่เริ่ม</div>
+    <button class="btn-undo" id="undoStart1" style="display:none" onclick="cancelPart1()">↩ ยกเลิกการเริ่ม (กดผิด)</button>
+    <div class="countdown" id="cd1" style="display:none"></div>
+    <button class="btn big drop" id="btnDrop" style="margin-top:12px;display:none" onclick="logDrop()">💧 หยดแรกตกลงถ้วยแล้ว! — กดทันทีที่เห็น</button>
+    <div class="logged empty" id="lg_drop" style="display:none">ยังไม่มีหยดแรก</div>
+  </div>
+
+  <!-- ส่วนที่ 1: ตารางชั่ง -->
+  <div class="block" id="weighBlock" style="display:none">
+    <div class="block-t p1"><span class="tag">1</span> บันทึกน้ำหนักทุก 5 นาที</div>
+    <div class="hint">ถึงเวลาชั่ง: ยกตะแกรง(พร้อมไอศกรีม)ขึ้น <b>ถือไว้เหนือปากถ้วย</b>ระหว่างชั่ง กันน้ำหยดออกนอกถ้วย → ชั่ง <b>ถ้วย + น้ำไอศกรีมที่ละลาย</b> กรอกตัวเลขแล้วกด <b>✓ บันทึก</b> — ระบบจะลงเวลาชั่งจริง ณ ตอนกดปุ่ม (เวลานัดมีไว้เตือนเท่านั้น กราฟใช้เวลาจริง) และลบน้ำหนักถ้วย/คิด % ให้เอง · แก้น้ำหนักหรือเวลาย้อนหลังได้ที่ปุ่ม ✎ แก้ · <b>ก่อนกดปุ่ม 💧 หยดแรก</b> ระบบจะบันทึกถ้วยเปล่าให้อัตโนมัติทุก 5 นาที (มีกล่องยืนยัน) และเสียงนับถอยหลังจะเริ่มทำงานหลังกดปุ่มหยดแรกค่ะ</div>
+    <table><thead><tr><th>นาทีที่</th><th>เวลานัด</th><th>ถ้วย+น้ำ (g)</th><th>เวลาชั่งจริง</th><th>น้ำที่ละลาย</th><th>% ละลาย</th></tr></thead><tbody id="weighBody"></tbody></table>
+    <div class="tbl-actions">
+      <button class="btn" id="btnExtend" onclick="extendHour()">➕ เพิ่มการบันทึกอีก 1 ชั่วโมง</button>
+      <button class="btn stopRec" id="btnStopRec" onclick="stopRecording()">⏹ หยุดบันทึก</button>
+    </div>
+    <div class="logged empty" id="lg_mStop" style="display:none"></div>
+  </div>
+
+  <!-- ส่วนที่ 2 -->
+  <div class="block">
+    <div class="block-t p2"><span class="tag">2</span> ลักษณะเนื้อที่ละลาย (Melt Appearance)</div>
+    <div class="hint">ช่วง 4–5 นาทีแรกของส่วนที่ 1 (ไอศกรีมยังไม่หยด) สคูปอีก 1 ก้อน (80–100 g) วางบน<b>จานแบน</b> ตั้งในที่เดียวกัน แล้วเหลือบดูเป็นระยะตั้งแต่ต้น — การแยกเป็นน้ำใสเห็นชัดช่วงแรก อาการเป็นฟองเห็นชัดตอนละลายมากแล้ว</div>
+    <div class="grid">
+      <div class="fld"><label>น้ำหนักจานรอง (g)</label><input id="a_plateW" type="number" step="0.1" placeholder="g" oninput="setF('plateW',this.value)"></div>
+      <div class="fld"><label>น้ำหนักจาน + ไอศกรีม (g)</label><input id="a_totalW" type="number" step="0.1" placeholder="g" oninput="setF('plateTotalW',this.value)"><div class="derived" id="d_aice">&nbsp;</div></div>
+    </div>
+    <button class="btn big start2" id="btnStart2" style="margin-top:14px" onclick="startPart2()">▶ บันทึกและเริ่มจับเวลาส่วนที่ 2</button>
+    <div class="logged empty" id="lg_aStart">ยังไม่เริ่ม</div>
+    <button class="btn-undo" id="undoStart2" style="display:none" onclick="cancelPart2()">↩ ยกเลิกการเริ่ม (กดผิด)</button>
+    <div class="countdown p2" id="cd2" style="display:none"></div>
+  </div>
+
+  <!-- ส่วนที่ 2: ตารางสังเกต -->
+  <div class="block" id="lookBlock" style="display:none">
+    <div class="block-t p2"><span class="tag">2</span> บันทึกการสังเกตทุก 10 นาที</div>
+    <table><thead><tr><th>นาทีที่</th><th>เวลานัดดู</th><th>ลักษณะเนื้อที่ละลาย</th><th>บันทึกเพิ่มเติม</th></tr></thead><tbody id="lookBody"></tbody></table>
+  </div>
+
+  <!-- บันทึกเพิ่มเติม -->
+  <div class="block" id="noteBlock">
+    <div class="block-t" style="color:#A85B47"><span class="tag" style="background:#A85B47">📝</span> บันทึกเพิ่มเติม</div>
+    <div class="fld">
+      <label>ข้อความสำคัญที่ต้องเก็บไว้กับข้อมูล Batch นี้ (ถ้ามี)</label>
+      <textarea id="f_note" rows="3" placeholder="พิมพ์บันทึก เช่น เหตุการณ์ผิดปกติระหว่างทดสอบ…" oninput="setNote(this)"></textarea>
+    </div>
+  </div>
+
+  <!-- สรุปผล -->
+  <div class="block" id="summaryBlock">
+    <div class="block-t"><span class="tag">∑</span> สรุปผล</div>
+    <div id="summaryBox"></div>
+  </div>
+
+  <!-- กราฟ -->
+  <div class="block" id="chartBlock">
+    <div class="block-t"><span class="tag">📈</span> กราฟ % การละลาย – เวลา</div>
+    <div class="chartwrap" id="chartWrap"><div class="chart-empty">กราฟจะแสดงเมื่อบันทึกน้ำหนัก ≥ 1 จุด</div></div>
+  </div>
+
+  <div id="pmbar">
+    <span class="msg">✅ หน้านี้พร้อมพิมพ์แล้ว — พื้นขาว ประหยัดหมึก · กดปุ่ม <b>พิมพ์</b> หรือ <b>Ctrl/⌘ + P</b></span>
+    <button class="btn print" onclick="window.print()">🖨 พิมพ์ / บันทึก PDF</button>
+    <button class="btn" onclick="exitPrintMode()">✕ ออกจากโหมด</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn print" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
+    <button class="btn print" onclick="enterPrintMode()">🖨 พิมพ์เอกสาร</button>
+    <button class="btn" onclick="resetAll()">เริ่มใหม่ (ล้างข้อมูล)</button>
+  </div>
+  <p class="note">บันทึกอัตโนมัติในเบราว์เซอร์เครื่องนี้ · จับเวลาอิงนาฬิกาจริง — สลับแอปหรือปิดหน้าแล้วกลับมา เวลายังเดินต่อถูกต้อง · เสียงเตือนก่อนถึงเวลาชั่ง 15 และ 10 วินาที แล้วนับ 5-4-3-2-1</p>
+  <footer>Miss Icecream</footer>
+</div>
+
+<script>
+const KEY='meltdown_store_v1';
+function mrEnd(){return state&&state.mExt?120:60}      // ต่อเวลาได้อีก 1 ชั่วโมง (ถึงนาที 120)
+function mrSlots(){const a=[];for(let m=5;m<=mrEnd();m+=5)a.push(m);return a}  // นาทีชั่ง ส่วนที่ 1
+const AP_SLOTS=[10,20,30,40,50,60];                    // นาทีสังเกต ส่วนที่ 2
+const LOOKS=['ละลายปกติ','แยกเป็นน้ำใส','เป็นฟอง','จับตัวเป็นก้อน','เป็นเกล็ดน้ำแข็ง','อื่นๆ (เขียนในช่องบันทึก)'];
+
+function fresh(){return {recipe:'',lot:'',date:thaiDate(Date.now()),recorder:'',roomTemp:'',humidity:'',
+  cupW:'',cupGridW:'',iceTemp:'',totalW:'',mStart:null,drop:null,weights:{},mExt:false,mStop:null,
+  plateW:'',plateTotalW:'',aStart:null,looks:{},lookNotes:{},note:''}}
+function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+let store=loadStore();
+let state=store.batches[store.current];
+function loadStore(){
+  try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(o&&o.batches&&o.order&&o.order.length&&o.batches[o.current])return o;}}catch(e){}
+  const id=newId();const o={batches:{},order:[id],current:id};o.batches[id]=fresh();return o;
+}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function save(){persist()}
+
+function batchLabel(id){const b=store.batches[id];if(!b)return 'Batch';const nm=(b.recipe||'').trim();return nm||('Batch · '+(b.date||''))}
+function refreshBatchSel(){
+  const sel=document.getElementById('batchSel');if(!sel)return;
+  sel.innerHTML=store.order.map((id,i)=>'<option value="'+id+'"'+(id===store.current?' selected':'')+'>'+(i+1)+'. '+escapeHtml(batchLabel(id))+'</option>').join('');
+}
+function switchBatch(id){if(!store.batches[id])return;store.current=id;state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel()}
+function newBatch(){const id=newId();store.batches[id]=fresh();store.order.push(id);store.current=id;state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();const r=document.getElementById('f_recipe');if(r)r.focus();}
+function deleteBatch(){
+  if(store.order.length<=1){if(!confirm('นี่เป็น Batch เดียวที่มี — ล้างข้อมูลแล้วเริ่ม Batch ใหม่?'))return;const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();return;}
+  if(!confirm('ลบ Batch นี้? ข้อมูลของ Batch นี้จะหายถาวร'))return;
+  const cur=store.current;delete store.batches[cur];store.order=store.order.filter(x=>x!==cur);
+  store.current=store.order[0];state=store.batches[store.current];persist();syncInputs();updateUI();refreshBatchSel();
+}
+function resetAll(){if(!confirm('ล้างข้อมูลใน Batch นี้และเริ่มใหม่?'))return;const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();}
+
+function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
+function hms(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
+function hm(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes()].map(n=>String(n).padStart(2,'0')).join(':')}
+function fmtDur(ms){let s=Math.max(0,Math.round(ms/1000));const m=Math.floor(s/60);s=s%60;return m+' นาที '+String(s).padStart(2,'0')+' วิ'}
+function num(v){const n=parseFloat(v);return isNaN(n)?null:n}
+function iceW(){const t=num(state.totalW),g=num(state.cupGridW);return (t!=null&&g!=null&&t>g)?Math.round((t-g)*10)/10:null}
+function gridW(){const g=num(state.cupGridW),c=num(state.cupW);return (g!=null&&c!=null&&g>c)?Math.round((g-c)*10)/10:null}
+function aIceW(){const t=num(state.plateTotalW),p=num(state.plateW);return (t!=null&&p!=null&&t>p)?Math.round((t-p)*10)/10:null}
+
+/* ===== เสียง ===== */
+let soundOn=true,audioCtx=null;
+function unlockAudio(){try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();}catch(e){}}
+function beep(n){
+  if(!soundOn)return;
+  try{unlockAudio();if(!audioCtx)return;const t0=audioCtx.currentTime;
+    for(let i=0;i<(n||3);i++){const s=t0+i*0.32,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);o.type='square';o.frequency.value=880;
+      g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.6,s+0.02);g.gain.exponentialRampToValueAtTime(0.0001,s+0.26);
+      o.start(s);o.stop(s+0.28);}
+  }catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate([250,120,250]);}catch(e){}
+}
+function tickBeep(){
+  if(!soundOn)return;
+  try{unlockAudio();if(!audioCtx)return;const s=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);o.type='square';o.frequency.value=660;
+    g.gain.setValueAtTime(0.0001,s);g.gain.exponentialRampToValueAtTime(0.45,s+0.015);g.gain.exponentialRampToValueAtTime(0.0001,s+0.15);
+    o.start(s);o.stop(s+0.17);
+  }catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate(80);}catch(e){}
+}
+const soundToggle=document.getElementById('soundToggle');
+soundToggle.addEventListener('click',()=>{soundOn=!soundOn;
+  if(soundOn){unlockAudio();soundToggle.textContent='🔔 เสียง: เปิด';soundToggle.classList.remove('off');}
+  else{soundToggle.textContent='🔕 เสียง: ปิด';soundToggle.classList.add('off');}
+});
+
+/* ===== ฟอร์ม ===== */
+function setF(k,v){state[k]=v;save();if(k==='recipe')refreshBatchSel();updateDerived();renderTables();renderSummary();buildChart();}
+function autoGrow(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px'}
+function setNote(el){state.note=el.value;autoGrow(el);save();toggleEmpty()}
+function updateDerived(){
+  const g=gridW(),i=iceW(),a=aIceW();
+  document.getElementById('d_grid').innerHTML=g!=null?('ตะแกรง = '+g+' g'):'&nbsp;';
+  document.getElementById('d_ice').innerHTML=i!=null?('✓ ไอศกรีมทดสอบ = '+i+' g'):'&nbsp;';
+  document.getElementById('d_aice').innerHTML=a!=null?('✓ ไอศกรีมทดสอบ = '+a+' g'):'&nbsp;';
+  document.getElementById('d_cup').innerHTML='&nbsp;';
+}
+
+/* ===== ส่วนที่ 1 ===== */
+function startPart1(){
+  unlockAudio();
+  if(state.mStart){alert('เริ่มไปแล้วค่ะ ('+hms(state.mStart)+') ถ้าต้องการเริ่มใหม่ กด "ยกเลิกการเริ่ม" ก่อน');return;}
+  if(num(state.cupW)==null||num(state.cupGridW)==null||num(state.totalW)==null||iceW()==null){
+    alert('กรอกน้ำหนักถ้วย, ถ้วย+ตะแกรง และ ถ้วย+ตะแกรง+ไอศกรีม ให้ครบก่อนค่ะ\n(ระบบต้องใช้คำนวณน้ำหนักไอศกรีมเริ่มต้น)');return;
+  }
+  state.mStart=Date.now();save();updateUI();
+}
+function cancelPart1(){
+  if(!state.mStart)return;
+  if(!confirm('ยกเลิกการเริ่มส่วนที่ 1? (ข้อมูลน้ำหนักที่กรอกในตารางจะยังอยู่)'))return;
+  state.mStart=null;state.drop=null;state.mStop=null;save();updateUI();
+}
+function extendHour(){
+  if(state.mExt){alert('ต่อเวลาเป็น 2 ชั่วโมงไปแล้วค่ะ (ถึงนาที 120)');return;}
+  if(!confirm('เพิ่มการบันทึกอีก 1 ชั่วโมง (ถึงนาที 120)?\nข้อมูลที่บันทึกไว้แล้วอยู่ครบเหมือนเดิมค่ะ'))return;
+  state.mExt=true;state.mStop=null;   // ต่อเวลา = กลับมาบันทึกต่อถ้าเคยกดหยุดไว้
+  save();updateUI();
+}
+function stopRecording(){
+  if(state.mStop)return;
+  if(!confirm('หยุดบันทึกส่วนที่ 1?\nเสียงเตือนและการบันทึกอัตโนมัติจะหยุด — ข้อมูลที่บันทึกแล้วยังอยู่ครบ และกลับมาบันทึกต่อได้ค่ะ'))return;
+  state.mStop=Date.now();save();updateUI();
+}
+function resumeRecording(){state.mStop=null;save();updateUI();}
+function logDrop(){
+  unlockAudio();
+  if(!state.mStart)return;
+  if(state.drop&&!confirm('บันทึกหยดแรกไว้แล้ว ('+hms(state.drop)+') บันทึกทับด้วยเวลาปัจจุบัน?'))return;
+  state.drop=Date.now();save();updateUI();
+}
+function clearDrop(){if(!confirm('ลบเวลาหยดแรก?'))return;state.drop=null;save();updateUI();}
+
+/* ข้อมูลชั่งแต่ละช่อง: {w:น้ำหนักถ้วย+น้ำ, t:เวลาชั่งจริง} — รองรับข้อมูลรุ่นเก่าที่เป็นตัวเลขเดี่ยว */
+function wEntry(min){
+  const v=state.weights[min];
+  if(v==null||v==='')return null;
+  if(typeof v==='object')return v;
+  return {w:String(v),t:null};
+}
+let _editRow=null;
+function saveWeight(min){
+  unlockAudio();
+  const inp=document.getElementById('mi_'+min);if(!inp)return;
+  const v=parseFloat(inp.value);
+  if(isNaN(v)){alert('กรอกน้ำหนัก ถ้วย+น้ำ ก่อนกดบันทึกค่ะ');return;}
+  state.weights[min]={w:String(Math.round(v*10)/10),t:Date.now()};  // เวลาชั่งจริง = ตอนกดปุ่มบันทึก
+  save();renderRow(min);renderSummary();buildChart();toggleEmpty();
+}
+function editW(min){_editRow=min;renderRow(min);const i=document.getElementById('mi_'+min);if(i)i.focus();}
+function cancelEditW(min){_editRow=null;renderRow(min);}
+function saveEditW(min){
+  const e=wEntry(min);if(!e)return;
+  const wi=document.getElementById('mi_'+min),ti=document.getElementById('mt_'+min);
+  const v=parseFloat(wi?wi.value:'');
+  if(isNaN(v)){alert('กรอกน้ำหนักก่อนค่ะ');return;}
+  let t=e.t;
+  if(ti&&ti.value){
+    const p=ti.value.split(':').map(Number);
+    const base=new Date(e.t||state.mStart||Date.now());
+    base.setHours(p[0]||0,p[1]||0,p[2]||0,0);
+    t=base.getTime();
+  }
+  state.weights[min]={w:String(Math.round(v*10)/10),t:t};
+  _editRow=null;
+  save();renderRow(min);renderSummary();buildChart();toggleEmpty();
+}
+function delW(min){
+  if(!confirm('ลบข้อมูลชั่งของนาทีที่ '+min+'?'))return;
+  delete state.weights[min];_editRow=null;
+  save();renderRow(min);renderSummary();buildChart();toggleEmpty();
+}
+function waterOf(min){
+  const e=wEntry(min);if(!e)return null;
+  const w=parseFloat(e.w),c=num(state.cupW);
+  if(isNaN(w)||c==null)return null;
+  return Math.max(0,Math.round((w-c)*10)/10);
+}
+function pctOf(min){
+  const w=waterOf(min),i=iceW();
+  if(w==null||!i)return null;
+  return Math.round(w/i*1000)/10;
+}
+function tHMS(ts){const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
+function renderRow(min){
+  const tr=document.getElementById('mrow_'+min);if(!tr||!state.mStart)return;
+  const e=wEntry(min);
+  const sched=hm(state.mStart+min*60000);
+  const head='<td class="t">'+min+'</td><td class="t">'+sched+'</td>';
+  if(_editRow===min&&e){
+    tr.innerHTML=head
+      +'<td><span style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><input id="mi_'+min+'" type="number" step="0.1" value="'+escapeHtml(e.w)+'">'
+      +'<button class="et-ok" onclick="saveEditW('+min+')">✓ ตกลง</button>'
+      +'<button class="del-t" onclick="cancelEditW('+min+')">ยกเลิก</button></span></td>'
+      +'<td><input id="mt_'+min+'" type="time" step="1" class="et-in" value="'+(e.t?tHMS(e.t):'')+'"></td>'
+      +'<td>—</td><td><button class="del-t" onclick="delW('+min+')">🗑 ลบ</button></td>';
+  }else if(e){
+    const w=waterOf(min),p=pctOf(min);
+    tr.innerHTML=head
+      +'<td class="wat">'+escapeHtml(e.w)+' g <button class="ed-t" onclick="editW('+min+')">✎ แก้</button></td>'
+      +'<td class="t">'+(e.t?hms(e.t):'—')+'</td>'
+      +'<td class="wat">'+(w!=null?w+' g':'—')+'</td><td class="pct">'+(p!=null?p+' %':'—')+'</td>';
+  }else{
+    const prev=document.getElementById('mi_'+min);
+    const keep=prev?prev.value:'';
+    tr.innerHTML=head
+      +'<td><span style="display:flex;gap:6px;align-items:center"><input id="mi_'+min+'" type="number" step="0.1" placeholder="g" value="'+escapeHtml(keep)+'">'
+      +'<button class="et-ok" onclick="saveWeight('+min+')">✓ บันทึก</button></span></td>'
+      +'<td class="t" style="color:var(--muted-soft)">—</td><td>—</td><td>—</td>';
+  }
+}
+function renderTables(){
+  // ส่วนที่ 1
+  const wb=document.getElementById('weighBody');
+  document.getElementById('weighBlock').style.display=state.mStart?'block':'none';
+  if(state.mStart&&wb){
+    const key=String(state.mStart)+'-'+mrEnd();
+    if(!wb.dataset.built||wb.dataset.start!=key){
+      wb.innerHTML=mrSlots().map(min=>'<tr id="mrow_'+min+'"></tr>').join('');
+      wb.dataset.built='1';wb.dataset.start=key;
+      mrSlots().forEach(renderRow);
+    }else{
+      // อัปเดตเฉพาะแถวที่บันทึกแล้ว (ไม่แตะช่องที่กำลังพิมพ์/กำลังแก้)
+      mrSlots().forEach(min=>{if(_editRow!==min&&wEntry(min))renderRow(min);});
+    }
+  } else if(wb){wb.innerHTML='';delete wb.dataset.built;delete wb.dataset.start;}
+  // ส่วนที่ 2
+  const lb=document.getElementById('lookBody');
+  document.getElementById('lookBlock').style.display=state.aStart?'block':'none';
+  if(state.aStart&&lb){
+    if(!lb.dataset.built||lb.dataset.start!=String(state.aStart)){
+      lb.innerHTML=AP_SLOTS.map(min=>'<tr id="arow_'+min+'"><td class="t">'+min+'</td><td class="t">'+hm(state.aStart+min*60000)+'</td>'
+        +'<td><select onchange="setLook('+min+',this.value)">'+LOOKS.map(o=>'<option'+((state.looks[min]||'ละลายปกติ')===o?' selected':'')+'>'+o+'</option>').join('')+'</select></td>'
+        +'<td><input type="text" placeholder="บันทึกเพิ่มเติม…" value="'+escapeHtml(state.lookNotes[min]||'')+'" oninput="setLookNote('+min+',this.value)"></td></tr>').join('');
+      lb.dataset.built='1';lb.dataset.start=String(state.aStart);
+    }
+  } else if(lb){lb.innerHTML='';delete lb.dataset.built;delete lb.dataset.start;}
+}
+function setLook(min,v){state.looks[min]=v;save();renderSummary();toggleEmpty();}
+function setLookNote(min,v){state.lookNotes[min]=v;save();toggleEmpty();}
+
+/* ===== ส่วนที่ 2 ===== */
+function startPart2(){
+  unlockAudio();
+  if(state.aStart){alert('เริ่มไปแล้วค่ะ ('+hms(state.aStart)+') ถ้าต้องการเริ่มใหม่ กด "ยกเลิกการเริ่ม" ก่อน');return;}
+  if(num(state.plateW)==null||num(state.plateTotalW)==null||aIceW()==null){
+    alert('กรอกน้ำหนักจานรอง และ จาน+ไอศกรีม ให้ครบก่อนค่ะ');return;
+  }
+  state.aStart=Date.now();save();updateUI();
+}
+function cancelPart2(){
+  if(!state.aStart)return;
+  if(!confirm('ยกเลิกการเริ่มส่วนที่ 2? (บันทึกการสังเกตจะยังอยู่)'))return;
+  state.aStart=null;save();updateUI();
+}
+
+/* ===== นาฬิกา + เสียงเตือน (อิงนาฬิกาจริง) ===== */
+const _beeped={};   // กันเสียงซ้ำ key = part:slot:sec
+const _asked={};    // กันถามซ้ำ auto-บันทึกถ้วยเปล่า key = นาที
+
+/* ก่อนหยดแรก: ครบ 5 นาทีแล้วยังไม่มีหยด → บันทึกน้ำหนักถ้วยเปล่าอัตโนมัติ (ถามยืนยัน) */
+function autoZero(now){
+  if(!state.mStart||state.drop)return;
+  const c=num(state.cupW);if(c==null)return;
+  if(state.mStop)return;
+  const due=mrSlots().filter(min=>now>=state.mStart+min*60000&&!wEntry(min)&&!_asked[min]);
+  if(!due.length)return;
+  due.forEach(min=>{_asked[min]=1});
+  const ok=confirm('นาทีที่ '+due.join(', ')+': ไอศกรีมยังไม่หยด\n\nบันทึกน้ำหนักเป็นน้ำหนักถ้วยเปล่า ('+c+' g = น้ำที่ละลาย 0 g) ให้อัตโนมัติเลยไหมคะ? (ลงเวลา ณ เวลานัด)\n\nระบบจะบันทึกแบบนี้ไปเรื่อยๆ ทุก 5 นาที จนกว่าจะกดปุ่ม 💧 หยดแรก');
+  if(ok){
+    due.forEach(min=>{
+      state.weights[min]={w:String(c),t:state.mStart+min*60000};  // ยังไม่หยด → เวลาบันทึก = เวลานัด
+      renderRow(min);
+    });
+    save();renderSummary();buildChart();toggleEmpty();
+  }
+}
+function nextSlot(start,slots){
+  if(!start)return null;
+  const now=Date.now();
+  for(const min of slots){const t=start+min*60000;if(now<t)return {min,t};}
+  return null;
+}
+function tickClock(){
+  const now=Date.now();
+  // ส่วนที่ 1
+  const cd1=document.getElementById('cd1');
+  if(state.mStart&&state.mStop){
+    cd1.style.display='block';
+    cd1.className='countdown done';
+    cd1.innerHTML='⏹ หยุดบันทึกแล้ว (ที่ '+fmtDur(state.mStop-state.mStart)+' หลังเริ่ม) — ข้อมูลอยู่ครบ กด "บันทึกต่อ" ด้านล่างตารางได้ถ้าต้องการ';
+    mrSlots().forEach(min=>{const r=document.getElementById('mrow_'+min);if(r)r.classList.remove('due');});
+  }else if(state.mStart){
+    const ns=nextSlot(state.mStart,mrSlots());
+    cd1.style.display='block';
+    if(ns){
+      const rem=(ns.t-now)/1000,sec=Math.ceil(rem);
+      const mm=Math.floor(sec/60),ss=sec%60;
+      cd1.className='countdown'+(sec<=15&&state.drop?' warn':'');
+      cd1.innerHTML='⏳ ชั่งครั้งถัดไป <b>นาทีที่ '+ns.min+'</b> (เวลา '+hm(ns.t)+') ในอีก<span class="big">'+mm+':'+String(ss).padStart(2,'0')+'</span>'
+        +(state.drop?'ยกตะแกรงขึ้น แล้วชั่งถ้วย+น้ำ':'ยังไม่มีหยดแรก — ระบบจะบันทึกถ้วยเปล่าให้อัตโนมัติ (เสียงเตือนเริ่มหลังกด 💧 หยดแรก)');
+      // เสียงเตือนทำงานหลังกดปุ่มหยดแรกแล้วเท่านั้น: 15, 10, 5-4-3-2-1
+      if(state.drop&&sec<=15&&sec>=1&&(sec===15||sec===10||sec<=5)){
+        const k='1:'+ns.min+':'+sec;
+        if(!_beeped[k]){_beeped[k]=1;tickBeep();}
+      }
+      // ครบเวลา (ข้ามเป็น slot ใหม่) → beep 3 ที (เฉพาะหลังมีหยดแรกแล้ว)
+      if(state.drop)mrSlots().forEach(min=>{const t=state.mStart+min*60000;const k='1:'+min+':0';
+        if(now>=t&&now-t<3000&&!_beeped[k]){_beeped[k]=1;beep(3);}});
+    }else{
+      cd1.className='countdown done';
+      cd1.innerHTML='✓ ครบ '+(mrEnd()/60)+' ชั่วโมงแล้ว — กรอกน้ำหนักช่องสุดท้ายให้ครบ แล้วดูสรุปผล/กราฟ หรือกด "เพิ่มการบันทึกอีก 1 ชั่วโมง" ท้ายตารางได้ค่ะ';
+    }
+    // ก่อนหยดแรก: บันทึกถ้วยเปล่าอัตโนมัติเมื่อครบเวลา
+    autoZero(now);
+    // ไฮไลต์แถวที่ถึงเวลาแล้วแต่ยังไม่กดบันทึก
+    mrSlots().forEach(min=>{const r=document.getElementById('mrow_'+min);if(!r)return;
+      r.classList.toggle('due',now>=state.mStart+min*60000&&!wEntry(min));});
+  }else{cd1.style.display='none';}
+  // ส่วนที่ 2
+  const cd2=document.getElementById('cd2');
+  if(state.aStart){
+    const ns=nextSlot(state.aStart,AP_SLOTS);
+    cd2.style.display='block';
+    if(ns){
+      const rem=(ns.t-now)/1000,sec=Math.ceil(rem);
+      const mm=Math.floor(sec/60),ss=sec%60;
+      cd2.className='countdown p2';
+      cd2.innerHTML='👁 รอบดูเนื้อถัดไป <b>นาทีที่ '+ns.min+'</b> (เวลา '+hm(ns.t)+') ในอีก<span class="big">'+mm+':'+String(ss).padStart(2,'0')+'</span>';
+      AP_SLOTS.forEach(min=>{const t=state.aStart+min*60000;const k='2:'+min+':0';
+        if(now>=t&&now-t<3000&&!_beeped[k]){_beeped[k]=1;beep(3);}});
+    }else{
+      cd2.className='countdown done';
+      cd2.innerHTML='✓ ครบ 1 ชั่วโมงแล้ว — บันทึกการสังเกตรอบสุดท้ายให้ครบค่ะ';
+    }
+    // ไฮไลต์รอบปัจจุบัน (slot ล่าสุดที่ถึงเวลา)
+    let cur=null;AP_SLOTS.forEach(min=>{if(now>=state.aStart+min*60000)cur=min;});
+    AP_SLOTS.forEach(min=>{const r=document.getElementById('arow_'+min);if(r)r.classList.toggle('cur',min===cur);});
+  }else{cd2.style.display='none';}
+}
+
+/* ===== สรุป + กราฟ ===== */
+function renderSummary(){
+  const box=document.getElementById('summaryBox');
+  const items=[];
+  if(state.mStart&&state.drop){
+    items.push('<b>เวลาหยดแรก = '+fmtDur(state.drop-state.mStart)+'</b> <span style="color:var(--muted);font-size:12.5px">(เวลา '+hms(state.drop)+') · ยิ่งหยดเร็ว โครงสร้างภายในยิ่งอ่อน</span>');
+  }
+  const i=iceW();
+  if(i)items.push('น้ำหนักไอศกรีมทดสอบส่วนที่ 1 = <b>'+i+' g</b>'+(aIceW()?' · ส่วนที่ 2 = <b>'+aIceW()+' g</b>':''));
+  (state.mExt?[30,60,90,120]:[30,60]).forEach(min=>{const p=pctOf(min);if(p!=null)items.push('% ละลายที่ '+min+' นาที = <b>'+p+' %</b>');});
+  if(state.mStart&&state.mStop)items.push('หยุดบันทึกที่ <b>'+fmtDur(state.mStop-state.mStart)+'</b> หลังเริ่ม');
+  const abn=[];
+  AP_SLOTS.forEach(min=>{
+    const l=state.looks[min]||'',n=(state.lookNotes[min]||'').trim();
+    if(l&&l!=='ละลายปกติ')abn.push('นาทีที่ '+min+': '+escapeHtml(l)+(n?' — '+escapeHtml(n):''));
+    else if(n)abn.push('นาทีที่ '+min+': '+escapeHtml(n));
+  });
+  if(state.aStart){
+    items.push(abn.length?('<span style="color:var(--rose)"><b>ความผิดปกติที่พบ:</b><br>'+abn.join('<br>')+'</span>'):'ลักษณะเนื้อที่ละลาย: <b>ไม่พบความผิดปกติ</b>');
+  }
+  document.getElementById('summaryBlock').classList.toggle('empty-print',items.length===0);
+  box.innerHTML=items.length?items.map(x=>'<div>'+x+'</div>').join(''):'<span style="color:var(--muted-soft);font-style:italic;font-family:Fraunces,serif">เริ่มทดสอบและบันทึกข้อมูล สรุปผลจะแสดงที่นี่ค่ะ</span>';
+}
+function buildChart(){
+  const wrap=document.getElementById('chartWrap');
+  const pts=[{m:0,p:0}];
+  mrSlots().forEach(min=>{
+    const p=pctOf(min);if(p==null)return;
+    const e=wEntry(min);
+    // ใช้เวลาชั่งจริงในการพล็อต (ถ้ามี) — เวลานัดใช้เฉพาะเตือน
+    const m=(e&&e.t&&state.mStart)?Math.max(0,(e.t-state.mStart)/60000):min;
+    pts.push({m:Math.round(m*10)/10,p:p});
+  });
+  pts.sort((a,b)=>a.m-b.m);
+  document.getElementById('chartBlock').classList.toggle('empty-print',pts.length<2);
+  if(pts.length<2){wrap.innerHTML='<div class="chart-empty">กราฟจะแสดงเมื่อบันทึกน้ำหนัก ≥ 1 จุด</div>';return;}
+  const W=620,H=250,mL=44,mR=16,mT=14,mB=34,pw=W-mL-mR,ph=H-mT-mB;
+  const maxM=Math.max(...pts.map(p=>p.m));
+  const xEnd=Math.max(mrEnd(),Math.ceil(maxM/10)*10),xStep=xEnd>60?20:10;
+  let pMax=Math.max(10,...pts.map(p=>p.p));pMax=Math.ceil(pMax/10)*10;
+  const X=m=>mL+m/xEnd*pw,Y=p=>mT+ph-p/pMax*ph;
+  let g='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="Sarabun,sans-serif">';
+  for(let p=0;p<=pMax;p+=Math.max(10,Math.round(pMax/5/10)*10)){
+    g+='<line x1="'+mL+'" y1="'+Y(p).toFixed(1)+'" x2="'+(W-mR)+'" y2="'+Y(p).toFixed(1)+'" stroke="#EFE5D2"/>';
+    g+='<text x="'+(mL-6)+'" y="'+(Y(p)+3).toFixed(1)+'" font-size="10" fill="#8C7A66" text-anchor="end">'+p+'</text>';
+  }
+  for(let m=0;m<=xEnd;m+=xStep){
+    g+='<text x="'+X(m).toFixed(1)+'" y="'+(H-9)+'" font-size="9.5" fill="#8C7A66" text-anchor="middle">'+m+'</text>';
+    g+='<line x1="'+X(m).toFixed(1)+'" y1="'+(mT+ph)+'" x2="'+X(m).toFixed(1)+'" y2="'+(mT+ph+4)+'" stroke="#BFB09B"/>';
+  }
+  // เส้นหยดแรก
+  if(state.mStart&&state.drop){
+    const dm=Math.min(mrEnd(),Math.max(0,(state.drop-state.mStart)/60000));
+    g+='<line x1="'+X(dm).toFixed(1)+'" y1="'+mT+'" x2="'+X(dm).toFixed(1)+'" y2="'+(mT+ph)+'" stroke="#A85B47" stroke-width="1.2" stroke-dasharray="4 3"/>';
+    g+='<text x="'+X(dm).toFixed(1)+'" y="'+(mT+10)+'" font-size="8.5" fill="#A85B47" font-weight="600" text-anchor="'+(dm<8?'start':'middle')+'">💧 หยดแรก</text>';
+  }
+  const d=pts.map((p,idx)=>(idx?'L':'M')+X(p.m).toFixed(1)+' '+Y(p.p).toFixed(1)).join(' ');
+  g+='<path d="'+d+'" fill="none" stroke="#6F804D" stroke-width="2"/>';
+  pts.forEach(p=>{g+='<circle cx="'+X(p.m).toFixed(1)+'" cy="'+Y(p.p).toFixed(1)+'" r="3" fill="#6F804D"/>';});
+  g+='<text x="'+mL+'" y="11" font-size="9.5" fill="#8C7A66">% ละลาย</text>';
+  g+='<text x="'+(W-mR)+'" y="'+(H-9)+'" font-size="9" fill="#8C7A66" text-anchor="end">นาที</text></svg>';
+  wrap.innerHTML=g;
+}
+function toggleEmpty(){
+  document.getElementById('noteBlock').classList.toggle('empty-print',!(state.note||'').trim());
+  const anyW=mrSlots().some(m=>!!wEntry(m));
+  document.getElementById('weighBlock').classList.toggle('empty-print',!anyW);
+  const anyL=AP_SLOTS.some(m=>(state.looks[m]&&state.looks[m]!=='ละลายปกติ')||(state.lookNotes[m]||'').trim())||state.aStart;
+  document.getElementById('lookBlock').classList.toggle('empty-print',!anyL);
+}
+
+function syncInputs(){
+  ['recipe','lot','date','recorder','roomTemp','humidity'].forEach(k=>{const e=document.getElementById('f_'+k);if(e)e.value=state[k]||''});
+  document.getElementById('m_cupW').value=state.cupW||'';
+  document.getElementById('m_cupGridW').value=state.cupGridW||'';
+  document.getElementById('m_iceTemp').value=state.iceTemp||'';
+  document.getElementById('m_totalW').value=state.totalW||'';
+  document.getElementById('a_plateW').value=state.plateW||'';
+  document.getElementById('a_totalW').value=state.plateTotalW||'';
+  const nt=document.getElementById('f_note');if(nt){nt.value=state.note||'';autoGrow(nt)}
+}
+function updateUI(){
+  updateDerived();
+  // ส่วนที่ 1 สถานะ
+  const lg1=document.getElementById('lg_mStart');
+  if(state.mStart){lg1.className='logged';lg1.textContent='✓ เริ่มส่วนที่ 1 เวลา '+hms(state.mStart);}
+  else{lg1.className='logged empty';lg1.textContent='ยังไม่เริ่ม';}
+  document.getElementById('btnStart1').style.display=state.mStart?'none':'block';
+  document.getElementById('undoStart1').style.display=state.mStart?'block':'none';
+  // ปุ่มท้ายตาราง: ต่อเวลา / หยุดบันทึก
+  const be=document.getElementById('btnExtend'),bs=document.getElementById('btnStopRec'),lgs=document.getElementById('lg_mStop');
+  if(be)be.style.display=state.mExt?'none':'block';
+  if(bs)bs.style.display=state.mStop?'none':'block';
+  if(lgs){
+    if(state.mStop){lgs.style.display='block';lgs.className='logged';lgs.innerHTML='⏹ หยุดบันทึกแล้ว เวลา '+hms(state.mStop)+' ('+fmtDur(state.mStop-state.mStart)+' หลังเริ่ม) <button class="bbtn" style="font-size:11px;padding:3px 10px" onclick="resumeRecording()">↩ บันทึกต่อ</button>';}
+    else{lgs.style.display='none';}
+  }
+  document.getElementById('btnDrop').style.display=(state.mStart&&!state.drop)?'block':'none';
+  const lgd=document.getElementById('lg_drop');
+  lgd.style.display=state.mStart?'block':'none';
+  if(state.drop){lgd.className='logged';lgd.innerHTML='💧 หยดแรก: <b>'+fmtDur(state.drop-state.mStart)+'</b> หลังเริ่ม (เวลา '+hms(state.drop)+') <button class="bbtn del" style="font-size:11px;padding:3px 10px" onclick="clearDrop()">ลบ</button>';}
+  else{lgd.className='logged empty';lgd.textContent='ยังไม่มีหยดแรก — กดปุ่มทันทีที่เห็นน้ำหยดลงถ้วย';}
+  // ส่วนที่ 2 สถานะ
+  const lg2=document.getElementById('lg_aStart');
+  if(state.aStart){lg2.className='logged';lg2.textContent='✓ เริ่มส่วนที่ 2 เวลา '+hms(state.aStart);}
+  else{lg2.className='logged empty';lg2.textContent='ยังไม่เริ่ม';}
+  document.getElementById('btnStart2').style.display=state.aStart?'none':'block';
+  document.getElementById('undoStart2').style.display=state.aStart?'block':'none';
+  renderTables();renderSummary();buildChart();toggleEmpty();tickClock();
+  save();
+}
+
+(function(){
+  if(!state.date)state.date=thaiDate(Date.now());
+  refreshBatchSel();syncInputs();updateUI();
+  setInterval(tickClock,250);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)tickClock();});
+  window.addEventListener('focus',()=>tickClock());
+})();
+</script>
+<script>
+/* โหมดพิมพ์ + แชร์ PDF (แบ่งหน้า A4 ตัดตรงรอยต่อกล่อง — pattern เดียวกับ log tools) */
+function enterPrintMode(){document.body.classList.add('cap');document.body.classList.add('printmode');window.scrollTo(0,0);}
+function exitPrintMode(){document.body.classList.remove('cap');document.body.classList.remove('printmode');}
+function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
+async function sharePDFink(btn){
+  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const hides=[...document.querySelectorAll('#pmbar,.actions,.topbar')], prevD=hides.map(el=>el.style.display);
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  try{
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    body.classList.add('cap');body.classList.add('printmode');
+    hides.forEach(el=>el.style.display='none');
+    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
+    const target=document.querySelector('.sheet');
+    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
+    let bs=[0];
+    target.querySelectorAll('.rep-head, .block').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
+    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
+    undo();
+    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
+    let pages=[], start=0, i=1;
+    while(i<bs.length){
+      if(bs[i]-start<=pageMaxPx){ i++; continue; }
+      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
+      pages.push([start,cut]); start=cut;
+    }
+    if(start<canvas.height)pages.push([start,canvas.height]);
+    for(let p=0;p<pages.length;p++){
+      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
+      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
+      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
+      if(p>0)pdf.addPage();
+      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
+    }
+    let name='Meltdown-Test.pdf';
+    if(typeof state!=='undefined'){
+      const parts=[state.recipe,state.lot].map(v=>String(v||'').trim().replace(/[\\\/:*?"<>|#%]+/g,'').replace(/\s+/g,'-')).filter(Boolean);
+      if(parts.length)name='Melt-'+parts.join('-')+'.pdf';
+    }
+    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'รายงาน Meltdown Test'});}
+    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
+  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
+}
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>

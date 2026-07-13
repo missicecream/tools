@@ -1,0 +1,662 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Churning Calculator · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4ECE0;
+    --card: #FBF6EC;
+    --ink: #2B1F15;
+    --muted: #8C7A66;
+    --muted-soft: #BFB09B;
+    --line: #E5D9C4;
+    --line-soft: #EFE5D2;
+    --accent: #6B8E4E;
+    --accent-deep: #4F6B3A;
+    --rose-deep: #A85B47;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { -webkit-font-smoothing: antialiased; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 44px 20px 48px;
+    background-image:
+      radial-gradient(circle at 15% 5%, rgba(220, 229, 200, 0.50) 0%, transparent 40%),
+      radial-gradient(circle at 88% 95%, rgba(201, 120, 98, 0.10) 0%, transparent 40%);
+  }
+
+  .container { max-width: 1040px; margin: 0 auto; }
+
+  /* Header */
+  header { text-align: center; margin-bottom: 32px; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent-deep);
+    font-weight: 400;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  .formula {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding: 9px 20px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 13px;
+  }
+
+  .formula .lbl {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .formula .expr {
+    font-family: 'Fraunces', serif;
+    color: var(--accent-deep);
+    font-weight: 500;
+  }
+
+  /* Table */
+  .table-wrap {
+    width: 80%;
+    margin: 0 auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 6px;
+    overflow-x: auto;
+    box-shadow: 0 4px 24px -16px rgba(43, 31, 21, 0.15);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 380px;
+  }
+
+  th {
+    text-align: center;
+    padding: 14px 10px 12px;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+
+  th.left { text-align: left; padding-left: 14px; }
+  th.batch-col { text-align: left; }
+
+  td {
+    padding: 7px 6px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(255, 255, 255, 0.4); }
+
+  td.num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 20px;
+    width: 44px;
+    text-align: center;
+  }
+
+  /* Inputs */
+  td input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  td input:focus {
+    border-color: var(--accent);
+    background: #FFFFFF;
+  }
+
+  td input::placeholder {
+    color: var(--muted-soft);
+    font-style: italic;
+  }
+
+  /* Number inputs */
+  td.cell-num input {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: 100px;
+    -moz-appearance: textfield;
+  }
+
+  td.cell-num input::-webkit-outer-spin-button,
+  td.cell-num input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Time inputs */
+  td.cell-time input {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: 110px;
+    font-variant-numeric: tabular-nums;
+    padding: 9px 8px;
+  }
+
+  td.cell-time input::-webkit-calendar-picker-indicator {
+    opacity: 0.4;
+    cursor: pointer;
+  }
+
+  td.cell-time input::-webkit-calendar-picker-indicator:hover {
+    opacity: 0.75;
+  }
+
+  /* Section title above each table */
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    margin-top: 32px;
+  }
+
+  .section-title:first-of-type { margin-top: 0; }
+
+  .section-title .th {
+    font-family: 'Sarabun', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .section-title .en {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  /* Batch name */
+  td.cell-batch input {
+    text-align: left;
+    min-width: 130px;
+  }
+
+  /* Time inputs */
+  td.cell-time input {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    padding: 9px 8px;
+  }
+
+  td.cell-time input::-webkit-calendar-picker-indicator {
+    opacity: 0.4;
+    cursor: pointer;
+  }
+
+  td.cell-time input::-webkit-calendar-picker-indicator:hover {
+    opacity: 0.75;
+  }
+
+  /* Result cells */
+  td.result {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--muted-soft);
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  td.result .suffix {
+    font-size: 12px;
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 400;
+    margin-left: 3px;
+    opacity: 0.75;
+  }
+
+  td.result.overrun.filled { color: var(--accent-deep); }
+  td.result.duration.filled { color: var(--rose-deep); }
+  td.result.warn { color: var(--rose-deep); }
+
+  /* Actions */
+  .actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+
+  .btn {
+    padding: 11px 26px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .btn:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  /* Warning row */
+  .warn-msg {
+    text-align: center;
+    margin-top: 12px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--rose-deep);
+    font-size: 13px;
+    min-height: 18px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.8;
+  }
+
+  footer .note {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+
+  footer .brand {
+    margin-top: 6px;
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted-soft);
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 28px;
+    padding: 8px 18px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: all 0.22s ease;
+  }
+
+  .back-link:hover {
+    color: var(--ink);
+    border-color: var(--accent);
+    transform: translateX(-2px);
+  }
+
+  .back-link .arrow {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    transition: transform 0.22s ease;
+  }
+
+  .back-link:hover .arrow { transform: translateX(-3px); }
+
+  body.cap .back-link, body.cap .actions { display:none !important; }
+  body.cap { background:#fff !important; background-image:none !important; }
+  body.cap .table-wrap { background:#fff !important; box-shadow:none !important; }
+  body.cap .formula { background:#fff !important; }
+  body.cap td.result.overrun.filled, body.cap td.result.duration.filled, body.cap td.result.warn { color:#000 !important; }
+
+  /* โหมดพร้อมพิมพ์ (preview บนจอ) — ใช้สไตล์ flatten ของ .cap ร่วมกัน */
+  #pmbar{ display:none; }
+  body.printmode #pmbar{ display:flex; position:sticky; top:0; z-index:50; gap:10px; align-items:center; flex-wrap:wrap;
+    background:#fff; border:1px solid #ccc; border-radius:10px; padding:10px 14px; margin:0 auto 14px; max-width:760px; font-size:13px; color:#333; }
+  #pmbar .msg{ flex:1; min-width:160px; }
+  #pmbar .btn{ margin:0; }
+  @media print{
+    @page{ size:A4 portrait; margin:9mm; }
+    body{ background:#fff !important; background-image:none !important; -webkit-print-color-adjust:economy; print-color-adjust:economy; }
+    .back-link, .actions, #pmbar{ display:none !important; }
+    .table-wrap{ background:#fff !important; box-shadow:none !important; }
+    .formula{ background:#fff !important; }
+    td.result.overrun.filled, td.result.duration.filled, td.result.warn{ color:#000 !important; }
+    tr, .table-wrap, .formula{ break-inside:avoid; page-break-inside:avoid; }
+  }
+
+  @media (max-width: 768px) {
+    .table-wrap { width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 28px 12px 40px; }
+    .table-wrap { padding: 4px; }
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+  <div class="container">
+
+    <a class="back-link" href="index.html"><span class="arrow">←</span> กลับหน้าหลัก</a>
+
+    <header>
+      <div class="eyebrow">Miss Icecream · Online Tools</div>
+      <h1>Churning <em>Calculator</em></h1>
+      <p class="subtitle">คำนวณ %Overrun และระยะเวลาในการปั่นไอศกรีม 4 ชุดในตารางเดียว ใช้ภาชนะใบเดียวกันชั่งทั้งก่อนและหลังปั่นนะคะ</p>
+      <div class="formula">
+        <span class="lbl">%Overrun =</span>
+        <span class="expr">((W<sub>ก่อน</sub> − W<sub>หลัง</sub>) ÷ W<sub>หลัง</sub>) × 100</span>
+      </div>
+    </header>
+
+    <div class="section-title">
+      <span class="th">โอเวอร์รัน</span>
+      <span class="en">(Overrun)</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>ก่อนปั่น (g)</th>
+            <th>หลังปั่น (g)</th>
+            <th>Overrun</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="warn-msg" id="warnMsg"></div>
+
+    <div class="section-title">
+      <span class="th">ระยะเวลาปั่น</span>
+      <span class="en">(Churning Time)</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>เริ่มปั่น</th>
+            <th>ปั่นเสร็จ</th>
+            <th>ระยะเวลา</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyTime"></tbody>
+      </table>
+    </div>
+
+    <div id="pmbar">
+      <span class="msg">✅ หน้านี้พร้อมพิมพ์แล้ว — พื้นขาว ไม่มีสี ประหยัดหมึก · กดปุ่ม <b>พิมพ์</b> หรือ <b>Ctrl/⌘ + P</b> แล้วเบราว์เซอร์จะจัดหน้าให้เอง (ไม่ตัดคำ)</span>
+      <button class="btn" onclick="window.print()">🖨 พิมพ์ / บันทึก PDF</button>
+      <button class="btn" onclick="exitPrintMode()">✕ ออกจากโหมด</button>
+    </div>
+
+    <div class="actions">
+      <button class="btn" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
+      <button class="btn" onclick="enterPrintMode()">🖨 พิมพ์เอกสาร</button>
+      <button class="btn" onclick="resetAll()">รีเซ็ตทั้งหมด</button>
+    </div>
+
+    <footer>
+      <p class="note">หมายเหตุ: ต้องใช้ภาชนะใบเดียวกัน ปริมาตรเท่ากัน ในการชั่งทั้งก่อนและหลังปั่น</p>
+      <p class="brand">Miss Icecream</p>
+    </footer>
+
+  </div>
+
+<script>
+  const tbody = document.getElementById('tbody');
+  const warnMsg = document.getElementById('warnMsg');
+
+  function createRow(i) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="num">${i}</td>
+      <td class="cell-num"><input type="number" class="before" placeholder="0" step="0.1" min="0" inputmode="decimal" /></td>
+      <td class="cell-num"><input type="number" class="after" placeholder="0" step="0.1" min="0" inputmode="decimal" /></td>
+      <td class="result overrun">—</td>
+    `;
+
+    const before = tr.querySelector('.before');
+    const after  = tr.querySelector('.after');
+    const overrunCell = tr.querySelector('.overrun');
+
+    function update() {
+      const w1 = parseFloat(before.value);
+      const w2 = parseFloat(after.value);
+
+      if (!isNaN(w1) && !isNaN(w2) && w1 > 0 && w2 > 0) {
+        const ov = ((w1 - w2) / w2) * 100;
+        overrunCell.innerHTML = `${ov.toFixed(1)}<span class="suffix">%</span>`;
+        overrunCell.className = (w2 > w1) ? 'result overrun warn' : 'result overrun filled';
+      } else {
+        overrunCell.innerHTML = '—';
+        overrunCell.className = 'result overrun';
+      }
+      updateGlobalWarn();
+    }
+
+    [before, after].forEach(el => {
+      el.addEventListener('input', update);
+      el.addEventListener('change', update);
+    });
+
+    return tr;
+  }
+
+  function updateGlobalWarn() {
+    const anyWarn = document.querySelector('.result.warn');
+    warnMsg.textContent = anyWarn
+      ? 'มีแถวที่น้ำหนักหลังปั่นมากกว่าก่อนปั่น — กรุณาตรวจสอบค่าอีกครั้งนะคะ'
+      : '';
+  }
+
+  for (let i = 1; i <= 4; i++) {
+    tbody.appendChild(createRow(i));
+  }
+
+  // ===== Duration table =====
+  const tbodyTime = document.getElementById('tbodyTime');
+
+  function createTimeRow(i) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="num">${i}</td>
+      <td class="cell-time"><input type="time" class="time-start" /></td>
+      <td class="cell-time"><input type="time" class="time-end" /></td>
+      <td class="result duration">—</td>
+    `;
+
+    const timeStart = tr.querySelector('.time-start');
+    const timeEnd   = tr.querySelector('.time-end');
+    const durationCell = tr.querySelector('.duration');
+
+    function update() {
+      const ts = timeStart.value;
+      const te = timeEnd.value;
+
+      if (ts && te && ts.includes(':') && te.includes(':')) {
+        const [sh, sm] = ts.split(':').map(Number);
+        const [eh, em] = te.split(':').map(Number);
+
+        if (!isNaN(sh) && !isNaN(sm) && !isNaN(eh) && !isNaN(em)) {
+          let mins = (eh * 60 + em) - (sh * 60 + sm);
+          if (mins < 0) mins += 24 * 60; // ปั่นข้ามเที่ยงคืน
+          durationCell.innerHTML = `${mins}<span class="suffix">นาที</span>`;
+          durationCell.className = 'result duration filled';
+          return;
+        }
+      }
+      durationCell.innerHTML = '—';
+      durationCell.className = 'result duration';
+    }
+
+    [timeStart, timeEnd].forEach(el => {
+      el.addEventListener('input', update);
+      el.addEventListener('change', update);
+    });
+
+    return tr;
+  }
+
+  for (let i = 1; i <= 4; i++) {
+    tbodyTime.appendChild(createTimeRow(i));
+  }
+
+  function resetAll() {
+    document.querySelectorAll('tbody input').forEach(input => input.value = '');
+    document.querySelectorAll('td.result.overrun').forEach(cell => {
+      cell.innerHTML = '—';
+      cell.className = 'result overrun';
+    });
+    document.querySelectorAll('td.result.duration').forEach(cell => {
+      cell.innerHTML = '—';
+      cell.className = 'result duration';
+    });
+    warnMsg.textContent = '';
+  }
+</script>
+<script>
+/* โหมดพร้อมพิมพ์ — แสดงหน้าพื้นขาว ไม่มีสี (ใช้สไตล์ .cap) แล้วให้ผู้ใช้สั่งพิมพ์เอง
+   ใช้การพิมพ์ของเบราว์เซอร์: ข้อความจริง ไม่ตัดคำ ไม่ซ้ำ */
+function enterPrintMode(){if(typeof refreshPrintHead==='function')refreshPrintHead();document.body.classList.add('cap');document.body.classList.add('printmode');window.scrollTo(0,0);}
+function exitPrintMode(){document.body.classList.remove('cap');document.body.classList.remove('printmode');}
+
+/* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า */
+function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
+async function sharePDFink(btn){
+  /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
+  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const hides=[...document.querySelectorAll('#pmbar,.actions,.back-link')], prevD=hides.map(el=>el.style.display);
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  try{
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    if(typeof refreshPrintHead==='function')refreshPrintHead();
+    body.classList.add('cap');body.classList.add('printmode');
+    hides.forEach(el=>el.style.display='none');
+    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
+    const target=document.querySelector('.container');
+    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
+    let bs=[0];
+    target.querySelectorAll('header, .table-wrap, .formula').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
+    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
+    undo();
+    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
+    let pages=[], start=0, i=1;
+    while(i<bs.length){
+      if(bs[i]-start<=pageMaxPx){ i++; continue; }
+      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
+      pages.push([start,cut]); start=cut;
+    }
+    if(start<canvas.height)pages.push([start,canvas.height]);
+    for(let p=0;p<pages.length;p++){
+      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
+      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
+      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
+      if(p>0)pdf.addPage();
+      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
+    }
+    let name='Churning-Report.pdf';
+    
+    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'รายงาน Churning (Overrun)'});}
+    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
+  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
+}
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>

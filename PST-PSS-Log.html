@@ -1,0 +1,623 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PST & PSS Log · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--muted-soft:#BFB09B;--line:#E5D9C4;--line-soft:#EFE5D2;--accent:#6B8E4E;--accent-deep:#4F6B3A;--blue:#3E73A6;--rose:#A85B47}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;padding:34px 18px 50px;
+    background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.45)0%,transparent 38%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08)0%,transparent 40%);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{max-width:780px;margin:0 auto}
+  .back-link{display:inline-flex;gap:7px;margin-bottom:18px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500}
+  .back-link:hover{color:var(--ink);border-color:var(--accent)}
+  header{text-align:center;margin-bottom:20px}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:32px;line-height:1.1}
+  h1 em{font-style:italic;color:var(--accent-deep)}
+  .sub{color:var(--muted);font-size:13px;margin-top:6px}
+  .rep-head{display:none}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 22px -18px rgba(43,31,21,.25)}
+  .block-t{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--accent-deep);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .block-t.pst{color:#C77F3A}
+  .block-t.pss{color:var(--blue)}
+  .block-t .tag{display:inline-flex;align-items:center;justify-content:center;padding:3px 11px;border-radius:100px;color:#fff;font-family:'Fraunces',serif;font-size:13px}
+  .block-t.pst .tag{background:#C77F3A}
+  .block-t.pss .tag{background:var(--blue)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+  .fld{display:flex;flex-direction:column;gap:4px}
+  .fld label{font-size:12px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%}
+  .fld input:focus,.fld select:focus{border-color:var(--accent);background:#fff}
+  .fld textarea{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%;resize:none;line-height:1.65;min-height:64px;overflow:hidden}
+  .fld textarea:focus{border-color:var(--accent);background:#fff}
+  .et-in{font-family:'Fraunces',serif;font-size:14px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .et-in:focus{border-color:var(--accent);outline:none}
+
+  .evrow{display:grid;grid-template-columns:34px 1fr;gap:0 12px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+  .evrow:last-child{border-bottom:none}
+  .stepcol{display:flex;justify-content:center;padding-top:2px}
+  .stepnum{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);background:#fff;color:var(--muted-soft);font-family:'Fraunces',serif;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s,color .18s,box-shadow .18s}
+  .evrow.logged .stepnum{background:var(--accent);border-color:var(--accent);color:#fff}
+  #pstEvents .evrow.logged .stepnum{background:#C77F3A;border-color:#C77F3A}
+  #pssEvents .evrow.logged .stepnum{background:var(--blue);border-color:var(--blue)}
+  .evrow.next .stepnum{border-color:var(--accent-deep);color:var(--accent-deep);box-shadow:0 0 0 4px rgba(107,142,78,.14)}
+  #pstEvents .evrow.next .stepnum{border-color:#C77F3A;color:#C77F3A;box-shadow:0 0 0 4px rgba(199,127,58,.16)}
+  #pssEvents .evrow.next .stepnum{border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 4px rgba(62,115,166,.14)}
+  .evlbl{font-size:13.5px;font-weight:600;margin-bottom:7px;padding-top:5px}
+  .evrow.logged .evlbl{margin-bottom:2px;padding-top:0}
+  .evlbl .opt{font-weight:400;color:var(--muted-soft);font-size:12px}
+  .evin{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .evrow.logged .evin{display:none}
+  .evin input{width:96px;font-size:15px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;font-family:'Fraunces',serif;text-align:center;background:#fff}
+  .evin input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(107,142,78,.12)}
+  .qb{padding:9px 14px;border-radius:10px;border:1px solid var(--accent);background:#EFF3E7;color:var(--accent-deep);font-weight:700;font-size:14px;cursor:pointer;font-family:'Fraunces',serif}
+  .qb:hover{background:var(--accent);color:#fff}
+  .sub-b{padding:9px 16px;border-radius:10px;border:none;background:var(--ink);color:#fff;font-weight:600;cursor:pointer;font-size:13px;font-family:'Sarabun',sans-serif}
+  #pstEvents .sub-b{background:#C77F3A}
+  #pstEvents .sub-b:hover{background:#B06F2F}
+  #pssEvents .sub-b{background:var(--blue)}
+  #pssEvents .sub-b:hover{background:#2D5474}
+  .clr{border:none;background:none;color:var(--rose);cursor:pointer;font-size:12px;font-family:'Sarabun',sans-serif}
+  .evres{margin-top:4px;font-size:13px}
+  .evres.empty{display:none}
+  .evres .val{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--ink)}
+  .evres .val small{font-size:13px;color:var(--muted);font-weight:400}
+  .evres .val.bad{color:var(--rose)}
+  .evres .tim{color:var(--muted);font-size:21px;font-weight:600;margin-left:12px;font-family:'Fraunces',serif}
+  .evres .tim small{font-size:13px;font-weight:400}
+  .evres .acts{display:inline-flex;gap:10px;margin-left:10px}
+  .evres .ok{font-family:'Fraunces',serif;color:var(--accent-deep)}
+  .evres .sch{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:100px;background:#EAF1F7;color:var(--blue);font-size:12px}
+  .evres .warn{display:block;margin-top:4px;color:var(--rose);font-size:12.5px}
+  .prog{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none}
+  .prog .pbar{width:70px;height:6px;border-radius:6px;background:var(--line-soft);overflow:hidden}
+  .prog .pbar i{display:block;height:100%;width:0%;background:var(--accent);border-radius:6px;transition:width .25s}
+  .block-t.pst .prog .pbar i{background:#C77F3A}
+  .block-t.pss .prog .pbar i{background:var(--blue)}
+
+  .chartwrap{margin-top:6px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
+  .chartwrap svg{width:100%;height:auto;display:block}
+  .chart-empty{text-align:center;color:var(--muted-soft);font-style:italic;font-family:'Fraunces',serif;padding:26px 0}
+
+  .actions{display:flex;justify-content:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+  .btn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:14px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:11px 22px;background:var(--card);color:var(--ink)}
+  .btn.print{background:var(--accent-deep);color:#fff;border:none}
+  .note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:14px;text-align:center}
+  footer{text-align:center;margin-top:18px;color:var(--muted-soft);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase}
+
+  .batchbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:16px}
+  .batchbar label{font-size:12px;font-weight:600;color:var(--muted)}
+  .batchbar select{flex:1;min-width:140px;font-family:'Sarabun',sans-serif;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .bbtn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:13px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:8px 14px;background:#fff;color:var(--ink)}
+  .bbtn.new{background:var(--accent-deep);color:#fff;border:none}
+  .bbtn.del{color:var(--rose)}
+
+  body.cap .back-link,body.cap .actions,body.cap .note,body.cap .evin,body.cap .batchbar,body.cap .clr{display:none!important}
+  body.cap .rep-head{display:block!important}
+  body.cap .evrow.empty-print,body.cap .block.empty-print{display:none!important}
+  body.cap .stepcol,body.cap .prog{display:none!important}
+  body.cap .evrow{display:block}
+  body.cap .evbody{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  body.cap .evres{margin-top:0}
+  body.cap .evres .val{font-size:14px;color:#000}
+  body.cap .evres .val small,body.cap .evres .tim{color:#000}
+  body.cap .evres .tim{font-size:14px}
+  body.cap .evres .sch{background:none;padding:0;color:#000}
+  body.cap{background:#fff!important;background-image:none!important}
+  body.cap .block{background:#fff!important;border:1px solid #ccc!important;box-shadow:none!important}
+  body.cap .block-t,body.cap .block-t.pst,body.cap .block-t.pss{color:#000!important}
+  body.cap .block-t .tag{background:none!important;color:#000!important;border:1px solid #888!important}
+  body.cap .chartwrap{border:1px solid #ccc!important}
+  body.cap .chartwrap svg rect{display:none!important}
+  body.cap .evres .ok,body.cap .evres .sch,body.cap .evres .warn{color:#000!important}
+  body.cap #summaryBox b{color:#000!important}
+
+  /* โหมดพร้อมพิมพ์ (preview บนจอ) — พื้นขาว ไม่มีสี ประหยัดหมึก */
+  #pmbar{display:none}
+  body.printmode{background:#fff!important;background-image:none!important}
+  body.printmode .back-link,body.printmode .note,body.printmode .batchbar,body.printmode .clr,body.printmode header,body.printmode .actions{display:none!important}
+  body.printmode .rep-head{display:block;text-align:center;margin-bottom:8px}
+  body.printmode .block{box-shadow:none!important;border:1px solid #ccc!important;background:#fff!important}
+  body.printmode .block-t,body.printmode .block-t.pst,body.printmode .block-t.pss{color:#000!important}
+  body.printmode .block-t .tag{background:none!important;color:#000!important;border:1px solid #888!important}
+  body.printmode .fld input,body.printmode .fld select,body.printmode .fld textarea{background:none!important}
+  body.printmode .evin{display:none!important}
+  body.printmode .chartwrap{border:1px solid #ccc!important}
+  body.printmode .chartwrap svg rect{display:none!important}
+  body.printmode .block.empty-print,body.printmode .evrow.empty-print{display:none!important}
+  body.printmode .stepcol,body.printmode .prog{display:none!important}
+  body.printmode .evrow{display:block}
+  body.printmode .evbody{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  body.printmode .evres{margin-top:0}
+  body.printmode .evres .val{font-size:14px}
+  body.printmode .evres .tim{font-size:14px}
+  body.printmode .evres .sch{background:none;padding:0;color:#333}
+  body.printmode #pmbar{display:flex;position:sticky;top:0;z-index:50;gap:10px;align-items:center;flex-wrap:wrap;
+    background:#fff;border:1px solid #ccc;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#333}
+  #pmbar .msg{flex:1;min-width:160px}
+  #pmbar .btn{margin:0}
+  @media print{
+    #pmbar{display:none!important}
+    @page{size:A4 portrait;margin:9mm}
+    body{padding:0;background:#fff;background-image:none;font-size:11px;print-color-adjust:economy;-webkit-print-color-adjust:economy}
+    .sheet{max-width:100%}
+    .back-link,.actions,.note,.batchbar,.clr{display:none!important}
+    header{display:none}
+    .rep-head{display:block;text-align:center;margin-bottom:8px}
+    .rep-head .rt{font-family:'Fraunces',serif;font-size:18px}
+    .rep-head .rs{font-size:10px;color:#555}
+    .block{box-shadow:none;border:1px solid #ccc;border-radius:8px;padding:8px 10px;margin-bottom:7px}
+    .block.empty-print{display:none}
+    .block-t,.block-t.pst,.block-t.pss{color:#000;font-size:11px;margin-bottom:6px}
+    .block-t .tag{background:none!important;color:#000;border:1px solid #888;font-size:10px}
+    .fld input,.fld select{border:none;border-bottom:1px solid #ccc;border-radius:0;padding:2px 0;background:none;font-size:11px}
+    .fld textarea{border:1px solid #ccc;border-radius:4px;padding:3px 6px;background:none;font-size:11px;min-height:0}
+    .fld label{font-size:9.5px}
+    .evin{display:none}
+    .evrow{padding:3px 0;display:block;break-inside:avoid;page-break-inside:avoid}
+    .stepcol,.prog{display:none!important}
+    .evbody{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+    .fld{break-inside:avoid;page-break-inside:avoid}
+    .evrow.empty-print{display:none}
+    .evlbl{margin-bottom:0;font-size:10.5px;font-weight:600;padding-top:0}
+    .evres{margin-top:0;font-size:10.5px;text-align:right;white-space:nowrap}
+    .evres .val{font-size:10.5px;font-weight:700;color:#000}
+    .evres .val small,.evres .tim{font-size:9.5px;color:#000;margin-left:4px}
+    .evres .sch{padding:0;background:none;color:#000;font-size:9.5px}
+    .evres .warn{display:inline;color:#000;font-size:9.5px}
+    .chartwrap{border:1px solid #ccc;padding:3px}
+    footer{margin-top:6px}
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+<div class="sheet">
+  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>PST &amp; PSS <em>Log</em></h1>
+    <p class="sub">เครื่องมือนี้สำหรับทีมงานบันทึกผลการทดลองเพื่อพัฒนาสูตร</p>
+  </header>
+  <div class="rep-head"><div class="rt">รายงานบันทึก PST &amp; PSS</div><div class="rs">Miss Icecream</div></div>
+
+  <!-- ตัวจัดการ Batch -->
+  <div class="batchbar">
+    <label>Batch:</label>
+    <select id="batchSel" onchange="switchBatch(this.value)"></select>
+    <button class="bbtn new" onclick="newBatch()">➕ Batch ใหม่</button>
+    <button class="bbtn del" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
+  </div>
+
+  <!-- ข้อมูลรายงาน -->
+  <div class="block">
+    <div class="block-t"><span class="tag">i</span> ข้อมูลรายงาน</div>
+    <div class="grid">
+      <div class="fld"><label>รหัสสูตร</label><input id="f_recipe" type="text" placeholder="เช่น MKDB11" oninput="setF('recipe',this.value)"></div>
+      <div class="fld"><label>รอบการทดลอง</label><input id="f_lot" type="text" placeholder="เช่น R1" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label>ชนิดเทอร์โมมิเตอร์</label>
+        <select id="f_thermo" onchange="setThermo(this.value)">
+          <option value="">— เลือก —</option>
+          <option value="อินฟราเรด">แบบอินฟราเรด</option>
+          <option value="จุ่ม">แบบจุ่ม</option>
+          <option value="อื่นๆ">อื่นๆ (ระบุ)</option>
+        </select>
+      </div>
+      <div class="fld" id="thermoOtherWrap" style="display:none"><label>ระบุชนิดเทอร์โมมิเตอร์</label><input id="f_thermoOther" type="text" placeholder="ระบุ" oninput="setF('thermoOther',this.value)"></div>
+      <div class="fld"><label>ผู้บันทึก</label>
+        <select id="f_recorder" onchange="setRecorder(this.value)">
+          <option value="Nat">Nat</option>
+          <option value="Kob">Kob</option>
+          <option value="Lek">Lek</option>
+          <option value="อื่นๆ">ระบุเอง</option>
+        </select>
+      </div>
+      <div class="fld" id="recorderOtherWrap" style="display:none"><label>ระบุชื่อผู้บันทึก</label><input id="f_recorderOther" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorderOther',this.value)"></div>
+      <div class="fld"><label>วันที่</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
+    </div>
+  </div>
+
+  <!-- PST -->
+  <div class="block" id="pstBlock">
+    <div class="block-t pst"><span class="tag">PST</span> Paula’s Spin Technique <span class="prog" id="pstProg"><b>0/2</b><span class="pbar"><i></i></span></span></div>
+    <div id="pstEvents"></div>
+  </div>
+
+  <!-- PSS -->
+  <div class="block" id="pssBlock">
+    <div class="block-t pss"><span class="tag">PSS</span> Paula’s Smart Setting <span class="prog" id="pssProg"><b>0/9</b><span class="pbar"><i></i></span></span></div>
+    <div id="pssEvents"></div>
+  </div>
+
+  <!-- บันทึกการสังเกต -->
+  <div class="block" id="obsBlock">
+    <div class="block-t" style="color:#8A6BB0"><span class="tag" style="background:#8A6BB0">👁</span> บันทึกการสังเกตเนื้อไอศกรีม</div>
+    <div class="grid">
+      <div class="fld" style="grid-column:1/-1"><label>ความแห้งของเนื้อไอศกรีมเมื่อปั่นเสร็จ</label>
+        <select id="f_dryness" onchange="setF('dryness',this.value)">
+          <option>เนื้อแห้งตามปกติ</option>
+          <option>เนื้อแห้งน้อยกว่าปกติ มีน้ำซึมที่ผิว</option>
+          <option>เนื้อไอศกรีมค่อนข้างนิ่ม มีน้ำซึมมาก</option>
+          <option>เนื้อเหลวมาก ไม่จับตัวเป็นไอศกรีม</option>
+        </select>
+      </div>
+      <div class="fld" style="grid-column:1/-1"><label>เครื่องปั่นไม่ได้หยุดปั่นตามปกติ (ถ้ามี)</label>
+        <select id="f_stopAbn" onchange="setF('stopAbn',this.value)">
+          <option value="">เครื่องหยุดปั่นตามปกติ</option>
+          <option>หยุดก่อนไอศกรีมจะปั่นเสร็จ</option>
+          <option>ปั่นนานผิดปกติ</option>
+        </select>
+      </div>
+      <div class="fld" style="grid-column:1/-1"><label>ลักษณะผิดปกติที่สังเกตเห็น</label>
+        <select id="f_defects" onchange="onDefectsChange(this.value)">
+          <option>ปกติ</option>
+          <option>buttery texture</option>
+          <option>เนื้อฟูเป็นโฟม</option>
+          <option>เนื้อแตกร่วน</option>
+          <option>ละลายเร็วผิดปกติ</option>
+          <option>ระบุรายละเอียดเอง</option>
+        </select>
+        <input id="f_defectsOther" type="text" placeholder="ระบุรายละเอียดเอง…" oninput="setF('defectsOther',this.value)" style="display:none;margin-top:6px">
+      </div>
+    </div>
+  </div>
+
+  <!-- บันทึกเพิ่มเติม -->
+  <div class="block" id="noteBlock">
+    <div class="block-t" style="color:#A85B47"><span class="tag" style="background:#A85B47">📝</span> บันทึกเพิ่มเติม</div>
+    <div class="fld">
+      <label>ข้อความสำคัญที่ต้องเก็บไว้กับข้อมูล Batch นี้ (ถ้ามี)</label>
+      <textarea id="f_note" rows="3" placeholder="พิมพ์บันทึก เช่น เหตุการณ์ผิดปกติ สิ่งที่อยากปรับครั้งหน้า…" oninput="setNote(this)"></textarea>
+    </div>
+  </div>
+
+  <!-- สรุปผล -->
+  <div class="block" id="summaryBlock">
+    <div class="block-t"><span class="tag" style="background:var(--accent-deep)">∑</span> สรุปผล</div>
+    <div id="summaryBox" style="font-size:14px;line-height:1.9"></div>
+  </div>
+
+  <!-- กราฟ -->
+  <div class="block" id="chartBlock">
+    <div class="block-t"><span class="tag" style="background:var(--accent-deep)">📈</span> กราฟอุณหภูมิ–เวลา</div>
+    <div class="chartwrap" id="chartWrap"><div class="chart-empty">กราฟจะแสดงเมื่อมีข้อมูล ≥ 2 จุด</div></div>
+  </div>
+
+  <div id="pmbar">
+    <span class="msg">✅ หน้านี้พร้อมพิมพ์แล้ว — พื้นขาว ไม่มีสี ประหยัดหมึก · กดปุ่ม <b>พิมพ์</b> หรือ <b>Ctrl/⌘ + P</b> แล้วเบราว์เซอร์จะจัดหน้าให้เอง (ไม่ตัดคำ)</span>
+    <button class="btn print" onclick="window.print()">🖨 พิมพ์ / บันทึก PDF</button>
+    <button class="btn" onclick="exitPrintMode()">✕ ออกจากโหมด</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn print" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
+    <button class="btn print" onclick="enterPrintMode()">🖨 พิมพ์เอกสาร</button>
+    <button class="btn" onclick="resetAll()">เริ่มใหม่ (ล้างข้อมูล)</button>
+  </div>
+  <p class="note">บันทึกอัตโนมัติในเบราว์เซอร์ของเครื่องนี้ (ไม่ส่งออกที่ไหน) · <b>แชร์ PDF</b> = บันทึก/ส่งไฟล์ PDF แบบประหยัดหมึกในปุ่มเดียว · <b>พิมพ์เอกสาร</b> = ดูหน้าพื้นขาวก่อนสั่งพิมพ์เอง · <b>เริ่มใหม่</b> = ล้างข้อมูล</p>
+  <footer>Miss Icecream</footer>
+</div>
+
+<script>
+const PST_EVENTS=[
+  {k:'pst_before',label:'อุณหภูมิในโถปั่น ก่อนเริ่มปั่นรอบแรก',warnBelow:60,warn:'อุณหภูมิต่ำเกินไป — ต้องอุ่นให้อยู่ในช่วง 60–65 °C ก่อนปั่น'},
+  {k:'pst_after',label:'อุณหภูมิในโถ หลังพักมิกซ์รอบสุดท้าย',warnBelow:50,warn:'อุณหภูมิค่อนข้างต่ำ — ครั้งหน้าควรอุ่นมิกซ์ก่อนปั่นให้สูงขึ้น หรืออุ่นระหว่างช่วงพัก'}
+];
+const PSS_EVENTS=[
+  {k:'pss_beforeActive',label:'ก่อนเริ่ม Active Cooling'},
+  {k:'pss_endActive',label:'จบ Active Cooling',quick:[40]},
+  {k:'pss_startPassive',label:'เริ่ม Passive Setting (30 นาที)',schedule:30},
+  {k:'pss_endPassive',label:'จบ Passive Setting',warnAbove:25,warn:'อุณหภูมิจบสูงเกินไป — เติมน้ำแข็งในอ่างและแช่นิ่งต่ออีก 10 นาที · ครั้งหน้าควรปรับปรุงระบบ cooling'},
+  {k:'pss_cream',label:'เติมครีมแช่เย็นก่อนปั่น',optional:true,quick:[10],warnAbove:10,warn:'ครีมแช่เย็นต้องเติมเมื่อมิกซ์มีอุณหภูมิต่ำกว่า 10 °C แล้วเท่านั้น'},
+  {k:'pss_weightBefore',label:'น้ำหนักมิกซ์ 1 ถ้วย ก่อนปั่น',type:'weight',unit:'g'},
+  {k:'pss_startChurn',label:'เริ่มปั่นจริง'},
+  {k:'pss_endChurn',label:'ปั่นเสร็จ'},
+  {k:'pss_weightAfter',label:'น้ำหนักไอศกรีม 1 ถ้วย หลังปั่น',type:'weight',unit:'g'}
+];
+const ALL=[...PST_EVENTS,...PSS_EVENTS];
+const KEY='pst_pss_log_v1';            // คีย์เดิม (รุ่นบันทึกเดี่ยว) ใช้ย้ายข้อมูลเข้าระบบหลาย Batch
+const STORE_KEY='pst_pss_store_v1';    // คีย์ใหม่ เก็บได้หลาย Batch
+
+function fresh(){return {recipe:'',lot:'',thermo:'อินฟราเรด',thermoOther:'',recorder:'Nat',recorderOther:'',date:thaiDate(Date.now()),events:{},dryness:'',stopAbn:'',defects:'',defectsOther:'',note:''}}
+function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+let store=loadStore();
+let state=store.batches[store.current];
+
+function loadStore(){
+  try{const s=localStorage.getItem(STORE_KEY);if(s){const o=JSON.parse(s);if(o&&o.batches&&o.order&&o.order.length&&o.batches[o.current])return o;}}catch(e){}
+  // ย้ายข้อมูลเดิม (ถ้ามี) มาเป็น Batch แรก
+  let first=null;
+  try{const old=localStorage.getItem(KEY);if(old)first=JSON.parse(old);}catch(e){}
+  const id=newId();const o={batches:{},order:[id],current:id};
+  o.batches[id]=first||fresh();
+  return o;
+}
+function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(store))}catch(e){}}
+function save(){persist()}
+
+function batchLabel(id){const b=store.batches[id];if(!b)return 'Batch';const nm=(b.recipe||'').trim();return nm||('Batch · '+(b.date||''))}
+function refreshBatchSel(){
+  const sel=document.getElementById('batchSel');if(!sel)return;
+  sel.innerHTML=store.order.map((id,i)=>'<option value="'+id+'"'+(id===store.current?' selected':'')+'>'+(i+1)+'. '+escapeHtml(batchLabel(id))+'</option>').join('');
+}
+function switchBatch(id){if(!store.batches[id])return;store.current=id;state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel()}
+function newBatch(){
+  const id=newId();store.batches[id]=fresh();store.order.push(id);store.current=id;state=store.batches[id];
+  persist();syncInputs();updateUI();refreshBatchSel();
+  const r=document.getElementById('f_recipe');if(r)r.focus();
+}
+function deleteBatch(){
+  if(store.order.length<=1){
+    if(!confirm('นี่เป็น Batch เดียวที่มี — ล้างข้อมูลแล้วเริ่ม Batch ใหม่?'))return;
+    const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();return;
+  }
+  if(!confirm('ลบ Batch นี้? ข้อมูลของ Batch นี้จะหายถาวร'))return;
+  const cur=store.current;delete store.batches[cur];store.order=store.order.filter(x=>x!==cur);
+  store.current=store.order[0];state=store.batches[store.current];persist();syncInputs();updateUI();refreshBatchSel();
+}
+function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
+function hms(ts){const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
+function hm(ts){const d=new Date(ts);return [d.getHours(),d.getMinutes()].map(n=>String(n).padStart(2,'0')).join(':')}
+function fmtDur(ms){let s=Math.round(ms/1000);const m=Math.floor(s/60);s=s%60;return m+' นาที '+String(s).padStart(2,'0')+' วิ'}
+
+function setF(k,v){state[k]=v;save();if(k==='recipe')refreshBatchSel()}
+function onDefectsChange(v){state.defects=v;if(v!=='ระบุรายละเอียดเอง')state.defectsOther='';const doth=document.getElementById('f_defectsOther');if(doth){doth.style.display=(v==='ระบุรายละเอียดเอง')?'block':'none';if(v!=='ระบุรายละเอียดเอง')doth.value='';}save();updateUI()}
+function setThermo(v){state.thermo=v;document.getElementById('thermoOtherWrap').style.display=v==='อื่นๆ'?'flex':'none';save()}
+function setRecorder(v){
+  state.recorder=v;
+  const w=document.getElementById('recorderOtherWrap');if(w)w.style.display=v==='อื่นๆ'?'flex':'none';
+  if(v!=='อื่นๆ'){state.recorderOther='';const e=document.getElementById('f_recorderOther');if(e)e.value='';}
+  save();
+}
+
+function rowHTML(ev,i){
+  const unit=ev.unit||'°C', num=i+1;
+  let q='';if(ev.quick)q=ev.quick.map(v=>'<button class="qb" onclick="quickLog(\''+ev.k+'\','+v+')">'+v+' °C</button>').join('');
+  return '<div class="evrow" id="row_'+ev.k+'">'
+    +'<div class="stepcol"><div class="stepnum" id="sn_'+ev.k+'" data-n="'+num+'">'+num+'</div></div>'
+    +'<div class="evbody">'
+    +'<div class="evlbl">'+ev.label+(ev.optional?' <span class="opt">(ถ้ามี)</span>':'')+'</div>'
+    +'<div class="evin">'+q+'<input id="in_'+ev.k+'" type="number" step="0.1" placeholder="'+unit+'"><button class="sub-b" onclick="logEvent(\''+ev.k+'\')">＋ บันทึก</button></div>'
+    +'<div class="evres empty" id="res_'+ev.k+'">ยังไม่บันทึก</div></div></div>';
+}
+function logEvent(k){
+  const el=document.getElementById('in_'+k);const v=parseFloat(el.value);
+  if(isNaN(v)){alert('กรอกอุณหภูมิก่อนค่ะ');return}
+  state.events[k]={temp:Math.round(v*10)/10,t:Date.now()};el.value='';save();updateUI();
+}
+function quickLog(k,v){state.events[k]={temp:v,t:Date.now()};save();updateUI()}
+function clearEv(k){delete state.events[k];save();updateUI()}
+
+/* แก้เวลาย้อนหลัง — กรณีลืมบันทึกแล้วมาบันทึกทีหลัง */
+function editTime(k){
+  const d=state.events[k];if(!d)return;
+  const r=document.getElementById('res_'+k);
+  const dt=new Date(d.t);
+  const hh=String(dt.getHours()).padStart(2,'0'),mm=String(dt.getMinutes()).padStart(2,'0');
+  r.className='evres';
+  r.innerHTML='แก้เวลาเป็น <input class="et-in" id="et_'+k+'" type="time" value="'+hh+':'+mm+'"> '
+    +'<button class="sub-b" onclick="saveTime(\''+k+'\')">✓ ตกลง</button> '
+    +'<button class="clr" onclick="updateUI()">ยกเลิก</button>';
+  const inp=document.getElementById('et_'+k);if(inp)inp.focus();
+}
+function saveTime(k){
+  const el=document.getElementById('et_'+k);const d=state.events[k];if(!el||!d)return;
+  if(!el.value){alert('เลือกเวลาก่อนค่ะ');return}
+  const p=el.value.split(':').map(Number);
+  const dt=new Date(d.t);dt.setHours(p[0],p[1],0,0);
+  d.t=dt.getTime();save();updateUI();
+}
+
+/* แก้ค่าอุณหภูมิ/น้ำหนักย้อนหลัง */
+function editVal(k){
+  const d=state.events[k];if(!d)return;
+  const ev=evMeta(k), unit=(ev&&ev.unit)||'°C';
+  const label=unit==='g'?'แก้น้ำหนักเป็น':'แก้อุณหภูมิเป็น';
+  const r=document.getElementById('res_'+k);
+  r.className='evres';
+  r.innerHTML=label+' <input type="number" step="0.1" class="et-in" id="ev_'+k+'" value="'+d.temp+'" style="width:90px;text-align:center"> '+unit
+    +' <button class="sub-b" onclick="saveVal(\''+k+'\')">✓ ตกลง</button> '
+    +'<button class="clr" onclick="updateUI()">ยกเลิก</button>';
+  const inp=document.getElementById('ev_'+k);if(inp)inp.focus();
+}
+function saveVal(k){
+  const el=document.getElementById('ev_'+k);const d=state.events[k];if(!el||!d)return;
+  const v=parseFloat(el.value);
+  if(isNaN(v)){alert('กรอกตัวเลขก่อนค่ะ');return}
+  d.temp=Math.round(v*10)/10;save();updateUI();
+}
+
+/* บันทึกเพิ่มเติม (note) */
+function autoGrow(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px'}
+function setNote(el){state.note=el.value;autoGrow(el);save();toggleNotePrint()}
+function toggleNotePrint(){const b=document.getElementById('noteBlock');if(b)b.classList.toggle('empty-print',!(state.note||'').trim())}
+
+function resetAll(){
+  if(!confirm('ล้างข้อมูลใน Batch นี้และเริ่มใหม่?'))return;
+  const id=store.current;store.batches[id]=fresh();state=store.batches[id];
+  persist();syncInputs();updateUI();refreshBatchSel();
+}
+function syncInputs(){
+  ['recipe','lot','date','thermoOther','stopAbn'].forEach(k=>{const e=document.getElementById('f_'+(k));if(e)e.value=state[k]||''});
+  // ผู้บันทึก: default Nat · ชื่อเก่าที่พิมพ์ไว้เอง → ย้ายไปช่องระบุเอง
+  if(!state.recorder){state.recorder='Nat';save();}
+  if(!['Nat','Kob','Lek','อื่นๆ'].includes(state.recorder)){state.recorderOther=state.recorder;state.recorder='อื่นๆ';save();}
+  const rsel=document.getElementById('f_recorder');if(rsel)rsel.value=state.recorder;
+  const rw=document.getElementById('recorderOtherWrap');if(rw)rw.style.display=state.recorder==='อื่นๆ'?'flex':'none';
+  const roth=document.getElementById('f_recorderOther');if(roth)roth.value=state.recorderOther||'';
+  const dry=document.getElementById('f_dryness');if(dry)dry.value=state.dryness||'เนื้อแห้งตามปกติ';
+  const dsel=document.getElementById('f_defects');if(dsel)dsel.value=state.defects||'ปกติ';
+  const doth=document.getElementById('f_defectsOther');if(doth){doth.value=state.defectsOther||'';doth.style.display=(state.defects==='ระบุรายละเอียดเอง')?'block':'none';}
+  if(!state.thermo){state.thermo='อินฟราเรด';save();}   // batch เก่าที่ยังไม่เลือก → default อินฟราเรด
+  document.getElementById('f_thermo').value=state.thermo;
+  document.getElementById('thermoOtherWrap').style.display=state.thermo==='อื่นๆ'?'flex':'none';
+  const nt=document.getElementById('f_note');if(nt){nt.value=state.note||'';autoGrow(nt)}
+}
+
+function evMeta(k){return ALL.find(e=>e.k===k)}
+function updateUI(){
+  ALL.forEach(ev=>{
+    const r=document.getElementById('res_'+ev.k), row=document.getElementById('row_'+ev.k), sn=document.getElementById('sn_'+ev.k);
+    const d=state.events[ev.k];
+    if(!d){r.className='evres empty';r.textContent='ยังไม่บันทึก';row.classList.remove('logged');row.classList.add('empty-print');if(sn)sn.textContent=sn.dataset.n;return;}
+    row.classList.add('logged');row.classList.remove('empty-print');
+    if(sn)sn.textContent='✓';
+    const unit=ev.unit||'°C';
+    const warned=(ev.warnBelow!=null&&d.temp<ev.warnBelow)||(ev.warnAbove!=null&&d.temp>ev.warnAbove);
+    let html='<span class="val'+(warned?' bad':'')+'">'+d.temp+'<small> '+unit+'</small></span>'
+      +'<span class="acts"><button class="clr" style="color:var(--blue)" onclick="editVal(\''+ev.k+'\')">✎ แก้</button></span>'
+      +'<span class="tim">'+hms(d.t)+'</span>'
+      +'<span class="acts"><button class="clr" style="color:var(--blue)" onclick="editTime(\''+ev.k+'\')">✎ แก้</button><button class="clr" onclick="clearEv(\''+ev.k+'\')">ลบ</button></span>';
+    if(ev.schedule){html+='<br><span class="sch">⏱ ครบ '+ev.schedule+' นาที เวลา '+hm(d.t+ev.schedule*60000)+'</span>';}
+    if(warned){html+='<span class="warn">⚠ '+ev.warn+'</span>';}
+    r.className='evres';r.innerHTML=html;
+  });
+  // ขั้นถัดไป + progress ของแต่ละบล็อก
+  [[PST_EVENTS,'pstProg'],[PSS_EVENTS,'pssProg']].forEach(pair=>{
+    const list=pair[0], progId=pair[1];
+    const next=list.find(ev=>!state.events[ev.k]&&!ev.optional);
+    list.forEach(ev=>{const row=document.getElementById('row_'+ev.k);if(row)row.classList.toggle('next',!!next&&ev.k===next.k);});
+    const n=list.filter(e=>state.events[e.k]).length;
+    const p=document.getElementById(progId);
+    if(p){p.querySelector('b').textContent=(n===list.length)?'ครบ ✓':(n+'/'+list.length);p.querySelector('.pbar i').style.width=(n/list.length*100)+'%';}
+  });
+  // hide empty sections in print
+  const pstHas=PST_EVENTS.some(e=>state.events[e.k]);
+  const pssHas=PSS_EVENTS.some(e=>state.events[e.k]);
+  document.getElementById('pstBlock').classList.toggle('empty-print',!pstHas);
+  document.getElementById('pssBlock').classList.toggle('empty-print',!pssHas);
+  document.getElementById('obsBlock').classList.toggle('empty-print',!((state.dryness&&state.dryness!=='เนื้อแห้งตามปกติ')||state.stopAbn||(state.defects&&state.defects!=='ปกติ')));
+  toggleNotePrint();
+  renderSummary();
+  buildChart();
+  save();
+}
+
+function phaseLine(label,a,b){
+  if(!a||!b)return null;
+  if(b.t<a.t)return '<b>'+label+'</b> &nbsp;<span style="color:var(--rose);font-size:12.5px">⚠ เวลาไม่ถูกต้อง — เวลาจบ ('+hms(b.t)+') อยู่ก่อนเวลาเริ่ม ('+hms(a.t)+') · กด ✎ แก้เวลา ที่รายการนั้นเพื่อแก้ไข</span>';
+  return '<b>'+label+' = '+fmtDur(b.t-a.t)+'</b> &nbsp;<span style="color:var(--muted);font-size:12.5px">· อุณหภูมิ '+a.temp+' → '+b.temp+' °C ('+hms(a.t)+' → '+hms(b.t)+')</span>';
+}
+function renderSummary(){
+  const box=document.getElementById('summaryBox');
+  const wb=state.events.pss_weightBefore, wa=state.events.pss_weightAfter;
+  const sc=state.events.pss_startChurn, ec=state.events.pss_endChurn;
+  let items=[],l;
+  if(l=phaseLine('PST',state.events.pst_before,state.events.pst_after))items.push(l);
+  if(l=phaseLine('PSS · Active Cooling',state.events.pss_beforeActive,state.events.pss_endActive))items.push(l);
+  if(l=phaseLine('PSS · Passive Setting',state.events.pss_startPassive,state.events.pss_endPassive))items.push(l);
+  if(wb&&wa&&wa.temp>0){const ov=((wb.temp-wa.temp)/wa.temp)*100;items.push('<b>%Overrun = '+ov.toFixed(1)+' %</b> &nbsp;<span style="color:var(--muted);font-size:12.5px">(ก่อนปั่น '+wb.temp+' g · หลังปั่น '+wa.temp+' g)</span>');}
+  if(sc&&ec){
+    if(ec.t<sc.t)items.push('<b>ระยะเวลาปั่น</b> &nbsp;<span style="color:var(--rose);font-size:12.5px">⚠ เวลาไม่ถูกต้อง — เวลาปั่นเสร็จ ('+hms(ec.t)+') อยู่ก่อนเวลาเริ่มปั่น ('+hms(sc.t)+') · กด ✎ แก้เวลา ที่รายการนั้นเพื่อแก้ไข</span>');
+    else items.push('<b>ระยะเวลาปั่น = '+fmtDur(ec.t-sc.t)+'</b> &nbsp;<span style="color:var(--muted);font-size:12.5px">('+hms(sc.t)+' → '+hms(ec.t)+')</span>');
+  }
+  document.getElementById('summaryBlock').classList.toggle('empty-print',items.length===0);
+  box.innerHTML=items.length?items.map(i=>'<div>'+i+'</div>').join(''):'<span style="color:var(--muted-soft);font-style:italic;font-family:Fraunces,serif">บันทึกน้ำหนักก่อน/หลังปั่น และเวลาเริ่ม/เสร็จปั่น เพื่อคำนวณ %Overrun และระยะเวลาปั่น</span>';
+}
+function buildChart(){
+  const wrap=document.getElementById('chartWrap');
+  const pts=ALL.filter(ev=>(ev.unit||'°C')!=='g').map(ev=>state.events[ev.k]?{t:state.events[ev.k].t,v:state.events[ev.k].temp,k:ev.k}:null).filter(Boolean).sort((a,b)=>a.t-b.t);
+  document.getElementById('chartBlock').classList.toggle('empty-print',pts.length<2);
+  if(pts.length<2){wrap.innerHTML='<div class="chart-empty">กราฟจะแสดงเมื่อมีข้อมูล ≥ 2 จุด</div>';return}
+  const W=620,H=240,mL=42,mR=14,mT=14,mB=28,pw=W-mL-mR,ph=H-mT-mB;
+  const t0=pts[0].t,t1=pts[pts.length-1].t;const tr=(t1-t0)||1;
+  let vMin=Math.min(...pts.map(p=>p.v)),vMax=Math.max(...pts.map(p=>p.v));
+  vMin=Math.floor((vMin-4)/5)*5;vMax=Math.ceil((vMax+4)/5)*5;if(vMin===vMax)vMax+=10;
+  const X=t=>mL+(t-t0)/tr*pw,Y=v=>mT+ph-(v-vMin)/(vMax-vMin)*ph;
+  let g='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="Sarabun,sans-serif">';
+  for(let v=vMin;v<=vMax;v+=Math.max(5,Math.round((vMax-vMin)/6/5)*5)){const y=Y(v);
+    g+='<line x1="'+mL+'" y1="'+y.toFixed(1)+'" x2="'+(W-mR)+'" y2="'+y.toFixed(1)+'" stroke="#EFE5D2"/>';
+    g+='<text x="'+(mL-6)+'" y="'+(y+3).toFixed(1)+'" font-size="10" fill="#8C7A66" text-anchor="end">'+v+'</text>';}
+  const dpath=pts.map((p,i)=>(i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1)).join(' ');
+  g+='<path d="'+dpath+'" fill="none" stroke="#6F804D" stroke-width="2"/>';
+  pts.forEach(p=>{g+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="3" fill="#6F804D"/>';});
+  g+='<text x="'+X(t0).toFixed(1)+'" y="'+(H-8)+'" font-size="9" fill="#8C7A66" text-anchor="middle">'+hm(t0)+'</text>';
+  g+='<text x="'+X(t1).toFixed(1)+'" y="'+(H-8)+'" font-size="9" fill="#8C7A66" text-anchor="middle">'+hm(t1)+'</text>';
+  g+='<text x="'+mL+'" y="11" font-size="9.5" fill="#8C7A66">°C</text></svg>';
+  wrap.innerHTML=g;
+}
+
+(function(){
+  document.getElementById('pstEvents').innerHTML=PST_EVENTS.map((e,i)=>rowHTML(e,i)).join('');
+  document.getElementById('pssEvents').innerHTML=PSS_EVENTS.map((e,i)=>rowHTML(e,i)).join('');
+  if(!state.date)state.date=thaiDate(Date.now());
+  refreshBatchSel();syncInputs();updateUI();
+})();
+</script>
+<script>
+/* โหมดพร้อมพิมพ์ — แสดงหน้าพื้นขาว ไม่มีสี แล้วให้ผู้ใช้สั่งพิมพ์เอง
+   (ใช้การพิมพ์ของเบราว์เซอร์ ข้อความจริง ไม่ตัดคำ ไม่ซ้ำ) */
+function enterPrintMode(){document.body.classList.add('printmode');window.scrollTo(0,0);}
+function exitPrintMode(){document.body.classList.remove('printmode');}
+
+/* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า */
+function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
+async function sharePDFink(btn){
+  /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
+  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const hides=[...document.querySelectorAll('#pmbar,.actions,.back-link')], prevD=hides.map(el=>el.style.display);
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  try{
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    if(typeof refreshPrintHead==='function')refreshPrintHead();
+    body.classList.add('printmode');
+    hides.forEach(el=>el.style.display='none');
+    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
+    const target=document.querySelector('.sheet');
+    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
+    let bs=[0];
+    target.querySelectorAll('.rep-head, .block').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
+    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
+    undo();
+    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
+    let pages=[], start=0, i=1;
+    while(i<bs.length){
+      if(bs[i]-start<=pageMaxPx){ i++; continue; }
+      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
+      pages.push([start,cut]); start=cut;
+    }
+    if(start<canvas.height)pages.push([start,canvas.height]);
+    for(let p=0;p<pages.length;p++){
+      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
+      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
+      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
+      if(p>0)pdf.addPage();
+      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
+    }
+    let name='PST-PSS-Log.pdf';
+    if(typeof state!=='undefined'){
+      // ชื่อสั้น: Lab-รหัสสูตร-รอบ.pdf (รองรับภาษาไทย ตัดเฉพาะอักขระต้องห้ามของชื่อไฟล์)
+      const parts=[state.recipe,state.lot].map(v=>String(v||'').trim().replace(/[\\\/:*?"<>|#%]+/g,'').replace(/\s+/g,'-')).filter(Boolean);
+      if(parts.length)name='Lab-'+parts.join('-')+'.pdf';
+    }
+    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'รายงาน PST & PSS'});}
+    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
+  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
+}
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผังทำไอศกรีม · ทำขาย · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--line:#E5D9C4;--accent:#6B8E4E;--accent-deep:#4F6B3A;--rose-deep:#A85B47}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;padding:32px 18px 44px;
+    background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.45)0%,transparent 38%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08)0%,transparent 40%);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{max-width:760px;margin:0 auto}
+  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:20px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:all .2s}
+  .back-link:hover{color:var(--ink);border-color:var(--accent)}
+  header{text-align:center;margin-bottom:22px}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:30px;line-height:1.1;margin-bottom:7px}
+  h1 .badge{display:inline-block;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:#fff;background:var(--rose-deep);border-radius:100px;padding:3px 14px;vertical-align:middle;margin-left:6px}
+  .sub{color:var(--muted);font-size:13px;line-height:1.5}
+  .flow{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .step{display:flex;align-items:stretch;background:var(--t);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px -12px rgba(43,31,21,.4)}
+  .num{flex-shrink:0;width:42px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;background:var(--c)}
+  .body{padding:9px 14px}
+  .t{font-size:14.5px;font-weight:600;line-height:1.25;color:var(--ink)}
+  .d{font-size:12.5px;line-height:1.5;color:#4a3f33;margin-top:2px}
+  .d b{color:var(--c);font-weight:700}
+  .arrow{align-self:center;color:var(--muted);font-size:15px;line-height:1;margin:3px 0}
+  .actions{display:flex;justify-content:center;gap:12px;margin-top:24px}
+  .btn{padding:11px 26px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:500;border-radius:100px;cursor:pointer;transition:all .2s}
+  .btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  footer{text-align:center;margin-top:16px;color:var(--muted);font-size:11px;letter-spacing:.25em;text-transform:uppercase}
+  @media print{
+    @page{size:A4 portrait;margin:9mm}
+    body{padding:0;background:#fff;background-image:none}
+    .sheet{max-width:100%}
+    .back-link,.actions{display:none!important}
+    header{margin-bottom:10px}
+    h1{font-size:24px}
+    .step{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+    .num{width:36px;font-size:17px}
+    .body{padding:6px 12px}
+    .t{font-size:12.5px}
+    .d{font-size:10.5px;margin-top:1px}
+    .arrow{font-size:12px;margin:1px 0}
+    footer{margin-top:8px}
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+<div class="sheet">
+  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+  <header>
+    <div class="eyebrow">Miss Icecream · คู่มือครัว</div>
+    <h1>ทำไอศกรีม <span class="badge">แบบทำขาย</span></h1>
+    <p class="sub">พาสเจอไรส์ทั้งหมด · บ่มมาตรฐาน (ประกาศ สธ. ฉ. 354) · 11 ขั้นตอน</p>
+  </header>
+
+  <div class="flow">
+    <div class="step" style="--c:#8C7A66;--t:#F1ECE3"><div class="num">1</div><div class="body"><div class="t">เตรียมความพร้อม</div><div class="d">ล้าง+ฆ่าเชื้ออุปกรณ์ทุกชิ้น · แต่งกาย GHP · แบ่งโซน · เก็บบันทึก (GMP)</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#8C7A66;--t:#F1ECE3"><div class="num">2</div><div class="body"><div class="t">ชั่งตวงวัด</div><div class="d">ชั่งเป็นกรัม · ร่อนผงที่จับก้อน · ชั่งให้ครบก่อนผสม</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#C77F3A;--t:#FAEFE2"><div class="num">3</div><div class="body"><div class="t">ผสม + พาสเจอไรส์</div><div class="d">ผสมรวมทุกอย่าง (รวมครีม+วัตถุดิบเสี่ยง) → <b>LTLT 68.5 °C / 30 นาที</b> · เก็บบันทึกอุณหภูมิ-เวลา</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#6B8E4E;--t:#EFF3E7"><div class="num">4</div><div class="body"><div class="t">PST — ปั่นสร้างอิมัลชัน</div><div class="d">ปั่นที่ <b>60–65 °C</b> · ปั่นแรง→พัก 60 วิ สลับ (ตามกลุ่ม/เครื่อง) · อย่าต่ำกว่า <b>50 °C</b></div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#3E73A6;--t:#E8F0F7"><div class="num">5</div><div class="body"><div class="t">ลดความร้อน + บ่ม</div><div class="d">ลด <b>→4 °C ภายใน ≤60 นาที</b> → บ่ม <b>0–4 °C 4–12 ชม.</b> (ไม่เกิน 24 ชม.)</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#8A6BB0;--t:#F0EBF7"><div class="num">6</div><div class="body"><div class="t">เติมก่อนปั่น</div><div class="d">เติมของห้ามโดนความร้อน (กลิ่น/เหล้า/สี) · ชิมปรับรส (หลายสูตรแทบไม่ต้องทำ)</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#2F9E8F;--t:#E4F4F1"><div class="num">7</div><div class="body"><div class="t">ปั่นไอศกรีม</div><div class="d">ดูเนื้อ: เนียน · ฟู · ผิวแห้ง · อย่าปั่นนานเกิน (เนื้อเนย)</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#C9A227;--t:#F8F1DA"><div class="num">8</div><div class="body"><div class="t">บรรจุ + Inclusion / Swirl</div><div class="d">เร็ว เบามือ · inclusion โรยสลับชั้น ไม่คน · ซอสราดไม่กวน</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#3E73A6;--t:#E8F0F7"><div class="num">9</div><div class="body"><div class="t">แช่แข็ง</div><div class="d">ถึงเป้าเร็วที่สุด · <b>−18 °C</b> (เก็บ) / <b>−14 °C</b> (เสิร์ฟ)</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#5A6BA8;--t:#EAECF7"><div class="num">10</div><div class="body"><div class="t">เก็บรักษา</div><div class="d"><b>−25 °C</b> อุณหภูมินิ่ง · ปิดผิวด้วย PE film · ใช้หลัก FIFO</div></div></div>
+    <div class="arrow">↓</div>
+    <div class="step" style="--c:#C76B86;--t:#FAEAF0"><div class="num">11</div><div class="body"><div class="t">เสิร์ฟ</div><div class="d">temper ถึง <b>−14 °C</b> · ตักด้วยการลาก ไม่กด · เริ่มจากขอบเข้าหากลาง</div></div></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
+    <button class="btn" onclick="window.print()">🖨 พิมพ์ A4</button>
+    <a class="btn" href="PST-Process-Selector.html" style="text-decoration:none">กลับไปที่ Process Selector</a>
+  </div>
+  <footer>Miss Icecream</footer>
+</div>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+<script>
+/* แชร์ PDF — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า (คงสีผัง) */
+function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
+async function sharePDFink(btn){
+  /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
+  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const hides=[...document.querySelectorAll('.actions,.back-link')], prevD=hides.map(el=>el.style.display);
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  try{
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    if(typeof refreshPrintHead==='function')refreshPrintHead();
+    
+    hides.forEach(el=>el.style.display='none');
+    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
+    const target=document.querySelector('.sheet');
+    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
+    let bs=[0];
+    target.querySelectorAll('.step').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
+    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
+    undo();
+    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
+    let pages=[], start=0, i=1;
+    while(i<bs.length){
+      if(bs[i]-start<=pageMaxPx){ i++; continue; }
+      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
+      pages.push([start,cut]); start=cut;
+    }
+    if(start<canvas.height)pages.push([start,canvas.height]);
+    for(let p=0;p<pages.length;p++){
+      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
+      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
+      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
+      if(p>0)pdf.addPage();
+      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
+    }
+    let name='Flowchart-Sell.pdf';
+    
+    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'ผังทำไอศกรีม (ทำขาย)'});}
+    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
+  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
+}
+</script>
+</body>
+</html>

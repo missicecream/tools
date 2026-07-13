@@ -1,0 +1,1102 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heat Process Log — บันทึกการให้ความร้อน · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--muted-soft:#BFB09B;--line:#E5D9C4;--line-soft:#EFE5D2;--accent:#6B8E4E;--accent-deep:#4F6B3A;--blue:#3E73A6;--rose:#A85B47;--gold:#C9A227}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;padding:34px 18px 50px;
+    background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.45)0%,transparent 38%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08)0%,transparent 40%);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{max-width:760px;margin:0 auto}
+  .back-link{display:inline-flex;gap:7px;margin-bottom:18px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500}
+  .back-link:hover{color:var(--ink);border-color:var(--accent)}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .sound-toggle{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;padding:8px 16px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .22s}
+  .sound-toggle:hover{color:var(--ink);border-color:var(--accent)}
+  .sound-toggle.off{color:var(--muted-soft)}
+
+  header{text-align:center;margin-bottom:20px}
+  .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:32px;line-height:1.1}
+  h1 em{font-style:italic;color:var(--accent-deep)}
+  .sub{color:var(--muted);font-size:13px;margin-top:6px}
+
+  .block{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px;margin-bottom:16px;box-shadow:0 4px 22px -18px rgba(43,31,21,.25)}
+  .block-t{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--accent-deep);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .block-t .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:'Fraunces',serif;font-size:13px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+  .fld{display:flex;flex-direction:column;gap:4px}
+  .fld label{font-size:12px;color:var(--muted);font-weight:500}
+  .fld input,.fld select{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%}
+  .fld input:focus,.fld select:focus{border-color:var(--accent);background:#fff}
+  .fld textarea{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%;resize:none;line-height:1.65;min-height:64px;overflow:hidden}
+  .fld textarea:focus{border-color:var(--accent);background:#fff}
+  .et-in{font-family:'Fraunces',serif;font-size:14px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+  .et-in:focus{border-color:var(--accent);outline:none}
+  .et-ok{padding:7px 12px;border-radius:9px;border:none;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;font-size:13px;font-family:'Sarabun',sans-serif}
+  .ed-t{color:var(--blue);cursor:pointer;font-size:12px;border:none;background:none;font-family:'Sarabun',sans-serif}
+
+  .crit{margin-top:10px;font-size:13.5px;background:#EFF3E7;border:1px solid #cfe0bf;border-radius:10px;padding:9px 13px;color:var(--accent-deep)}
+  .crit b{font-weight:700}
+  .crit.none{background:var(--line-soft);border-color:var(--line);color:var(--muted)}
+  .prog-note{margin-top:8px;font-size:13px;line-height:1.5;background:#FBF1E7;border:1px solid #E6C9A8;border-radius:10px;padding:9px 13px;color:#8A5A2B}
+  .prog-cat{font-size:12.5px;font-weight:700;color:var(--accent-deep);letter-spacing:.01em;margin:11px 0 6px}
+  .prog-cat:first-child{margin-top:2px}
+  .mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(max-width:560px){.mode-grid{grid-template-columns:1fr}}
+  .mode-btn{font-family:'Sarabun',sans-serif;text-align:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 8px;cursor:pointer;font-weight:600;font-size:13.5px;line-height:1.4;color:var(--ink);transition:all .18s}
+  .mode-btn:hover{border-color:var(--accent)}
+  .mode-btn.sel{border-color:var(--accent-deep);background:#F3F6EC;color:var(--accent-deep);box-shadow:0 4px 16px -12px rgba(79,107,58,.5)}
+  .chg-prog{margin-top:8px;width:100%;padding:9px;border:1px dashed var(--line);background:#fff;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;border-radius:10px;cursor:pointer}
+  .chg-prog:hover{border-color:var(--accent);color:var(--accent-deep)}
+  .prog-grid{display:grid;grid-template-columns:1fr;gap:6px}
+  .prog-opt{text-align:left;background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px 13px;cursor:pointer;font-family:'Sarabun',sans-serif;color:var(--ink);transition:all .18s;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .prog-opt:hover{border-color:var(--accent)}
+  .prog-opt.sel{border-color:var(--accent-deep);background:#F3F6EC;box-shadow:0 4px 16px -12px rgba(79,107,58,.5)}
+  .prog-opt .nm{font-weight:600;font-size:14px;line-height:1.3}
+  .prog-opt.sel .nm{color:var(--accent-deep)}
+  .prog-opt .meta{flex-shrink:0;white-space:nowrap;font-size:12px;color:var(--accent-deep);background:#EFF3E7;border:1px solid #cfe0bf;border-radius:100px;padding:2px 11px;font-weight:600}
+  .prog-opt.custom{cursor:default;flex-wrap:wrap}
+  .prog-opt.custom input{width:78px;font-family:'Fraunces',serif;font-size:15px;text-align:center;padding:7px 8px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+  .prog-opt.custom input:focus{border-color:var(--accent);background:#fff;outline:none}
+
+  .btn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:14px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:11px 18px;transition:all .18s;background:var(--card);color:var(--ink)}
+  .btn:hover{filter:brightness(.97)}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.big{display:block;width:100%;color:#fff;border:none;padding:13px}
+  .btn.start{background:var(--accent)}
+  .btn.reach{background:var(--blue)}
+  .btn.stop{background:var(--rose)}
+  .btn.cool{background:var(--blue)}
+  .btn.done{background:var(--accent-deep)}
+  .btn.ghost{background:var(--card);color:var(--ink)}
+  .btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}
+  .logged{font-family:'Fraunces',serif;font-size:14px;color:var(--accent-deep);margin-top:7px}
+  .logged.empty{color:var(--muted-soft);font-style:italic}
+
+  /* แถบสถานะสด */
+  .statusbar{margin:0 0 12px;border-radius:12px;padding:12px 14px;font-size:14px;font-weight:600;text-align:center;line-height:1.55;background:#fff;border:1px solid var(--line);color:var(--muted)}
+  .statusbar .big{font-family:'Fraunces',serif;font-size:clamp(44px,15vw,64px);line-height:1.08;font-weight:400;display:block;margin:2px 0 2px;font-variant-numeric:tabular-nums}
+  .statusbar .sm{display:block;font-weight:400;font-size:12.5px;margin-top:3px}
+  .statusbar .ph{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.02em;padding:3px 12px;border-radius:100px;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.05)}
+  .statusbar .nx{display:block;font-size:15px;font-weight:700;margin-top:7px}
+  .statusbar.heat{background:#FBF1E7;border-color:#E6C9A8;color:#8A5A2B}
+  .statusbar.heat .big{color:#C77F3A}
+  .statusbar.heat .sbar i{background:#C77F3A}
+  .statusbar.hold{background:#EAF1F7;border-color:#b9d3e6;color:#2D5474}
+  .statusbar.hold .big{color:var(--blue)}
+  .statusbar.ok{background:#EFF3E7;border-color:#cfe0bf;color:var(--accent-deep)}
+  .statusbar.ok .big{color:var(--accent-deep)}
+  .sbar{display:block;margin-top:9px;height:8px;border-radius:8px;background:rgba(255,255,255,.75);border:1px solid rgba(0,0,0,.07);overflow:hidden}
+  .sbar i{display:block;height:100%;width:0%;background:var(--blue);border-radius:8px;transition:width .4s}
+  .statusbar.ok .sbar i{background:var(--accent)}
+  /* เส้นทาง 5 ขั้น */
+  .stepper{display:flex;margin:2px 0 12px}
+  .step{flex:1;text-align:center;position:relative;font-size:11px;color:var(--muted-soft);line-height:1.4}
+  .step .dot{width:26px;height:26px;margin:0 auto 4px;border-radius:50%;border:2px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:12px;color:var(--muted-soft);position:relative;z-index:1}
+  .step:not(:first-child):before{content:'';position:absolute;top:12px;left:-50%;width:100%;height:2px;background:var(--line-soft)}
+  .step.done .dot{background:var(--accent);border-color:var(--accent);color:#fff}
+  .step.done{color:var(--accent-deep)}
+  .step.done:not(:first-child):before{background:#cfe0bf}
+  .step.cur .dot{border-color:var(--accent-deep);color:var(--accent-deep);box-shadow:0 0 0 4px rgba(107,142,78,.14)}
+  .step.cur{color:var(--accent-deep);font-weight:700}
+  .step .tm{display:block;font-family:'Fraunces',serif;font-size:10.5px;color:var(--muted);font-weight:400}
+  /* progress ในหัวบล็อก */
+  .prog{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:0;text-transform:none}
+  .prog .pbar{width:70px;height:6px;border-radius:6px;background:var(--line-soft);overflow:hidden}
+  .prog .pbar i{display:block;height:100%;width:0%;background:var(--accent);border-radius:6px;transition:width .25s}
+  td.temp-ok{color:var(--accent-deep);font-weight:600}
+  .btn.waiting{opacity:.45}
+  /* โทนสีบล็อก: ให้ความร้อน = ส้มอิฐ · ลดความร้อน = ฟ้าหม่น (สีช่วยกันบันทึกผิดที่) */
+  #heatBlock .block-t{color:#C77F3A}
+  #heatBlock .block-t .n{background:#C77F3A}
+  #heatBlock .prog .pbar i{background:#C77F3A}
+  #heatBlock .quick .qb{border-color:#C77F3A;background:#FBF1E7;color:#8A5A2B}
+  #heatBlock .quick .qb:hover{background:#C77F3A;color:#fff}
+  #heatBlock .quick .sub-b{background:#C77F3A}
+  #coolBlock .block-t{color:var(--blue)}
+  #coolBlock .block-t .n{background:var(--blue)}
+  #coolBlock .prog .pbar i{background:var(--blue)}
+  #coolBlock .btn.done{background:#2D5474}
+  .step.heat.done .dot{background:#C77F3A;border-color:#C77F3A}
+  .step.heat.done{color:#8A5A2B}
+  .step.heat.cur .dot{border-color:#C77F3A;color:#C77F3A;box-shadow:0 0 0 4px rgba(199,127,58,.16)}
+  .step.heat.cur{color:#8A5A2B}
+  .step.cool.done .dot{background:var(--blue);border-color:var(--blue)}
+  .step.cool.done{color:#2D5474}
+  .step.cool.cur .dot{border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 4px rgba(62,115,166,.14)}
+  .step.cool.cur{color:#2D5474}
+  .cool-lock{background:#F1ECE3;border:1px dashed var(--muted-soft);border-radius:10px;padding:9px 13px;font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  #coolBlock.locked{opacity:.6}
+  #coolBlock.locked .btn,#coolBlock.locked input{pointer-events:none}
+  .btn-undo{margin-top:8px;width:100%;padding:9px;border:1px dashed var(--rose);background:#fff;color:var(--rose);font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;border-radius:10px;cursor:pointer}
+  .btn-undo:hover{background:#FBEFEC}
+  .nextread{margin-top:8px;font-size:12.5px;color:var(--muted);text-align:center}
+  .nextread b{font-family:'Fraunces',serif;color:var(--blue);font-variant-numeric:tabular-nums}
+  .remind{margin-top:10px;background:#FBEFE3;border:1px solid #E6C09A;border-radius:12px;padding:11px 14px;font-size:13.5px;color:#9A5B25;font-weight:600;text-align:center;line-height:1.5;animation:remindPulse 1.1s ease-in-out infinite}
+  @keyframes remindPulse{0%,100%{background:#FBEFE3}50%{background:#F6DFC6}}
+
+  .quick{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .quick .qb{padding:11px 14px;border-radius:10px;border:1px solid var(--accent);background:#EFF3E7;color:var(--accent-deep);font-weight:700;font-size:14px;cursor:pointer;font-family:'Fraunces',serif}
+  .quick .qb:hover{background:var(--accent);color:#fff}
+  .quick input{width:84px;font-size:14px;padding:9px;border:1px solid var(--line);border-radius:9px;font-family:'Fraunces',serif;text-align:center}
+  .quick .sub-b{padding:9px 14px;border-radius:9px;border:none;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;font-size:13px}
+
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+  th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line-soft)}
+  th{font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;font-weight:600}
+  td.t{font-family:'Fraunces',serif}
+  tr:last-child td{border-bottom:none}
+  .del{color:var(--rose);cursor:pointer;font-size:12px;border:none;background:none;font-family:'Sarabun',sans-serif}
+
+  .events{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px;font-size:13px;margin-top:4px}
+  .ev{display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed var(--line-soft);padding:4px 0}
+  .ev .lbl{color:var(--muted)}
+  .ev .val{font-family:'Fraunces',serif;color:var(--ink)}
+  .ev .val.no{color:var(--muted-soft);font-style:italic}
+
+  .summary{border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.65}
+  .summary.pass{background:#EAF3E4;border:1px solid #bcd7a8}
+  .summary.fail{background:#FBEDE7;border:1px solid #e7c3b4}
+  .summary.wait{background:var(--line-soft);border:1px solid var(--line)}
+  .summary .verdict{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:5px}
+  .summary.pass .verdict{color:var(--accent-deep)}
+  .summary.fail .verdict{color:var(--rose)}
+  .summary.wait .verdict{color:var(--muted)}
+  .summary ul{margin:6px 0 0;padding-left:18px}
+  .summary li{margin-bottom:3px}
+
+  .chartwrap{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px}
+  .chartwrap svg{width:100%;height:auto;display:block}
+  .chart-empty{text-align:center;color:var(--muted-soft);font-style:italic;font-family:'Fraunces',serif;padding:30px 0}
+
+  .actions{display:flex;justify-content:center;gap:12px;margin-top:8px;flex-wrap:wrap}
+  .note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:14px;text-align:center}
+  footer{text-align:center;margin-top:18px;color:var(--muted-soft);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase}
+
+  /* report-only header for print */
+  .rep-head{display:none}
+
+  .batchbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:16px}
+  .batchbar label{font-size:12px;font-weight:600;color:var(--muted)}
+  .batchbar select{flex:1;min-width:140px;font-family:'Sarabun',sans-serif;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  .bbtn{font-family:'Sarabun',sans-serif;font-weight:600;font-size:13px;border-radius:100px;cursor:pointer;border:1px solid var(--line);padding:8px 14px;background:#fff;color:var(--ink)}
+  .bbtn.new{background:var(--accent-deep);color:#fff;border:none}
+  .bbtn.del{color:var(--rose)}
+
+  body.cap .back-link,body.cap .actions,body.cap .note,body.cap .logging-only,body.cap .batchbar,body.cap .del,body.cap .ed-t,body.cap .guide-link,body.cap #progPicker,body.cap .prog-hint,body.cap #customWrap,body.cap .stepper,body.cap .statusbar,body.cap .prog,body.cap .sound-toggle{display:none!important}
+  body.cap #noteBlock.empty-note{display:none!important}
+  body.cap .fld textarea{background:none!important;border:1px solid #ccc!important}
+  body.cap .rep-head{display:block!important}
+  body.cap{background:#fff!important;background-image:none!important}
+  body.cap .block{background:#fff!important;border:1px solid #ccc!important;box-shadow:none!important}
+  body.cap .block-t{color:#000!important}
+  body.cap .block-t .n{background:none!important;color:#000!important;border:1px solid #888!important}
+  body.cap .crit,body.cap .crit.none,body.cap .prog-note{background:none!important;border:1px solid #999!important;color:#000!important}
+  body.cap .summary{background:none!important;border:1px solid #999!important}
+  body.cap .summary .verdict{color:#000!important}
+  body.cap .chip{background:#eee!important;color:#000!important}
+  body.cap .ev .val,body.cap .pst-metrics .big{color:#000!important}
+  body.cap .chartwrap{border:1px solid #ccc!important}
+  body.cap .chartwrap svg rect{display:none!important}
+
+  /* โหมดพร้อมพิมพ์ (preview บนจอ) — ใช้สไตล์ flatten ของ .cap ร่วมกัน */
+  #pmbar{display:none}
+  body.printmode #pmbar{display:flex;position:sticky;top:0;z-index:50;gap:10px;align-items:center;flex-wrap:wrap;
+    background:#fff;border:1px solid #ccc;border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:#333}
+  #pmbar .msg{flex:1;min-width:160px}
+  #pmbar .btn{margin:0}
+  @media print{
+    #pmbar{display:none!important}
+    @page{size:A4 portrait;margin:9mm}
+    .block,tr,.ev,.fld,.evrow{break-inside:avoid;page-break-inside:avoid}
+    body{padding:0;background:#fff;background-image:none;font-size:11px}
+    .sheet{max-width:100%}
+    .back-link,.actions,.note,.logging-only,.batchbar,.del,.ed-t{display:none!important}
+    #noteBlock.empty-note{display:none!important}
+    .fld textarea{border:1px solid #ccc;border-radius:4px;padding:3px 6px;background:none;font-size:11px;min-height:0}
+    header{display:none}
+    .rep-head{display:block;text-align:center;margin-bottom:8px}
+    .rep-head .rt{font-family:'Fraunces',serif;font-size:18px}
+    .rep-head .rs{font-size:10px;color:#555}
+    .block{box-shadow:none;border:1px solid #ccc;border-radius:8px;padding:8px 10px;margin-bottom:7px}
+    .block-t{font-size:10px;margin-bottom:6px}
+    .block-t .n{width:16px;height:16px;font-size:10px}
+    .fld input,.fld select{border:none;border-bottom:1px solid #ccc;border-radius:0;padding:2px 0;background:none;font-size:11px}
+    .fld label{font-size:9.5px}
+    .grid{gap:4px 12px}
+    .crit{padding:5px 9px;font-size:11px;margin-top:6px}
+    table{font-size:10px}
+    th,td{padding:3px 7px}
+    .events{font-size:10.5px}
+    .chartwrap{padding:3px}
+    .summary{padding:9px 11px;font-size:11px}
+    .summary .verdict{font-size:14px}
+    footer{margin-top:6px}
+    /* printer-friendly: ตัดสีพื้น เหลือเส้นขอบ (ประหยัดหมึก) */
+    body{print-color-adjust:economy;-webkit-print-color-adjust:economy}
+    .block{background:#fff!important;box-shadow:none!important}
+    .block-t .n{background:none!important;color:#000!important;border:1px solid #888!important}
+    .block-t{color:#000!important}
+    .crit,.crit.none,.prog-note{background:none!important;border:1px solid #999!important;color:#000!important}
+    .prog-note{font-size:11px;padding:5px 9px;margin-top:6px}
+    .summary,.summary.pass,.summary.fail,.summary.wait{background:none!important;border:1px solid #999!important}
+    .summary .verdict,.summary.pass .verdict,.summary.fail .verdict,.summary.wait .verdict{color:#000!important}
+    .ev .val,.ev .val.no,.pst-metrics .big{color:#000!important}
+    .chip{background:#eee!important;color:#000!important}
+    .batchbar,.remind,.nextread,.btn-undo,.cool-lock,#progPicker,.prog-hint,#customWrap,.stepper,.statusbar,.prog,.sound-toggle{display:none!important}
+    .chartwrap{border:1px solid #ccc;background:#fff!important}
+    .chartwrap svg rect{display:none}
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+<div class="sheet">
+  <div class="topbar">
+    <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+    <button class="sound-toggle" id="soundToggle" type="button">🔔 เสียง: เปิด</button>
+  </div>
+
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>Heat Process <em>Log</em></h1>
+    <p class="sub">บันทึกการให้ความร้อนวัตถุดิบ/มิกซ์ไอศกรีม · จับเวลา–อุณหภูมิ · ตรวจว่าผ่านเกณฑ์หรือไม่ · ออกรายงาน PDF A4</p>
+    <p class="sub guide-link" style="margin-top:7px"><a href="Heat-Log-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
+  </header>
+
+  <div class="rep-head">
+    <div class="rt">รายงานการให้ความร้อน (Heat Process Log)</div>
+    <div class="rs">Miss Icecream</div>
+  </div>
+
+  <!-- ตัวจัดการ Batch -->
+  <div class="batchbar">
+    <label>Batch:</label>
+    <select id="batchSel" onchange="switchBatch(this.value)"></select>
+    <button class="bbtn new" onclick="newBatch()">➕ Batch ใหม่</button>
+    <button class="bbtn del" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
+  </div>
+
+  <!-- 1. ข้อมูลรายงาน -->
+  <div class="block">
+    <div class="block-t"><span class="n">1</span> ข้อมูลรายงาน</div>
+    <div class="grid">
+      <div class="fld"><label>ผลิตภัณฑ์</label><input id="f_product" type="text" placeholder="เช่น ไอศกรีมวานิลลา" oninput="setF('product',this.value)"></div>
+      <div class="fld"><label>หมายเลข Lot</label><input id="f_lot" type="text" placeholder="เช่น 260612-1" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label>ผู้บันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
+      <div class="fld"><label>วันที่</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
+    </div>
+  </div>
+
+  <!-- 2. โปรแกรม -->
+  <div class="block">
+    <div class="block-t"><span class="n">2</span> เลือกโปรแกรมการให้ความร้อน</div>
+    <div class="prog-hint" style="font-size:12.5px;color:var(--muted);margin-bottom:6px">เลือกแนวการผลิตก่อน แล้วเลือกโปรแกรมตามวัตถุดิบ — ระบบเติมอุณหภูมิ/เวลาให้เอง</div>
+    <div id="progPicker"></div>
+    <div class="crit none" id="critBox">ยังไม่ได้เลือกโปรแกรม</div>
+    <div class="prog-note" id="progNote" style="display:none"></div>
+    <div class="fld logging-only" style="margin-top:10px"><label>เตือนให้บันทึกอุณหภูมิระหว่างต้ม ทุกๆ</label>
+      <select id="f_interval" onchange="setF('interval',+this.value)" style="max-width:180px">
+        <option value="1">1 นาที</option>
+        <option value="2">2 นาที</option>
+        <option value="3">3 นาที</option>
+        <option value="5">5 นาที</option>
+        <option value="10">10 นาที</option>
+        <option value="0">ไม่ต้องเตือน</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 3. บันทึกการต้ม -->
+  <div class="block logging-only" id="heatBlock">
+    <div class="block-t"><span class="n">3</span> บันทึกการให้ความร้อน <span class="prog" id="heatProg"><b>0/3</b><span class="pbar"><i></i></span></span></div>
+
+    <div class="stepper" id="stepperBox"></div>
+    <div class="statusbar" id="statusBar" style="display:none"></div>
+
+    <div style="font-size:13px;font-weight:600;color:var(--muted)">🌡 บันทึกอุณหภูมิเป็นระยะ <span style="font-weight:400;color:var(--muted-soft)">(ค่าแรกที่บันทึก = เริ่มต้ม)</span></div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.55;margin:3px 0 8px">กดปุ่มอุณหภูมิที่ <b>ต่ำกว่าแต่ใกล้ค่าที่อ่านได้มากที่สุด</b> (เช่น อ่านได้ 70.7 °C → กด 70.5) หรือพิมพ์ค่าที่อ่านได้เองในช่อง “ระบุ °C” · ระบบลงเวลาให้อัตโนมัติ และเริ่มจับเวลาให้เองเมื่ออุณหภูมิที่บันทึกถึงเกณฑ์</div>
+    <div class="quick" id="quickRow">
+      <button class="qb" id="qb0" onclick="quickTemp(0)" disabled>–</button>
+      <button class="qb" id="qb1" onclick="quickTemp(1)" disabled>–</button>
+      <button class="qb" id="qb2" onclick="quickTemp(2)" disabled>–</button>
+      <button class="qb" id="qb3" onclick="quickTemp(3)" disabled>–</button>
+      <button class="qb" id="qb4" onclick="quickTemp(4)" disabled>–</button>
+      <button class="qb" id="qb5" onclick="quickTemp(5)" disabled>–</button>
+      <input id="f_mtemp" type="number" step="0.1" placeholder="ระบุ °C">
+      <button class="sub-b" onclick="quickTempManual()">＋ บันทึก</button>
+    </div>
+
+    <div class="remind" id="remindBox" style="display:none"></div>
+
+    <button class="btn big stop" id="btnEndHold" style="margin-top:22px" onclick="confirmEndHold()">⏹ จบการให้ความร้อน — หยุดจับเวลา</button>
+    <div class="logged empty" id="lg_endHold">ยังไม่บันทึก</div>
+    <button class="btn-undo" id="undoEndHold" style="display:none" onclick="cancelEndHold()">↩ ยกเลิกการจบการให้ความร้อน (กดผิด)</button>
+
+    <table id="readTbl" style="margin-top:14px;display:none"><thead><tr><th>#</th><th>เวลา</th><th>อุณหภูมิ</th><th></th></tr></thead><tbody id="readBody"></tbody></table>
+  </div>
+
+  <!-- 4. ลดความร้อน -->
+  <div class="block logging-only" id="coolBlock">
+    <div class="block-t"><span class="n">4</span> บันทึกการลดความร้อน <span class="prog" id="coolProg"><b>0/2</b><span class="pbar"><i></i></span></span></div>
+    <div class="cool-lock" id="coolLock">🔒 ส่วนนี้จะบันทึกได้หลังจากกด “จบการให้ความร้อน” ด้านบนค่ะ</div>
+    <button class="btn big cool" id="btnStartCool" onclick="logEvent('startCool')">▶ เริ่มลดความร้อน — บันทึกเวลา</button>
+    <div class="logged empty" id="lg_startCool">ยังไม่บันทึก</div>
+    <div class="quick" style="margin-top:8px"><span style="font-size:12.5px;color:var(--muted)">อุณหภูมิตอนเริ่มลด (ไม่บังคับ):</span><input id="f_coolTemp" type="number" step="0.1" placeholder="°C" oninput="setF('coolStartTemp',this.value);updateUI()"></div>
+    <button class="btn big done" id="btnReachCool" style="margin-top:12px" onclick="logEvent('reachCool')">⏹ ถึง ≤4 °C — บันทึกเวลา</button>
+    <div class="logged empty" id="lg_reachCool">ยังไม่บันทึก</div>
+  </div>
+
+  <!-- บันทึกเพิ่มเติม -->
+  <div class="block" id="noteBlock">
+    <div class="block-t"><span class="n" style="background:#A85B47">📝</span> บันทึกเพิ่มเติม</div>
+    <div class="fld">
+      <label>ข้อความสำคัญที่ต้องเก็บไว้กับข้อมูล Batch นี้ (ถ้ามี)</label>
+      <textarea id="f_note" rows="3" placeholder="พิมพ์บันทึก เช่น เหตุการณ์ผิดปกติ สิ่งที่อยากปรับครั้งหน้า…" oninput="setNote(this)"></textarea>
+    </div>
+  </div>
+
+  <!-- 5. สรุป + กราฟ -->
+  <div class="block">
+    <div class="block-t"><span class="n">5</span> สรุปผล + กราฟ</div>
+    <div class="chartwrap" id="chartWrap"><div class="chart-empty">กราฟจะแสดงเมื่อมีข้อมูลอุณหภูมิ</div></div>
+    <div class="summary wait" id="summaryBox" style="margin-top:12px"><div class="verdict">รอข้อมูล</div>เริ่มเลือกโปรแกรมและกดปุ่มบันทึกระหว่างต้มค่ะ</div>
+    <div class="events" id="eventsBox" style="margin-top:16px"></div>
+    <table id="repReadTbl" style="display:none"><thead><tr><th>#</th><th>เวลา</th><th>อุณหภูมิ (°C)</th></tr></thead><tbody id="repReadBody"></tbody></table>
+  </div>
+
+  <div id="pmbar">
+    <span class="msg">✅ หน้านี้พร้อมพิมพ์แล้ว — พื้นขาว ไม่มีสี ประหยัดหมึก · กดปุ่ม <b>พิมพ์</b> หรือ <b>Ctrl/⌘ + P</b> แล้วเบราว์เซอร์จะจัดหน้าให้เอง (ไม่ตัดคำ)</span>
+    <button class="btn done" style="color:#fff" onclick="window.print()">🖨 พิมพ์ / บันทึก PDF</button>
+    <button class="btn ghost" onclick="exitPrintMode()">✕ ออกจากโหมด</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn done" style="color:#fff" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
+    <button class="btn done" style="color:#fff" onclick="enterPrintMode()">🖨 พิมพ์เอกสาร</button>
+    <button class="btn ghost" onclick="resetAll()">เริ่มใหม่ (ล้างข้อมูล)</button>
+  </div>
+  <p class="note logging-only">หมายเหตุ: เครื่องมือนี้ช่วยบันทึกและดูภาพรวม ค่าผ่าน/ไม่ผ่านอิงตามตัวเลขที่กรอกและนาฬิกาของเครื่อง ไม่แทนเครื่องบันทึกอุณหภูมิที่สอบเทียบหรือการตรวจรับรองอย่างเป็นทางการ · ข้อมูลถูกบันทึกอัตโนมัติในเบราว์เซอร์ของเครื่องนี้ (ไม่ส่งออกที่ไหน) กด "เริ่มใหม่" เพื่อล้าง</p>
+  <footer>Miss Icecream</footer>
+</div>
+
+<script>
+const PROGRAMS=[
+  // ประเภท 1 — LTLT พาสเจอไรซ์มิกซ์ทั้งหมด (แนวทำขาย)
+  {cat:1,k:'mixAll',label:'พาสเจอไรซ์มิกซ์ไอศกรีมทั้งหมด',temp:68.5,time:30},
+  // ประเภท 2 — ฆ่าเชื้อวัตถุดิบเสี่ยง แบบให้ความร้อนนาน
+  {cat:2,k:'rawMilk',label:'นมดิบ',temp:63,time:30},
+  {cat:2,k:'rawCream',label:'ครีมดิบ',temp:70,time:30},
+  {cat:2,k:'coconutLong',label:'กะทิคั้นสด',temp:70,time:30},
+  {cat:2,k:'nutMilk',label:'นมพืชจากนัท (อัลมอนด์ เม็ดมะม่วงหิมพานต์)',temp:70,time:30},
+  {cat:2,k:'eggYolkLong',label:'ไข่แดง (แบบ LTLT ไม่ทำคัสตาร์ด)',temp:63,time:30},
+  // ประเภท 3 — ฆ่าเชื้อวัตถุดิบเสี่ยง แบบรักษากลิ่นรส / ความร้อนสูงเวลาสั้น
+  {cat:3,k:'freshFruit',label:'ผลไม้สด',temp:70,tempHi:75,time:2},
+  {cat:3,k:'coconut',label:'กะทิคั้นสด',temp:80,time:2},
+  {cat:3,k:'mixShort',label:'ให้ความร้อนกับมิกซ์ทั้งหมด',temp:80,time:2},
+  {cat:3,k:'custard',label:'ไข่แดงแบบทำคัสตาร์ด (82–85 °C)',temp:82,ceiling:85,noTimer:true},
+  // ประเภท 4 — กำหนดเอง
+  {cat:4,k:'custom',label:'ระบุเวลาและอุณหภูมิเอง'}
+];
+const CAT_LABEL={1:'① LTLT — พาสเจอไรซ์มิกซ์ทั้งหมด (แนวทำขาย)',2:'② LTLT — พาสเจอร์ไรส์วัตถุดิบเสี่ยง (แนวทำทาน)',3:'③ ให้ความร้อนสูง เวลาสั้น (แนวทำทาน เน้นรักษากลิ่นรส)',4:'④ กำหนดเอง'};
+const LEGACY={iceCreamMix:'mixAll',eggYolk:'eggYolkLong',freshCoconut:'coconut',plantMilk:'nutMilk'};
+const KEY='ltlt_log_v1';            // คีย์เดิม (รุ่นบันทึกเดี่ยว) ใช้ย้ายข้อมูลเข้าระบบหลาย Batch
+const STORE_KEY='ltlt_store_v1';    // คีย์ใหม่ เก็บได้หลาย Batch
+
+function fresh(){
+  return {product:'',lot:'',recorder:'',date:thaiDate(Date.now()),program:'',progMode:'',ctemp:'',ctime:'',interval:3,
+    startHeat:null,reachTemp:null,endHold:null,endHoldReason:'',startCool:null,coolStartTemp:'',reachCool:null,readings:[],pasteurNotified:false,remindKey:null,remindCount:0,note:''};
+}
+function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+let store=loadStore();
+let state=store.batches[store.current];
+
+function loadStore(){
+  try{const s=localStorage.getItem(STORE_KEY);if(s){const o=JSON.parse(s);if(o&&o.batches&&o.order&&o.order.length&&o.batches[o.current])return o;}}catch(e){}
+  let first=null;
+  try{const old=localStorage.getItem(KEY);if(old)first=JSON.parse(old);}catch(e){}
+  const id=newId();const o={batches:{},order:[id],current:id};
+  o.batches[id]=first||fresh();
+  return o;
+}
+function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(store))}catch(e){}}
+function save(){persist()}
+
+function batchLabel(id){const b=store.batches[id];if(!b)return 'Batch';const nm=(b.product||'').trim();return nm||('Batch · '+(b.date||''))}
+function refreshBatchSel(){
+  const sel=document.getElementById('batchSel');if(!sel)return;
+  sel.innerHTML=store.order.map((id,i)=>'<option value="'+id+'"'+(id===store.current?' selected':'')+'>'+(i+1)+'. '+escapeHtml(batchLabel(id))+'</option>').join('');
+}
+function switchBatch(id){if(!store.batches[id])return;store.current=id;state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel()}
+function newBatch(){
+  const id=newId();store.batches[id]=fresh();store.order.push(id);store.current=id;state=store.batches[id];
+  persist();syncInputs();updateUI();refreshBatchSel();
+  const r=document.getElementById('f_product');if(r)r.focus();
+}
+function deleteBatch(){
+  if(store.order.length<=1){
+    if(!confirm('นี่เป็น Batch เดียวที่มี — ล้างข้อมูลแล้วเริ่ม Batch ใหม่?'))return;
+    const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();return;
+  }
+  if(!confirm('ลบ Batch นี้? ข้อมูลของ Batch นี้จะหายถาวร'))return;
+  const cur=store.current;delete store.batches[cur];store.order=store.order.filter(x=>x!==cur);
+  store.current=store.order[0];state=store.batches[store.current];persist();syncInputs();updateUI();refreshBatchSel();
+}
+
+function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
+function hms(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
+function hm(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes()].map(n=>String(n).padStart(2,'0')).join(':')}
+function fmtDur(ms){if(ms==null)return '—';let s=Math.round(ms/1000);const m=Math.floor(s/60);s=s%60;return m+' นาที '+String(s).padStart(2,'0')+' วิ'}
+
+function crit(){
+  if(state.program==='custom') return {temp:parseFloat(state.ctemp),time:parseFloat(state.ctime)};
+  let k=state.program; if(LEGACY[k])k=LEGACY[k];
+  const p=PROGRAMS.find(x=>x.k===k);
+  if(!p)return {temp:NaN,time:NaN};
+  return {temp:p.temp,time:p.noTimer?NaN:p.time,noTimer:!!p.noTimer,ceiling:p.ceiling,tempHi:p.tempHi,cat:p.cat};
+}
+
+function setF(k,v){state[k]=v;save();if(k==='product')refreshBatchSel()}
+function setCustom(){state.program='custom';state.progMode='custom';state.ctemp=document.getElementById('f_ctemp').value;state.ctime=document.getElementById('f_ctime').value;save();updateUI()}
+
+/* โหมดการผลิต: sell = ทำขาย · home = ทำทาน · custom = กำหนดเอง */
+let _homeListOpen=false; // ทำทาน: เปิดรายการเต็มชั่วคราวเมื่อกด "เปลี่ยนโปรแกรม"
+function progMode(){
+  if(state.progMode)return state.progMode;
+  if(state.program==='custom')return 'custom';
+  if(state.program){const p=PROGRAMS.find(x=>x.k===(LEGACY[state.program]||state.program));if(p)return p.cat===1?'sell':'home';}
+  return '';
+}
+function setMode(m){
+  if(m==='sell'){selectProgram('mixAll');return;}          // เลือกโปรแกรมทำขายให้อัตโนมัติ
+  if(m==='custom'){selectProgram('custom');return;}        // เปิดแถบกำหนดเอง
+  // home — คงโปรแกรมเดิมถ้าเป็นแนวทำทานอยู่แล้ว มิฉะนั้นให้เลือกใหม่จากรายการ
+  const p=PROGRAMS.find(x=>x.k===(LEGACY[state.program]||state.program));
+  if(state.program && !(p&&(p.cat===2||p.cat===3))){
+    if(state.readings.length && !state.endHold){
+      if(!confirm('กำลังบันทึกการให้ความร้อนอยู่ — เปลี่ยนเป็น “ผลิตเพื่อทำทาน” จะยกเลิกโปรแกรมเดิม และต้องกดเลือกโปรแกรมใหม่จากรายการทันที ระบบจึงจะคำนวณต่อได้\n\nยืนยันไหมคะ?')){buildProgPicker();return;}
+      state.pasteurNotified=false;
+    }
+    state.program='';
+  }
+  state.progMode='home';save();buildProgPicker();updateUI();
+}
+function progBtnHTML(p){
+  const meta=p.noTimer?'ไม่จับเวลา · 82–85 °C':((p.tempHi?(p.temp+'–'+p.tempHi):p.temp)+' °C / '+p.time+' นาที');
+  return '<button type="button" class="prog-opt'+(state.program===p.k?' sel':'')+'" onclick="selectProgram(\''+p.k+'\')"><span class="nm">'+p.label+'</span><span class="meta">'+meta+'</span></button>';
+}
+function buildProgPicker(){
+  const wrap=document.getElementById('progPicker');if(!wrap)return;
+  const m=progMode();
+  let h='<div class="mode-grid">'
+    +'<button type="button" class="mode-btn'+(m==='sell'?' sel':'')+'" onclick="setMode(\'sell\')">🛒 ผลิตเพื่อทำขาย</button>'
+    +'<button type="button" class="mode-btn'+(m==='home'?' sel':'')+'" onclick="setMode(\'home\')">🏠 ผลิตเพื่อทำทาน</button>'
+    +'<button type="button" class="mode-btn'+(m==='custom'?' sel':'')+'" onclick="setMode(\'custom\')">⚙ กำหนดอุณหภูมิและเวลาเอง</button>'
+    +'</div>';
+  if(m==='sell'){
+    h+='<div class="prog-cat">พาสเจอไรซ์มิกซ์ทั้งหมดตามประกาศ สธ.354</div><div class="prog-grid">'
+      +PROGRAMS.filter(p=>p.cat===1).map(progBtnHTML).join('')+'</div>';
+  }else if(m==='home'){
+    const pcur=PROGRAMS.find(x=>x.k===(LEGACY[state.program]||state.program));
+    const homeSel=pcur&&(pcur.cat===2||pcur.cat===3);
+    if(homeSel&&!_homeListOpen){
+      // เลือกแล้ว → ยุบรายการ เหลือเฉพาะโปรแกรมที่เลือก + ปุ่มเปลี่ยน
+      h+='<div class="prog-cat">'+(pcur.cat===2?'① พาสเจอร์ไรส์วัตถุดิบเสี่ยง':'② ให้ความร้อนสูง ระยะเวลาสั้น (เน้นรักษากลิ่นรส ฆ่าเชื้อแต่ไม่ใช่การพาสเจอร์ไรส์มาตรฐาน)')+'</div>';
+      h+='<div class="prog-grid">'+progBtnHTML(pcur)+'</div>';
+      h+='<button type="button" class="chg-prog" onclick="_homeListOpen=true;buildProgPicker()">🔁 เปลี่ยนโปรแกรม — ดูรายการทั้งหมด</button>';
+    }else{
+      h+='<div class="prog-cat">① พาสเจอร์ไรส์วัตถุดิบเสี่ยง</div><div class="prog-grid">'
+        +PROGRAMS.filter(p=>p.cat===2).map(progBtnHTML).join('')+'</div>';
+      h+='<div class="prog-cat">② ให้ความร้อนสูง ระยะเวลาสั้น (เน้นรักษากลิ่นรส ฆ่าเชื้อแต่ไม่ใช่การพาสเจอร์ไรส์มาตรฐาน)</div><div class="prog-grid">'
+        +PROGRAMS.filter(p=>p.cat===3).map(progBtnHTML).join('')+'</div>';
+    }
+  }else if(m==='custom'){
+    h+='<div class="prog-cat">กำหนดเกณฑ์เอง</div><div class="prog-grid">'
+      +'<div class="prog-opt custom'+(state.program==='custom'?' sel':'')+'">'
+      +'<span class="nm">กรอกอุณหภูมิและเวลาที่ต้องการ</span>'
+      +'<span style="display:flex;align-items:center;gap:6px">'
+      +'<input id="f_ctemp" type="number" step="0.1" placeholder="°C" value="'+(state.ctemp||'')+'" oninput="setCustom()">'
+      +'<span style="color:var(--muted);font-size:12.5px">°C /</span>'
+      +'<input id="f_ctime" type="number" step="1" placeholder="นาที" value="'+(state.ctime||'')+'" oninput="setCustom()">'
+      +'<span style="color:var(--muted);font-size:12.5px">นาที</span>'
+      +'</span></div></div>';
+  }
+  wrap.innerHTML=h;
+}
+function selectProgram(k){
+  const prev=state.program;
+  // กำลังบันทึกอยู่และยังไม่กดจบ → เตือน + ยืนยันก่อนเปลี่ยนโปรแกรม
+  if(prev && k!==prev && state.readings.length && !state.endHold){
+    if(!confirm('กำลังบันทึกการให้ความร้อนอยู่ และยังไม่ได้กด “จบการให้ความร้อน”\n\nการเปลี่ยนโปรแกรมจะนำ “เกณฑ์ใหม่” มาคำนวณกับข้อมูลที่บันทึกไว้แล้ว (ไม่ลบข้อมูลที่บันทึก) — ระบบจะคิดเวลา/ผ่านเกณฑ์ใหม่ให้อัตโนมัติ ไม่ต้องเริ่มบันทึกใหม่\n\nยืนยันเปลี่ยนโปรแกรมไหมคะ?')){
+      buildProgPicker(); // ยกเลิก = คงไฮไลต์เดิม
+      return;
+    }
+    state.pasteurNotified=false; // ให้คำนวณสถานะ “สมบูรณ์” ใหม่ตามเกณฑ์ใหม่
+  }
+  state.program=k;
+  _homeListOpen=false; // เลือกแล้ว → ยุบรายการ
+  // อัปเดตโหมดการผลิตให้สอดคล้องกับโปรแกรมที่เลือก
+  if(k==='custom')state.progMode='custom';
+  else{const pm=PROGRAMS.find(x=>x.k===(LEGACY[k]||k));if(pm)state.progMode=pm.cat===1?'sell':'home';}
+  // ตั้งค่า default ช่วงเตือนบันทึกตามเวลาของโปรแกรม: <3 นาที → ทุก 1 นาที, ≥3 นาที → ทุก 3 นาที
+  if(k!==prev && k!=='custom'){
+    const p=PROGRAMS.find(x=>x.k===(LEGACY[k]||k));
+    if(p){ state.interval = p.noTimer ? 0 : ((typeof p.time==='number'&&p.time<3)?1:3);
+      const ivEl=document.getElementById('f_interval');if(ivEl)ivEl.value=state.interval; }
+  }
+  save();buildProgPicker();updateUI();
+}
+
+function logEvent(name){
+  if(state[name] && !confirm('บันทึกไว้แล้ว ('+hms(state[name])+') ต้องการบันทึกทับด้วยเวลาปัจจุบันไหม?')) return;
+  state[name]=Date.now();save();updateUI();
+}
+function heatStatus(c,rt,now){
+  if(c.noTimer){const mx=state.readings.length?Math.max(...state.readings.map(r=>r.temp)):null;return {complete:mx!=null&&mx>=82,reason:'ยังไม่ถึงเป้า 82 °C (เนื้อยังไม่เคลือบหลังช้อน)'};}
+  if(!state.program||isNaN(c.temp)||isNaN(c.time))return {complete:false,reason:'ยังไม่ได้เลือกโปรแกรม/เกณฑ์'};
+  if(!rt)return {complete:false,reason:'อุณหภูมิยังไม่ถึงเกณฑ์ ≥ '+c.temp+' °C (ยังไม่เริ่มจับเวลา)'};
+  const end=rt+c.time*60000;
+  if(now<end){const left=Math.max(1,Math.ceil((end-now)/60000));return {complete:false,reason:'คงอุณหภูมิยังไม่ครบ '+c.time+' นาที (เหลืออีกประมาณ '+left+' นาที)'};}
+  if(state.readings.some(r=>r.t>=rt&&r.t<=now&&r.temp<c.temp))return {complete:false,reason:'อุณหภูมิเคยหลุดต่ำกว่า '+c.temp+' °C ระหว่างจับเวลา — ตามหลัก LTLT ควรเริ่มจับเวลาใหม่'};
+  return {complete:true,reason:''};
+}
+function confirmEndHold(){
+  if(state.endHold){if(!confirm('บันทึกจบการให้ความร้อนไว้แล้ว ('+hms(state.endHold)+') ต้องการบันทึกทับด้วยเวลาปัจจุบันไหม?'))return;state.endHold=Date.now();save();updateUI();return;}
+  const c=crit();const rt=getReachTime(c);const now=Date.now();
+  const st=heatStatus(c,rt,now);
+  if(st.complete){
+    if(!confirm('ยืนยัน “จบการให้ความร้อน” ใช่ไหมคะ?\nระบบจะหยุดจับเวลา LTLT และปลดล็อกส่วนบันทึกการลดความร้อน'))return;
+    state.endHoldReason='';state.endHold=now;save();updateUI();return;
+  }
+  // ยังไม่สมบูรณ์ — เตือน + ยืนยัน + ระบุเหตุผล
+  if(!confirm('⚠ การพาสเจอไรซ์ยังไม่สมบูรณ์\n\n'+st.reason+'\n\nต้องการจบการให้ความร้อนตอนนี้จริงๆ ใช่ไหมคะ?'))return;
+  const reason=prompt('ระบุเหตุผลที่จบก่อนสมบูรณ์ (ไม่บังคับ — เว้นว่างแล้วกดตกลงได้)','');
+  if(reason===null)return; // กดยกเลิก = ไม่จบ
+  state.endHoldReason=reason.trim();state.endHold=now;save();updateUI();
+}
+function cancelEndHold(){
+  if(!state.endHold)return;
+  if(confirm('ยกเลิกการจบการให้ความร้อน? ระบบจะกลับไปจับเวลาต่อ และบันทึกอุณหภูมิเพิ่มได้ค่ะ')){
+    state.endHold=null;state.endHoldReason='';state.pasteurNotified=false;save();updateUI();
+  }
+}
+function quickTemp(i){
+  const c=crit();if(isNaN(c.temp)){alert('เลือกโปรแกรมก่อนค่ะ');return}
+  addReading(c.temp+i*0.5);
+}
+function quickTempManual(){
+  if(!state.program){alert('กรุณาเลือกโปรแกรมก่อนบันทึกอุณหภูมิค่ะ');return}
+  const el=document.getElementById('f_mtemp');const v=parseFloat(el.value);
+  if(isNaN(v)){alert('กรอกอุณหภูมิก่อนค่ะ');return}
+  addReading(v);el.value='';
+}
+function addReading(temp){
+  const now=Date.now();
+  const v=Math.round(temp*10)/10;
+  const c=crit();
+  const rtBefore=getReachTime(c); // จุดเริ่มจับเวลาก่อนเพิ่มค่านี้
+  state.readings.push({t:now,temp:v});
+  showRemind(false);
+  save();updateUI();
+  // เกินช่วงแนะนำ / เพดาน (ผลไม้ 70–75 °C หรือ ไข่แดงคัสตาร์ด เพดาน 85 °C)
+  const hiLimit=c.tempHi||c.ceiling;
+  if(hiLimit&&v>hiLimit){
+    cdBeep();
+    const msg=c.tempHi
+      ? '⚠ อุณหภูมิ '+v+' °C เกินช่วงแนะนำ ('+c.temp+'–'+c.tempHi+' °C)\n\nลดไฟลงเพื่อรักษากลิ่นรส อย่าให้เกิน '+c.tempHi+' °C ค่ะ'
+      : '⚠ อุณหภูมิ '+v+' °C เกินเพดาน '+hiLimit+' °C (คัสตาร์ด: เป้า 82 °C · เพดาน 85 °C)\n\nเสี่ยงไข่ตกตะกอน/แตกเป็นก้อน (โปรตีนไข่สุกเกิน) — รีบยกลงจากเตาค่ะ';
+    setTimeout(()=>alert(msg),60);
+  }
+  // (A) อุณหภูมิหลุดต่ำกว่าเกณฑ์ระหว่างจับเวลา -> ต้องเริ่มจับเวลาใหม่
+  if(!isNaN(c.temp)&&rtBefore!==null&&v<c.temp&&!state.endHold){
+    state.pasteurNotified=false;save();updateUI();
+    setTimeout(()=>alert('⚠ อุณหภูมิต่ำกว่าเกณฑ์ '+c.temp+' °C\n\nตามหลัก LTLT ต้องเริ่มจับเวลาใหม่ค่ะ\nเมื่ออุ่นกลับให้อุณหภูมิ ≥ '+c.temp+' °C แล้วบันทึกอีกครั้ง ระบบจะเริ่มนับเวลาใหม่ให้อัตโนมัติ\n\nกดตกลงเพื่อรับทราบ'),60);
+    return;
+  }
+  // (B) แจ้งเตือนเมื่อพาสเจอไรซ์สมบูรณ์ (คงอุณหภูมิครบเวลาในช่วงต่อเนื่องปัจจุบัน)
+  const rt=getReachTime(c);
+  if(rt&&!isNaN(c.time)&&!state.pasteurNotified&&now>=rt+c.time*60000){
+    state.pasteurNotified=true;save();
+    cdBeep();
+    setTimeout(()=>alert('✓ การพาสเจอไรซ์สมบูรณ์แล้ว\n\nคงอุณหภูมิ ≥ '+c.temp+' °C ครบ '+c.time+' นาทีตามเกณฑ์ LTLT\nหยุดให้ความร้อนแล้วกด “จบการให้ความร้อน” ได้เลยค่ะ'),60);
+  }
+}
+function delReading(i){state.readings.splice(i,1);save();updateUI()}
+
+/* แก้เวลาย้อนหลัง — กรณีลืมบันทึกแล้วมาบันทึกทีหลัง */
+function editReadTime(i){
+  const cell=document.getElementById('rt_'+i);const r=state.readings[i];if(!cell||!r)return;
+  const d=new Date(r.t),hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');
+  cell.innerHTML='<input type="time" class="et-in" id="etr_'+i+'" value="'+hh+':'+mm+'"> <button class="et-ok" onclick="saveReadTime('+i+')">✓ ตกลง</button> <button class="del" onclick="updateUI()">ยกเลิก</button>';
+  const inp=document.getElementById('etr_'+i);if(inp)inp.focus();
+}
+function saveReadTime(i){
+  const el=document.getElementById('etr_'+i);const r=state.readings[i];if(!el||!r)return;
+  if(!el.value){alert('เลือกเวลาก่อนค่ะ');return}
+  const p=el.value.split(':').map(Number);
+  const d=new Date(r.t);d.setHours(p[0],p[1],0,0);
+  r.t=d.getTime();
+  state.readings.sort((a,b)=>a.t-b.t);   // เรียงตามเวลาใหม่ ให้การคำนวณ LTLT ถูกต้อง
+  state.pasteurNotified=false;           // คำนวณสถานะสมบูรณ์ใหม่ตามเวลาที่แก้
+  save();updateUI();
+}
+function editReadTemp(i){
+  const cell=document.getElementById('rc_'+i);const r=state.readings[i];if(!cell||!r)return;
+  cell.innerHTML='<input type="number" step="0.1" class="et-in" id="etc_'+i+'" value="'+r.temp+'" style="width:80px;text-align:center"> °C <button class="et-ok" onclick="saveReadTemp('+i+')">✓ ตกลง</button> <button class="del" onclick="updateUI()">ยกเลิก</button>';
+  const inp=document.getElementById('etc_'+i);if(inp)inp.focus();
+}
+function saveReadTemp(i){
+  const el=document.getElementById('etc_'+i);const r=state.readings[i];if(!el||!r)return;
+  const v=parseFloat(el.value);
+  if(isNaN(v)){alert('กรอกอุณหภูมิก่อนค่ะ');return}
+  r.temp=Math.round(v*10)/10;
+  state.pasteurNotified=false;   // คำนวณสถานะสมบูรณ์ใหม่ตามค่าที่แก้
+  save();updateUI();
+}
+function editEvTime(name){
+  const el=document.getElementById('lg_'+name);const ts=state[name];if(!el||!ts)return;
+  const d=new Date(ts),hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');
+  el.className='logged';
+  el.innerHTML='แก้เวลาเป็น <input type="time" class="et-in" id="et_'+name+'" value="'+hh+':'+mm+'"> <button class="et-ok" onclick="saveEvTime(\''+name+'\')">✓ ตกลง</button> <button class="del" onclick="updateUI()">ยกเลิก</button>';
+  const inp=document.getElementById('et_'+name);if(inp)inp.focus();
+}
+function saveEvTime(name){
+  const el=document.getElementById('et_'+name);if(!el||!state[name])return;
+  if(!el.value){alert('เลือกเวลาก่อนค่ะ');return}
+  const p=el.value.split(':').map(Number);
+  const d=new Date(state[name]);d.setHours(p[0],p[1],0,0);
+  state[name]=d.getTime();save();updateUI();
+}
+
+/* บันทึกเพิ่มเติม (note) */
+function autoGrow(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px'}
+function setNote(el){state.note=el.value;autoGrow(el);save();toggleNotePrint()}
+function toggleNotePrint(){const b=document.getElementById('noteBlock');if(b)b.classList.toggle('empty-note',!(state.note||'').trim())}
+
+function resetAll(){
+  if(!confirm('ล้างข้อมูลใน Batch นี้และเริ่มบันทึกใหม่?'))return;
+  const id=store.current;store.batches[id]=fresh();state=store.batches[id];
+  persist();syncInputs();updateUI();refreshBatchSel();
+}
+
+function syncInputs(){
+  document.getElementById('f_product').value=state.product||'';
+  document.getElementById('f_lot').value=state.lot||'';
+  document.getElementById('f_recorder').value=state.recorder||'';
+  document.getElementById('f_date').value=state.date||'';
+  if(LEGACY[state.program])state.program=LEGACY[state.program];
+  buildProgPicker();
+  const ct=document.getElementById('f_ctemp');if(ct)ct.value=state.ctemp||'';   // มีเฉพาะโหมดกำหนดเอง
+  const cti=document.getElementById('f_ctime');if(cti)cti.value=state.ctime||'';
+  document.getElementById('f_interval').value=(state.interval==null?3:state.interval);
+  document.getElementById('f_coolTemp').value=state.coolStartTemp||'';
+  const nt=document.getElementById('f_note');if(nt){nt.value=state.note||'';autoGrow(nt)}
+}
+
+function updateUI(){
+  const c=crit();
+  // criteria box
+  const cb=document.getElementById('critBox');
+  const tempLabel=c.tempHi?(c.temp+'–'+c.tempHi):c.temp;
+  if(!state.program){cb.className='crit none';cb.textContent='ยังไม่ได้เลือกโปรแกรม';}
+  else if(c.noTimer){cb.className='crit';cb.innerHTML='โปรแกรมนี้ <b>ไม่จับเวลา</b> — ให้บันทึกอุณหภูมิสูงสุดที่ถึง (เป้า <b>82 °C</b> เพดาน <b>85 °C</b>) และสังเกตเนื้อเคลือบหลังช้อน (nappe) แล้วยกลง';}
+  else if(isNaN(c.temp)||isNaN(c.time)){cb.className='crit none';cb.textContent='กรอกอุณหภูมิและเวลาที่ต้องการค่ะ';}
+  else{cb.className='crit';cb.innerHTML='เกณฑ์: คงอุณหภูมิ <b>≥ '+tempLabel+' °C</b> ต่อเนื่อง <b>≥ '+c.time+' นาที</b>';}
+
+  // คำเตือนนิยาม: ประเภท 2/3 = ฆ่าเชื้อเฉพาะจุด ไม่ใช่พาสเจอไรซ์มิกซ์ทั้งหมดตามกฎหมาย
+  const pn=document.getElementById('progNote');
+  if(state.program==='mixShort'){pn.style.display='block';pn.innerHTML='⚠ โปรแกรมนี้ให้ความร้อนมิกซ์ทั้งหมดแบบสั้นสำหรับ<b>ทำทานเอง</b> — เป็นการฆ่าเชื้อ แต่<b>ไม่ใช่การพาสเจอไรซ์ตามประกาศ สธ.354</b> ถ้าทำขาย ต้องใช้ <b>ผลิตเพื่อทำขาย (68.5 °C / 30 นาที)</b> เสมอ';}
+  else if(c.cat===2||c.cat===3){pn.style.display='block';pn.innerHTML='⚠ ประเภทนี้เป็นการ<b>ฆ่าเชื้อวัตถุดิบเสี่ยงเฉพาะจุด</b> ไม่ใช่การพาสเจอไรซ์มิกซ์ทั้งหมดตามกฎหมาย — ถ้าทำขาย ต้องใช้ <b>ผลิตเพื่อทำขาย (พาสเจอไรซ์มิกซ์ทั้งหมด 68.5 °C / 30 นาที)</b> เสมอ';}
+  else{pn.style.display='none';pn.innerHTML='';}
+
+  // quick buttons
+  const ok=!isNaN(c.temp);
+  [0,1,2,3,4,5].forEach(i=>{const b=document.getElementById('qb'+i);b.disabled=!ok;b.textContent=ok?((Math.round((c.temp+i*0.5)*10)/10)+' °C'):'–';});
+
+  // logged labels
+  setLog('endHold','จบให้ความร้อน');
+  const cb4=document.getElementById('coolBlock');if(cb4)cb4.classList.toggle('locked',!state.endHold);
+  const clk=document.getElementById('coolLock');if(clk)clk.style.display=state.endHold?'none':'block';
+  const ueh=document.getElementById('undoEndHold');if(ueh)ueh.style.display=state.endHold?'block':'none';
+  const cst0=parseFloat(state.coolStartTemp);
+  setLog('startCool','เริ่มลดความร้อน',(state.startCool&&!isNaN(cst0))?(' · '+cst0+' °C'):'');
+  setLog('reachCool','ถึง ≤4 °C');
+
+  // เวลาที่ถึงเกณฑ์ — ตรวจจับอัตโนมัติจากค่าที่บันทึก (ค่าแรกที่ ≥ เกณฑ์)
+  const rt=getReachTime(c);
+  renderStatus(c,rt);
+  renderStepper(c,rt);
+
+  // ปุ่มใหญ่: จางเมื่อยังไม่ถึงคิว (ยังกดได้ — มี logic ยืนยันป้องกันอยู่แล้ว)
+  const bEnd=document.getElementById('btnEndHold');if(bEnd)bEnd.classList.toggle('waiting',!state.readings.length&&!state.endHold);
+  const bRc=document.getElementById('btnReachCool');if(bRc)bRc.classList.toggle('waiting',!state.startCool&&!state.reachCool);
+
+  // readings table (logging) — ติดสีเขียวเมื่อถึงเกณฑ์
+  const rb=document.getElementById('readBody');rb.innerHTML='';
+  document.getElementById('readTbl').style.display=state.readings.length?'table':'none';
+  for(let i=state.readings.length-1;i>=0;i--){const r=state.readings[i];const okCls=(!isNaN(c.temp)&&r.temp>=c.temp)?' temp-ok':'';rb.innerHTML+='<tr><td>'+(i+1)+'</td><td class="t" id="rt_'+i+'">'+hms(r.t)+' <button class="ed-t" onclick="editReadTime('+i+')">✎</button></td><td class="t'+okCls+'" id="rc_'+i+'">'+r.temp+' °C <button class="ed-t" onclick="editReadTemp('+i+')">✎</button></td><td><button class="del" onclick="delReading('+i+')">ลบ</button></td></tr>';}
+
+  // report readings table (ค่าล่าสุดอยู่บนสุด)
+  const rrb=document.getElementById('repReadBody');rrb.innerHTML='';
+  document.getElementById('repReadTbl').style.display=state.readings.length?'table':'none';
+  for(let i=state.readings.length-1;i>=0;i--){const r=state.readings[i];rrb.innerHTML+='<tr><td>'+(i+1)+'</td><td class="t">'+hms(r.t)+'</td><td class="t">'+r.temp+'</td></tr>';}
+
+  // events summary
+  const holdDur=(rt&&state.endHold)?state.endHold-rt:null;
+  const coolDur=(state.startCool&&state.reachCool)?state.reachCool-state.startCool:null;
+  document.getElementById('eventsBox').innerHTML=
+    ev('เริ่มต้ม (ค่าแรกที่บันทึก)',state.readings.length?hms(state.readings[0].t):'—',state.readings.length?state.readings[0].t:null)+
+    ev('ถึงเกณฑ์ (เริ่มจับเวลา)',rt?hms(rt):'—',rt)+
+    ev('จบให้ความร้อน',hms(state.endHold),state.endHold)+
+    ev('ระยะเวลาคงอุณหภูมิ',holdDur!=null?(holdDur<0?'⚠ เวลาไม่ถูกต้อง':fmtDur(holdDur)):'—',holdDur)+
+    ev('เริ่มลดความร้อน',hms(state.startCool),state.startCool)+
+    ev('ถึง ≤4 °C',hms(state.reachCool),state.reachCool)+
+    ev('เวลาที่ใช้ลดความร้อน',coolDur!=null?(coolDur<0?'⚠ เวลาไม่ถูกต้อง':fmtDur(coolDur)):'—',coolDur)+
+    (state.endHoldReason?ev('เหตุผลที่จบก่อนสมบูรณ์',escapeHtml(state.endHoldReason),true):'');
+
+  toggleNotePrint();
+  buildChart(c);
+  evaluate(c,holdDur,coolDur,rt);
+  save();
+}
+
+// เวลาเริ่มจับเวลาของ "ช่วงต่อเนื่อง" ปัจจุบัน — ถ้าอุณหภูมิหลุดต่ำกว่าเกณฑ์ จะรีเซ็ตจุดเริ่ม (ตามหลัก LTLT)
+function getReachTime(c,reads){
+  reads=reads||state.readings;
+  if(!c||isNaN(c.temp)||c.noTimer)return null;
+  let rt=null;
+  for(const r of reads){ if(r.temp<c.temp){rt=null;} else if(rt===null){rt=r.t;} }
+  return rt;
+}
+// นับถอยหลังแบบอิงนาฬิกาจริง — ไม่รีเซ็ตเมื่อปิดจอ/ปิดหน้า
+let _cdAudio=null,_cdLastBeepEnd=null;
+// เสียงเปิด/ปิด (จำค่าไว้ประจำเครื่อง) + ปลดล็อกเสียงตั้งแต่แตะแรก (สำคัญบนมือถือ)
+const SND_KEY='heatlog_sound_v1';
+let soundOn=true;try{soundOn=localStorage.getItem(SND_KEY)!=='off';}catch(e){}
+function unlockAudio(){try{if(!_cdAudio)_cdAudio=new (window.AudioContext||window.webkitAudioContext)();if(_cdAudio.state==='suspended')_cdAudio.resume();}catch(e){}}
+function cdBeep(){
+  if(!soundOn)return;
+  try{if(!_cdAudio)_cdAudio=new (window.AudioContext||window.webkitAudioContext)();if(_cdAudio.state==='suspended')_cdAudio.resume();
+    const t0=_cdAudio.currentTime;for(let i=0;i<3;i++){const st=t0+i*0.3;const o=_cdAudio.createOscillator(),g=_cdAudio.createGain();o.connect(g);g.connect(_cdAudio.destination);o.type='square';o.frequency.value=880;g.gain.setValueAtTime(0.0001,st);g.gain.exponentialRampToValueAtTime(0.5,st+0.02);g.gain.exponentialRampToValueAtTime(0.0001,st+0.25);o.start(st);o.stop(st+0.27);}
+  }catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate([240,120,240]);}catch(e){}
+}
+// เสียงติ๊กสั้นสำหรับนับถอยหลัง 5-4-3-2-1
+let _lastTickKey=null;
+function tickBeep(){
+  if(!soundOn)return;
+  try{if(!_cdAudio)_cdAudio=new (window.AudioContext||window.webkitAudioContext)();if(_cdAudio.state==='suspended')_cdAudio.resume();
+    const t0=_cdAudio.currentTime;const o=_cdAudio.createOscillator(),g=_cdAudio.createGain();o.connect(g);g.connect(_cdAudio.destination);o.type='square';o.frequency.value=660;g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.4,t0+0.015);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.12);o.start(t0);o.stop(t0+0.14);
+  }catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate(60);}catch(e){}
+}
+// ติ๊กเมื่อ countdown ที่แสดงอยู่เหลือ 5..1 วินาที (dedup ต่อเป้าหมาย+วินาที)
+function cdTick(target,remMs){
+  const sec=Math.ceil(remMs/1000);
+  if(sec>=1&&sec<=5){const key=target+'_'+sec;if(_lastTickKey!==key){_lastTickKey=key;tickBeep();}}
+}
+// เตือนให้บันทึกอุณหภูมิทุกๆ ช่วงเวลา (นับจากการบันทึกครั้งล่าสุด หรือเริ่มต้ม)
+function showRemind(on){const b=document.getElementById('remindBox');if(!b)return;if(on){const iv=state.interval||3;b.style.display='block';b.innerHTML='⏰ ถึงเวลาบันทึกอุณหภูมิแล้ว (ทุก '+iv+' นาที) — กดปุ่มอุณหภูมิด้านบนเพื่อบันทึกค่ะ';}else{b.style.display='none';}}
+function checkReminder(){
+  const box=document.getElementById('remindBox');
+  const rt=getReachTime(crit());
+  if(state.endHold||!rt||state.interval===0){if(box)box.style.display='none';return;}   // ปิดเตือน / เตือนเฉพาะช่วงคงอุณหภูมิ
+  const last=state.readings.length?state.readings[state.readings.length-1].t:null;
+  if(!last){if(box)box.style.display='none';return;}
+  const iv=(state.interval||3)*60000;
+  const slot=Math.floor((Date.now()-last)/iv);
+  if(slot<1)return;
+  if(state.remindKey!==last){state.remindKey=last;state.remindCount=0;}
+  if(slot>state.remindCount){state.remindCount=slot;save();cdBeep();showRemind(true);}
+}
+/* แถบสถานะสด — นาฬิกาเดียว: นับถอยหลังถึง action ถัดไป */
+function _mmss(ms){const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function renderStatus(c,rt){
+  const box=document.getElementById('statusBar');if(!box)return;
+  if(c===undefined)c=crit();
+  if(rt===undefined)rt=getReachTime(c);
+  const show=(cls,html)=>{box.style.display='block';box.className='statusbar'+(cls?' '+cls:'');box.innerHTML=html;};
+  const ph=t=>'<span class="ph">'+t+'</span>';
+  const nx=t=>'<span class="nx">ถัดไป · '+t+'</span>';
+  if(!state.program){box.style.display='none';return;}
+  const last=state.readings.length?state.readings[state.readings.length-1]:null;
+  // เสร็จสิ้นทั้งหมด
+  if(state.reachCool){show('ok',ph('✓ เสร็จสิ้น')+nx('ไม่มีแล้วค่ะ — ถึง ≤4 °C เวลา '+hms(state.reachCool)));return;}
+  // ช่วงลดความร้อน
+  if(state.endHold){
+    if(state.startCool)show('hold',ph('❄ กำลังลดความร้อน — เริ่ม '+hms(state.startCool))+nx('พออุณหภูมิถึง ≤4 °C กด “ถึง ≤4 °C” ในข้อ 4'));
+    else show('',ph('⏹ จบให้ความร้อนแล้ว '+hms(state.endHold))+nx('กด “เริ่มลดความร้อน” ในข้อ 4 เมื่อเริ่มแช่เย็น'));
+    return;
+  }
+  // คัสตาร์ด (ไม่จับเวลา)
+  if(c.noTimer){
+    if(!last){show('',ph('พร้อมเริ่ม')+nx('บันทึกอุณหภูมิค่าแรกเมื่อเริ่มต้ม'));return;}
+    const mx=Math.max(...state.readings.map(r=>r.temp));
+    if(mx>85)show('heat',ph('⚠ เกินเพดาน 85 °C')+nx('รีบยกลงจากเตา แล้วกด “จบการให้ความร้อน”')+'<span class="sm">สูงสุดที่บันทึก '+mx+' °C</span>');
+    else if(mx>=82)show('ok',ph('✓ ถึงเป้า 82 °C แล้ว')+nx('สังเกตเนื้อเคลือบหลังช้อน (nappe) ยกลง แล้วกด “จบการให้ความร้อน”')+'<span class="sm">สูงสุดที่บันทึก '+mx+' °C · เพดาน 85 °C</span>');
+    else show('heat',ph('🔥 กำลังทำคัสตาร์ด')+nx('บันทึกอุณหภูมิต่อจนถึงเป้า 82 °C (เพดาน 85 °C)')+'<span class="sm">สูงสุดที่บันทึก '+mx+' °C</span>');
+    return;
+  }
+  // ยังไม่เริ่ม / กำลังไล่อุณหภูมิ
+  if(!rt){
+    if(!last){show('',ph('พร้อมเริ่ม')+nx('บันทึกอุณหภูมิค่าแรกเมื่อเริ่มต้ม (ค่าแรก = เริ่มต้ม)'));return;}
+    show('heat',ph('🔥 กำลังให้ความร้อน')+nx('บันทึกอุณหภูมิเป็นระยะ จนถึงเกณฑ์ ≥ '+c.temp+' °C')+'<span class="sm">ค่าล่าสุด '+last.temp+' °C เวลา '+hms(last.t)+' · เริ่มต้ม '+hms(state.readings[0].t)+'</span>');
+    return;
+  }
+  // ถึงเกณฑ์แล้ว — จับเวลา: นับถอยหลังถึง action ถัดไป (บันทึกผล หรือ จบให้ความร้อน)
+  if(isNaN(c.time)){box.style.display='none';return;}
+  const now=Date.now();
+  const end=rt+c.time*60000, remHold=end-now;
+  const frac=Math.max(0,Math.min(1,(now-rt)/(c.time*60000)));
+  const sbar='<span class="sbar"><i style="width:'+(frac*100).toFixed(1)+'%"></i></span>';
+  const smHold='<span class="sm">คงอุณหภูมิแล้ว '+_mmss(now-rt)+' / '+c.time+':00 นาที · ครบ '+hms(end)+' · ห้ามต่ำกว่า '+c.temp+' °C</span>';
+  if(remHold<=0){
+    show('ok',ph('✓ ครบเวลาขั้นต่ำแล้ว ('+c.time+' นาที เมื่อ '+hms(end)+')')+nx('⏹ กด “จบการให้ความร้อน” ได้เลย')
+      +'<span class="sm">คงอุณหภูมิต่อได้ตามต้องการค่ะ</span><span class="sbar"><i style="width:100%"></i></span>');
+    if(_cdLastBeepEnd!==end){_cdLastBeepEnd=end;cdBeep();}
+    return;
+  }
+  // เวลาถึงกำหนดบันทึกครั้งถัดไป
+  let remRead=null;
+  if(state.interval&&last){const iv=state.interval*60000;remRead=iv-((now-last.t)%iv);}
+  if(remRead!=null&&remRead<remHold){
+    show('heat',ph('⏳ กำลังจับเวลาคงอุณหภูมิ')+nx('🌡 บันทึกอุณหภูมิครั้งถัดไป ในอีก')
+      +'<span class="big">'+_mmss(remRead)+'</span>'+smHold+sbar);
+    cdTick(last.t+Math.ceil((now-last.t)/(state.interval*60000))*(state.interval*60000),remRead);
+  }else{
+    show('heat',ph('⏳ กำลังจับเวลาคงอุณหภูมิ')+nx('⏹ จบการให้ความร้อน — จะครบเกณฑ์ในอีก')
+      +'<span class="big">'+_mmss(remHold)+'</span>'
+      +'<span class="sm">ครบ '+c.time+' นาที เวลา '+hms(end)+' · ห้ามต่ำกว่า '+c.temp+' °C</span>'+sbar);
+    cdTick(end,remHold);
+  }
+}
+/* เส้นทาง 5 ขั้น */
+function renderStepper(c,rt){
+  const box=document.getElementById('stepperBox');if(!box)return;
+  if(c===undefined)c=crit();
+  if(rt===undefined)rt=getReachTime(c);
+  const noT=!!c.noTimer;
+  const mx=state.readings.length?Math.max(...state.readings.map(r=>r.temp)):null;
+  const reach=noT?((mx!=null&&mx>=82)?state.readings.find(r=>r.temp>=82).t:null):rt;
+  const steps=[
+    {lbl:'เริ่มต้ม',t:state.readings.length?state.readings[0].t:null},
+    {lbl:noT?'ถึงเป้า 82°':'ถึงเกณฑ์',t:reach},
+    {lbl:'จบให้ความร้อน',t:state.endHold},
+    {lbl:'เริ่มลด',t:state.startCool},
+    {lbl:'ถึง ≤4 °C',t:state.reachCool}
+  ];
+  let cur=steps.findIndex(s=>!s.t);
+  box.innerHTML=steps.map((s,i)=>'<div class="step '+(i<3?'heat':'cool')+(s.t?' done':(i===cur?' cur':''))+'"><div class="dot">'+(s.t?'✓':(i+1))+'</div>'+s.lbl+'<span class="tm">'+(s.t?hm(s.t):'&nbsp;')+'</span></div>').join('');
+  // progress หัวบล็อก 3 (3 ขั้นแรก) และบล็อก 4 (2 ขั้นหลัง)
+  const n3=steps.slice(0,3).filter(s=>s.t).length, n4=steps.slice(3).filter(s=>s.t).length;
+  const p3=document.getElementById('heatProg'),p4=document.getElementById('coolProg');
+  if(p3){p3.querySelector('b').textContent=n3===3?'ครบ ✓':(n3+'/3');p3.querySelector('.pbar i').style.width=(n3/3*100)+'%';}
+  if(p4){p4.querySelector('b').textContent=n4===2?'ครบ ✓':(n4+'/2');p4.querySelector('.pbar i').style.width=(n4/2*100)+'%';}
+}
+function ev(l,v,has){return '<div class="ev"><span class="lbl">'+l+'</span><span class="val'+(has?'':' no')+'">'+v+'</span></div>'}
+function setLog(name,label,extra){
+  const el=document.getElementById('lg_'+name);if(!el)return;
+  if(state[name]){el.className='logged';el.innerHTML='✓ '+label+': '+hms(state[name])+(extra||'')+' <button class="ed-t" onclick="editEvTime(\''+name+'\')">✎ แก้เวลา</button>';}
+  else{el.className='logged empty';el.textContent='ยังไม่บันทึก';}
+}
+
+function evaluate(c,holdDur,coolDur,rt){
+  const box=document.getElementById('summaryBox');
+  // โปรแกรมไม่จับเวลา (คัสตาร์ด) — สรุปจากอุณหภูมิสูงสุดที่บันทึก
+  if(c.noTimer){
+    if(!state.readings.length){box.className='summary wait';box.innerHTML='<div class="verdict">รอข้อมูล</div>บันทึกอุณหภูมิที่อ่านได้ระหว่างทำคัสตาร์ด ระบบจะเก็บค่าสูงสุดให้ค่ะ';return;}
+    const mx=Math.max(...state.readings.map(r=>r.temp));
+    const over=mx>85, reach=mx>=82;
+    let li='<li>อุณหภูมิสูงสุดที่บันทึก: <b>'+mx+' °C</b></li><li>เป้า 82 °C · เพดาน 85 °C</li><li>สังเกตเนื้อเคลือบหลังช้อน (nappe) แล้วยกลง</li>';
+    if(coolDur!=null){li+=coolDur<0?'<li style="color:var(--rose)">⚠ เวลาลดความร้อนไม่ถูกต้อง (ถึง ≤4 °C ก่อนเวลาเริ่มลด) — กด ✎ แก้เวลา เพื่อแก้ไข</li>':'<li>ลดความร้อนถึง ≤4 °C ใช้ <b>'+fmtDur(coolDur)+'</b></li>';}
+    if(state.endHoldReason)li+='<li>หมายเหตุ: '+escapeHtml(state.endHoldReason)+'</li>';
+    box.className='summary '+(over?'fail':(reach?'pass':'wait'));
+    box.innerHTML='<div class="verdict">'+(over?'⚠ เกินเพดาน 85 °C (เสี่ยงไข่สุกเกิน)':(reach?'✓ ถึงเป้า 82 °C — สังเกตเนื้อ nappe':'รอให้ถึงเป้า 82 °C'))+'</div><ul>'+li+'</ul>';
+    return;
+  }
+  if(!state.program||isNaN(c.temp)||!rt||!state.endHold){
+    box.className='summary wait';box.innerHTML='<div class="verdict">รอข้อมูล</div>ต้องเลือกโปรแกรม + บันทึกอุณหภูมิให้ถึงเกณฑ์ และกด "จบการให้ความร้อน" ก่อนค่ะ';return;
+  }
+  if(holdDur!=null&&holdDur<0){
+    box.className='summary fail';
+    box.innerHTML='<div class="verdict">⚠ เวลาไม่ถูกต้อง</div>เวลา “จบให้ความร้อน” ('+hms(state.endHold)+') อยู่ก่อนเวลาถึงเกณฑ์ ('+hms(rt)+') — กดปุ่ม ✎ แก้เวลา ที่รายการที่ผิดเพื่อแก้ไขค่ะ';
+    return;
+  }
+  const minutes=holdDur/60000;
+  const timeOk=minutes>=c.time;
+  // readings within hold window below threshold?
+  const low=state.readings.filter(r=>r.t>=rt&&r.t<=state.endHold&&r.temp<c.temp);
+  const tempOk=low.length===0;
+  const pass=timeOk&&tempOk;
+  let li='';
+  li+='<li>เกณฑ์: ≥ '+c.temp+' °C · ≥ '+c.time+' นาที</li>';
+  li+='<li>คงอุณหภูมิจริง: <b>'+minutes.toFixed(1)+' นาที</b> '+(timeOk?'✓ ครบเวลา':'✗ ยังไม่ครบเวลา')+'</li>';
+  li+='<li>อุณหภูมิระหว่างจับเวลา: '+(tempOk?'✓ ไม่หลุดต่ำกว่าเกณฑ์':'✗ มี '+low.length+' จุดต่ำกว่า '+c.temp+' °C → ตามหลัก LTLT ต้องเริ่มจับเวลาใหม่')+'</li>';
+  if(coolDur!=null){li+=coolDur<0?'<li style="color:var(--rose)">⚠ เวลาลดความร้อนไม่ถูกต้อง (ถึง ≤4 °C ก่อนเวลาเริ่มลด) — กด ✎ แก้เวลา เพื่อแก้ไข</li>':'<li>ลดความร้อนถึง ≤4 °C ใช้ <b>'+fmtDur(coolDur)+'</b></li>';}
+  box.className='summary '+(pass?'pass':'fail');
+  box.innerHTML='<div class="verdict">'+(pass?'✓ ผ่านเกณฑ์การให้ความร้อน':'✗ ไม่ผ่านเกณฑ์')+'</div><ul>'+li+'</ul>';
+}
+
+function buildChart(c){
+  const wrap=document.getElementById('chartWrap');
+  const rt=getReachTime(c);
+  const pts=[];
+  state.readings.forEach(r=>pts.push({t:r.t,v:r.temp}));
+  const lastTemp=state.readings.length?state.readings[state.readings.length-1].temp:(isNaN(c.temp)?null:c.temp);
+  const cst=parseFloat(state.coolStartTemp);
+  const coolTemp=!isNaN(cst)?cst:lastTemp;
+  if(state.startCool&&coolTemp!=null)pts.push({t:state.startCool,v:coolTemp});
+  if(state.reachCool)pts.push({t:state.reachCool,v:4});
+  pts.sort((a,b)=>a.t-b.t);
+  if(pts.length<2){wrap.innerHTML='<div class="chart-empty">กราฟจะแสดงเมื่อมีข้อมูลอุณหภูมิ ≥ 2 จุด</div>';return}
+
+  const W=620,H=240,mL=42,mR=14,mT=14,mB=46,pw=W-mL-mR,ph=H-mT-mB;
+  const t0=pts[0].t,t1=pts[pts.length-1].t;const tr=(t1-t0)||1;
+  const vals=pts.map(p=>p.v).concat(isNaN(c.temp)?[]:[c.temp]);
+  let vMin=Math.min(...vals),vMax=Math.max(...vals);
+  vMin=Math.floor((vMin-4)/5)*5;vMax=Math.ceil((vMax+4)/5)*5;if(vMin===vMax)vMax+=10;
+  const X=t=>mL+(t-t0)/tr*pw, Y=v=>mT+ph-(v-vMin)/(vMax-vMin)*ph;
+
+  let g='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="Sarabun,sans-serif">';
+  // hold window shade
+  if(rt&&state.endHold){
+    const x1=X(rt),x2=X(Math.min(state.endHold,t1));
+    g+='<rect x="'+x1.toFixed(1)+'" y="'+mT+'" width="'+(x2-x1).toFixed(1)+'" height="'+ph+'" fill="#6B8E4E" opacity="0.10"/>';
+  }
+  // y grid + labels
+  for(let v=vMin;v<=vMax;v+=Math.max(5,Math.round((vMax-vMin)/6/5)*5)){
+    const y=Y(v);
+    g+='<line x1="'+mL+'" y1="'+y.toFixed(1)+'" x2="'+(W-mR)+'" y2="'+y.toFixed(1)+'" stroke="#EFE5D2"/>';
+    g+='<text x="'+(mL-6)+'" y="'+(y+3).toFixed(1)+'" font-size="10" fill="#8C7A66" text-anchor="end">'+v+'</text>';
+  }
+  // threshold line
+  if(!isNaN(c.temp)){
+    const y=Y(c.temp);
+    g+='<line x1="'+mL+'" y1="'+y.toFixed(1)+'" x2="'+(W-mR)+'" y2="'+y.toFixed(1)+'" stroke="#A85B47" stroke-width="1.3" stroke-dasharray="5 4"/>';
+    g+='<text x="'+(W-mR)+'" y="'+(y-4).toFixed(1)+'" font-size="9.5" fill="#A85B47" text-anchor="end">เกณฑ์ '+c.temp+' °C</text>';
+  }
+  // data line
+  const dpath=pts.map((p,i)=>(i?'L':'M')+X(p.t).toFixed(1)+' '+Y(p.v).toFixed(1)).join(' ');
+  g+='<path d="'+dpath+'" fill="none" stroke="#6F804D" stroke-width="2"/>';
+  pts.forEach(p=>{g+='<circle cx="'+X(p.t).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="3" fill="#6F804D"/>';});
+  // แกน x: เส้นประ + ชื่อเหตุการณ์ (ถึงเกณฑ์ / จบให้ความร้อน / ถึง ≤4 °C) + เวลา
+  function anchorFor(x){return x<mL+34?'start':(x>W-mR-34?'end':'middle')}
+  function tick(x){g+='<line x1="'+x.toFixed(1)+'" y1="'+(mT+ph)+'" x2="'+x.toFixed(1)+'" y2="'+(mT+ph+4)+'" stroke="#BFB09B"/>'}
+  const marks=[];
+  if(rt)marks.push({t:rt,name:'ถึงเกณฑ์'});
+  if(state.endHold)marks.push({t:state.endHold,name:'จบให้ความร้อน'});
+  if(state.reachCool)marks.push({t:state.reachCool,name:'ถึง ≤4 °C'});
+  const inMarks=marks.filter(m=>m.t>=t0&&m.t<=t1).sort((a,b)=>a.t-b.t);
+  let lastNameX=-1e9,lastRow=1; // สลับสองแถวเมื่อชื่ออยู่ใกล้กัน กันทับ
+  inMarks.forEach(m=>{
+    const x=X(m.t);m.x=x;
+    g+='<line x1="'+x.toFixed(1)+'" y1="'+mT+'" x2="'+x.toFixed(1)+'" y2="'+(mT+ph)+'" stroke="#4F6B3A" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/>';
+    const row=(x-lastNameX<95&&lastRow===1)?2:1;
+    const y=row===1?(H-21):(H-32);
+    g+='<text x="'+x.toFixed(1)+'" y="'+y+'" font-size="8.5" fill="#4F6B3A" font-weight="600" text-anchor="'+anchorFor(x)+'">'+m.name+'</text>';
+    lastNameX=x;lastRow=row;
+  });
+  // เวลาบนแกน: เหตุการณ์ก่อน แล้วค่อยจุดเริ่ม/จุดสุดท้าย (ข้ามอันที่ทับกัน)
+  const tl=[];
+  function addT(ts,color){if(ts==null)return;const x=X(ts);if(tl.some(o=>Math.abs(o.x-x)<36))return;tl.push({x,txt:hm(ts),color:color||'#8C7A66'})}
+  inMarks.forEach(m=>addT(m.t,'#4F6B3A'));
+  addT(t0);addT(t1);
+  tl.forEach(o=>{tick(o.x);g+='<text x="'+o.x.toFixed(1)+'" y="'+(H-9)+'" font-size="9" fill="'+o.color+'" text-anchor="'+anchorFor(o.x)+'">'+o.txt+'</text>';});
+  g+='<text x="'+(mL)+'" y="11" font-size="9.5" fill="#8C7A66">°C</text>';
+  g+='</svg>';
+  wrap.innerHTML=g;
+}
+
+// init
+(function(){
+  if(!state.date)state.date=thaiDate(Date.now());
+  refreshBatchSel();syncInputs();updateUI();
+  setInterval(()=>{renderStatus();checkReminder();},1000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){renderStatus();checkReminder();}});
+  window.addEventListener('focus',()=>{renderStatus();checkReminder();});
+  // เสียง: ปุ่มเปิด/ปิด + ปลดล็อก AudioContext จากการแตะครั้งแรกๆ
+  const st=document.getElementById('soundToggle');
+  function paintSound(){if(!st)return;st.textContent=soundOn?'🔔 เสียง: เปิด':'🔕 เสียง: ปิด';st.classList.toggle('off',!soundOn);}
+  if(st)st.addEventListener('click',()=>{soundOn=!soundOn;try{localStorage.setItem(SND_KEY,soundOn?'on':'off')}catch(e){};if(soundOn)unlockAudio();paintSound();});
+  paintSound();
+  document.addEventListener('pointerdown',unlockAudio);
+  document.addEventListener('touchstart',unlockAudio,{passive:true});
+})();
+</script>
+<script>
+/* โหมดพร้อมพิมพ์ — แสดงหน้าพื้นขาว ไม่มีสี (ใช้สไตล์ .cap) แล้วให้ผู้ใช้สั่งพิมพ์เอง
+   ใช้การพิมพ์ของเบราว์เซอร์: ข้อความจริง ไม่ตัดคำ ไม่ซ้ำ */
+function enterPrintMode(){if(typeof refreshPrintHead==='function')refreshPrintHead();document.body.classList.add('cap');document.body.classList.add('printmode');window.scrollTo(0,0);}
+function exitPrintMode(){document.body.classList.remove('cap');document.body.classList.remove('printmode');}
+
+/* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า */
+function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
+async function sharePDFink(btn){
+  /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
+  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const hides=[...document.querySelectorAll('#pmbar,.actions,.back-link')], prevD=hides.map(el=>el.style.display);
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  try{
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+    if(typeof refreshPrintHead==='function')refreshPrintHead();
+    body.classList.add('cap');body.classList.add('printmode');
+    hides.forEach(el=>el.style.display='none');
+    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
+    const target=document.querySelector('.sheet');
+    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
+    let bs=[0];
+    target.querySelectorAll('.rep-head, .block').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
+    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
+    undo();
+    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
+    let pages=[], start=0, i=1;
+    while(i<bs.length){
+      if(bs[i]-start<=pageMaxPx){ i++; continue; }
+      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
+      pages.push([start,cut]); start=cut;
+    }
+    if(start<canvas.height)pages.push([start,canvas.height]);
+    for(let p=0;p<pages.length;p++){
+      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
+      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
+      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
+      if(p>0)pdf.addPage();
+      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
+    }
+    let name='Heat-Process-Log.pdf';
+    if(typeof state!=='undefined'){
+      // ชื่อสั้น: Log-ผลิตภัณฑ์-Lot.pdf (รองรับภาษาไทย ตัดเฉพาะอักขระต้องห้ามของชื่อไฟล์)
+      const parts=[state.product,state.lot].map(v=>String(v||'').trim().replace(/[\\\/:*?"<>|#%]+/g,'').replace(/\s+/g,'-')).filter(Boolean);
+      if(parts.length)name='Log-'+parts.join('-')+'.pdf';
+    }
+    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'รายงานการให้ความร้อน'});}
+    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
+  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
+}
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือการใช้งาน · Process Selector · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--muted-soft:#BFB09B;--line:#E5D9C4;--line-soft:#EFE5D2;--accent:#6B8E4E;--accent-deep:#4F6B3A;--blue:#3E73A6;--rose:#A85B47}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;min-height:100vh;padding:44px 20px 48px;
+    background-image:radial-gradient(circle at 15% 5%,rgba(220,229,200,.5)0%,transparent 40%),radial-gradient(circle at 88% 95%,rgba(201,120,98,.1)0%,transparent 40%)}
+  .container{max-width:720px;margin:0 auto}
+  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:26px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500}
+  .back-link:hover{color:var(--ink);border-color:var(--accent)}
+  .back-link .arrow{font-family:'Fraunces',serif;font-size:16px}
+  header{text-align:center;margin-bottom:28px}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:500}
+  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,5vw,42px);line-height:1.06;letter-spacing:-.02em;margin-bottom:10px}
+  h1 em{font-style:italic;color:var(--accent-deep)}
+  .subtitle{color:var(--muted);font-size:14px;line-height:1.65;max-width:540px;margin:0 auto}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 26px;box-shadow:0 4px 24px -18px rgba(43,31,21,.2);margin-bottom:16px}
+  .card h2{font-family:'Fraunces',serif;font-size:21px;font-weight:500;color:var(--accent-deep);margin-bottom:6px}
+  .card .lead{font-size:14px;color:var(--ink);line-height:1.7}
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+  .step:last-child{border-bottom:none}
+  .step-n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:'Fraunces',serif;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .step-b{flex:1}
+  .step-t{font-weight:600;font-size:15px;margin-bottom:3px}
+  .step-d{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .chip{display:inline-block;background:#EFF3E7;color:var(--accent-deep);border:1px solid #cfe0bf;border-radius:100px;padding:1px 9px;font-size:12.5px;font-weight:600}
+  .tip{background:#EAF1F7;border:1px solid #b9d3e6;border-radius:12px;padding:12px 15px;font-size:13px;color:#2D5474;line-height:1.6;margin-top:6px}
+  .tip b{color:var(--blue)}
+  ul.notes{list-style:none;margin-top:4px}
+  ul.notes li{position:relative;padding-left:18px;margin-bottom:8px;font-size:13.5px;line-height:1.6;color:var(--ink)}
+  ul.notes li::before{content:'•';position:absolute;left:3px;color:var(--accent);font-weight:700}
+  .cta{text-align:center;margin:10px 0 4px}
+  .cta a{display:inline-block;background:var(--accent-deep);color:#fff;text-decoration:none;font-weight:700;font-size:15px;border-radius:100px;padding:13px 28px}
+  .cta a:hover{background:var(--accent)}
+  .site-footer{margin-top:34px;text-align:center;font-size:12px;color:var(--muted);line-height:1.7}
+  .site-footer a{color:inherit;text-decoration:underline}
+</style>
+<link rel="stylesheet" href="tools-theme.css">
+<script src="tools-shell.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <a class="back-link" href="PST-Process-Selector.html"><span class="arrow">←</span> กลับไปที่เครื่องมือ</a>
+
+    <header>
+      <div class="eyebrow">Miss Icecream · คู่มือการใช้งาน</div>
+      <h1>Process <em>Selector</em></h1>
+      <p class="subtitle">ตัวช่วยเลือกกระบวนการผลิตไอศกรีมแบบครบ 11 ขั้น เฉพาะตามเงื่อนไขของคุณ — เลือกตอบไม่กี่คำถาม แล้วได้คู่มือพร้อมอุณหภูมิ เวลา และคำเตือน (อ้างอิงบทที่ 4)</p>
+    </header>
+
+    <div class="card">
+      <h2>เครื่องมือนี้ทำอะไร</h2>
+      <p class="lead">แทนที่จะอ่านคู่มือทั้งเล่ม เครื่องมือจะถามเงื่อนไขการผลิตของคุณ (ทำขาย/ทำทาน, วัตถุดิบเสี่ยง, เครื่องปั่น ฯลฯ) แล้วประกอบเป็น “คู่มือกระบวนการ 11 ขั้น” เฉพาะของคุณ ครบทั้งอุณหภูมิ เวลา และข้อควรระวัง พร้อมสร้างตัวจับเวลา PST และพิมพ์/แชร์เป็น PDF ได้</p>
+    </div>
+
+    <div class="card">
+      <h2>ขั้นตอนการใช้งาน</h2>
+
+      <div class="step"><div class="step-n">1</div><div class="step-b">
+        <div class="step-t">ตอบคำถามเงื่อนไขการผลิต</div>
+        <div class="step-d">เลือก: ผลิตเพื่ออะไร (ทำขาย/ทำทาน) · วัตถุดิบเสี่ยงที่ใช้ · กลุ่มสูตร (1/2) · เครื่องปั่น · อุณหภูมิละลายสารคงตัว · และคำถามย่อยอื่น ๆ ตามที่ปรากฏ</div>
+      </div></div>
+
+      <div class="step"><div class="step-n">2</div><div class="step-b">
+        <div class="step-t">ดูคู่มือ 11 ขั้นเฉพาะของคุณ</div>
+        <div class="step-d">พอตอบครบ (อย่างน้อยข้อ 1, 3, 4) ระบบจะสร้างคู่มือให้ทันที — ตั้งแต่เตรียมความพร้อม พาสเจอไรซ์ PST/PSS เติมส่วนผสม ปั่น จนถึงแช่แข็งและการเสิร์ฟ พร้อม <span class="chip">อุณหภูมิ</span> <span class="chip">เวลา</span> และคำเตือน</div>
+      </div></div>
+
+      <div class="step"><div class="step-n">3</div><div class="step-b">
+        <div class="step-t">สร้างตัวจับเวลา PST (ถ้าต้องการ)</div>
+        <div class="step-d">ในขั้นที่ 4 (PST) มีปุ่ม <b>“⏱ สร้างตัวจับเวลา PST จากค่านี้”</b> — กดแล้วได้ตัวจับเวลาที่ไล่ทีละช่วง <b>ปั่น → พัก</b> ตามรอบ/วินาทีที่คำนวณให้ พร้อมเสียงเตือนและบอกเวลานาฬิกาที่แต่ละช่วงจะครบ</div>
+      </div></div>
+
+      <div class="step"><div class="step-n">4</div><div class="step-b">
+        <div class="step-t">ใส่ชื่อสูตร/ล็อต (ไม่บังคับ)</div>
+        <div class="step-d">กรอกชื่อสูตรและรอบ/ล็อต เพื่อให้ปรากฏบนหัวกระดาษตอนพิมพ์ — ระบบใส่วันที่ให้อัตโนมัติ</div>
+      </div></div>
+
+      <div class="step"><div class="step-n">5</div><div class="step-b">
+        <div class="step-t">พิมพ์ / แชร์คู่มือ</div>
+        <div class="step-d">กด 🖨 พิมพ์คู่มือ หรือ 📤 แชร์ PDF / 📷 แชร์รูป — ออกมาแบบ printer-friendly (พื้นขาว ไม่มีปุ่ม/ตัวจับเวลา ประหยัดหมึก)</div>
+      </div></div>
+    </div>
+
+    <div class="card">
+      <h2>เกร็ดน่ารู้</h2>
+      <ul class="notes">
+        <li>คำตอบทั้งหมดถูกบันทึกอัตโนมัติ (autosave) — เปิดหน้าใหม่ก็ยังได้คู่มือชุดเดิม กดปุ่ม “เริ่มใหม่” เพื่อล้างค่า</li>
+        <li>เปลี่ยนคำตอบข้อใดข้อหนึ่ง คู่มือจะปรับให้ใหม่ทันที</li>
+        <li>มีผังสรุปแบบ A4 (แบบทำทาน / แบบทำขาย) ให้กดดู/พิมพ์ได้จากหน้าเครื่องมือ</li>
+      </ul>
+      <div class="tip">คู่มือนี้อ้างอิงเนื้อหาบทที่ 4 เพื่อช่วยจัดลำดับกระบวนการ — โปรดใช้ควบคู่กับการสังเกตจริงและมาตรฐานความปลอดภัยอาหารของคุณค่ะ</div>
+    </div>
+
+    <div class="cta"><a href="PST-Process-Selector.html">เริ่มใช้งานเครื่องมือ →</a></div>
+
+    <div class="site-footer">
+      Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a>
+    </div>
+  </div>
+</body>
+</html>
