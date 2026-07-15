@@ -61,10 +61,10 @@
     }
 
     document.querySelectorAll('.site-footer').forEach(function (footer) {
-      if (footer.querySelector('.tools-audience') || footer.textContent.indexOf('สำหรับผู้เรียนในคลาสของอาจารย์พรหล้า ขาวเธียร') !== -1) return;
+      if (footer.querySelector('.tools-audience') || footer.textContent.indexOf('Version 072026B by Paula Kaothien') !== -1) return;
       const audience = document.createElement('div');
       audience.className = 'tools-audience';
-      audience.textContent = 'สำหรับผู้เรียนในคลาสของอาจารย์พรหล้า ขาวเธียร';
+      audience.textContent = 'Version 072026B by Paula Kaothien';
       footer.appendChild(audience);
     });
   });
