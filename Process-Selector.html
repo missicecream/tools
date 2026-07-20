@@ -56,6 +56,7 @@
   .opts.c3{grid-template-columns:1fr 1fr 1fr}
   .opt{text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:13px;padding:12px 14px;cursor:pointer;transition:all .18s;font-family:'Sarabun',sans-serif;color:var(--ink);font-size:13.5px;line-height:1.4}
   .opt:hover{border-color:var(--accent)}
+  .opt:disabled{opacity:.45;cursor:not-allowed;background:var(--card);border-color:var(--line)}
   .opt.sel{border-color:var(--accent-deep);background:#F3F6EC;box-shadow:0 4px 16px -12px rgba(79,107,58,.5)}
   .opt b{font-weight:600}
   .opt .s{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
@@ -136,7 +137,7 @@
   body.cap .back-link,body.cap header,body.cap .setup,body.cap .prompt,body.cap .printset,body.cap .actions,body.cap .pst-cta,body.cap .pst-timer{display:none!important}
   body.cap .print-head{display:block!important;text-align:center}
 
-  /* ตัวจับเวลา PST */
+  /* ตัวจับเวลา PBT */
   .pst-cta{margin:16px 0 4px;text-align:center}
   .timer-open-btn{font-family:'Sarabun',sans-serif;font-weight:700;font-size:14px;color:#fff;background:var(--accent-deep);border:none;border-radius:100px;padding:11px 22px;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px -8px rgba(79,107,58,.8)}
   .timer-open-btn:hover{background:var(--accent);transform:translateY(-1px)}
@@ -243,7 +244,7 @@
   <header>
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Process <em>Selector</em></h1>
-    <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 11 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
+    <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 12 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
     <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
     <div class="chart-links">
       <span class="cl-label">หรือ เลือกผังขั้นตอนการผลิตแบบสรุป (A4):</span>
@@ -256,7 +257,7 @@
     <div class="q">
       <div class="q-label">1. ผลิตเพื่ออะไร? <span class="en">Purpose</span></div>
       <div class="opts">
-        <button class="opt" data-k="purpose" data-v="home" type="button"><b>ทำทานเอง</b><span class="s">ฆ่าเชื้อเฉพาะวัตถุดิบเสี่ยง + ใช้ PSS</span></button>
+        <button class="opt" data-k="purpose" data-v="home" type="button"><b>ทำทานเอง</b><span class="s">ฆ่าเชื้อเฉพาะวัตถุดิบเสี่ยง + เติมครีม/ส่วนผสมสดระหว่างลดความร้อน</span></button>
         <button class="opt" data-k="purpose" data-v="sell" type="button"><b>ทำขาย / เพื่อจำหน่าย</b><span class="s">พาสเจอไรส์ทั้งหมด + บ่มมาตรฐาน (ประกาศ สธ. ฉ. 354)</span></button>
       </div>
     </div>
@@ -286,59 +287,70 @@
     <hr class="divider">
 
     <div class="q">
-      <div class="q-label">3. กลุ่มทางเลือก PST <span class="en">PST option group</span></div>
+      <div class="q-label">3. ลักษณะสูตรสำหรับกำหนดจำนวนรอบ PBT <span class="en">PBT formula profile</span></div>
       <div class="opts">
-        <button class="opt" data-k="group" data-v="1" type="button"><b>กลุ่ม 1 · ไม่ต้องลดขนาดเม็ดไขมัน</b><span class="s">ไม่มีไขมัน (เช่น ซอร์เบต์) หรือมีไขมันแต่ไม่ผ่านความร้อน เช่น เติมครีมแช่เย็นทีหลัง</span></button>
-        <button class="opt" data-k="group" data-v="2" type="button"><b>กลุ่ม 2 · ต้องลดขนาดเม็ดไขมัน</b><span class="s">มีการให้ความร้อนกับไขมัน เช่น กะทิ ครีม น้ำมันมะพร้าว เนยขาว น้ำมันพืช ช็อกโกแลต ผงโกโก้ เพสต์ถั่ว รวมถึงแนวทางทำขายทั้งหมด</span></button>
+        <button class="opt" data-k="group" data-v="full" type="button"><b>ใช้จำนวนรอบเต็มตามตาราง</b><span class="s">ไขมันผ่านความร้อนหรือมีไขมันอิสระ เช่น ทำขาย ช็อกโกแลต โกโก้ เพสต์ถั่ว กะทิ หรือนมพืชเติมน้ำมัน</span></button>
+        <button class="opt" data-k="group" data-v="factory" type="button"><b>ไขมันผ่านโฮโมจีไนซ์จากโรงงาน และไม่โดนความร้อนซ้ำ</b><span class="s">เฉพาะเครื่องปั่นโถ ลดได้ 1 รอบ เช่น แนวทำทานที่เก็บครีมแช่เย็นไว้เติมทีหลัง</span></button>
+        <button class="opt" data-k="group" data-v="foamy" type="button"><b>เชอร์เบท/ซอร์เบต์ที่ปั่นแล้วฟูเป็นโฟมมากเกิน</b><span class="s">เฉพาะเครื่องปั่นโถ ลดเหลือ 1–2 รอบ; เครื่องปั่นมือถือยังใช้รอบเต็ม</span></button>
       </div>
     </div>
 
     <div class="q">
-      <div class="q-label">4. เครื่องปั่นที่ใช้ทำ PST <span class="en">Blender</span></div>
+      <div class="q-label">4. เครื่องปั่นที่ใช้ทำ PBT <span class="en">Blender</span></div>
       <div class="opts">
-        <button class="opt" data-k="machine" data-v="commJar" type="button"><b>เครื่องปั่นโถระดับการค้า</b><span class="s">แบบร้านน้ำปั่น</span></button>
-        <button class="opt" data-k="machine" data-v="homeJar" type="button"><b>เครื่องปั่นโถครัวเรือน</b><span class="s">กำลังต่ำ</span></button>
-        <button class="opt" data-k="machine" data-v="immMed" type="button"><b>เครื่องปั่นมือถือระดับการค้า (กลาง)</b><span class="s">มิกซ์ 5–24 กก.</span></button>
-        <button class="opt" data-k="machine" data-v="immLarge" type="button"><b>เครื่องปั่นมือถือระดับการค้า (ใหญ่)</b><span class="s">มิกซ์ 25–50 กก.</span></button>
+        <button class="opt" data-k="machine" data-v="homeJar" type="button"><b>เครื่องปั่นโถครัวเรือน</b><span class="s">มิกซ์ 0.5–1.2 กก.</span></button>
+        <button class="opt" data-k="machine" data-v="commJar" type="button"><b>เครื่องปั่นโถระดับการค้า</b><span class="s">มิกซ์ 0.8–1.5 กก.</span></button>
+        <button class="opt" data-k="machine" data-v="immSmall" type="button"><b>เครื่องปั่นมือถือการค้า เล็ก</b><span class="s">มิกซ์ 1–5 กก.</span></button>
+        <button class="opt" data-k="machine" data-v="immMed" type="button"><b>เครื่องปั่นมือถือการค้า กลาง</b><span class="s">มิกซ์ 5–10 กก.</span></button>
+        <button class="opt" data-k="machine" data-v="immLarge" type="button"><b>เครื่องปั่นมือถือการค้า ใหญ่</b><span class="s">มิกซ์ 10–20 กก.</span></button>
       </div>
     </div>
 
     <div class="q" id="qProfile" style="display:none">
-      <div class="q-label">4.1 ชุดการผลิตเป็นแบบไหน? <span class="en">Batch</span></div>
+      <div class="q-label">4.1 เลือกค่าฝั่งใดของช่วงในตาราง? <span class="en">Batch / range</span></div>
       <div class="opts">
-        <button class="opt" data-k="profile" data-v="low" type="button"><b>ชุดเล็ก / เนื้อใส</b><span class="s">ใช้ตัวเลขฝั่งต่ำ</span></button>
-        <button class="opt" data-k="profile" data-v="high" type="button"><b>ชุดใหญ่ / เนื้อข้น</b><span class="s">ใช้ตัวเลขฝั่งสูง</span></button>
+        <button class="opt" data-k="profile" data-v="low" type="button"><b>ชุดเล็ก / เนื้อใส / ค่าฝั่งต่ำ</b><span class="s">ใช้จำนวนรอบ วินาที หรือเวลาพักฝั่งต่ำของช่วง</span></button>
+        <button class="opt" data-k="profile" data-v="high" type="button"><b>ชุดใหญ่ / เนื้อข้น / ค่าฝั่งสูง</b><span class="s">ใช้จำนวนรอบ วินาที หรือเวลาพักฝั่งสูงของช่วง</span></button>
       </div>
     </div>
 
     <div class="q">
       <div class="q-label">5. สารให้ความคงตัวในสูตร ละลายที่อุณหภูมิไหน? <span class="en">Dissolving temp</span><span class="q-hint">ดูคำแนะนำผู้ขาย · เลือกได้หลายอัน</span></div>
       <div class="opts">
-        <button class="opt chk" data-multi="stab" data-v="65" type="button"><b>ละลายที่ 65 °C ได้</b><span class="s">SEP, CMC, XTG หรือที่ผู้ขายแนะนำ 65 °C</span></button>
-        <button class="opt chk" data-multi="stab" data-v="85" type="button"><b>ต้องละลายแยกที่ 85 °C</b><span class="s">SER, คาร์ราจีแนน, LBG, แป้งมัน/แป้งข้าวโพด หรือที่ผู้ขายแนะนำ 85 °C</span></button>
+        <button class="opt chk" data-multi="stab" data-v="cold" type="button"><b>ละลายในน้ำเย็นได้</b><span class="s">กัวกัม แซนแทนกัม และเซลลูโลสกัม — ยังต้องคลุกน้ำตาลกันจับก้อน</span></button>
+        <button class="opt chk" data-multi="stab" data-v="65" type="button"><b>ละลายแยกที่ 65 °C</b><span class="s">SEP หรือเกรดที่ผู้ขายระบุ 65 °C</span></button>
+        <button class="opt chk" data-multi="stab" data-v="85" type="button"><b>ละลายแยกที่ 85 °C</b><span class="s">SER, โลคัสต์บีนกัม, คัปปาคาร์ราจีแนน หรือเกรดที่ผู้ขายระบุ 85 °C</span></button>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="q-label">6. จะบ่มแบบใด? <span class="en">Aging</span></div>
+      <div class="opts">
+        <button class="opt" data-k="aging" data-v="standard" type="button"><b>บ่มมาตรฐาน 4–8 ชั่วโมง</b><span class="s">ใช้ได้ทุกสูตร · บ่มที่ 0–4 °C ในภาชนะปิดสนิท</span></button>
+        <button class="opt" data-k="aging" data-v="quick" type="button"><b>บ่มด่วน 30 นาที</b><span class="s">เฉพาะสูตรที่มีอินูลิน (INL) ≥2% และยอมรับว่าเนื้ออาจด้อยกว่าบ่มเต็มเล็กน้อย</span></button>
       </div>
     </div>
 
     <div id="homeExtra" style="display:none">
       <hr class="divider">
       <div class="q">
-        <div class="q-label">6. มีส่วนผสมกลิ่นรสบอบบางที่ต้องเติมไหม? <span class="en">Delicate add-ins</span></div>
+        <div class="q-label">7. มีส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมตอนเย็นไหม? <span class="en">Delicate add-ins</span></div>
         <div class="opts">
-          <button class="opt" data-k="delicate" data-v="yes" type="button"><b>มี</b><span class="s">ผลไม้สด / โยเกิร์ต / กรีกโยเกิร์ต / นมพาสเจอร์ไรส์ที่กันไว้เติมทีหลัง — เติมตอนจบ PST ก่อนลดความร้อน</span></button>
+          <button class="opt" data-k="delicate" data-v="yes" type="button"><b>มี</b><span class="s">ผลไม้สด / โยเกิร์ต / กรีกโยเกิร์ต / นมพาสเจอร์ไรส์ที่กันไว้ — เติมเมื่อมิกซ์เย็นถึง ≤10 °C</span></button>
           <button class="opt" data-k="delicate" data-v="no" type="button"><b>ไม่มี</b><span class="s">ทำ active cooling ปกติ</span></button>
         </div>
       </div>
       <div class="q">
-        <div class="q-label">7. มีครีมแช่เย็นที่ต้องเติมเมื่อมิกซ์เย็นแล้วไหม? <span class="en">Cold cream</span></div>
+        <div class="q-label">8. มีครีมแช่เย็นที่ต้องเติมเมื่อมิกซ์เย็นแล้วไหม? <span class="en">Cold cream</span></div>
         <div class="opts">
-          <button class="opt" data-k="cream" data-v="yes" type="button"><b>มี</b><span class="s">เติมครีมแช่เย็นหลังลดอุณหภูมิถึง ≤10 °C</span></button>
-          <button class="opt" data-k="cream" data-v="no" type="button"><b>ไม่มี / ไม่ใช้ครีม</b><span class="s">เข้าขั้นปั่นได้เลย</span></button>
+          <button class="opt" data-k="cream" data-v="yes" type="button"><b>มี</b><span class="s">เติมครีมพาสเจอร์ไรส์ที่แช่เย็นแล้วเมื่อมิกซ์ ≤10 °C จากนั้นลดต่อถึง ≤4 °C</span></button>
+          <button class="opt" data-k="cream" data-v="no" type="button"><b>ไม่มี / ไม่ใช้ครีม</b><span class="s">ลดมิกซ์ต่อถึง ≤4 °C แล้วจึงเริ่มบ่ม</span></button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="prompt" id="prompt">ตอบข้อ 1, 3, 4 ให้ครบ เพื่อดูคู่มือกระบวนการของคุณค่ะ</div>
+  <div class="prompt" id="prompt">ตอบข้อ 1, 3, 4 และ 4.1 ให้ครบ เพื่อดูคู่มือกระบวนการของคุณค่ะ</div>
 
   <div id="result"></div>
 
@@ -349,11 +361,12 @@
 </div>
 
 <script>
-const PST={
-  commJar:{label:'เครื่องปั่นโถระดับการค้า',type:'jar',g1:{r:'2',s:'30'},g2:{r:'3',s:'30'}},
-  homeJar:{label:'เครื่องปั่นโถครัวเรือน',type:'jar',g1:{r:'3',s:'30'},g2:{r:'4',s:'25',note:'กลุ่ม 2 ลดเวลาต่อรอบเหลือ 25 วินาที กันมอเตอร์กำลังต่ำร้อนสะสม'}},
-  immMed:{label:'เครื่องปั่นมือถือระดับการค้า ขนาดกลาง (5–24 กก.)',type:'imm',g1:{rL:3,rH:4,sL:45,sH:45},g2:{rL:4,rH:5,sL:45,sH:55}},
-  immLarge:{label:'เครื่องปั่นมือถือระดับการค้า ขนาดใหญ่ (25–50 กก.)',type:'imm',large:true,g1:{rL:4,rH:5,sL:70,sH:70},g2:{rL:5,rH:6,sL:70,sH:90}}
+const PBT={
+  homeJar:{label:'เครื่องปั่นโถครัวเรือน (0.5–1.2 กก.)',type:'jar',rL:4,rH:4,sL:20,sH:20,restL:10,restH:20},
+  commJar:{label:'เครื่องปั่นโถระดับการค้า (0.8–1.5 กก.)',type:'jar',rL:3,rH:3,sL:30,sH:30,restL:5,restH:10},
+  immSmall:{label:'เครื่องปั่นมือถือการค้า เล็ก (1–5 กก.)',type:'imm',rL:2,rH:3,sL:45,sH:45,restL:5,restH:10},
+  immMed:{label:'เครื่องปั่นมือถือการค้า กลาง (5–10 กก.)',type:'imm',rL:3,rH:3,sL:45,sH:60,restL:10,restH:10},
+  immLarge:{label:'เครื่องปั่นมือถือการค้า ใหญ่ (10–20 กก.)',type:'imm',rL:3,rH:3,sL:60,sH:60,restL:10,restH:15}
 };
 const RISKY={
   // กลุ่มเน้นฆ่าเชื้อ — ให้ความร้อนนาน 30 นาที
@@ -370,10 +383,10 @@ const RISKY={
   soyOat:{t:'นมถั่วเหลือง/ข้าวโอ๊ต (ทำเอง)',h:'ในขั้นตอนทำต้องต้มเดือด <span class="chip">≥90 °C / 5–10 นาที</span> อยู่แล้ว จึงถือว่า<b>ฆ่าเชื้อในตัว</b> — ไม่ต้องให้ความร้อนซ้ำ เพียงลด <span class="chip warm">&lt;4 °C</span> และเก็บสะอาดจนนำเข้ามิกซ์'}
 };
 
-const state={purpose:null,risky:new Set(),group:null,machine:null,profile:null,delicate:null,cream:null,stab:new Set(),title:'',lot:''};
+const state={purpose:null,risky:new Set(),group:null,machine:null,profile:null,aging:null,delicate:null,cream:null,stab:new Set(),title:'',lot:''};
 
-let curPST=null;
-const SAVE_KEY='pst_process_selector_v1';
+let curPBT=null;
+const SAVE_KEY='pbt_process_selector_v2';
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({...state,risky:[...state.risky],stab:[...state.stab]}));}catch(e){}}
 function load(){try{const s=localStorage.getItem(SAVE_KEY);if(!s)return;const o=JSON.parse(s);Object.assign(state,o);state.risky=new Set(o.risky||[]);state.stab=new Set(o.stab||[]);}catch(e){}}
 
@@ -394,11 +407,12 @@ function refreshPrintHead(){
 
 document.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{
   const k=b.dataset.k,v=b.dataset.v;
+  if(k==='group'&&state.purpose==='sell'&&v!=='full')return;
   state[k]=v;
   b.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
   b.classList.add('sel');
   if(k==='machine'){state.profile=null;document.querySelectorAll('[data-k="profile"]').forEach(o=>o.classList.remove('sel'));}
-  if(k==='purpose'&&v==='sell'){state.group='2';document.querySelectorAll('[data-k="group"]').forEach(o=>o.classList.toggle('sel',o.dataset.v==='2'));}
+  if(k==='purpose'&&v==='sell'){state.group='full';document.querySelectorAll('[data-k="group"]').forEach(o=>o.classList.toggle('sel',o.dataset.v==='full'));}
   update();save();
 }));
 document.querySelectorAll('[data-multi]').forEach(b=>b.addEventListener('click',()=>{
@@ -410,12 +424,14 @@ document.querySelectorAll('[data-multi]').forEach(b=>b.addEventListener('click',
 function update(){
   ptHardStop();
   const home=state.purpose==='home', sell=state.purpose==='sell';
+  if(sell)state.group='full';
   document.getElementById('qRisky').style.display=home?'block':'none';
   document.getElementById('homeExtra').style.display=home?'block':'none';
-  const m=state.machine?PST[state.machine]:null;
-  document.getElementById('qProfile').style.display=(m&&m.type==='imm')?'block':'none';
+  document.querySelectorAll('[data-k="group"]').forEach(o=>{o.disabled=!!(sell&&o.dataset.v!=='full');o.classList.toggle('sel',state.group===o.dataset.v);});
+  const m=state.machine?PBT[state.machine]:null;
+  document.getElementById('qProfile').style.display=m?'block':'none';
 
-  const ready=state.purpose&&state.group&&m&&(m.type!=='imm'||state.profile);
+  const ready=state.purpose&&state.group&&m&&state.profile;
   const res=document.getElementById('result'), prompt=document.getElementById('prompt');
   if(!ready){res.innerHTML='';prompt.style.display='block';return;}
   prompt.style.display='none';
@@ -423,22 +439,31 @@ function update(){
   refreshPrintHead();
 }
 
-function pstResult(m){
-  const g=state.group==='1'?m.g1:m.g2;
-  let r,s,range='';
-  if(m.type==='jar'){r=g.r;s=g.s;}
-  else{const hi=state.profile==='high';r=hi?g.rH:g.rL;s=hi?g.sH:g.sL;
-    const rr=g.rL!==g.rH?(g.rL+'–'+g.rH+' รอบ'):null, ss=g.sL!==g.sH?(g.sL+'–'+g.sH+' วิ'):null;
-    const p=[rr,ss].filter(Boolean); if(p.length)range='ช่วงทั้งหมดของเครื่องนี้: '+p.join(' · ');}
-  return {r,s,range,note:(state.group==='2'&&g.note)?g.note:null,large:m.large};
+function pbtResult(m){
+  const hi=state.profile==='high';
+  let r=hi?m.rH:m.rL, s=hi?m.sH:m.sL, rest=hi?m.restH:m.restL, note='';
+  if(m.type==='jar'&&state.group==='factory'){
+    r=Math.max(1,r-1);
+    note='ลด 1 รอบ เพราะไขมันผ่านการโฮโมจีไนซ์จากโรงงานและไม่ได้โดนความร้อนซ้ำระหว่างผลิต';
+  }else if(m.type==='jar'&&state.group==='foamy'){
+    r=hi?2:1;
+    note='ใช้ 1–2 รอบเฉพาะเมื่อเชอร์เบท/ซอร์เบต์ฟูเป็นโฟมมากเกินไป';
+  }else if(m.type==='imm'&&state.group!=='full'){
+    note='เครื่องปั่นมือถือไม่ลดจำนวนรอบ ต้องใช้รอบเต็มเพื่อให้มิกซ์ทั่วถึงทั้งหม้อ';
+  }
+  const ranges=[];
+  if(m.rL!==m.rH)ranges.push(m.rL+'–'+m.rH+' รอบ');
+  if(m.sL!==m.sH)ranges.push(m.sL+'–'+m.sH+' วินาที/รอบ');
+  if(m.restL!==m.restH)ranges.push('พัก '+m.restL+'–'+m.restH+' วินาที');
+  return {r,s,rest,range:ranges.length?'ช่วงเต็มตามตารางของเครื่องนี้: '+ranges.join(' · '):'',note};
 }
 
 function render(){
   const home=state.purpose==='home';
-  const m=PST[state.machine];
-  const pr=pstResult(m);
-  curPST=pr;
-  const groupTxt=state.group==='1'?'กลุ่ม 1':'กลุ่ม 2';
+  const m=PBT[state.machine];
+  const pr=pbtResult(m);
+  curPBT=pr;
+  const groupTxt=state.group==='full'?'รอบเต็ม':(state.group==='factory'?'ลด 1 รอบ (เครื่องปั่นโถ)':'เชอร์เบท/ซอร์เบต์ 1–2 รอบ (เครื่องปั่นโถ)');
   let H='';
 
   // print-only header (recipe title / lot / date)
@@ -479,23 +504,24 @@ function render(){
     +'</ul>');
 
   // 3
-  const has65=state.stab.has('65'), has85=state.stab.has('85'), bothStab=(!has65&&!has85);
+  const hasCold=state.stab.has('cold'), has65=state.stab.has('65'), has85=state.stab.has('85'), allStab=(!hasCold&&!has65&&!has85);
   let s3='';
-  s3+='<p><b>หลักการกลาง:</b> คลุกของแห้งเข้ากันก่อนโรยลงของเหลว • S/E คลุกกับน้ำตาลก่อนแล้วตีตะกร้อเร็วๆ กันจับก้อน</p><ul>';
-  if(has65||bothStab) s3+='<li>สารให้ความคงตัวที่ละลายได้ที่ <span class="chip">65 °C</span> (เช่น SEP, CMC, XTG) ทำละลายไปพร้อมกับการอุ่นมิกซ์ได้เลย</li>';
-  if(has85||bothStab) s3+='<li>สารให้ความคงตัวที่ต้องละลายที่ <span class="chip">85 °C</span> (เช่น SER, คาร์ราจีแนน, LBG, แป้งมัน/แป้งข้าวโพด) → แยกละลายในน้ำ+น้ำตาลที่แบ่งมา แล้วรวมกลับ (ชั่งเติมน้ำชดเชยที่ระเหย)</li>';
-  if(has65&&!has85) s3+='<li style="color:var(--muted)">สูตรนี้ไม่มีสารที่ต้องแยกต้มที่ 85 °C</li>';
+  s3+='<p><b>หลักการกลาง:</b> คลุกของแห้งให้เข้ากัน • คลุก S/E หรือสารให้ความคงตัวกับน้ำตาลก่อนเสมอ แล้วทำละลายแยกตามอุณหภูมิของเกรด เพื่อตรวจว่าไม่มีเม็ดสาคูก่อนรวมกลับ</p><ul>';
+  if(hasCold||allStab) s3+='<li><b>กัวกัม แซนแทนกัม และเซลลูโลสกัม:</b> ละลายในน้ำเย็นได้ ไม่ต้องแยกต้ม แต่ยังต้องคลุกน้ำตาลและกระจายให้ทั่วกันจับก้อน</li>';
+  if(has65||allStab) s3+='<li><b>SEP หรือเกรดที่กำหนด 65 °C:</b> แยกละลายในน้ำจากสูตรที่ <span class="chip">65 °C</span> แล้วตรวจว่าเนียนไม่มีเม็ดก่อนรวมกลับ</li>';
+  if(has85||allStab) s3+='<li><b>SER / โลคัสต์บีนกัม / คัปปาคาร์ราจีแนน หรือเกรดที่กำหนด 85 °C:</b> แยกละลายในน้ำจากสูตรที่ <span class="chip">85 °C</span> แล้วชั่งเติมน้ำชดเชยที่ระเหย</li>';
+  s3+='<li>ถ้าน้ำในสูตรมาก ให้ใช้ S/E ทั้งหมดคลุกน้ำตาลอย่างน้อย 5 เท่าของน้ำหนัก S/E แล้วแบ่งน้ำมาเท่าที่คนทั่วและไม่ไหม้ก้นหม้อ</li>';
   s3+='<li><b>ผลไม้:</b> ล้างผิวก่อนปอก → บดละเอียด → ปรับ/เทียบ Brix</li></ul>';
   if(home){
     s3+='<div class="branch-tag">ทำทาน — ฆ่าเชื้อวัตถุดิบเสี่ยงแยกก่อน</div>';
     if(state.risky.size){
       state.risky.forEach(k=>{const r=RISKY[k];if(!r)return;s3+='<div class="sub"><div class="sub-t">'+r.t+'</div><p>'+r.h+'</p></div>';});
-      s3+='<p class="warn" style="color:var(--rose-deep);font-size:13px">ทุกตัวที่ผ่านความร้อนแล้ว ลดอุณหภูมิ &lt;4 °C ทันที และเก็บแยกจากของดิบจนนำเข้ามิกซ์</p>';
+      s3+='<p class="warn" style="color:var(--rose-deep);font-size:13px">ทุกตัวที่ผ่านความร้อนแล้ว ลดอุณหภูมิต่ำกว่า 4 °C ทันที และเก็บแยกจากของดิบจนนำเข้ามิกซ์</p>';
       s3+='<div class="sub" style="border-color:#E6C09A;background:#FBF1E7"><p style="color:#9A5B25;font-size:12.5px;margin:0">⚠ <b>ข้อควรเข้าใจเรื่องนิยาม:</b> การฆ่าเชื้อวัตถุดิบเสี่ยงแบบแยก (ทั้ง 2 กลุ่ม) <b>ไม่ใช่</b>การพาสเจอไรซ์มิกซ์ทั้งหมดตามกฎหมาย — ถ้าทำขาย ต้องพาสเจอไรซ์มิกซ์รวมตามประกาศ สธ. ฉบับที่ 354 เสมอ</p></div>';
     } else {
       s3+='<p style="color:var(--muted)">ยังไม่ได้เลือกวัตถุดิบเสี่ยงในข้อ 2 — ถ้ามี เลือกไว้เพื่อดูวิธีฆ่าเชื้อแต่ละตัวค่ะ</p>';
     }
-    s3+='<p><b>ผสม + ให้ความร้อน:</b> นำวัตถุดิบเสี่ยงที่ฆ่าเชื้อแล้ว + ของแห้งที่ละลาย + ของเหลวที่เหลือ คนเข้ากัน <b>ยังไม่ใส่ครีม</b> (เก็บครีมเย็นไว้เติมขั้นปั่น) แล้วให้ความร้อนถึง <span class="chip">60–65 °C</span> เพื่อละลายและรวมเนื้อ — ไม่ต้องคงอุณหภูมิ → เข้าขั้น PST ขณะยังร้อน</p>';
+    s3+='<p><b>ผสม + ให้ความร้อน:</b> รวมวัตถุดิบเสี่ยงที่จัดการแล้ว ของแห้งที่ละลาย และของเหลวที่เหลือ <b>ยกเว้นครีมและส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมตอนเย็น</b> แล้วอุ่นมิกซ์ถึง <span class="chip">68–70 °C</span> เพื่อละลายและรวมเนื้อ ไม่ต้องคงอุณหภูมิ • ถ้าตั้งไฟตรงและมิกซ์ข้น/ไหม้ง่าย ให้หยุดที่ 68 °C; ถ้าใช้การตุ๋นหรือมิกซ์ใส อุ่นถึง 70 °C แล้วเข้า PBT ทันที</p>';
   } else {
     s3+='<div class="branch-tag">ทำขาย — พาสเจอไรส์ทั้งหมด</div>';
     s3+='<ul>'
@@ -505,29 +531,28 @@ function render(){
       +'<div class="sub"><div class="sub-t">พาสเจอไรส์ LTLT</div><p>'
       +'ให้ความร้อน <span class="chip">68.5 °C</span> ค้าง <span class="chip">≥30 นาที</span> คนสม่ำเสมอ • วัดที่จุดเย็นสุด (กลางหม้อ) • เริ่มจับเวลาเมื่อถึง 68.5 °C, ถ้าตกต่ำกว่าเกณฑ์ต้อง<b>เริ่มนับใหม่</b> • ใช้ bain-marie / sous vide ช่วยคุมอุณหภูมิ'
       +'</p><p class="warn" style="color:var(--rose-deep)">เก็บบันทึกอุณหภูมิและเวลาทุกครั้ง (หลักฐานความปลอดภัย)</p></div>'
-      +'<p style="color:var(--muted);font-size:12.5px">HTST 80 °C ≥25 วินาที สำหรับสเกลใหญ่ที่มีเครื่องคุมอุณหภูมิแม่นยำ → เข้าขั้น PST ขณะยังร้อน</p>';
+      +'<p style="color:var(--muted);font-size:12.5px">HTST 80 °C ≥25 วินาที ใช้เฉพาะสเกลใหญ่ที่มีเครื่องคุมอุณหภูมิแม่นยำ • ก่อน PBT ให้มิกซ์อยู่ในช่วง 68–70 °C</p>';
   }
   H+=step('3','การผสมและให้ความร้อน','Mixing & Heating',s3);
 
-  // 4 — PST
-  let s4='<p>ลดขนาดเม็ดไขมันด้วยการปั่นแบบสลับพัก (pulsed shear) ที่อุณหภูมิ <span class="chip">60–65 °C</span> — วัดก่อนเทลงโถทุกครั้ง ถ้าเย็นกว่าให้อุ่นกลับ</p>';
+  // 4 — PBT
+  let s4='<p><b>Paula’s Blending Technique (PBT)</b> ลดขนาดเม็ดไขมันและกระจายของแห้งด้วยการปั่นสลับพัก เทมิกซ์ลงโถหรือเริ่มปั่นขณะอยู่ที่ <span class="chip">68–70 °C</span></p>';
   s4+='<div class="pst-metrics"><div class="m"><div class="big">'+pr.r+'</div><div class="lbl">รอบ</div></div>'
     +'<div class="m"><div class="big">'+pr.s+'</div><div class="lbl">วินาที / รอบ</div></div>'
-    +'<div class="m"><div class="big">60</div><div class="lbl">วินาทีพัก</div></div></div>';
+    +'<div class="m"><div class="big">'+pr.rest+'</div><div class="lbl">วินาทีพัก / รอบ</div></div></div>';
   if(pr.range)s4+='<p style="color:var(--muted);font-size:12.5px">'+pr.range+'</p>';
   s4+='<ul>'
-    +'<li>ปั่นแรงตามเวลา → พัก 60 วินาที → ทำซ้ำตามจำนวนรอบ</li>'
-    +'<li class="warn">ระหว่างทำซ้ำ อย่าให้มิกซ์เย็นต่ำกว่า 50 °C — ถ้าใกล้ถึงให้อุ่นกลับก่อนปั่นรอบต่อไป</li>'
+    +'<li>ปั่นแรงตามเวลา → พักตามเวลาที่เลือก → ทำซ้ำตามจำนวนรอบ</li>'
+    +'<li class="warn">พยายามปั่นให้จบก่อนมิกซ์ต่ำกว่า <span class="chip">58 °C</span> • ถ้าต่ำกว่า 58 °C หรือเริ่มหนืดจนปั่นยาก ให้อุ่นกลับก่อนปั่นต่อ</li>'
     +'<li>ล้าง+ฆ่าเชื้อเครื่องปั่น/ใบมีด/ภาชนะก่อนใช้ (จุดแรกที่อุปกรณ์สัมผัสมิกซ์หลังพาสเจอไรส์)</li>';
   if(m.type==='imm')s4+='<li>ไล่หัวปั่นให้ทั่วหม้อ ไม่ปั่นจุดเดียว • ใช้เลขฝั่งสูงเมื่อชุดใหญ่/เนื้อข้น</li>';
-  if(pr.large)s4+='<li>ถ้ามิกซ์ ≥35 กก. พักระหว่างรอบได้ถึง 75 วินาที</li>';
   if(pr.note)s4+='<li>'+pr.note+'</li>';
   s4+='</ul>';
-  s4+='<p><b>รู้ว่าเสร็จ:</b> มิกซ์เนียนเป็นเนื้อเดียว ไม่มีคราบไขมันลอยที่ผิว เทแล้วไหลเรียบ ตอนนี้อยู่ที่ <span class="chip">~50–55 °C</span></p>';
-  // ปุ่มสร้างตัวจับเวลา PST (อยู่ในบล็อกข้อ 4 · ไม่แสดงตอนพิมพ์/แชร์)
+  s4+='<p><b>รู้ว่าเสร็จ:</b> มิกซ์เนียนเป็นเนื้อเดียว ไม่มีชั้นน้ำมันหรือก้อนของแห้ง เทแล้วไหลเรียบ ตอนนี้อยู่ที่ราว <span class="chip">58–60 °C</span></p>';
+  // ปุ่มสร้างตัวจับเวลา PBT (อยู่ในบล็อกข้อ 4 · ไม่แสดงตอนพิมพ์/แชร์)
   s4+='<div class="pst-cta" id="ptCta">'
-    +'<button class="timer-open-btn" onclick="openPstTimer()">⏱ สร้างตัวจับเวลา PST (ปั่น + พัก) จากค่านี้</button>'
-    +'<p class="pst-cta-sub">ไล่จับเวลาทีละช่วง: ปั่น '+pr.s+' วินาที → พัก 60 วินาที ครบ '+pr.r+' รอบ · มีเสียงเตือนเมื่อจบแต่ละช่วง และบอกเวลานาฬิกาที่แต่ละช่วงจะครบ</p>'
+    +'<button class="timer-open-btn" onclick="openPbtTimer()">⏱ สร้างตัวจับเวลา PBT (ปั่น + พัก) จากค่านี้</button>'
+    +'<p class="pst-cta-sub">ไล่จับเวลาทีละช่วง: ปั่น '+pr.s+' วินาที → พัก '+pr.rest+' วินาที ครบ '+pr.r+' รอบ · มีเสียงเตือนเมื่อจบแต่ละช่วง และบอกเวลานาฬิกาที่แต่ละช่วงจะครบ</p>'
     +'</div>';
   s4+='<div class="pst-timer" id="ptPanel" style="display:none">'
     +'<div><span class="pt-chip idle" id="ptChip" role="status" aria-live="polite">พร้อมเริ่ม</span></div>'
@@ -546,72 +571,52 @@ function render(){
     +'</div></div>'
     +'<p class="pt-hint">ถ้าเครื่องปั่นตั้งเวลาช่วงปั่นเองได้ พอเครื่องปั่นเสร็จให้กด “ช่วงนี้เสร็จแล้ว” เพื่อข้ามไปจับเวลาช่วงพักต่อทันทีค่ะ</p>'
     +'</div>';
-  H+=step('4','Paula’s Spin Technique','PST',s4);
+  H+=step('4','Paula’s Blending Technique','PBT',s4);
 
-  // 5
-  let s5='';
+  // 5 — Cooling
   const delicate=state.delicate==='yes'||state.risky.has('freshFruit');
+  let s5='<div class="branch-tag">'+(home?'ทำทาน — เติมครีม/ส่วนผสมสดระหว่างลดความร้อน':'ทำขาย — ส่วนผสมทั้งหมดผ่านความร้อนมาแล้ว')+'</div>';
+  s5+='<p>ลดอุณหภูมิที่<b>ใจกลางมิกซ์</b>จากราว 58–60 °C ลงถึง <span class="chip">4 °C ภายในไม่เกิน 60 นาที</span> แล้วจึงเริ่มขั้นบ่ม</p>';
+  s5+='<div class="sub"><div class="sub-t">วิธีลดความร้อนที่ใช้ได้</div><ul>'
+    +'<li><b>อ่างน้ำแข็ง + คนต่อเนื่อง</b> ในชามสเตนเลส เตรียมน้ำแข็งราว 1.5 เท่าของน้ำหนักมิกซ์</li>'
+    +'<li><b>ถุงแบนหนา ≤2 ซม. ฝังน้ำแข็ง</b> ไล่อากาศ ปิดสนิท และให้น้ำแข็งล้อมทุกด้าน</li>'
+    +'<li><b>Blast Freezer โหมด chill</b> ในถาดสเตนเลสตื้น ≤3 ซม. ปิดผิวด้วยฟิล์ม</li>'
+    +'<li class="warn">ห้ามแช่ช่องแช่แข็งโดยตรง เพราะผิวอาจเป็นน้ำแข็งก่อนใจกลางเย็นถึง 4 °C</li></ul></div>';
   if(home){
-    s5+='<div class="branch-tag">ทำทาน — Paula’s Smart Setting (PSS)</div>';
-    s5+='<p>ลดความร้อน + เซ็ตมิกซ์ให้พร้อมปั่นในขั้นเดียว ใช้เวลาราวครึ่งชั่วโมง ไม่ต้องบ่มข้ามคืน</p>';
-    if(delicate){
-      s5+='<div class="sub"><div class="sub-t">เติมส่วนผสมกลิ่นรสบอบบาง + วัดอุณหภูมิ</div>'
-        +'<p>จบ PST มิกซ์อยู่ราว <span class="chip">50–55 °C</span> ถ้ามีส่วนผสมกลิ่นรสบอบบาง (ผลไม้สดปรับ Brix แล้ว / โยเกิร์ต / กรีกโยเกิร์ต / นมพาสเจอร์ไรส์ที่กันไว้) เติมตอนนี้ คนให้เข้ากัน แล้ววัดอุณหภูมิ:</p>'
-        +'<ul><li><b>&gt;40 °C</b> → ช่วงที่ 1 active cooling คนลดถึง 40 °C แล้วเข้าช่วงที่ 2</li>'
-        +'<li><b>≤40 °C</b> → ข้าม active cooling เข้าช่วงที่ 2 ได้เลย</li></ul>'
-        +'<p style="color:var(--muted);font-size:12.5px">ของพวกนี้ปลอดภัยทานได้อยู่แล้ว แต่กลิ่นรสไวต่อความร้อน จึงเติมตอนจบ PST ก่อนลดความร้อน</p></div>';
-    }
-    s5+='<div class="sub"><div class="sub-t">ช่วงที่ 1 — Active cooling <span class="chip">50–55 → 40 °C</span> ~1–2 นาที'+(delicate?' <span style="color:var(--muted);font-weight:400">(ทำเมื่อวัดได้ &gt;40 °C)</span>':'')+'</div>'
-      +'<p>วางชามในอ่างน้ำแข็ง หมุนชาม+ปาดขอบต่อเนื่อง ให้เย็นเท่ากันทั่วชาม</p>'
-      +'<ul><li><b>ถ้าสารคงตัวมีคาร์ราจีแนน</b> (เช่น SER, SEP — ดูฉลาก carrageenan/E407): <b>หยุดคนที่ ~40 °C</b> (38–42 °C ยอมรับได้) ห้ามคนต่อ เพราะคาร์ราจีแนนเริ่มล็อกเครือข่ายเจล</li>'
-      +'<li><b>ถ้าไม่มีคาร์ราจีแนน</b>: ไม่มีเครือข่ายเจลให้ต้องระวัง คนต่อเนื่องได้โดยไม่ต้องหยุดที่ 40 °C เลือกได้ 2 ทาง — (1) คนต่อเนื่องลงจนถึง ≤25 °C แล้วแช่นิ่ง (passive setting) ต่ออีก 20 นาที เพื่อให้สารคงตัวพองตัวและเซ็ตเจลสมบูรณ์ หรือ (2) คนต่อเนื่องถึง 40 °C แล้วแช่นิ่ง (passive setting) 30 นาที ตามขั้นถัดไปปกติ</li></ul></div>';
-    s5+='<div class="sub"><div class="sub-t">ช่วงที่ 2 — Passive setting <span class="chip">40 → ≤25 °C</span> 30 นาที</div>'
-      +'<p>วางชามนิ่งในอ่างน้ำแข็ง <b>ไม่คน ไม่ยก ไม่เขย่า</b> ปล่อยให้เครือข่ายเจลตั้งตัว (เติมน้ำแข็งรอบนอกได้)</p></div>';
-    s5+='<div class="sub"><div class="sub-t">ตรวจที่ 30 นาที (ยิงผิวบน ไม่คน)</div><ul>'
-      +'<li><span class="chip">≤25 °C</span> = ผ่าน พร้อมขั้นต่อไป</li>'
-      +'<li>25–30 °C: เติมน้ำแข็งรอบนอกอีก ≤10 นาที (ห้ามคน) แล้ววัดใหม่</li>'
-      +'<li class="warn">&gt;25 °C หลังเติมเวลา: ยังใช้ต่อได้แต่คุณภาพไม่เต็มที่ — batch ถัดไปเพิ่มน้ำแข็ง/ลดขนาด/ใช้ชามปากกว้าง</li></ul></div>';
-    s5+='<p style="color:var(--muted);font-size:12.5px">PSS ใช้กับการทำทานเองเท่านั้น ห้ามใช้กับการผลิตเพื่อจำหน่าย และทุกขั้นต้องเน้นความสะอาด (ไม่ได้พาสเจอไรส์ทั้งมิกซ์)</p>';
-  } else {
-    s5+='<div class="branch-tag">ทำขาย — ลดความร้อน + บ่มมาตรฐาน</div>';
-    s5+='<div class="sub"><div class="sub-t">ลดความร้อน → 4 °C ภายใน ≤60 นาที</div><ul>'
-      +'<li><b>อ่างน้ำแข็ง + คนต่อเนื่อง</b> (ชามสเตนเลส, น้ำแข็ง ~1.5 เท่าของมิกซ์) — หมุนชาม+ปาดขอบช่วยเร็วขึ้น ≥3 เท่า</li>'
-      +'<li><b>ถุงแบน ≤2 ซม. ฝังน้ำแข็ง</b> ไล่อากาศ ปิดสนิท ล้อมน้ำแข็งทุกด้าน</li>'
-      +'<li><b>Blast Freezer โหมด chill</b> ถาดตื้น ≤3 ซม. ปิดฟิล์ม</li>'
-      +'<li class="warn">มิกซ์ ~5 กก. วิธีคนจะเกิน 60 นาที — แบ่ง 2 ภาชนะ • ห้ามแช่ช่องฟรีซโดยตรง (ผิวเป็นเกล็ดน้ำแข็งก่อนแกนเย็น)</li></ul></div>';
-    s5+='<div class="sub"><div class="sub-t">บ่มมาตรฐาน</div><p>เมื่อถึง 4 °C บ่มที่ <span class="chip">0–4 °C</span> นาน <span class="chip">4–12 ชม.</span> (ข้ามคืน 8–12 ชม. สะดวกสุด) ในภาชนะปิดสนิท</p>'
-      +'<p class="warn" style="color:var(--rose-deep)">ไม่เกิน 24 ชม. (เสี่ยงเชื้อ + syneresis น้ำแยกชั้น เนื้อแตกร่วน)</p></div>';
+    s5+='<div class="sub"><div class="sub-t">เมื่อมิกซ์เย็นถึง <span class="chip">≤10 °C</span></div><ul>';
+    if(state.cream==='yes')s5+='<li>เติม<b>ครีมพาสเจอร์ไรส์ที่แช่เย็นมาแล้วอย่างน้อย 8 ชั่วโมง</b> คนให้กระจายทั่ว</li>';
+    else s5+='<li style="color:var(--muted)">สูตรนี้ไม่มีครีมแช่เย็น → ข้ามการเติมครีม</li>';
+    if(delicate)s5+='<li>เติมส่วนผสมกลิ่นรสไวต่อความร้อนที่สูตรเก็บไว้ เช่น ผลไม้สด โยเกิร์ต กรีกโยเกิร์ต หรือนมพาสเจอร์ไรส์ แล้วคนให้เข้ากัน</li>';
+    else s5+='<li style="color:var(--muted)">สูตรนี้ไม่มีส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมตอนเย็น</li>';
+    s5+='</ul><p><b>หลังเติมครบ คนต่อจนมิกซ์สมบูรณ์ลงถึง ≤4 °C</b> — 10 °C เป็นจุดเติม ไม่ใช่จุดเริ่มบ่ม</p></div>';
   }
-  H+=step('5','การลดความร้อนและการบ่ม','Cooling & Aging',s5);
+  s5+='<div class="sub"><div class="sub-t">เวลาตัวอย่าง: อ่างน้ำแข็ง + คนต่อเนื่อง</div>'
+    +'<table class="ftable"><thead><tr><th>น้ำหนักมิกซ์</th><th>เวลาจาก 55–60 °C ถึง 4 °C</th></tr></thead><tbody>'
+    +'<tr><td>1 กก.</td><td class="t">ประมาณ 30–45 นาที</td></tr><tr><td>2 กก.</td><td class="t">ประมาณ 45–60 นาที</td></tr><tr><td>5 กก.</td><td class="t">ประมาณ 75–105 นาที — ต้องแบ่งภาชนะ</td></tr>'
+    +'</tbody></table></div>';
+  H+=step('5','การลดความร้อน','Cooling',s5);
 
-  // 6
-  let s6='';
-  if(home){
-    s6+='<div class="branch-tag">ทำทาน</div>';
-    s6+='<p>ทำตามลำดับนี้ — <b>ครีมก่อน แล้วค่อยแต่งกลิ่น/ปรับรส</b> เพราะแต่งกลิ่น เติมสี ปรับรสให้ถูกต้องได้ต่อเมื่อครีมเข้าครบแล้ว:</p>';
-    s6+='<div class="sub"><div class="sub-t">1) ลดอุณหภูมิมิกซ์ <span class="chip">≤10 °C</span></div><p>ในเครื่องปั่น 2–3 นาที หรืออ่างน้ำแข็งพร้อมคนเบาๆ</p></div>';
-    if(state.cream==='yes'){
-      s6+='<div class="sub"><div class="sub-t">2) เติมครีมแช่เย็น</div>'
-        +'<p>เติม<b>วิปปิ้งครีมพาสเจอไรส์</b> ที่แช่ 4 °C ≥8 ชม. และยัง <span class="chip">≤8 °C</span> ตอนเท คนให้กระจายทั่ว — ครีมต้องเย็นเพื่อรักษาผลึกไขมัน</p></div>';
-    } else {
-      s6+='<div class="sub"><div class="sub-t">2) เติมครีมแช่เย็น</div><p style="color:var(--muted)">สูตรนี้ไม่มีครีม → ข้ามขั้นนี้</p></div>';
-    }
-    s6+='<div class="sub"><div class="sub-t">3) หลังครีมเข้าครบ ค่อยแต่งกลิ่น / เติมสี / ชิมปรับรส (ถ้าจำเป็น)</div><ul>'
-      +'<li>กลิ่นระเหยง่าย, แอลกอฮอล์/เหล้า (ใส่น้อย — ทำให้แข็งตัวยาก), สีปรับเฉดขั้นสุดท้าย</li>'
-      +'<li>ปรับเปรี้ยวด้วย <b>CIT20</b> หรือน้ำมะนาว, ปรับหวานด้วย <b>SYR</b> (เผื่อรสจางลงหลังปั่น)</li>'
-      +'<li class="warn">กรด/น้ำมะนาวเติมขั้นนี้เท่านั้น — ถ้าเจอความร้อนพร้อมนม โปรตีนจะจับก้อน</li></ul></div>';
-    s6+='<div class="sub"><div class="sub-t">4) พร้อมเข้าขั้นปั่น</div></div>';
-  } else {
-    s6+='<div class="branch-tag">ทำขาย</div>';
-    s6+='<p>ส่วนผสมหลักผ่านพาสเจอไรส์มาแล้ว ขั้นนี้จัดการเท่าที่จำเป็น:</p><ul>'
-      +'<li>เติมของห้ามโดนความร้อน: กลิ่นระเหยง่าย, เหล้า (น้อย), สีปรับเฉด — ใช้ภาชนะ/ช้อนสะอาด</li>'
-      +'<li>ชิมปรับรสครั้งสุดท้าย (CIT20 / SYR) เผื่อรสจางลงหลังปั่น</li>'
-      +'<li>หลายสูตรแทบไม่มีอะไรต้องทำ — ชิมยืนยันแล้วเทเข้าเครื่องได้เลย</li></ul>';
+  // 6 — Aging
+  const quickAging=state.aging==='quick';
+  let s6='<p>เริ่มจับเวลาบ่มเมื่อ<b>มิกซ์สมบูรณ์ทั้งสูตร</b>เย็นถึง <span class="chip">≤4 °C</span> แล้วเท่านั้น • บ่มในภาชนะปิดสนิทที่ <span class="chip">0–4 °C</span></p>';
+  if(quickAging){
+    s6+='<div class="sub"><div class="sub-t">บ่มด่วน <span class="chip">30 นาที</span></div><p>ใช้ได้เฉพาะสูตรที่มีอินูลิน (INL) ตั้งแต่ <b>2% ขึ้นไป</b> เหมาะเมื่ออยากรักษากลิ่นรสสด โดยยอมรับว่าเนื้ออาจด้อยกว่าบ่มเต็มเล็กน้อย</p></div>';
+  }else{
+    s6+='<div class="sub"><div class="sub-t">บ่มมาตรฐาน <span class="chip">4–8 ชั่วโมง</span></div><p>ที่ 4 ชั่วโมงใช้งานได้และดีขึ้นเรื่อยๆ จนถึงการบ่มข้ามคืน • ไม่ควรเกิน 24 ชั่วโมง เพราะเสี่ยงจุลินทรีย์และ syneresis</p></div>';
   }
-  H+=step('6','เติมส่วนผสมก่อนปั่น','Final Additions',s6);
+  s6+='<ul><li>ใช้ช่อง chill ที่วัดแล้วว่าอยู่ 0–4 °C; ช่องแช่เย็นทั่วไป 6–8 °C อุ่นเกินไป</li><li>หรือปิดมิกซ์ในถุงแบนแล้วฝังน้ำแข็งล้อมทุกด้าน ตรวจและเติมน้ำแข็งตลอดช่วงบ่ม</li><li><b>สัญญาณว่าบ่มแล้ว:</b> มิกซ์ข้นและหนืดขึ้น เก็บอากาศได้ดีขึ้นเมื่อปั่น</li></ul>';
+  H+=step('6','การบ่ม','Aging',s6);
 
-  // 7
-  H+=step('7','การปั่นไอศกรีม','Churning',
+  // 7 — Final additions
+  let s7='<p>หลังบ่ม เติมเฉพาะส่วนที่ห้ามโดนความร้อนหรือต้องการความสด แล้วชิมปรับรสครั้งสุดท้าย:</p><ul>'
+    +'<li>กลิ่นสกัด/น้ำมันหอมระเหย เหล้าหรือแอลกอฮอล์ (ใส่น้อย) และสีปรับเฉดขั้นสุดท้าย</li>'
+    +'<li>ปรับเปรี้ยวด้วย CIT20 และปรับหวานด้วย SYR เท่าที่จำเป็น • ถ้าเลี่ยงไม่ให้กรดโดนความร้อนพร้อมนม ให้เก็บกรดมาเติมขั้นนี้</li>'
+    +'<li>ใช้ภาชนะ ช้อน และทัพพีสะอาด เพราะขั้นนี้อยู่หลังการฆ่าเชื้อแล้ว</li>'
+    +'<li>หลายสูตรแทบไม่มีอะไรต้องทำ เพียงชิมยืนยันแล้วเข้าเครื่องปั่น</li></ul>';
+  H+=step('7','เติมส่วนผสมก่อนปั่น','Final Additions Before Churning',s7);
+
+  // 8
+  H+=step('8','การปั่นไอศกรีม','Churning',
     '<ul>'
     +'<li>ตรวจถังปั่น/ใบพัด/ฝา สะอาดและแห้ง • ทำตามคู่มือเครื่อง (ตั้งอุณหภูมิ / ตั้งเวลา / เลือกโปรแกรม)</li>'
     +'<li><b>ดูลักษณะเนื้อเป็นเกณฑ์หลัก</b> (ไม่ยึดเวลาตายตัว): เนียน · ฟูเหมาะสม · ผิวแห้งสวย</li>'
@@ -619,8 +624,8 @@ function render(){
     +'<li>เครื่องระบายความร้อนด้วยอากาศ ตั้งในที่อากาศไม่ร้อน</li>'
     +'</ul>');
 
-  // 8
-  H+=step('8','บรรจุ + Inclusion / Swirl','Panning',
+  // 9
+  H+=step('9','ตักใส่ภาชนะ + Inclusion / Swirl','Panning & Inclusions',
     '<ul>'
     +'<li>ทำเร็ว เบามือ (ฟองอากาศยุบง่าย) • ความสะอาดสำคัญ ของที่เติมหลายอย่างไม่ผ่านความร้อน</li>'
     +'<li>ถาดสแตนเลส<b>แช่แข็งก่อน</b>ใช้ • ภาชนะพลาสติก/กระดาษไม่ต้อง</li>'
@@ -629,8 +634,8 @@ function render(){
     +'<li>เสร็จแล้วรีบเข้าแช่แข็งทันที</li>'
     +'</ul>');
 
-  // 9
-  H+=step('9','การแช่แข็ง','Hardening',
+  // 10
+  H+=step('10','การแช่แข็ง','Hardening',
     '<ul>'
     +'<li>แช่ให้ถึงเป้าหมาย<b>เร็วที่สุด</b> ยิ่งเร็วผลึกยิ่งเล็ก เนื้อยิ่งเนียน • Blast Freezer ดีที่สุด ส่วนตู้แช่แข็ง −25 °C ก็ใช้ได้ดี (เป็นตู้ที่ใช้กันมากที่สุด)</li>'
     +'<li>เป้าหมาย <span class="chip">−18 °C</span> (เก็บสต็อก) หรือ <span class="chip">−14 °C</span> (พร้อมเสิร์ฟ/ตู้โชว์)</li>'
@@ -648,8 +653,8 @@ function render(){
     +'</tbody></table></div>'
     +'<ul><li class="warn">เลี่ยงเนื้อหนาเกิน / เปิดตู้บ่อย / ใส่พร้อมกันมากเกินกำลังตู้ • ตู้เป่าลมอย่าวางถาดชิดจนลมไม่ทั่ว • ถ้าช้ากว่าปกติให้เช็ก defrost น้ำแข็งเกาะคอยล์</li></ul>');
 
-  // 10
-  H+=step('10','การเก็บรักษา','Storage',
+  // 11
+  H+=step('11','การเก็บรักษา','Storage',
     '<ul>'
     +'<li>เก็บยาวที่ <span class="chip">−25 °C</span> (อย่างน้อยไม่เกิน −18 °C) และ<b>อุณหภูมินิ่ง</b></li>'
     +'<li class="warn">เลี่ยงตู้ auto-defrost (ตู้บ้าน 2 ประตูส่วนใหญ่) — อุณหภูมิแกว่งทำผลึกโตเร็ว</li>'
@@ -657,8 +662,8 @@ function render(){
     +'<li>ติดป้ายวันที่ + ใช้หลัก FIFO (เข้าก่อน-ออกก่อน)</li>'
     +'</ul>');
 
-  // 11
-  H+=step('11','การเสิร์ฟ','Serving',
+  // 12
+  H+=step('12','การเสิร์ฟ','Serving',
     '<ul>'
     +'<li><b>Tempering:</b> ปรับเนื้อช้าๆ สม่ำเสมอจากตู้เก็บ → ตู้ตัก (−12 ถึง −15 °C) ตักดีที่ <span class="chip">−14 °C</span> • ย้ายล่วงหน้า 3–6 ชม.</li>'
     +'<li class="warn">ห้ามเร่งให้นิ่มที่อุณหภูมิห้อง (ผิวละลายเกินก่อนในนิ่ม)</li>'
@@ -672,8 +677,8 @@ function render(){
 }
 
 function resetAll(){
-  state.purpose=null;state.risky=new Set();state.group=null;state.machine=null;state.profile=null;state.delicate=null;state.cream=null;state.stab=new Set();state.title='';state.lot='';
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  state.purpose=null;state.risky=new Set();state.group=null;state.machine=null;state.profile=null;state.aging=null;state.delicate=null;state.cream=null;state.stab=new Set();state.title='';state.lot='';
+  document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('sel');o.disabled=false;});
   document.getElementById('qRisky').style.display='none';
   document.getElementById('homeExtra').style.display='none';
   document.getElementById('qProfile').style.display='none';
@@ -683,7 +688,7 @@ function resetAll(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ===== ตัวจับเวลา PST (ปั่น + พัก แบบไล่ทีละช่วง) =====
+// ===== ตัวจับเวลา PBT (ปั่น + พัก แบบไล่ทีละช่วง) =====
 const PT={phases:[],idx:0,endTime:null,remaining:null,running:false,iv:null};
 let ptAudio=null;
 function ptUnlock(){try{if(!ptAudio)ptAudio=new (window.AudioContext||window.webkitAudioContext)();if(ptAudio.state==='suspended')ptAudio.resume();}catch(e){}}
@@ -692,9 +697,9 @@ function ptFmt(sec){const m=Math.floor(sec/60),s=sec%60;return m+':'+String(s).p
 function ptClock(ms){const d=new Date(ms);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');}
 function ptHardStop(){clearInterval(PT.iv);PT.iv=null;PT.running=false;PT.idx=0;PT.endTime=null;PT.remaining=null;PT.phases=[];}
 
-function openPstTimer(){
-  if(!curPST)return;
-  const rounds=parseInt(curPST.r)||0, spin=parseInt(curPST.s)||0, rest=60;
+function openPbtTimer(){
+  if(!curPBT)return;
+  const rounds=parseInt(curPBT.r)||0, spin=parseInt(curPBT.s)||0, rest=parseInt(curPBT.rest)||0;
   if(!rounds||!spin)return;
   PT.phases=[];
   for(let n=1;n<=rounds;n++){PT.phases.push({round:n,kind:'spin',dur:spin});PT.phases.push({round:n,kind:'rest',dur:rest});}
