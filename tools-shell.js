@@ -9,6 +9,101 @@
     'Meltdown-Test.html': 'Meltdown-Test-guide.html'
   };
 
+  function makeHomeLink() {
+    const link = document.createElement('a');
+    link.className = 'back-link tools-home-link';
+    link.href = 'index.html';
+    link.setAttribute('aria-label', 'กลับหน้าหลัก');
+    link.innerHTML = '<span class="tools-nav-icon" aria-hidden="true">⌂</span><span>หน้าหลัก</span>';
+    return link;
+  }
+
+  function makeGuideLink(href) {
+    const link = document.createElement('a');
+    link.className = 'tool-guide-link';
+    link.href = href;
+    link.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">?</span><span>คู่มือ</span>';
+    return link;
+  }
+
+  function setCompactTopNavigation() {
+    if (page === 'index.html') return;
+
+    const container = document.querySelector('.container, .wrap, .sheet, main');
+    const header = container && container.querySelector('header');
+    if (!container || !header) return;
+
+    let topbar = container.querySelector('.topbar');
+    if (!topbar) {
+      topbar = document.createElement('div');
+      topbar.className = 'topbar tools-added-topbar';
+      container.insertBefore(topbar, header);
+    }
+
+    let home = container.querySelector('a.back-link[href="index.html"], a.back-link[href="/class/index.html"]');
+    if (!home) home = makeHomeLink();
+    home.classList.add('tools-home-link');
+    home.href = 'index.html';
+    home.setAttribute('aria-label', 'กลับหน้าหลัก');
+    home.innerHTML = '<span class="tools-nav-icon" aria-hidden="true">⌂</span><span>หน้าหลัก</span>';
+
+    let guide = null;
+    if (guides[page]) {
+      guide = container.querySelector('.topbar a[href$="-guide.html"], header a[href$="-guide.html"]');
+      if (!guide) guide = makeGuideLink(guides[page]);
+
+      const oldWrapper = guide.parentElement;
+      guide.classList.add('tool-guide-link');
+      guide.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">?</span><span>คู่มือ</span>';
+      if (oldWrapper && oldWrapper !== topbar && oldWrapper !== container) {
+        guide.remove();
+        if (!oldWrapper.textContent.trim()) oldWrapper.remove();
+      }
+    }
+
+    const returnLink = Array.from(container.querySelectorAll('a.back-link')).find(function (link) {
+      return link !== home && !/index\.html(?:$|[?#])/.test(link.getAttribute('href') || '');
+    });
+    if (returnLink) {
+      returnLink.classList.add('tools-return-link');
+      returnLink.innerHTML = '<span class="tools-nav-icon" aria-hidden="true">←</span><span>เครื่องมือ</span>';
+    }
+
+    let group = topbar.querySelector('.tools-nav-group');
+    if (!group) {
+      group = document.createElement('nav');
+      group.className = 'tools-nav-group';
+      group.setAttribute('aria-label', 'ทางลัดของหน้า');
+      topbar.appendChild(group);
+    }
+    if (returnLink) group.appendChild(returnLink);
+    group.appendChild(home);
+    if (guide) group.appendChild(guide);
+  }
+
+  function addBottomHomeButton() {
+    if (page === 'index.html' || document.querySelector('.tools-bottom-nav')) return;
+
+    const container = document.querySelector('.container, .wrap, .sheet, main');
+    if (!container) return;
+
+    const nav = document.createElement('nav');
+    nav.className = 'tools-bottom-nav';
+    nav.setAttribute('aria-label', 'กลับหน้าหลัก');
+    nav.innerHTML = '<a class="tools-bottom-home" href="index.html">'
+      + '<span class="tools-bottom-icon" aria-hidden="true">⌂</span>'
+      + '<span class="tools-bottom-copy"><strong>กลับหน้าหลัก</strong><small>ดูเครื่องมือออนไลน์ทั้งหมด</small></span>'
+      + '<span class="tools-bottom-arrow" aria-hidden="true">→</span>'
+      + '</a>';
+
+    const footer = document.querySelector('.site-footer');
+    if (footer && footer.parentNode) {
+      footer.parentNode.insertBefore(nav, footer);
+    } else {
+      container.appendChild(nav);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.eyebrow').forEach(function (node) {
       node.textContent = 'Miss Icecream · Online Tools';
@@ -31,28 +126,8 @@
       }
     });
 
-    const topbar = document.querySelector('.topbar');
-    const existingGuide = document.querySelector('a[href$="-guide.html"]');
-    if (guides[page] && !existingGuide && !document.querySelector('.tool-guide-link')) {
-      const link = document.createElement('a');
-      link.className = 'tool-guide-link';
-      link.href = guides[page];
-      link.innerHTML = '<span aria-hidden="true">?</span> คู่มือ';
-      if (topbar) {
-        topbar.appendChild(link);
-      } else {
-        const container = document.querySelector('.container, .wrap, .sheet');
-        const header = container && container.querySelector('header');
-        if (container && header) {
-          const row = document.createElement('div');
-          row.className = 'topbar tools-added-topbar';
-          const back = container.querySelector('.back-link');
-          if (back) row.appendChild(back);
-          row.appendChild(link);
-          container.insertBefore(row, header);
-        }
-      }
-    }
+    setCompactTopNavigation();
+    addBottomHomeButton();
 
     const batchbar = document.querySelector('.batchbar');
     if (batchbar) {

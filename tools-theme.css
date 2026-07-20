@@ -105,8 +105,84 @@ textarea:focus {
   justify-content: center;
 }
 
-.tools-added-topbar .back-link {
-  margin-bottom: 0 !important;
+.topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  margin-bottom: 20px !important;
+}
+
+.tools-nav-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  margin-left: auto;
+}
+
+.topbar .tools-home-link,
+.topbar .tools-return-link,
+.topbar .tool-guide-link {
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 6px 11px !important;
+  gap: 6px;
+  border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 250, 242, .86) !important;
+  color: var(--muted) !important;
+  box-shadow: 0 7px 20px -18px rgba(43, 33, 24, .65);
+  text-decoration: none !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+  transform: none !important;
+  transition: color .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease !important;
+}
+
+.topbar .tool-guide-link {
+  border-color: #cdd6b7 !important;
+  background: var(--accent-soft) !important;
+  color: var(--accent-deep) !important;
+}
+
+.topbar .tools-home-link:hover,
+.topbar .tools-return-link:hover,
+.topbar .tool-guide-link:hover {
+  border-color: var(--accent) !important;
+  background: #fffdf8 !important;
+  color: var(--accent-deep) !important;
+  box-shadow: 0 9px 22px -17px rgba(43, 33, 24, .75);
+}
+
+.tools-nav-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--line-soft);
+  color: var(--accent-deep);
+  font-family: 'Sarabun', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tools-guide-icon {
+  background: var(--accent-deep);
+  color: #fff;
+  font-size: 11px;
+}
+
+.topbar > .sound-toggle {
+  min-height: 36px !important;
+  margin-right: auto;
+  padding-block: 6px !important;
+  font-size: 12.5px !important;
 }
 
 .tool-guide-link {
@@ -119,6 +195,107 @@ textarea:focus {
   text-decoration: none;
   font-size: 13px;
   font-weight: 600;
+}
+
+.tools-bottom-nav {
+  width: min(calc(100% - 24px), 420px);
+  margin: 38px auto 0;
+}
+
+.tools-bottom-home {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 13px;
+  overflow: hidden;
+  border: 1px solid #cfd8ba;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fffdf8 0%, var(--accent-soft) 100%);
+  box-shadow: 0 18px 34px -27px rgba(43, 33, 24, .62);
+  color: var(--ink);
+  text-decoration: none;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.tools-bottom-home::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--accent-deep);
+}
+
+.tools-bottom-home:hover {
+  transform: translateY(-2px);
+  border-color: #aebd8e;
+  box-shadow: 0 21px 38px -25px rgba(43, 33, 24, .7);
+}
+
+.tools-bottom-icon,
+.tools-bottom-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.tools-bottom-icon {
+  width: 46px;
+  height: 46px;
+  background: var(--accent-deep);
+  color: #fff;
+  box-shadow: 0 9px 20px -13px rgba(79, 99, 54, .85);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.tools-bottom-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.tools-bottom-copy strong {
+  color: var(--accent-deep);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tools-bottom-copy small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tools-bottom-arrow {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccd6b6;
+  background: rgba(255, 255, 255, .64);
+  color: var(--accent-deep);
+  font-size: 16px;
+  transition: transform .22s ease, background .22s ease;
+}
+
+.tools-bottom-home:hover .tools-bottom-arrow {
+  transform: translateX(2px);
+  background: #fff;
+}
+
+.tools-bottom-nav + .site-footer {
+  margin-top: 18px !important;
+}
+
+body.cap .tools-bottom-nav {
+  display: none !important;
 }
 
 .tools-notice {
@@ -391,16 +568,22 @@ table select {
   .topbar {
     flex-wrap: wrap;
     gap: 8px !important;
-    margin-bottom: 20px !important;
+    margin-bottom: 18px !important;
   }
 
-  .topbar .back-link {
-    flex: 1 1 auto;
+  .tools-nav-group {
+    gap: 6px;
   }
 
-  .topbar .sound-toggle,
+  .topbar .tools-home-link,
+  .topbar .tools-return-link,
   .topbar .tool-guide-link {
-    flex: 0 0 auto;
+    min-height: 40px !important;
+    padding: 7px 10px !important;
+  }
+
+  .topbar > .sound-toggle {
+    min-height: 40px !important;
   }
 
   input,
@@ -510,21 +693,42 @@ table select {
     padding-inline: 8px !important;
     font-size: 12px !important;
   }
+
+  .tools-bottom-nav {
+    width: min(calc(100% - 8px), 420px);
+    margin-top: 30px;
+  }
 }
 
 @media screen and (max-width: 390px) {
-  .topbar .back-link {
-    flex-basis: 100%;
+  .topbar {
+    align-items: flex-start !important;
   }
 
-  .topbar .sound-toggle,
+  .topbar > .sound-toggle {
+    max-width: calc(100% - 174px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topbar .tools-home-link,
+  .topbar .tools-return-link,
   .topbar .tool-guide-link {
-    flex: 1 1 calc(50% - 4px);
+    font-size: 12px !important;
   }
 
-  .tools-added-topbar .back-link,
-  .tools-added-topbar .tool-guide-link {
-    flex: 1 1 calc(50% - 4px);
+  .tools-bottom-home {
+    grid-template-columns: 42px minmax(0, 1fr) 30px;
+    gap: 11px;
+    padding: 11px 12px;
+    border-radius: 16px;
+  }
+
+  .tools-bottom-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
   }
 }
 
@@ -552,6 +756,8 @@ table select {
   }
 
   .tool-guide-link,
+  .tools-nav-group,
+  .tools-bottom-nav,
   .tools-notice {
     display: none !important;
   }
