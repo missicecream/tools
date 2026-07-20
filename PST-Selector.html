@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PST Selector · Miss Icecream</title>
+<title>PBT Selector · Miss Icecream</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -217,7 +217,7 @@
     .metric .big { font-size: 40px; }
   }
 
-  /* ตัวจับเวลา PST */
+  /* ตัวจับเวลา PBT */
   .pst-cta { margin: 18px 0 4px; text-align: center; }
   .timer-open-btn {
     font-family: 'Sarabun', sans-serif; font-weight: 700; font-size: 14px;
@@ -292,26 +292,30 @@
 
     <header>
       <div class="eyebrow">Miss Icecream · Online Tools</div>
-      <h1>PST <em>Selector</em></h1>
-      <p class="subtitle">Paula’s Spin Technique · ตอบ 2 คำถาม แล้วดูว่าต้องปั่นกี่รอบ รอบละกี่วินาที และพักเท่าไหร่ค่ะ</p>
+      <h1>PBT <em>Selector</em></h1>
+      <p class="subtitle">Paula’s Blending Technique · เลือกลักษณะสูตรและเครื่อง แล้วดูจำนวนรอบ เวลาปั่น และเวลาพักตามตาราง PBT ปัจจุบันค่ะ</p>
     </header>
 
     <!-- Step 1: recipe group -->
     <div class="step" id="step1">
       <div class="step-head">
         <span class="step-num">1</span>
-        <span class="step-q">ไขมันในสูตรผ่านความร้อนระหว่างการผลิตไหม?</span>
+        <span class="step-q">ลักษณะสูตรสำหรับกำหนดจำนวนรอบ PBT</span>
       </div>
       <div class="opts">
-        <button class="opt" data-group="1" type="button">
-          <div class="opt-title">ไม่ผ่านความร้อน / ไม่มีไขมัน</div>
-          <div class="opt-sub">เม็ดไขมันยังเล็กอยู่แล้ว PST แค่รักษาสภาพไว้ (กลุ่ม 1)</div>
-          <div class="opt-eg">เช่น เบสทำทานที่เติมครีมแช่เย็นทีหลัง, ซอร์เบต์, เชอร์เบท</div>
+        <button class="opt" data-group="full" type="button">
+          <div class="opt-title">ใช้จำนวนรอบเต็มตามตาราง</div>
+          <div class="opt-sub">ไขมันผ่านความร้อนหรือมีไขมันอิสระ</div>
+          <div class="opt-eg">เช่น ทำขาย ช็อกโกแลต โกโก้ เพสต์ถั่ว กะทิ หรือนมพืชเติมน้ำมัน</div>
         </button>
-        <button class="opt" data-group="2" type="button">
-          <div class="opt-title">ผ่านความร้อน</div>
-          <div class="opt-sub">เม็ดไขมันรวมตัวใหญ่ขึ้น PST ต้องลดขนาดใหม่ (กลุ่ม 2)</div>
-          <div class="opt-eg">เช่น เบสทำขายทุกชนิด, ช็อกโกแลต/โกโก้, เพสต์ถั่ว, กะทิ, นมพืชเติมน้ำมัน</div>
+        <button class="opt" data-group="factory" type="button">
+          <div class="opt-title">ไขมันผ่านโฮโมจีไนซ์จากโรงงาน และไม่โดนความร้อนซ้ำ</div>
+          <div class="opt-sub">เฉพาะเครื่องปั่นโถ ลดได้ 1 รอบ</div>
+          <div class="opt-eg">เช่น ทำทานที่เก็บครีมแช่เย็นไว้เติมทีหลัง</div>
+        </button>
+        <button class="opt" data-group="foamy" type="button">
+          <div class="opt-title">เชอร์เบท/ซอร์เบต์ที่ฟูเป็นโฟมมากเกิน</div>
+          <div class="opt-sub">เฉพาะเครื่องปั่นโถ ใช้ 1–2 รอบ; เครื่องปั่นมือถือใช้รอบเต็ม</div>
         </button>
       </div>
     </div>
@@ -323,21 +327,25 @@
         <span class="step-q">ใช้เครื่องปั่นชนิดไหน?</span>
       </div>
       <div class="opts">
-        <button class="opt" data-machine="commJar" type="button">
-          <div class="opt-title">เครื่องปั่นโถระดับการค้า</div>
-          <div class="opt-sub">แบบที่ใช้ในร้านน้ำปั่น</div>
-        </button>
         <button class="opt" data-machine="homeJar" type="button">
           <div class="opt-title">เครื่องปั่นโถครัวเรือน</div>
-          <div class="opt-sub">กำลังต่ำ</div>
+          <div class="opt-sub">มิกซ์ 0.5–1.2 กก.</div>
+        </button>
+        <button class="opt" data-machine="commJar" type="button">
+          <div class="opt-title">เครื่องปั่นโถระดับการค้า</div>
+          <div class="opt-sub">มิกซ์ 0.8–1.5 กก.</div>
+        </button>
+        <button class="opt" data-machine="immSmall" type="button">
+          <div class="opt-title">เครื่องปั่นมือถือการค้า เล็ก</div>
+          <div class="opt-sub">มิกซ์ 1–5 กก.</div>
         </button>
         <button class="opt" data-machine="immMed" type="button">
-          <div class="opt-title">เครื่องปั่นมือถือ (กลาง)</div>
-          <div class="opt-sub">ระดับการค้า · มิกซ์ 5–24 กก.</div>
+          <div class="opt-title">เครื่องปั่นมือถือการค้า กลาง</div>
+          <div class="opt-sub">มิกซ์ 5–10 กก.</div>
         </button>
         <button class="opt" data-machine="immLarge" type="button">
-          <div class="opt-title">เครื่องปั่นมือถือ (ใหญ่)</div>
-          <div class="opt-sub">ระดับการค้า · มิกซ์ 25–50 กก.</div>
+          <div class="opt-title">เครื่องปั่นมือถือการค้า ใหญ่</div>
+          <div class="opt-sub">มิกซ์ 10–20 กก.</div>
         </button>
       </div>
     </div>
@@ -345,8 +353,8 @@
     <!-- Step 3: batch profile (immersion only) -->
     <div class="step hidden" id="step3">
       <div class="step-head">
-        <span class="step-num">3</span>
-        <span class="step-q">ชุดการผลิตเป็นแบบไหน?</span>
+        <span class="step-num">2.1</span>
+        <span class="step-q">สำหรับเครื่องปั่นมือถือ เลือกค่าฝั่งใดของช่วง?</span>
       </div>
       <div class="opts">
         <button class="opt" data-profile="low" type="button">
@@ -379,9 +387,9 @@
         </div>
       </div>
 
-      <!-- ตัวจับเวลา PST (ปั่น + พัก) -->
+      <!-- ตัวจับเวลา PBT (ปั่น + พัก) -->
       <div class="pst-cta" id="ptCta">
-        <button class="timer-open-btn" onclick="openPstTimer()">⏱ สร้างตัวจับเวลา PST (ปั่น + พัก) จากค่านี้</button>
+        <button class="timer-open-btn" onclick="openPbtTimer()">⏱ สร้างตัวจับเวลา PBT (ปั่น + พัก) จากค่านี้</button>
         <p class="pst-cta-sub" id="ptCtaSub"></p>
       </div>
       <div class="pst-timer" id="ptPanel" style="display:none">
@@ -418,30 +426,11 @@
 
 <script>
   const DATA = {
-    commJar: {
-      label: 'เครื่องปั่นโถระดับการค้า', type: 'jar',
-      g1: { rounds: '2', sec: '30' },
-      g2: { rounds: '3', sec: '30' },
-      rest: '60'
-    },
-    homeJar: {
-      label: 'เครื่องปั่นโถครัวเรือน (กำลังต่ำ)', type: 'jar',
-      g1: { rounds: '3', sec: '30' },
-      g2: { rounds: '4', sec: '25', note: 'กลุ่ม 2 ลดเวลาต่อรอบเหลือ 25 วินาที เพราะต้องปั่นหลายรอบ ช่วยไม่ให้มอเตอร์กำลังต่ำร้อนสะสมเกินไป' },
-      rest: '60'
-    },
-    immMed: {
-      label: 'เครื่องปั่นมือถือ ระดับการค้า ขนาดกลาง (5–24 กก.)', type: 'imm',
-      g1: { rLow: 3, rHigh: 4, sLow: 45, sHigh: 45 },
-      g2: { rLow: 4, rHigh: 5, sLow: 45, sHigh: 55 },
-      rest: '60'
-    },
-    immLarge: {
-      label: 'เครื่องปั่นมือถือ ระดับการค้า ขนาดใหญ่ (25–50 กก.)', type: 'imm', large: true,
-      g1: { rLow: 4, rHigh: 5, sLow: 70, sHigh: 70 },
-      g2: { rLow: 5, rHigh: 6, sLow: 70, sHigh: 90 },
-      rest: '60'
-    }
+    homeJar:{label:'เครื่องปั่นโถครัวเรือน (0.5–1.2 กก.)',type:'jar',rLow:4,rHigh:4,sLow:20,sHigh:20,restLow:10,restHigh:20,timerRest:10},
+    commJar:{label:'เครื่องปั่นโถระดับการค้า (0.8–1.5 กก.)',type:'jar',rLow:3,rHigh:3,sLow:30,sHigh:30,restLow:5,restHigh:10,timerRest:10},
+    immSmall:{label:'เครื่องปั่นมือถือการค้า เล็ก (1–5 กก.)',type:'imm',rLow:2,rHigh:3,sLow:45,sHigh:45,restLow:5,restHigh:10},
+    immMed:{label:'เครื่องปั่นมือถือการค้า กลาง (5–10 กก.)',type:'imm',rLow:3,rHigh:3,sLow:45,sHigh:60,restLow:10,restHigh:10},
+    immLarge:{label:'เครื่องปั่นมือถือการค้า ใหญ่ (10–20 กก.)',type:'imm',rLow:3,rHigh:3,sLow:60,sHigh:60,restLow:10,restHigh:15}
   };
 
   const state = { group: null, machine: null, profile: null };
@@ -455,7 +444,7 @@
     document.querySelectorAll('[data-' + attr + ']').forEach(btn => {
       btn.addEventListener('click', () => {
         const val = btn.getAttribute('data-' + attr);
-        state[key] = (attr === 'group') ? Number(val) : val;
+        state[key] = val;
         // ไฮไลต์เฉพาะกลุ่มเดียวกัน
         btn.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
         btn.classList.add('selected');
@@ -491,30 +480,37 @@
   }
 
   function renderResult(m) {
-    const g = state.group === 1 ? m.g1 : m.g2;
-    let rounds, sec, rangeText = '';
+    const hi = state.profile === 'high';
+    let rounds = hi ? m.rHigh : m.rLow;
+    let sec = hi ? m.sHigh : m.sLow;
+    let rest = hi ? m.restHigh : m.restLow;
+    let rangeText = '';
 
     if (m.type === 'jar') {
-      rounds = g.rounds; sec = g.sec;
+      rounds = m.rHigh;
+      sec = m.sHigh;
+      rest = m.timerRest;
+      if (state.group === 'factory') rounds = Math.max(1, rounds - 1);
+      if (state.group === 'foamy') rounds = 2;
+      rangeText = 'ช่วงพักตามตาราง: ' + m.restLow + '–' + m.restHigh + ' วินาที · ตัวจับเวลาใช้ 10 วินาที';
     } else {
-      const hi = state.profile === 'high';
-      rounds = hi ? g.rHigh : g.rLow;
-      sec = hi ? g.sHigh : g.sLow;
-      const rangeR = (g.rLow !== g.rHigh) ? (g.rLow + '–' + g.rHigh + ' รอบ') : null;
-      const rangeS = (g.sLow !== g.sHigh) ? (g.sLow + '–' + g.sHigh + ' วินาที') : null;
-      const parts = [rangeR, rangeS].filter(Boolean);
+      const rangeR = (m.rLow !== m.rHigh) ? (m.rLow + '–' + m.rHigh + ' รอบ') : null;
+      const rangeS = (m.sLow !== m.sHigh) ? (m.sLow + '–' + m.sHigh + ' วินาที') : null;
+      const rangeRest = (m.restLow !== m.restHigh) ? ('พัก ' + m.restLow + '–' + m.restHigh + ' วินาที') : null;
+      const parts = [rangeR, rangeS, rangeRest].filter(Boolean);
       if (parts.length) rangeText = 'ช่วงทั้งหมดของเครื่องนี้: ' + parts.join(' · ');
+      if (state.group !== 'full') rangeText += (rangeText ? ' · ' : '') + 'เครื่องปั่นมือถือใช้จำนวนรอบเต็มทุกสูตร';
     }
 
     document.getElementById('mRounds').textContent = rounds;
     document.getElementById('mSec').textContent = sec;
-    document.getElementById('mRest').textContent = m.rest;
+    document.getElementById('mRest').textContent = rest;
     document.getElementById('rangeNote').textContent = rangeText;
 
     // เก็บค่าไว้สำหรับตัวจับเวลา + รีเซ็ตตัวจับเวลาเมื่อผลเปลี่ยน
     curR = parseInt(rounds) || 0;
     curS = parseInt(sec) || 0;
-    curRest = parseInt(m.rest) || 60;
+    curRest = parseInt(rest) || 10;
     ptHardStop();
     const ctaSub = document.getElementById('ptCtaSub');
     if (ctaSub) ctaSub.textContent = 'ไล่จับเวลาทีละช่วง: ปั่น ' + curS + ' วินาที → พัก ' + curRest + ' วินาที ครบ ' + curR + ' รอบ · มีเสียงเตือนเมื่อจบแต่ละช่วง และบอกเวลานาฬิกาที่แต่ละช่วงจะครบ';
@@ -524,25 +520,21 @@
     // badges
     const badges = document.getElementById('badges');
     badges.innerHTML =
-      '<span class="badge grp">กลุ่ม ' + state.group + '</span>' +
+      '<span class="badge grp">' + ({full:'รอบเต็ม',factory:'ลด 1 รอบเฉพาะเครื่องปั่นโถ',foamy:'เชอร์เบท/ซอร์เบต์ 1–2 รอบเฉพาะเครื่องปั่นโถ'}[state.group]) + '</span>' +
       '<span class="badge">' + m.label + '</span>';
 
     // notes
     const notes = [];
-    notes.push('ปั่นที่อุณหภูมิ 60–65°C — วัดทุกครั้งก่อนเทลงโถ ถ้าเย็นกว่าให้อุ่นก่อน ถ้าสูงกว่าเล็กน้อยเริ่มได้เลย');
+    notes.push('เริ่ม PBT เมื่อมิกซ์อยู่ที่ 68–70°C และพยายามปั่นให้จบก่อนต่ำกว่า 58°C');
     notes.push('ปั่นแบบสลับพัก (pulsed shear): ปั่นแรงสั้นๆ สลับพัก ไม่ปั่นต่อเนื่องรวดเดียว');
     if (m.type === 'imm') {
       notes.push('ไล่หัวปั่นให้ทั่วหม้อ ไม่ปั่นจุดเดียว');
       notes.push('ใช้ตัวเลขฝั่งสูงเมื่อชุดใหญ่/เนื้อข้น และฝั่งต่ำเมื่อชุดเล็ก/เนื้อใส');
     }
-    if (m.large) {
-      notes.push('ถ้ามิกซ์ตั้งแต่ 35 กก. ขึ้นไป พักระหว่างรอบได้ถึง 75 วินาที');
-    }
-    if (state.group === 2 && g.note) {
-      notes.push(g.note);
-    }
-    notes.push({ warn: true, text: 'อย่าให้มิกซ์เย็นต่ำกว่า 50°C ระหว่างทำซ้ำ ถ้าใกล้ถึงให้อุ่นกลับก่อนปั่นรอบต่อไป' });
-    notes.push({ warn: true, text: 'ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้นก่อนใช้ เพราะ PST เป็นจุดแรกที่อุปกรณ์สัมผัสมิกซ์หลังพาสเจอร์ไรส์' });
+    if (m.type === 'jar' && state.group === 'factory') notes.push('ลด 1 รอบ เพราะไขมันผ่านการโฮโมจีไนซ์จากโรงงานและไม่ได้โดนความร้อนซ้ำระหว่างผลิต');
+    if (m.type === 'jar' && state.group === 'foamy') notes.push('ตัวจับเวลาเริ่มที่ 2 รอบ; ถ้ายังฟูเป็นโฟมมากเกินไป ครั้งถัดไปลดเหลือ 1 รอบได้');
+    notes.push({ warn: true, text: 'ถ้ามิกซ์ต่ำกว่า 58°C หรือเริ่มหนืดจนปั่นยาก ให้อุ่นกลับก่อนปั่นรอบต่อไป' });
+    notes.push({ warn: true, text: 'ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้นก่อนใช้ เพราะ PBT เป็นจุดแรกที่อุปกรณ์สัมผัสมิกซ์หลังพาสเจอร์ไรส์' });
 
     const ul = document.getElementById('noteList');
     ul.innerHTML = '';
@@ -564,8 +556,8 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ===== ตัวจับเวลา PST (ปั่น + พัก แบบไล่ทีละช่วง) =====
-  let curR = 0, curS = 0, curRest = 60;
+  // ===== ตัวจับเวลา PBT (ปั่น + พัก แบบไล่ทีละช่วง) =====
+  let curR = 0, curS = 0, curRest = 10;
   const PT = { phases: [], idx: 0, endTime: null, remaining: null, running: false, iv: null };
   let ptAudio = null;
   function ptUnlock() { try { if (!ptAudio) ptAudio = new (window.AudioContext || window.webkitAudioContext)(); if (ptAudio.state === 'suspended') ptAudio.resume(); } catch (e) {} }
@@ -574,7 +566,7 @@
   function ptClock(ms) { const d = new Date(ms); return [d.getHours(), d.getMinutes(), d.getSeconds()].map(n => String(n).padStart(2, '0')).join(':'); }
   function ptHardStop() { clearInterval(PT.iv); PT.iv = null; PT.running = false; PT.idx = 0; PT.endTime = null; PT.remaining = null; PT.phases = []; }
 
-  function openPstTimer() {
+  function openPbtTimer() {
     if (!curR || !curS) return;
     PT.phases = [];
     for (let n = 1; n <= curR; n++) { PT.phases.push({ round: n, kind: 'spin', dur: curS }); PT.phases.push({ round: n, kind: 'rest', dur: curRest }); }

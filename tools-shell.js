@@ -5,7 +5,6 @@
     'PST-Selector.html': 'PST-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html',
     'Heat-Log.html': 'Heat-Log-guide.html',
-    'PST-PSS-Log.html': 'PST-PSS-Log-guide.html',
     'Churning.html': 'Churning-guide.html',
     'Meltdown-Test.html': 'Meltdown-Test-guide.html'
   };

@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class PST Timer · Miss Icecream</title>
+<title>Class PBT Timers · Miss Icecream</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -139,8 +139,8 @@
 
     <header>
       <div class="eyebrow">Miss Icecream · Online Tools</div>
-      <h1>Class PST <em>Timer</em></h1>
-      <p class="subtitle">จับเวลา ปั่น–พัก สำหรับคลาสไอศกรีมของ อ.พรหล้า — เลือกเบสที่กำลังทำ แล้วกดเริ่ม ระบบจะนับถอยหลังทีละช่วงและส่งเสียงเตือนเมื่อเปลี่ยนช่วงให้อัตโนมัติค่ะ</p>
+      <h1>Class PBT <em>Timers</em></h1>
+      <p class="subtitle">จับเวลา Paula’s Blending Technique สำหรับเครื่องปั่นโถระดับการค้าในคลาสของ อ.พรหล้า — เลือกเบส แล้วระบบจะนับช่วงปั่น–พักทีละรอบพร้อมเสียงเตือนค่ะ</p>
     </header>
 
     <!-- เมนูเลือกเบส -->
@@ -177,24 +177,24 @@
     </div>
 
     <footer>
-      <p class="note">แถบสีเขียว = ช่วงปั่น · แถบสีน้ำตาลอ่อน = ช่วงพัก · ชื่อช่วงจะแสดงเหนือเวลาเสมอ · 5 วินาทีสุดท้ายมีเสียงติ๊กทุกวินาที และครบช่วงมีเสียงเตือน 3 ครั้ง</p>
+      <p class="note">ค่าชุดคลาสนี้อิงเครื่องปั่นโถระดับการค้า: ปั่น 30 วินาที · พัก 10 วินาที · แถบสีเขียว = ช่วงปั่น · แถบสีฟ้าอ่อน = ช่วงพัก</p>
       <p class="brand">Miss Icecream</p>
     </footer>
 
   </div>
 
 <script>
-  /* ===== รายการเบส ===== */
+  /* ===== รายการเบสตาม PBT สำหรับเครื่องปั่นโถระดับการค้า ===== */
   const GROUPS=[
     {day:'คลาสวันแรก',items:[
-      {name:'เบสกะทิ',blend:30,rest:60,rounds:3},
-      {name:'เบสนมโอ๊ต',blend:30,rest:60,rounds:3},
-      {name:'เบสนม',blend:30,rest:60,rounds:2}
+      {name:'เบสกะทิ',blend:30,rest:10,rounds:3},
+      {name:'เบสนมโอ๊ต',blend:30,rest:10,rounds:3},
+      {name:'เบสนม',blend:30,rest:10,rounds:2}
     ]},
     {day:'คลาสวันที่สอง',items:[
-      {name:'เบสโยเกิร์ต',blend:30,rest:60,rounds:2},
-      {name:'เบสเชอร์เบท',blend:30,rest:60,rounds:2},
-      {name:'เบสซอร์เบต์',blend:30,rest:60,rounds:2}
+      {name:'เบสโยเกิร์ต',blend:30,rest:10,rounds:2},
+      {name:'เบสเชอร์เบท',blend:30,rest:10,rounds:2},
+      {name:'เบสซอร์เบต์',blend:30,rest:10,rounds:2}
     ]}
   ];
 
@@ -256,7 +256,7 @@
   let cdKey=null; // กันเสียงนับถอยหลังซ้ำในวินาทีเดียวกัน
 
   /* ===== จำสถานะข้ามการปิด/เปิดหน้า — อิงนาฬิกาจริง (endTime เป็นเวลาจริง ไม่ใช่ตัวนับใน JS) ===== */
-  const SKEY='classtimer_v1';
+  const SKEY='class_pbt_timers_v2';
   function saveState(){
     try{
       if(!sel){localStorage.removeItem(SKEY);return;}
@@ -315,7 +315,7 @@
   }
 
   function buildSegRows(){
-    // ไทม์ไลน์แคปซูลแถวเดียว — ความกว้างตามสัดส่วนเวลา (ปั่น 30 วิสั้น พัก 60 วิยาว)
+    // ไทม์ไลน์แคปซูลแถวเดียว — ความกว้างตามสัดส่วนเวลาจริงของ PBT
     segList.innerHTML=segs.map((s,i)=>
       '<div class="tl-seg '+s.type+'" id="tlseg_'+i+'" style="flex:'+s.dur+'"><div class="fl" id="tlfl_'+i+'"></div></div>'
     ).join('');

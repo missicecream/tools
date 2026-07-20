@@ -264,6 +264,9 @@
 
     <div class="q" id="qRisky" style="display:none">
       <div class="q-label">2. ใช้วัตถุดิบเสี่ยงตัวไหนบ้าง? <span class="en">Risky ingredients</span><span class="q-hint">เลือกได้หลายอัน</span></div>
+      <div class="opts">
+        <button class="opt chk" data-risky-none type="button"><b>ไม่มีวัตถุดิบเสี่ยง</b><span class="s">ใช้วัตถุดิบพาสเจอร์ไรส์/UHT หรือวัตถุดิบพร้อมบริโภคทั้งหมด — ข้ามการฆ่าเชื้อแยกรายตัว</span></button>
+      </div>
       <div class="risky-grp">กลุ่มเน้นฆ่าเชื้อ — ให้ความร้อนนาน 30 นาที</div>
       <div class="opts">
         <button class="opt chk" data-multi="risky" data-v="rawMilk" type="button">นมดิบ</button>
@@ -350,7 +353,7 @@
     </div>
   </div>
 
-  <div class="prompt" id="prompt">ตอบข้อ 1, 3, 4 และ 4.1 ให้ครบ เพื่อดูคู่มือกระบวนการของคุณค่ะ</div>
+  <div class="prompt" id="prompt">ตอบข้อ 1, 3 และ 4 ให้ครบ — ถ้าใช้เครื่องปั่นมือถือ ให้ตอบข้อ 4.1 เพิ่มด้วยค่ะ</div>
 
   <div id="result"></div>
 
@@ -383,12 +386,12 @@ const RISKY={
   soyOat:{t:'นมถั่วเหลือง/ข้าวโอ๊ต (ทำเอง)',h:'ในขั้นตอนทำต้องต้มเดือด <span class="chip">≥90 °C / 5–10 นาที</span> อยู่แล้ว จึงถือว่า<b>ฆ่าเชื้อในตัว</b> — ไม่ต้องให้ความร้อนซ้ำ เพียงลด <span class="chip warm">&lt;4 °C</span> และเก็บสะอาดจนนำเข้ามิกซ์'}
 };
 
-const state={purpose:null,risky:new Set(),group:null,machine:null,profile:null,aging:null,delicate:null,cream:null,stab:new Set(),title:'',lot:''};
+const state={purpose:null,risky:new Set(),riskyNone:false,group:null,machine:null,profile:null,aging:null,delicate:null,cream:null,stab:new Set(),title:'',lot:''};
 
 let curPBT=null;
 const SAVE_KEY='pbt_process_selector_v2';
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({...state,risky:[...state.risky],stab:[...state.stab]}));}catch(e){}}
-function load(){try{const s=localStorage.getItem(SAVE_KEY);if(!s)return;const o=JSON.parse(s);Object.assign(state,o);state.risky=new Set(o.risky||[]);state.stab=new Set(o.stab||[]);}catch(e){}}
+function load(){try{const s=localStorage.getItem(SAVE_KEY);if(!s)return;const o=JSON.parse(s);Object.assign(state,o);state.risky=new Set(o.risky||[]);state.riskyNone=!!o.riskyNone;state.stab=new Set(o.stab||[]);}catch(e){}}
 
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setTitle(v){state.title=v;refreshPrintHead();save();}
@@ -417,9 +420,19 @@ document.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>
 }));
 document.querySelectorAll('[data-multi]').forEach(b=>b.addEventListener('click',()=>{
   const set=state[b.dataset.multi],v=b.dataset.v;
+  if(b.dataset.multi==='risky'){
+    state.riskyNone=false;
+    const none=document.querySelector('[data-risky-none]');if(none)none.classList.remove('sel');
+  }
   if(set.has(v)){set.delete(v);b.classList.remove('sel');}else{set.add(v);b.classList.add('sel');}
   update();save();
 }));
+document.querySelector('[data-risky-none]').addEventListener('click',b=>{
+  state.riskyNone=!state.riskyNone;
+  if(state.riskyNone){state.risky.clear();document.querySelectorAll('[data-multi="risky"]').forEach(o=>o.classList.remove('sel'));}
+  b.currentTarget.classList.toggle('sel',state.riskyNone);
+  update();save();
+});
 
 function update(){
   ptHardStop();
@@ -428,10 +441,12 @@ function update(){
   document.getElementById('qRisky').style.display=home?'block':'none';
   document.getElementById('homeExtra').style.display=home?'block':'none';
   document.querySelectorAll('[data-k="group"]').forEach(o=>{o.disabled=!!(sell&&o.dataset.v!=='full');o.classList.toggle('sel',state.group===o.dataset.v);});
+  const none=document.querySelector('[data-risky-none]');if(none)none.classList.toggle('sel',state.riskyNone);
   const m=state.machine?PBT[state.machine]:null;
-  document.getElementById('qProfile').style.display=m?'block':'none';
+  const needProfile=!!(m&&m.type==='imm');
+  document.getElementById('qProfile').style.display=needProfile?'block':'none';
 
-  const ready=state.purpose&&state.group&&m&&state.profile;
+  const ready=state.purpose&&state.group&&m&&(!needProfile||state.profile);
   const res=document.getElementById('result'), prompt=document.getElementById('prompt');
   if(!ready){res.innerHTML='';prompt.style.display='block';return;}
   prompt.style.display='none';
@@ -440,14 +455,15 @@ function update(){
 }
 
 function pbtResult(m){
-  const hi=state.profile==='high';
+  const hi=m.type==='jar'||state.profile==='high';
   let r=hi?m.rH:m.rL, s=hi?m.sH:m.sL, rest=hi?m.restH:m.restL, note='';
+  if(m.type==='jar')rest=10;
   if(m.type==='jar'&&state.group==='factory'){
     r=Math.max(1,r-1);
     note='ลด 1 รอบ เพราะไขมันผ่านการโฮโมจีไนซ์จากโรงงานและไม่ได้โดนความร้อนซ้ำระหว่างผลิต';
   }else if(m.type==='jar'&&state.group==='foamy'){
-    r=hi?2:1;
-    note='ใช้ 1–2 รอบเฉพาะเมื่อเชอร์เบท/ซอร์เบต์ฟูเป็นโฟมมากเกินไป';
+    r=2;
+    note='ตัวจับเวลาเริ่มที่ 2 รอบ; ถ้าเชอร์เบท/ซอร์เบต์ยังฟูเป็นโฟมมากเกินไป ครั้งถัดไปลดเหลือ 1 รอบได้';
   }else if(m.type==='imm'&&state.group!=='full'){
     note='เครื่องปั่นมือถือไม่ลดจำนวนรอบ ต้องใช้รอบเต็มเพื่อให้มิกซ์ทั่วถึงทั้งหม้อ';
   }
@@ -455,7 +471,9 @@ function pbtResult(m){
   if(m.rL!==m.rH)ranges.push(m.rL+'–'+m.rH+' รอบ');
   if(m.sL!==m.sH)ranges.push(m.sL+'–'+m.sH+' วินาที/รอบ');
   if(m.restL!==m.restH)ranges.push('พัก '+m.restL+'–'+m.restH+' วินาที');
-  return {r,s,rest,range:ranges.length?'ช่วงเต็มตามตารางของเครื่องนี้: '+ranges.join(' · '):'',note};
+  let range=ranges.length?'ช่วงเต็มตามตารางของเครื่องนี้: '+ranges.join(' · '):'';
+  if(m.type==='jar'&&m.restL!==m.restH)range+=(range?' · ':'')+'ตัวจับเวลาใช้เวลาพัก '+rest+' วินาที';
+  return {r,s,rest,range,note};
 }
 
 function render(){
@@ -514,7 +532,9 @@ function render(){
   s3+='<li><b>ผลไม้:</b> ล้างผิวก่อนปอก → บดละเอียด → ปรับ/เทียบ Brix</li></ul>';
   if(home){
     s3+='<div class="branch-tag">ทำทาน — ฆ่าเชื้อวัตถุดิบเสี่ยงแยกก่อน</div>';
-    if(state.risky.size){
+    if(state.riskyNone){
+      s3+='<div class="sub"><div class="sub-t">ไม่มีวัตถุดิบเสี่ยง</div><p>ใช้วัตถุดิบพาสเจอร์ไรส์/UHT หรือวัตถุดิบพร้อมบริโภคทั้งหมด จึงข้ามการฆ่าเชื้อแยกรายตัว แล้วเริ่มผสมตามขั้นตอนด้านล่างได้เลย</p></div>';
+    }else if(state.risky.size){
       state.risky.forEach(k=>{const r=RISKY[k];if(!r)return;s3+='<div class="sub"><div class="sub-t">'+r.t+'</div><p>'+r.h+'</p></div>';});
       s3+='<p class="warn" style="color:var(--rose-deep);font-size:13px">ทุกตัวที่ผ่านความร้อนแล้ว ลดอุณหภูมิต่ำกว่า 4 °C ทันที และเก็บแยกจากของดิบจนนำเข้ามิกซ์</p>';
       s3+='<div class="sub" style="border-color:#E6C09A;background:#FBF1E7"><p style="color:#9A5B25;font-size:12.5px;margin:0">⚠ <b>ข้อควรเข้าใจเรื่องนิยาม:</b> การฆ่าเชื้อวัตถุดิบเสี่ยงแบบแยก (ทั้ง 2 กลุ่ม) <b>ไม่ใช่</b>การพาสเจอไรซ์มิกซ์ทั้งหมดตามกฎหมาย — ถ้าทำขาย ต้องพาสเจอไรซ์มิกซ์รวมตามประกาศ สธ. ฉบับที่ 354 เสมอ</p></div>';
@@ -677,7 +697,7 @@ function render(){
 }
 
 function resetAll(){
-  state.purpose=null;state.risky=new Set();state.group=null;state.machine=null;state.profile=null;state.aging=null;state.delicate=null;state.cream=null;state.stab=new Set();state.title='';state.lot='';
+  state.purpose=null;state.risky=new Set();state.riskyNone=false;state.group=null;state.machine=null;state.profile=null;state.aging=null;state.delicate=null;state.cream=null;state.stab=new Set();state.title='';state.lot='';
   document.querySelectorAll('.opt').forEach(o=>{o.classList.remove('sel');o.disabled=false;});
   document.getElementById('qRisky').style.display='none';
   document.getElementById('homeExtra').style.display='none';
