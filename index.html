@@ -65,8 +65,10 @@
     header{margin-bottom:24px}
     .subtitle{font-size:14px}
     .category-filter-wrap{top:0;width:calc(100% + 24px);margin:0 -12px 26px;padding:8px 12px;border-right:0;border-left:0;border-radius:0}
-    .category-filter{max-width:300px;margin:0 auto;justify-content:center;flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none}
-    .filter-btn{padding-inline:16px}
+    .category-filter{max-width:none;margin:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity}
+    .filter-btn{min-height:38px;padding:7px 12px;font-size:13px}
+    .filter-btn:first-child{margin-left:auto}
+    .filter-btn:last-child{margin-right:auto}
     .category{margin-bottom:26px}
     .category-title{font-size:21px}
     .tool-card{grid-template-columns:42px 1fr auto;gap:11px;min-height:92px;padding:15px 13px;border-radius:16px}
@@ -94,7 +96,6 @@
     <nav class="category-filter-wrap" aria-label="เลือกประเภทเครื่องมือ">
       <div class="category-filter">
         <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">ทั้งหมด</button>
-        <button class="filter-btn" type="button" data-filter="class" aria-pressed="false">ในคลาส</button>
         <button class="filter-btn" type="button" data-filter="formula" aria-pressed="false">ปรับสูตร</button>
         <button class="filter-btn" type="button" data-filter="production" aria-pressed="false">การผลิต</button>
         <button class="filter-btn" type="button" data-filter="records" aria-pressed="false">บันทึกผล</button>
