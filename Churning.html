@@ -178,6 +178,13 @@
     font-size: 22px;
     font-variant-numeric: tabular-nums;
     outline: none;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  .weight-input input::-webkit-outer-spin-button,
+  .weight-input input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
   }
   .weight-input span {
     position: absolute;
@@ -275,7 +282,7 @@
   <header>
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Overrun <em>Calculator</em></h1>
-    <p class="subtitle">คำนวณ %Overrun แบบง่ายสำหรับ 1 Batch โดยชั่งตัวอย่างปริมาตรเท่ากันก่อนและหลังปั่น</p>
+    <p class="subtitle">คำนวณ %Overrun แบบง่าย โดยชั่งตัวอย่างปริมาตรเท่ากันก่อนและหลังปั่น</p>
     <div class="formula" aria-label="สูตรคำนวณเปอร์เซ็นต์โอเวอร์รัน">
       <span class="formula-label">%Overrun =</span>
       <span class="formula-expression">((W<sub>ก่อน</sub> − W<sub>หลัง</sub>) ÷ W<sub>หลัง</sub>) × 100</span>
@@ -293,19 +300,19 @@
 
   <section class="calculator" aria-labelledby="calculator-title">
     <div class="calculator-head">
-      <h2 id="calculator-title">1 Batch</h2>
+      <h2 id="calculator-title">คำนวณ %Overrun อย่างง่าย</h2>
       <p>ใช้ภาชนะใบเดียวกันและตวงตัวอย่างให้ได้ปริมาตรเท่ากันทั้ง 2 ครั้ง</p>
     </div>
     <div class="fields">
       <div class="field">
-        <label for="weightBefore">น้ำหนักก่อนปั่น</label>
+        <label for="weightBefore">น้ำหนักมิกซ์ไอศกรีมเต็มภาชนะที่ใช้ก่อนปั่น</label>
         <div class="weight-input">
           <input id="weightBefore" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0" autocomplete="off">
           <span>กรัม</span>
         </div>
       </div>
       <div class="field">
-        <label for="weightAfter">น้ำหนักหลังปั่น</label>
+        <label for="weightAfter">น้ำหนักไอศกรีมเต็มภาชนะที่ใช้หลังปั่น</label>
         <div class="weight-input">
           <input id="weightAfter" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0" autocomplete="off">
           <span>กรัม</span>
@@ -319,7 +326,7 @@
       </div>
       <div class="result-value placeholder" id="overrunResult">—</div>
     </div>
-    <p class="message" id="message">กรอกน้ำหนักก่อนปั่นและหลังปั่นเพื่อคำนวณ</p>
+    <p class="message" id="message">กรอกน้ำหนักเต็มภาชนะก่อนและหลังปั่นเพื่อคำนวณ</p>
     <div class="actions">
       <button class="btn" id="resetButton" type="button">รีเซ็ต</button>
     </div>
@@ -344,7 +351,7 @@
     if (!(before > 0) || !(after > 0)) {
       overrunResult.textContent = '—';
       overrunResult.className = 'result-value placeholder';
-      message.textContent = 'กรอกน้ำหนักก่อนปั่นและหลังปั่นเพื่อคำนวณ';
+      message.textContent = 'กรอกน้ำหนักเต็มภาชนะก่อนและหลังปั่นเพื่อคำนวณ';
       message.className = 'message';
       return;
     }
@@ -354,7 +361,7 @@
 
     if (after > before) {
       overrunResult.className = 'result-value warning';
-      message.textContent = 'น้ำหนักหลังปั่นมากกว่าก่อนปั่น กรุณาตรวจสอบน้ำหนักสุทธิและปริมาตรตัวอย่างอีกครั้ง';
+      message.textContent = 'น้ำหนักไอศกรีมเต็มภาชนะหลังปั่นมากกว่าก่อนปั่น กรุณาตรวจสอบน้ำหนักสุทธิและปริมาตรตัวอย่างอีกครั้ง';
       message.className = 'message warning';
     } else {
       overrunResult.className = 'result-value';
