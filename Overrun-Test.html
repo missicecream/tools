@@ -107,6 +107,43 @@
   }
   .quick-links a:hover { border-color: var(--accent); color: var(--accent-deep); }
 
+  .batchbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+  }
+  .batchbar label { margin: 0; font-size: 12px; font-weight: 600; }
+  .batchbar select {
+    flex: 1;
+    min-width: 150px;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+  }
+  .bbtn {
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fffdf8;
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .bbtn.new { border-color: var(--accent-deep); background: var(--accent-deep); color: #fff; }
+  .bbtn.del { color: var(--rose); }
+
   .section {
     margin-bottom: 16px;
     overflow: hidden;
@@ -313,7 +350,7 @@
   @media print {
     @page { size: A4 portrait; margin: 10mm; }
     body { padding: 0; background: #fff; }
-    .topbar, .quick-links, .toolbar, .return-simple, .tools-bottom-nav, .save-status { display: none !important; }
+    .topbar, .quick-links, .batchbar, .toolbar, .return-simple, .tools-bottom-nav, .save-status { display: none !important; }
     .section { break-inside: avoid; box-shadow: none; }
     input, select, textarea { background: #fff !important; }
   }
@@ -328,7 +365,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072126G" defer></script>
+<script src="tools-shell.js?v=072126H" defer></script>
 </head>
 <body>
 <main class="container">
@@ -337,9 +374,16 @@
   <header>
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Overrun <em>Experiment</em></h1>
-    <p class="subtitle">แบบบันทึกการทดลองวัด %Overrun อย่างละเอียดสำหรับ 1 Batch ข้อมูลจะบันทึกอัตโนมัติบนอุปกรณ์นี้</p>
+    <p class="subtitle">แบบบันทึกการทดลองวัด %Overrun อย่างละเอียด รองรับการบันทึกและทำงานควบคู่กันหลาย Batch บนอุปกรณ์นี้</p>
     <div class="save-status" id="saveStatus" aria-live="polite">พร้อมบันทึกอัตโนมัติ</div>
   </header>
+
+  <div class="batchbar">
+    <label for="batchSel">Batch:</label>
+    <select id="batchSel" onchange="switchBatch(this.value)"></select>
+    <button class="bbtn new" type="button" onclick="newBatch()">➕ Batch ใหม่</button>
+    <button class="bbtn del" type="button" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
+  </div>
 
   <nav class="quick-links" aria-label="ส่วนต่างๆ ของแบบบันทึก">
     <a href="#experiment-info">ข้อมูลรายงาน</a>
@@ -531,9 +575,11 @@
 </main>
 
 <script>
-  const STORAGE_KEY = 'missicecream-overrun-experiment-v1';
+  const LEGACY_STORAGE_KEY = 'missicecream-overrun-experiment-v1';
+  const STORE_KEY = 'missicecream-overrun-experiment-store-v1';
   const fields = Array.from(document.querySelectorAll('[data-field]'));
   const saveStatus = document.getElementById('saveStatus');
+  const batchSelect = document.getElementById('batchSel');
   const experimentDate = document.getElementById('experimentDate');
   const productionLot = document.getElementById('productionLot');
   const mixBefore = document.getElementById('mixBefore');
@@ -553,6 +599,7 @@
 
   let timer = { startedAt: null, elapsedMs: 0 };
   let timerInterval = null;
+  let store = null;
 
   function localDate() {
     const now = new Date();
@@ -562,6 +609,109 @@
   function defaultLot() {
     const parts = localDate().split('-');
     return parts[2] + parts[1] + parts[0].slice(-2) + '-';
+  }
+
+  function newId() {
+    return 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  }
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"]/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[character];
+    });
+  }
+
+  function freshPayload() {
+    const data = {};
+    fields.forEach(function (field) { data[field.dataset.field] = ''; });
+    data.experimentDate = localDate();
+    data.productionLot = defaultLot();
+    return {
+      version: 1,
+      page: 'Overrun-Test',
+      data: data,
+      timer: { startedAt: null, elapsedMs: 0 },
+      savedAt: new Date().toISOString()
+    };
+  }
+
+  function normalizePayload(payload) {
+    const normalized = payload && typeof payload === 'object' ? payload : freshPayload();
+    if (!normalized.data || typeof normalized.data !== 'object') normalized.data = {};
+    fields.forEach(function (field) {
+      if (!Object.prototype.hasOwnProperty.call(normalized.data, field.dataset.field)) {
+        normalized.data[field.dataset.field] = '';
+      }
+    });
+    if (!normalized.data.experimentDate) normalized.data.experimentDate = localDate();
+    if (!Object.prototype.hasOwnProperty.call(normalized.data, 'productionLot')) {
+      normalized.data.productionLot = defaultLot();
+    }
+    if (!normalized.timer || typeof normalized.timer !== 'object') normalized.timer = {};
+    const startedAt = Number(normalized.timer.startedAt);
+    const elapsedMs = Number(normalized.timer.elapsedMs);
+    normalized.timer.startedAt = Number.isFinite(startedAt) && startedAt > 0 ? startedAt : null;
+    normalized.timer.elapsedMs = Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : 0;
+    normalized.version = 1;
+    normalized.page = 'Overrun-Test';
+    return normalized;
+  }
+
+  function loadStore() {
+    try {
+      const rawStore = localStorage.getItem(STORE_KEY);
+      if (rawStore) {
+        const parsed = JSON.parse(rawStore);
+        if (parsed && parsed.batches && Array.isArray(parsed.order)) {
+          parsed.order = parsed.order.filter(function (id) { return parsed.batches[id]; });
+          if (parsed.order.length) {
+            parsed.order.forEach(function (id) { parsed.batches[id] = normalizePayload(parsed.batches[id]); });
+            if (!parsed.batches[parsed.current]) parsed.current = parsed.order[0];
+            return parsed;
+          }
+        }
+      }
+    } catch (error) {}
+
+    let firstPayload = null;
+    try {
+      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (legacy) firstPayload = normalizePayload(JSON.parse(legacy));
+    } catch (error) {}
+
+    const id = newId();
+    return {
+      version: 1,
+      batches: { [id]: firstPayload || freshPayload() },
+      order: [id],
+      current: id
+    };
+  }
+
+  function persistStore() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function batchLabel(id) {
+    const payload = store && store.batches[id];
+    const data = payload && payload.data ? payload.data : {};
+    const product = String(data.formulaTested || '').trim();
+    const lot = String(data.productionLot || '').trim();
+    if (product && lot) return product + ' · ' + lot;
+    return product || lot || ('Batch · ' + (data.experimentDate || ''));
+  }
+
+  function refreshBatchSel() {
+    if (!batchSelect || !store) return;
+    batchSelect.innerHTML = store.order.map(function (id, index) {
+      return '<option value="' + id + '"' + (id === store.current ? ' selected' : '') + '>'
+        + (index + 1) + '. ' + escapeHtml(batchLabel(id)) + '</option>';
+    }).join('');
   }
 
   function numberValue(element) {
@@ -623,55 +773,91 @@
   }
 
   function saveData(showStatus) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(storedPayload()));
+    if (!store || !store.batches[store.current]) return;
+    store.batches[store.current] = storedPayload();
+    if (persistStore()) {
+      refreshBatchSel();
       if (showStatus !== false) {
         const now = new Date();
-        saveStatus.textContent = 'บันทึกอัตโนมัติแล้ว ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+        saveStatus.textContent = 'บันทึก Batch นี้อัตโนมัติแล้ว ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
       }
-    } catch (error) {
+    } else {
       saveStatus.textContent = 'ไม่สามารถบันทึกอัตโนมัติบนอุปกรณ์นี้';
     }
   }
 
   function restorePayload(payload) {
-    if (!payload || typeof payload !== 'object') return;
-    const data = payload.data || {};
+    stopTimerUpdates();
+    const normalized = normalizePayload(payload);
+    const data = normalized.data;
     fields.forEach(function (field) {
-      if (Object.prototype.hasOwnProperty.call(data, field.dataset.field)) {
-        field.value = data[field.dataset.field] == null ? '' : String(data[field.dataset.field]);
-      }
+      field.value = data[field.dataset.field] == null ? '' : String(data[field.dataset.field]);
     });
-    if (!Object.prototype.hasOwnProperty.call(data, 'productionLot')) productionLot.value = defaultLot();
-    if (payload.timer && typeof payload.timer === 'object') {
-      timer.startedAt = Number.isFinite(Number(payload.timer.startedAt)) && Number(payload.timer.startedAt) > 0
-        ? Number(payload.timer.startedAt)
-        : null;
-      timer.elapsedMs = Number.isFinite(Number(payload.timer.elapsedMs))
-        ? Math.max(0, Number(payload.timer.elapsedMs))
-        : 0;
-    }
+    timer = {
+      startedAt: normalized.timer.startedAt,
+      elapsedMs: normalized.timer.elapsedMs
+    };
     renderTimer();
     if (timer.startedAt) beginTimerUpdates();
     calculateDetailedOverrun();
   }
 
   function restoreData() {
-    let restored = false;
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        restorePayload(JSON.parse(raw));
-        restored = true;
-        saveStatus.textContent = 'กู้คืนข้อมูลที่บันทึกไว้แล้ว';
-      }
-    } catch (error) {
-      saveStatus.textContent = 'ไม่สามารถกู้คืนข้อมูลเดิม';
+    store = loadStore();
+    persistStore();
+    refreshBatchSel();
+    restorePayload(store.batches[store.current]);
+    saveStatus.textContent = 'กู้คืนข้อมูล Batch ที่บันทึกไว้แล้ว';
+  }
+
+  function switchBatch(id) {
+    if (!store || !store.batches[id] || id === store.current) return;
+    saveData(false);
+    stopTimerUpdates();
+    store.current = id;
+    persistStore();
+    refreshBatchSel();
+    restorePayload(store.batches[id]);
+    saveStatus.textContent = 'เปลี่ยนเป็น Batch ที่เลือกแล้ว';
+  }
+
+  function newBatch() {
+    saveData(false);
+    stopTimerUpdates();
+    const id = newId();
+    store.batches[id] = freshPayload();
+    store.order.push(id);
+    store.current = id;
+    persistStore();
+    refreshBatchSel();
+    restorePayload(store.batches[id]);
+    saveStatus.textContent = 'สร้าง Batch ใหม่แล้ว';
+    const productField = document.getElementById('formulaTested');
+    if (productField) productField.focus();
+  }
+
+  function deleteBatch() {
+    if (!store) return;
+    if (store.order.length === 1) {
+      if (!window.confirm('มีเพียง 1 Batch ต้องการล้างข้อมูลและตัวจับเวลาของ Batch นี้ใช่ไหมคะ?')) return;
+      stopTimerUpdates();
+      store.batches[store.current] = freshPayload();
+      persistStore();
+      refreshBatchSel();
+      restorePayload(store.batches[store.current]);
+      saveStatus.textContent = 'ล้าง Batch นี้แล้ว';
+      return;
     }
-    if (!restored) {
-      if (!experimentDate.value) experimentDate.value = localDate();
-      if (!productionLot.value) productionLot.value = defaultLot();
-    }
+    if (!window.confirm('ลบ Batch ที่กำลังใช้งานและข้อมูลทั้งหมดของ Batch นี้ใช่ไหมคะ?')) return;
+    stopTimerUpdates();
+    const removedIndex = store.order.indexOf(store.current);
+    delete store.batches[store.current];
+    store.order.splice(removedIndex, 1);
+    store.current = store.order[Math.min(removedIndex, store.order.length - 1)];
+    persistStore();
+    refreshBatchSel();
+    restorePayload(store.batches[store.current]);
+    saveStatus.textContent = 'ลบ Batch แล้ว';
   }
 
   function setResultClass(warning) {
@@ -811,17 +997,13 @@
   });
 
   document.getElementById('clearForm').addEventListener('click', function () {
-    if (!window.confirm('ล้างข้อมูลการทดลองและตัวจับเวลาทั้งหมดใช่ไหมคะ?')) return;
+    if (!window.confirm('ล้างข้อมูลการทดลองและตัวจับเวลาของ Batch นี้ทั้งหมดใช่ไหมคะ?')) return;
     stopTimerUpdates();
-    localStorage.removeItem(STORAGE_KEY);
-    fields.forEach(function (field) { field.value = ''; });
-    experimentDate.value = localDate();
-    productionLot.value = defaultLot();
-    timer = { startedAt: null, elapsedMs: 0 };
-    renderTimer();
-    calculateDetailedOverrun();
-    saveData(false);
-    saveStatus.textContent = 'ล้างแบบฟอร์มแล้ว';
+    store.batches[store.current] = freshPayload();
+    persistStore();
+    refreshBatchSel();
+    restorePayload(store.batches[store.current]);
+    saveStatus.textContent = 'ล้างแบบฟอร์มของ Batch นี้แล้ว';
   });
 
   restoreData();
