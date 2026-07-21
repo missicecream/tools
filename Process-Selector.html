@@ -235,7 +235,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072126I" defer></script>
+<script src="tools-shell.js?v=072126J" defer></script>
 </head>
 <body>
 <div class="container">
@@ -245,11 +245,11 @@
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Process <em>Selector</em></h1>
     <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 12 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
-    <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html?v=072126I" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
+    <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html?v=072126J" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
     <div class="chart-links">
       <span class="cl-label">หรือ เลือกผังขั้นตอนการผลิตแบบสรุป (A4):</span>
-      <a class="cl-btn" href="Flowchart-Home.html">📄 แบบทำทาน</a>
-      <a class="cl-btn" href="Flowchart-Sell.html">📄 แบบทำขาย</a>
+      <a class="cl-btn" href="Flowchart-Home.html?v=072126J">📄 แบบทำทาน</a>
+      <a class="cl-btn" href="Flowchart-Sell.html?v=072126J">📄 แบบทำขาย</a>
     </div>
   </header>
 
@@ -346,8 +346,8 @@
       <div class="q">
         <div class="q-label">8. มีครีมแช่เย็นที่ต้องเติมเมื่อมิกซ์เย็นแล้วไหม? <span class="en">Cold cream</span></div>
         <div class="opts">
-          <button class="opt" data-k="cream" data-v="yes" type="button"><b>มี</b><span class="s">เติมครีมพาสเจอร์ไรส์ที่แช่เย็นแล้วเมื่อมิกซ์ ≤10 °C จากนั้นลดต่อถึง ≤4 °C</span></button>
-          <button class="opt" data-k="cream" data-v="no" type="button"><b>ไม่มี / ไม่ใช้ครีม</b><span class="s">ลดมิกซ์ต่อถึง ≤4 °C แล้วจึงเริ่มบ่ม</span></button>
+          <button class="opt" data-k="cream" data-v="yes" type="button"><b>มี</b><span class="s">เติมครีมพาสเจอร์ไรส์ที่แช่เย็นแล้วเมื่อมิกซ์ ≤10 °C จากนั้นลดต่อจนได้ 4 °C หรือต่ำกว่าอย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที)</span></button>
+          <button class="opt" data-k="cream" data-v="no" type="button"><b>ไม่มี / ไม่ใช้ครีม</b><span class="s">ลดมิกซ์จนได้ 4 °C หรือต่ำกว่าอย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที) แล้วจึงเริ่มบ่ม</span></button>
         </div>
       </div>
     </div>
@@ -596,7 +596,7 @@ function render(){
   // 5 — Cooling
   const delicate=state.delicate==='yes'||state.risky.has('freshFruit');
   let s5='<div class="branch-tag">'+(home?'ทำทาน — เติมครีม/ส่วนผสมสดระหว่างลดความร้อน':'ทำขาย — ส่วนผสมทั้งหมดผ่านความร้อนมาแล้ว')+'</div>';
-  s5+='<p>ลดอุณหภูมิที่<b>ใจกลางมิกซ์</b>จากราว 58–60 °C ลงถึง <span class="chip">4 °C ภายในไม่เกิน 60 นาที</span> แล้วจึงเริ่มขั้นบ่ม</p>';
+  s5+='<p>ลดอุณหภูมิที่<b>ใจกลางมิกซ์</b>จากราว 58–60 °C ลงจนได้ <span class="chip">4 °C หรือต่ำกว่า</span> อย่างเร็วที่สุด <b>(ช้าสุดไม่เกิน 60 นาที)</b> แล้วจึงเริ่มขั้นบ่ม</p>';
   s5+='<div class="sub"><div class="sub-t">วิธีลดความร้อนที่ใช้ได้</div><ul>'
     +'<li><b>อ่างน้ำแข็ง + คนต่อเนื่อง</b> ในชามสเตนเลส เตรียมน้ำแข็งราว 1.5 เท่าของน้ำหนักมิกซ์</li>'
     +'<li><b>ถุงแบนหนา ≤2 ซม. ฝังน้ำแข็ง</b> ไล่อากาศ ปิดสนิท และให้น้ำแข็งล้อมทุกด้าน</li>'
@@ -608,11 +608,11 @@ function render(){
     else s5+='<li style="color:var(--muted)">สูตรนี้ไม่มีครีมแช่เย็น → ข้ามการเติมครีม</li>';
     if(delicate)s5+='<li>เติมส่วนผสมกลิ่นรสไวต่อความร้อนที่สูตรเก็บไว้ เช่น ผลไม้สด โยเกิร์ต กรีกโยเกิร์ต หรือนมพาสเจอร์ไรส์ แล้วคนให้เข้ากัน</li>';
     else s5+='<li style="color:var(--muted)">สูตรนี้ไม่มีส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมตอนเย็น</li>';
-    s5+='</ul><p><b>หลังเติมครบ คนต่อจนมิกซ์สมบูรณ์ลงถึง ≤4 °C</b> — 10 °C เป็นจุดเติม ไม่ใช่จุดเริ่มบ่ม</p></div>';
+    s5+='</ul><p><b>หลังเติมครบ คนต่อจนมิกซ์สมบูรณ์ได้ 4 °C หรือต่ำกว่าอย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที)</b> — 10 °C เป็นจุดเติม ไม่ใช่จุดเริ่มบ่ม</p></div>';
   }
   s5+='<div class="sub"><div class="sub-t">เวลาตัวอย่าง: อ่างน้ำแข็ง + คนต่อเนื่อง</div>'
-    +'<table class="ftable"><thead><tr><th>น้ำหนักมิกซ์</th><th>เวลาจาก 55–60 °C ถึง 4 °C</th></tr></thead><tbody>'
-    +'<tr><td>1 กก.</td><td class="t">ประมาณ 30–45 นาที</td></tr><tr><td>2 กก.</td><td class="t">ประมาณ 45–60 นาที</td></tr><tr><td>5 กก.</td><td class="t">ประมาณ 75–105 นาที — ต้องแบ่งภาชนะ</td></tr>'
+    +'<table class="ftable"><thead><tr><th>น้ำหนักมิกซ์</th><th>เวลาจาก 55–60 °C จนได้ 4 °C หรือต่ำกว่า</th></tr></thead><tbody>'
+    +'<tr><td>1 กก.</td><td class="t">ประมาณ 30–45 นาที</td></tr><tr><td>2 กก.</td><td class="t">ประมาณ 45–60 นาที</td></tr><tr><td>5 กก.</td><td class="t">ต้องแบ่งภาชนะ เพื่อให้แต่ละส่วนเย็นถึงเป้าภายในไม่เกิน 60 นาที</td></tr>'
     +'</tbody></table></div>';
   H+=step('5','การลดความร้อน','Cooling',s5);
 
