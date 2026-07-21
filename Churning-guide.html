@@ -1,3 +1,48 @@
 <!DOCTYPE html>
-<html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>คู่มือ Churning Calculator · Miss Icecream</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="tools-theme.css?v=072026C"><link rel="stylesheet" href="guide.css"><script src="tools-shell.js?v=072026C" defer></script></head>
-<body><main class="container"><a class="back-link" href="Churning.html">← กลับไปที่เครื่องมือ</a><header><div class="eyebrow">Miss Icecream · Online Tools</div><h1>Churning <em>Calculator</em></h1><p class="subtitle">คำนวณ %Overrun และระยะเวลาปั่นเพื่อเปรียบเทียบผลหลายชุด</p></header><section class="card"><h2>คำนวณ %Overrun</h2><ol><li>ใช้ภาชนะใบเดียวกันและปริมาตรเท่ากันทุกครั้ง</li><li>ชั่งมิกซ์ก่อนปั่นแล้วกรอกในช่อง “ก่อนปั่น”</li><li>ชั่งไอศกรีมหลังปั่นในภาชนะเดิม แล้วกรอกในช่อง “หลังปั่น”</li><li>ระบบคำนวณ %Overrun ให้ทันที สามารถใช้แต่ละแถวเปรียบเทียบคนละชุดได้</li></ol><div class="warning">หากน้ำหนักหลังปั่นมากกว่าก่อนปั่น หรือใช้ปริมาตรไม่เท่ากัน ผลลัพธ์จะไม่สะท้อน Overrun ที่ถูกต้อง</div></section><section class="card"><h2>บันทึกระยะเวลาปั่น</h2><p>กรอกเวลาเริ่มปั่นและเวลาปั่นเสร็จของชุดเดียวกัน ระบบจะแสดงระยะเวลาอัตโนมัติ ตรวจว่าคู่เวลาและแถวตรงกับข้อมูล Overrun ก่อนพิมพ์</p><div class="tip">เมื่อเสร็จสามารถ “แชร์ PDF” จากมือถือ หรือเปิด “พิมพ์เอกสาร” เพื่อดูรายงานพื้นขาวก่อนสั่งพิมพ์</div></section><div class="links"><a href="Churning.html">เปิด Churning Calculator <span>→</span></a><a href="guide.html">คู่มือรวม <span>→</span></a></div><footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer></main></body></html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือ Overrun Calculator · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=072026C">
+<link rel="stylesheet" href="guide.css">
+<script src="tools-shell.js?v=072026D" defer></script>
+</head>
+<body>
+<main class="container">
+  <a class="back-link" href="Churning.html">← กลับไปที่เครื่องมือ</a>
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>Overrun <em>Calculator</em></h1>
+    <p class="subtitle">คู่มือคำนวณ %Overrun แบบง่ายสำหรับ 1 Batch</p>
+  </header>
+
+  <section class="card">
+    <h2>วิธีคำนวณแบบง่าย</h2>
+    <ol>
+      <li>ใช้ภาชนะใบเดียวกันและตวงตัวอย่างให้ได้ปริมาตรเท่ากันก่อนและหลังปั่น</li>
+      <li>ชั่งน้ำหนักสุทธิของมิกซ์ก่อนปั่น แล้วกรอกช่อง “น้ำหนักก่อนปั่น”</li>
+      <li>ชั่งน้ำหนักสุทธิของไอศกรีมหลังปั่น แล้วกรอกช่อง “น้ำหนักหลังปั่น”</li>
+      <li>ระบบจะแสดง %Overrun ของ Batch นี้ทันที</li>
+    </ol>
+    <div class="tip">%Overrun = ((น้ำหนักก่อนปั่น − น้ำหนักหลังปั่น) ÷ น้ำหนักหลังปั่น) × 100</div>
+    <div class="warning">น้ำหนักทั้ง 2 ค่าต้องไม่รวมภาชนะ หากน้ำหนักหลังปั่นมากกว่าก่อนปั่น ให้ตรวจสอบการ Tare และปริมาตรตัวอย่างอีกครั้ง</div>
+  </section>
+
+  <section class="card">
+    <h2>ต้องการบันทึกการทดลองอย่างละเอียด</h2>
+    <p>เลือก “ทำการทดลองวัด %Overrun อย่างละเอียด” ในหน้าเครื่องมือ เพื่อบันทึกวันที่ สูตร เครื่องปั่น ผู้บันทึก ช่วงปั่น การชั่งหลังปั่น 2 ครั้ง และลักษณะเนื้อทันทีที่ปั่นเสร็จ</p>
+  </section>
+
+  <div class="links">
+    <a href="Churning.html">เปิด Overrun Calculator <span>→</span></a>
+    <a href="Overrun-Test.html">เปิดแบบบันทึกการทดลอง <span>→</span></a>
+    <a href="guide.html">คู่มือรวม <span>→</span></a>
+  </div>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer>
+</main>
+</body>
+</html>

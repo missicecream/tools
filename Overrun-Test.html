@@ -1,0 +1,810 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บันทึกการทดลอง %Overrun · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4ece0;
+    --card: #fffaf2;
+    --ink: #2b2118;
+    --muted: #6f604f;
+    --line: #dcd0bd;
+    --line-soft: #eee5d7;
+    --accent: #6f804d;
+    --accent-deep: #4f6336;
+    --accent-soft: #edf0e2;
+    --rose: #8b5142;
+    --rose-soft: #f6e9e4;
+    --shadow: 0 18px 42px -34px rgba(43, 33, 24, .72);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { -webkit-font-smoothing: antialiased; }
+  body {
+    min-height: 100vh;
+    padding: 38px 18px 48px;
+    background:
+      radial-gradient(circle at 12% 4%, rgba(220, 229, 200, .52) 0%, transparent 38%),
+      radial-gradient(circle at 90% 94%, rgba(201, 120, 98, .1) 0%, transparent 42%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+  }
+
+  .container { width: min(100%, 820px); margin: 0 auto; }
+  header { margin-bottom: 22px; text-align: center; }
+  .eyebrow {
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .23em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin-bottom: 9px;
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 6vw, 47px);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+  h1 em { color: var(--accent-deep); font-weight: 400; }
+  .subtitle {
+    max-width: 610px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .save-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 13px;
+    padding: 6px 11px;
+    border: 1px solid #d4dcc2;
+    border-radius: 999px;
+    background: rgba(255, 253, 248, .75);
+    color: var(--accent-deep);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .save-status::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    content: '';
+  }
+
+  .quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+    margin-bottom: 22px;
+  }
+  .quick-links a {
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 250, 242, .82);
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .quick-links a:hover { border-color: var(--accent); color: var(--accent-deep); }
+
+  .section {
+    margin-bottom: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--card);
+    box-shadow: var(--shadow);
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 15px 18px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(90deg, rgba(237, 240, 226, .72), rgba(255, 250, 242, .65));
+  }
+  .section-number {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent-deep);
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-style: italic;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', 'Sarabun', serif;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .section-body { padding: 18px; }
+  .section-note {
+    margin-bottom: 14px;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .field.full { grid-column: 1 / -1; }
+  label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  input, select, textarea {
+    width: 100%;
+    min-height: 45px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fffdf8;
+    color: var(--ink);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 14px;
+    outline: none;
+  }
+  textarea { min-height: 92px; resize: vertical; line-height: 1.55; }
+  .input-unit { position: relative; }
+  .input-unit input { padding-right: 70px; }
+  .input-unit span {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .timer-card {
+    grid-column: 1 / -1;
+    padding: 16px;
+    border: 1px solid #d3dbc0;
+    border-radius: 16px;
+    background: var(--accent-soft);
+    text-align: center;
+  }
+  .timer-card label { color: var(--accent-deep); }
+  .timer-display {
+    margin: 7px 0 12px;
+    color: var(--accent-deep);
+    font-family: 'Fraunces', serif;
+    font-size: clamp(34px, 8vw, 48px);
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .timer-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .btn {
+    min-height: 42px;
+    padding: 9px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fffdf8;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn:hover:not(:disabled) { border-color: var(--accent); background: var(--ink); color: var(--bg); }
+  .btn.primary { border-color: var(--accent-deep); background: var(--accent-deep); color: #fff; }
+  .btn.danger { color: var(--rose); }
+  .btn:disabled { cursor: not-allowed; opacity: .45; }
+
+  .measurement-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+    margin-top: 15px;
+  }
+  .summary-item {
+    min-height: 76px;
+    padding: 11px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #fffdf8;
+    text-align: center;
+  }
+  .summary-item span { display: block; color: var(--muted); font-size: 11.5px; line-height: 1.4; }
+  .summary-item strong {
+    display: block;
+    margin-top: 5px;
+    color: var(--accent-deep);
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+  .selection-rule {
+    margin-top: 11px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--line-soft);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .selection-rule.warning { background: var(--rose-soft); color: var(--rose); font-weight: 600; }
+
+  .result-card {
+    margin-top: 14px;
+    padding: 18px;
+    border: 1px solid #cbd5b5;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fffdf8, var(--accent-soft));
+    text-align: center;
+  }
+  .result-card span { display: block; color: var(--muted); font-size: 12px; }
+  .result-value {
+    display: block;
+    margin-top: 5px;
+    color: var(--accent-deep);
+    font-family: 'Fraunces', serif;
+    font-size: clamp(38px, 9vw, 54px);
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .result-value.placeholder { color: #a79782; font-weight: 400; }
+  .result-value.warning { color: var(--rose); }
+  .result-message { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .result-message.warning { color: var(--rose); font-weight: 600; }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 9px;
+    margin: 24px 0 8px;
+  }
+  .file-input { display: none; }
+  .return-simple {
+    display: block;
+    width: fit-content;
+    margin: 18px auto 0;
+    color: var(--accent-deep);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .return-simple:hover { text-decoration: underline; }
+  .site-footer {
+    margin: 30px auto 0;
+    padding: 14px 16px 4px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+  }
+  .site-footer a { color: inherit; text-decoration: underline; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 10mm; }
+    body { padding: 0; background: #fff; }
+    .topbar, .quick-links, .toolbar, .return-simple, .tools-bottom-nav, .save-status { display: none !important; }
+    .section { break-inside: avoid; box-shadow: none; }
+    input, select, textarea { background: #fff !important; }
+  }
+  @media (max-width: 650px) {
+    body { padding: 26px 12px 40px; }
+    .grid, .grid.three { grid-template-columns: 1fr; }
+    .field.full, .timer-card { grid-column: auto; }
+    .measurement-summary { grid-template-columns: 1fr; }
+    .section-body { padding: 15px; }
+    .section-head { padding: 14px 15px; }
+    .section-head h2 { font-size: 19px; }
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css?v=072026C">
+<script src="tools-shell.js?v=072026D" defer></script>
+</head>
+<body>
+<main class="container">
+  <a class="back-link" href="Churning.html">← กลับไป Overrun Calculator</a>
+
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>Overrun <em>Experiment</em></h1>
+    <p class="subtitle">แบบบันทึกการทดลองวัด %Overrun อย่างละเอียดสำหรับ 1 Batch ข้อมูลจะบันทึกอัตโนมัติบนอุปกรณ์นี้</p>
+    <div class="save-status" id="saveStatus" aria-live="polite">พร้อมบันทึกอัตโนมัติ</div>
+  </header>
+
+  <nav class="quick-links" aria-label="ส่วนต่างๆ ของแบบบันทึก">
+    <a href="#experiment-info">ข้อมูลการทดลอง</a>
+    <a href="#before-churn">%OR ก่อนปั่น</a>
+    <a href="#churning">ช่วงปั่น</a>
+    <a href="#after-churn">%OR หลังปั่น</a>
+    <a href="#texture">ลักษณะเนื้อ</a>
+  </nav>
+
+  <form id="experimentForm">
+    <section class="section" id="experiment-info">
+      <div class="section-head">
+        <span class="section-number">1</span>
+        <h2>ข้อมูลการทดลอง</h2>
+      </div>
+      <div class="section-body">
+        <div class="grid">
+          <div class="field">
+            <label for="experimentDate">วันที่ทดลอง</label>
+            <input id="experimentDate" data-field="experimentDate" type="date">
+          </div>
+          <div class="field">
+            <label for="formulaTested">สูตรที่ทดลอง</label>
+            <input id="formulaTested" data-field="formulaTested" type="text" placeholder="ชื่อสูตร / รหัสสูตร">
+          </div>
+          <div class="field">
+            <label for="machine">เครื่องปั่น</label>
+            <input id="machine" data-field="machine" type="text" placeholder="ยี่ห้อ / รุ่น">
+          </div>
+          <div class="field">
+            <label for="recorder">ผู้บันทึก</label>
+            <input id="recorder" data-field="recorder" type="text" placeholder="ชื่อผู้บันทึก">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="before-churn">
+      <div class="section-head">
+        <span class="section-number">%1</span>
+        <h2>%Overrun · ก่อนปั่น</h2>
+      </div>
+      <div class="section-body">
+        <p class="section-note">ชั่งมิกซ์จากส่วนที่ไม่มีฟอง 1 ถ้วย · Tare ถ้วยก่อนชั่ง · บันทึกเฉพาะน้ำหนักมิกซ์</p>
+        <div class="grid">
+          <div class="field">
+            <label for="mixBefore">น้ำหนักมิกซ์ 1 ถ้วยก่อนปั่น</label>
+            <div class="input-unit">
+              <input id="mixBefore" data-field="mixBefore" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>กรัม</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="beforeNote">หมายเหตุก่อนปั่น</label>
+            <input id="beforeNote" data-field="beforeNote" type="text" placeholder="ถ้ามี">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="churning">
+      <div class="section-head">
+        <span class="section-number">2</span>
+        <h2>ช่วงปั่นไอศกรีม</h2>
+      </div>
+      <div class="section-body">
+        <div class="grid">
+          <div class="field">
+            <label for="entryTemp">อุณหภูมิมิกซ์ก่อนเข้าเครื่องปั่น</label>
+            <div class="input-unit">
+              <input id="entryTemp" data-field="entryTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>°C</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="drawTemp">อุณหภูมิไอศกรีมตอนดึงออก</label>
+            <div class="input-unit">
+              <input id="drawTemp" data-field="drawTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>°C</span>
+            </div>
+          </div>
+          <div class="timer-card">
+            <label>ระยะเวลาปั่น · บันทึกอัตโนมัติ</label>
+            <div class="timer-display" id="timerDisplay">00:00:00</div>
+            <div class="timer-actions">
+              <button class="btn primary" id="startTimer" type="button">เริ่มปั่น</button>
+              <button class="btn" id="stopTimer" type="button" disabled>หยุดปั่น</button>
+              <button class="btn" id="resetTimer" type="button">ตั้งเวลาใหม่</button>
+            </div>
+          </div>
+          <div class="field full">
+            <label for="churningNote">บันทึกช่วงปั่นไอศกรีม</label>
+            <textarea id="churningNote" data-field="churningNote" placeholder="การเปลี่ยนแปลงของเนื้อ เสียงเครื่อง หรือเหตุการณ์ระหว่างปั่น"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="after-churn">
+      <div class="section-head">
+        <span class="section-number">%2</span>
+        <h2>%Overrun · หลังปั่น</h2>
+      </div>
+      <div class="section-body">
+        <p class="section-note">ชั่งไอศกรีมพร้อมถ้วย 2 ครั้ง ระบบหักน้ำหนักถ้วยและคำนวณอัตโนมัติ: ผลต่างไม่เกิน 5 กรัม ใช้ค่าเฉลี่ย · มากกว่า 5 กรัม ใช้ค่าที่มากกว่า</p>
+        <div class="grid three">
+          <div class="field">
+            <label for="emptyCup">น้ำหนักถ้วยเปล่า</label>
+            <div class="input-unit">
+              <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>กรัม</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cupFullOne">ไอศกรีมและถ้วย · ครั้งที่ 1</label>
+            <div class="input-unit">
+              <input id="cupFullOne" data-field="cupFullOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>กรัม</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="cupFullTwo">ไอศกรีมและถ้วย · ครั้งที่ 2</label>
+            <div class="input-unit">
+              <input id="cupFullTwo" data-field="cupFullTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>กรัม</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="measurement-summary" aria-live="polite">
+          <div class="summary-item"><span>น้ำหนักสุทธิ · ครั้งที่ 1</span><strong id="netOne">—</strong></div>
+          <div class="summary-item"><span>น้ำหนักสุทธิ · ครั้งที่ 2</span><strong id="netTwo">—</strong></div>
+          <div class="summary-item"><span>น้ำหนักที่ใช้คำนวณ</span><strong id="selectedNet">—</strong></div>
+        </div>
+        <p class="selection-rule" id="selectionRule">กรอกน้ำหนักถ้วยและน้ำหนักที่ชั่งทั้ง 2 ครั้ง</p>
+
+        <div class="result-card" aria-live="polite">
+          <span>%Overrun ของ Batch นี้</span>
+          <strong class="result-value placeholder" id="detailedOverrun">—</strong>
+          <p class="result-message" id="resultMessage">รอข้อมูลน้ำหนักก่อนและหลังปั่น</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="texture">
+      <div class="section-head">
+        <span class="section-number">3</span>
+        <h2>ลักษณะเนื้อไอศกรีมทันทีที่ปั่นเสร็จ</h2>
+      </div>
+      <div class="section-body">
+        <div class="grid">
+          <div class="field">
+            <label for="textureLevel">ลักษณะเนื้อโดยรวม</label>
+            <select id="textureLevel" data-field="textureLevel">
+              <option value="">— เลือก —</option>
+              <option value="แห้ง ปกติ">แห้ง ปกติ</option>
+              <option value="มีน้ำซึม เกือบปกติ">มีน้ำซึม เกือบปกติ</option>
+              <option value="เปียก เหลว">เปียก เหลว</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="textureNote">รายละเอียดลักษณะเนื้อ</label>
+            <textarea id="textureNote" data-field="textureNote" placeholder="ความแน่น ความแห้ง การไหลตัว น้ำซึม หรือข้อสังเกตอื่น"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <div class="toolbar">
+    <button class="btn primary" id="exportJson" type="button">ดาวน์โหลดข้อมูล JSON</button>
+    <button class="btn" id="importJsonButton" type="button">นำเข้าข้อมูล</button>
+    <input class="file-input" id="importJson" type="file" accept="application/json,.json">
+    <button class="btn" id="printPage" type="button">พิมพ์ / บันทึก PDF</button>
+    <button class="btn danger" id="clearForm" type="button">ล้างแบบฟอร์ม</button>
+  </div>
+
+  <a class="return-simple" href="Churning.html">← กลับไปคำนวณ %Overrun แบบง่าย</a>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer>
+</main>
+
+<script>
+  const STORAGE_KEY = 'missicecream-overrun-experiment-v1';
+  const fields = Array.from(document.querySelectorAll('[data-field]'));
+  const saveStatus = document.getElementById('saveStatus');
+  const experimentDate = document.getElementById('experimentDate');
+  const mixBefore = document.getElementById('mixBefore');
+  const emptyCup = document.getElementById('emptyCup');
+  const cupFullOne = document.getElementById('cupFullOne');
+  const cupFullTwo = document.getElementById('cupFullTwo');
+  const netOne = document.getElementById('netOne');
+  const netTwo = document.getElementById('netTwo');
+  const selectedNet = document.getElementById('selectedNet');
+  const selectionRule = document.getElementById('selectionRule');
+  const detailedOverrun = document.getElementById('detailedOverrun');
+  const resultMessage = document.getElementById('resultMessage');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const startTimerButton = document.getElementById('startTimer');
+  const stopTimerButton = document.getElementById('stopTimer');
+  const resetTimerButton = document.getElementById('resetTimer');
+
+  let timer = { startedAt: null, elapsedMs: 0 };
+  let timerInterval = null;
+
+  function localDate() {
+    const now = new Date();
+    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+
+  function numberValue(element) {
+    const value = Number.parseFloat(element.value);
+    return Number.isFinite(value) ? value : null;
+  }
+
+  function formatWeight(value) {
+    return Number.isFinite(value) ? value.toFixed(1) + ' กรัม' : '—';
+  }
+
+  function timerElapsed() {
+    return timer.elapsedMs + (timer.startedAt ? Date.now() - timer.startedAt : 0);
+  }
+
+  function formatDuration(milliseconds) {
+    const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+    const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
+    const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    return hours + ':' + minutes + ':' + seconds;
+  }
+
+  function renderTimer() {
+    timerDisplay.textContent = formatDuration(timerElapsed());
+    startTimerButton.disabled = Boolean(timer.startedAt);
+    stopTimerButton.disabled = !timer.startedAt;
+  }
+
+  function beginTimerUpdates() {
+    if (timerInterval) window.clearInterval(timerInterval);
+    timerInterval = window.setInterval(renderTimer, 250);
+  }
+
+  function stopTimerUpdates() {
+    if (timerInterval) window.clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  function currentData() {
+    const data = {};
+    fields.forEach(function (field) {
+      data[field.dataset.field] = field.value;
+    });
+    return data;
+  }
+
+  function storedPayload() {
+    return {
+      version: 1,
+      page: 'Overrun-Test',
+      data: currentData(),
+      timer: {
+        startedAt: timer.startedAt,
+        elapsedMs: timer.elapsedMs
+      },
+      savedAt: new Date().toISOString()
+    };
+  }
+
+  function saveData(showStatus) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(storedPayload()));
+      if (showStatus !== false) {
+        const now = new Date();
+        saveStatus.textContent = 'บันทึกอัตโนมัติแล้ว ' + now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+      }
+    } catch (error) {
+      saveStatus.textContent = 'ไม่สามารถบันทึกอัตโนมัติบนอุปกรณ์นี้';
+    }
+  }
+
+  function restorePayload(payload) {
+    if (!payload || typeof payload !== 'object') return;
+    const data = payload.data || {};
+    fields.forEach(function (field) {
+      if (Object.prototype.hasOwnProperty.call(data, field.dataset.field)) {
+        field.value = data[field.dataset.field] == null ? '' : String(data[field.dataset.field]);
+      }
+    });
+    if (payload.timer && typeof payload.timer === 'object') {
+      timer.startedAt = Number.isFinite(Number(payload.timer.startedAt)) && Number(payload.timer.startedAt) > 0
+        ? Number(payload.timer.startedAt)
+        : null;
+      timer.elapsedMs = Number.isFinite(Number(payload.timer.elapsedMs))
+        ? Math.max(0, Number(payload.timer.elapsedMs))
+        : 0;
+    }
+    renderTimer();
+    if (timer.startedAt) beginTimerUpdates();
+    calculateDetailedOverrun();
+  }
+
+  function restoreData() {
+    let restored = false;
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        restorePayload(JSON.parse(raw));
+        restored = true;
+        saveStatus.textContent = 'กู้คืนข้อมูลที่บันทึกไว้แล้ว';
+      }
+    } catch (error) {
+      saveStatus.textContent = 'ไม่สามารถกู้คืนข้อมูลเดิม';
+    }
+    if (!restored && !experimentDate.value) experimentDate.value = localDate();
+  }
+
+  function setResultClass(warning) {
+    detailedOverrun.className = warning ? 'result-value warning' : 'result-value';
+    resultMessage.className = warning ? 'result-message warning' : 'result-message';
+  }
+
+  function clearResult(message) {
+    detailedOverrun.textContent = '—';
+    detailedOverrun.className = 'result-value placeholder';
+    resultMessage.textContent = message;
+    resultMessage.className = 'result-message';
+  }
+
+  function calculateDetailedOverrun() {
+    const before = numberValue(mixBefore);
+    const cup = numberValue(emptyCup);
+    const fullOne = numberValue(cupFullOne);
+    const fullTwo = numberValue(cupFullTwo);
+    const first = cup !== null && fullOne !== null ? fullOne - cup : null;
+    const second = cup !== null && fullTwo !== null ? fullTwo - cup : null;
+
+    netOne.textContent = first !== null && first > 0 ? formatWeight(first) : '—';
+    netTwo.textContent = second !== null && second > 0 ? formatWeight(second) : '—';
+    selectedNet.textContent = '—';
+    selectionRule.className = 'selection-rule';
+
+    if (!(first > 0) || !(second > 0)) {
+      selectionRule.textContent = 'กรอกน้ำหนักถ้วยและน้ำหนักที่ชั่งทั้ง 2 ครั้ง';
+      clearResult('รอข้อมูลน้ำหนักก่อนและหลังปั่น');
+      return;
+    }
+
+    const difference = Math.abs(first - second);
+    const selected = difference <= 5 ? (first + second) / 2 : Math.max(first, second);
+    selectedNet.textContent = formatWeight(selected);
+
+    if (difference <= 5) {
+      selectionRule.textContent = 'ผลต่าง ' + difference.toFixed(1) + ' กรัม · ใช้ค่าเฉลี่ยของน้ำหนักสุทธิทั้ง 2 ครั้ง';
+    } else {
+      selectionRule.textContent = 'ผลต่าง ' + difference.toFixed(1) + ' กรัม · มากกว่า 5 กรัม จึงใช้ค่าน้ำหนักสุทธิที่มากกว่า';
+      selectionRule.className = 'selection-rule warning';
+    }
+
+    if (!(before > 0)) {
+      clearResult('กรอกน้ำหนักมิกซ์ 1 ถ้วยก่อนปั่น');
+      return;
+    }
+
+    const overrun = ((before - selected) / selected) * 100;
+    detailedOverrun.textContent = overrun.toFixed(1) + '%';
+    if (selected > before) {
+      setResultClass(true);
+      resultMessage.textContent = 'น้ำหนักหลังปั่นมากกว่าก่อนปั่น กรุณาตรวจสอบการ Tare และปริมาตรตัวอย่าง';
+    } else {
+      setResultClass(false);
+      resultMessage.textContent = 'คำนวณจากน้ำหนักหลังปั่นที่ระบบเลือกตามเกณฑ์';
+    }
+  }
+
+  fields.forEach(function (field) {
+    field.addEventListener('input', function () {
+      calculateDetailedOverrun();
+      saveData();
+    });
+    field.addEventListener('change', function () {
+      calculateDetailedOverrun();
+      saveData();
+    });
+  });
+
+  startTimerButton.addEventListener('click', function () {
+    if (timer.startedAt) return;
+    timer.startedAt = Date.now();
+    beginTimerUpdates();
+    renderTimer();
+    saveData();
+  });
+
+  stopTimerButton.addEventListener('click', function () {
+    if (!timer.startedAt) return;
+    timer.elapsedMs += Date.now() - timer.startedAt;
+    timer.startedAt = null;
+    stopTimerUpdates();
+    renderTimer();
+    saveData();
+  });
+
+  resetTimerButton.addEventListener('click', function () {
+    if (timerElapsed() > 0 && !window.confirm('ตั้งเวลาปั่นใหม่เป็น 00:00:00 ใช่ไหมคะ?')) return;
+    timer.startedAt = null;
+    timer.elapsedMs = 0;
+    stopTimerUpdates();
+    renderTimer();
+    saveData();
+  });
+
+  document.getElementById('exportJson').addEventListener('click', function () {
+    const payload = storedPayload();
+    payload.exportedAt = new Date().toISOString();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const formula = document.getElementById('formulaTested').value.trim().replace(/[^a-zA-Z0-9ก-๙_-]+/g, '-');
+    link.href = url;
+    link.download = 'Overrun-' + (formula || 'Experiment') + '-' + (experimentDate.value || localDate()) + '.json';
+    link.click();
+    window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  });
+
+  const importJson = document.getElementById('importJson');
+  document.getElementById('importJsonButton').addEventListener('click', function () {
+    importJson.click();
+  });
+  importJson.addEventListener('change', function () {
+    const file = importJson.files && importJson.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      try {
+        const payload = JSON.parse(String(reader.result));
+        restorePayload(payload);
+        saveData(false);
+        saveStatus.textContent = 'นำเข้าข้อมูลเรียบร้อยแล้ว';
+      } catch (error) {
+        window.alert('ไฟล์ข้อมูลไม่ถูกต้องหรืออ่านไม่ได้');
+      }
+      importJson.value = '';
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('printPage').addEventListener('click', function () {
+    window.print();
+  });
+
+  document.getElementById('clearForm').addEventListener('click', function () {
+    if (!window.confirm('ล้างข้อมูลการทดลองและตัวจับเวลาทั้งหมดใช่ไหมคะ?')) return;
+    stopTimerUpdates();
+    localStorage.removeItem(STORAGE_KEY);
+    fields.forEach(function (field) { field.value = ''; });
+    experimentDate.value = localDate();
+    timer = { startedAt: null, elapsedMs: 0 };
+    renderTimer();
+    calculateDetailedOverrun();
+    saveData(false);
+    saveStatus.textContent = 'ล้างแบบฟอร์มแล้ว';
+  });
+
+  restoreData();
+  calculateDetailedOverrun();
+  renderTimer();
+</script>
+</body>
+</html>
