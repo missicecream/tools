@@ -644,9 +644,7 @@
       }
     });
     if (!normalized.data.experimentDate) normalized.data.experimentDate = localDate();
-    if (!Object.prototype.hasOwnProperty.call(normalized.data, 'productionLot')) {
-      normalized.data.productionLot = defaultLot();
-    }
+    if (!String(normalized.data.productionLot || '').trim()) normalized.data.productionLot = defaultLot();
     if (!normalized.timer || typeof normalized.timer !== 'object') normalized.timer = {};
     const startedAt = Number(normalized.timer.startedAt);
     const elapsedMs = Number(normalized.timer.elapsedMs);
