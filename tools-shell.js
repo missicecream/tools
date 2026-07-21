@@ -4,7 +4,7 @@
     'ClassTimer.html': 'ClassTimer-guide.html',
     'PST-Selector.html': 'PST-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html',
-    'Heat-Log.html': 'Heat-Log-guide.html',
+    'Heat-Log.html': 'Heat-Log-guide.html?v=072126D',
     'Churning.html': 'Churning-guide.html',
     'Overrun-Test.html': 'Overrun-Test-guide.html?v=072126C',
     'Meltdown-Test.html': 'Meltdown-Test-guide.html'
@@ -55,6 +55,7 @@
 
       const oldWrapper = guide.parentElement;
       guide.classList.add('tool-guide-link');
+      guide.href = guides[page];
       guide.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">?</span><span>คู่มือ</span>';
       if (oldWrapper && oldWrapper !== topbar && oldWrapper !== container) {
         guide.remove();

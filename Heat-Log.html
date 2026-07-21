@@ -39,6 +39,7 @@
 
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
   .fld{display:flex;flex-direction:column;gap:4px}
+  .fld.full{grid-column:1/-1}
   .fld label{font-size:12px;color:var(--muted);font-weight:500}
   .fld input,.fld select{font-family:'Sarabun',sans-serif;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);outline:none;width:100%}
   .fld input:focus,.fld select:focus{border-color:var(--accent);background:#fff}
@@ -263,7 +264,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072026C" defer></script>
+<script src="tools-shell.js?v=072126D" defer></script>
 </head>
 <body>
 <div class="sheet">
@@ -296,10 +297,11 @@
   <div class="block">
     <div class="block-t"><span class="n">1</span> ข้อมูลรายงาน</div>
     <div class="grid">
-      <div class="fld"><label>ผลิตภัณฑ์</label><input id="f_product" type="text" placeholder="เช่น ไอศกรีมวานิลลา" oninput="setF('product',this.value)"></div>
-      <div class="fld"><label>หมายเลข Lot</label><input id="f_lot" type="text" placeholder="เช่น 260612-1" oninput="setF('lot',this.value)"></div>
-      <div class="fld"><label>ผู้บันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
-      <div class="fld"><label>วันที่</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
+      <div class="fld"><label for="f_date">วันที่ (อัตโนมัติ)</label><input id="f_date" type="text" readonly aria-readonly="true"></div>
+      <div class="fld"><label for="f_product">ผลิตภัณฑ์ / lot</label><input id="f_product" type="text" placeholder="ไอศกรีมวานิลา หรือ รหัสสินค้า" oninput="setF('product',this.value)"></div>
+      <div class="fld"><label for="f_lot">หมายเลข lot</label><input id="f_lot" type="text" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label for="f_productionKg">ปริมาณการผลิต (kg)</label><input id="f_productionKg" type="number" min="0" step="0.01" inputmode="decimal" placeholder="น้ำหนัก (kg)" oninput="setF('productionKg',this.value)"></div>
+      <div class="fld full"><label for="f_recorder">ผู้บันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
     </div>
   </div>
 
@@ -419,7 +421,7 @@ const KEY='ltlt_log_v1';            // คีย์เดิม (รุ่นบ
 const STORE_KEY='ltlt_store_v1';    // คีย์ใหม่ เก็บได้หลาย Batch
 
 function fresh(){
-  return {product:'',lot:'',recorder:'',date:thaiDate(Date.now()),program:'',progMode:'',ctemp:'',ctime:'',interval:3,
+  return {product:'',lot:defaultLot(Date.now()),lotDefaultVersion:1,productionKg:'',recorder:'',date:thaiDate(Date.now()),program:'',progMode:'',ctemp:'',ctime:'',interval:3,
     startHeat:null,reachTemp:null,endHold:null,endHoldReason:'',startCool:null,coolStartTemp:'',reachCool:null,readings:[],pasteurNotified:false,remindKey:null,remindCount:0,note:''};
 }
 function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
@@ -461,6 +463,14 @@ function deleteBatch(){
 }
 
 function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
+function defaultLot(ts){const d=new Date(ts);return [d.getDate(),d.getMonth()+1,d.getFullYear()%100].map(n=>String(n).padStart(2,'0')).join('')+'-'}
+function ensureReportDefaults(batch){
+  let changed=false;
+  if(!batch.date){batch.date=thaiDate(Date.now());changed=true}
+  if(batch.lotDefaultVersion!==1){if(!String(batch.lot||'').trim())batch.lot=defaultLot(Date.now());batch.lotDefaultVersion=1;changed=true}
+  if(batch.productionKg==null){batch.productionKg='';changed=true}
+  return changed;
+}
 function hms(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
 function hm(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes()].map(n=>String(n).padStart(2,'0')).join(':')}
 function fmtDur(ms){if(ms==null)return '—';let s=Math.round(ms/1000);const m=Math.floor(s/60);s=s%60;return m+' นาที '+String(s).padStart(2,'0')+' วิ'}
@@ -697,8 +707,10 @@ function resetAll(){
 }
 
 function syncInputs(){
+  if(ensureReportDefaults(state))persist();
   document.getElementById('f_product').value=state.product||'';
   document.getElementById('f_lot').value=state.lot||'';
+  document.getElementById('f_productionKg').value=state.productionKg||'';
   document.getElementById('f_recorder').value=state.recorder||'';
   document.getElementById('f_date').value=state.date||'';
   if(LEGACY[state.program])state.program=LEGACY[state.program];
@@ -1026,7 +1038,7 @@ function buildChart(c){
 
 // init
 (function(){
-  if(!state.date)state.date=thaiDate(Date.now());
+  if(ensureReportDefaults(state))persist();
   refreshBatchSel();syncInputs();updateUI();
   setInterval(()=>{renderStatus();checkReminder();},1000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){renderStatus();checkReminder();}});
