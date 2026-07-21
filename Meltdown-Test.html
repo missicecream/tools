@@ -154,7 +154,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072026C" defer></script>
+<script src="tools-shell.js?v=072126F" defer></script>
 </head>
 <body>
 <div class="sheet">
@@ -177,16 +177,17 @@
     <button class="bbtn del" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
   </div>
 
-  <!-- ข้อมูลทั่วไป -->
+  <!-- ข้อมูลรายงาน -->
   <div class="block">
-    <div class="block-t"><span class="tag">i</span> ข้อมูลทั่วไป</div>
+    <div class="block-t"><span class="tag">i</span> ข้อมูลรายงาน</div>
     <div class="grid">
-      <div class="fld"><label>รหัส/สูตรไอศกรีม</label><input id="f_recipe" type="text" placeholder="เช่น MKDB11" oninput="setF('recipe',this.value)"></div>
-      <div class="fld"><label>Lot การผลิต</label><input id="f_lot" type="text" placeholder="เช่น L260706-01" oninput="setF('lot',this.value)"></div>
-      <div class="fld"><label>วันที่ทดสอบ</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
-      <div class="fld"><label>ผู้ทำการบันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
-      <div class="fld"><label>อุณหภูมิห้อง (°C)</label><input id="f_roomTemp" type="number" step="0.1" placeholder="เช่น 25" oninput="setF('roomTemp',this.value)"></div>
-      <div class="fld"><label>ความชื้น %humidity (ถ้ามี)</label><input id="f_humidity" type="number" step="0.1" placeholder="เช่น 60" oninput="setF('humidity',this.value)"></div>
+      <div class="fld"><label for="f_date">วันที่</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
+      <div class="fld"><label for="f_recipe">ผลิตภัณฑ์</label><input id="f_recipe" type="text" placeholder="เช่น เบส-รสชาติ หรือ รหัสผลิตภัณฑ์" oninput="setF('recipe',this.value)"></div>
+      <div class="fld"><label for="f_lot">Lot การผลิต</label><input id="f_lot" type="text" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label for="f_productionKg">ปริมาณการผลิต (kg)</label><input id="f_productionKg" type="number" min="0" step="0.01" inputmode="decimal" placeholder="น้ำหนัก (kg)" oninput="setF('productionKg',this.value)"></div>
+      <div class="fld"><label for="f_recorder">ผู้บันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
+      <div class="fld"><label for="f_roomTemp">อุณหภูมิห้อง (°C)</label><input id="f_roomTemp" type="number" step="0.1" placeholder="เช่น 25" oninput="setF('roomTemp',this.value)"></div>
+      <div class="fld"><label for="f_humidity">ความชื้น %humidity (ถ้ามี)</label><input id="f_humidity" type="number" step="0.1" placeholder="เช่น 60" oninput="setF('humidity',this.value)"></div>
     </div>
   </div>
 
@@ -283,7 +284,7 @@ function mrSlots(){const a=[];for(let m=5;m<=mrEnd();m+=5)a.push(m);return a}  /
 const AP_SLOTS=[10,20,30,40,50,60];                    // นาทีสังเกต ส่วนที่ 2
 const LOOKS=['ละลายปกติ','แยกเป็นน้ำใส','เป็นฟอง','จับตัวเป็นก้อน','เป็นเกล็ดน้ำแข็ง','อื่นๆ (เขียนในช่องบันทึก)'];
 
-function fresh(){return {recipe:'',lot:'',date:thaiDate(Date.now()),recorder:'',roomTemp:'',humidity:'',
+function fresh(){return {recipe:'',lot:defaultLot(Date.now()),lotDefaultVersion:1,productionKg:'',date:thaiDate(Date.now()),recorder:'',roomTemp:'',humidity:'',
   cupW:'',cupGridW:'',iceTemp:'',totalW:'',mStart:null,drop:null,weights:{},mExt:false,mStop:null,
   plateW:'',plateTotalW:'',aStart:null,looks:{},lookNotes:{},note:''}}
 function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
@@ -314,6 +315,14 @@ function deleteBatch(){
 function resetAll(){if(!confirm('ล้างข้อมูลใน Batch นี้และเริ่มใหม่?'))return;const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();}
 
 function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
+function defaultLot(ts){const d=new Date(ts);return [d.getDate(),d.getMonth()+1,d.getFullYear()%100].map(n=>String(n).padStart(2,'0')).join('')+'-'}
+function ensureReportDefaults(batch){
+  let changed=false;
+  if(!batch.date){batch.date=thaiDate(Date.now());changed=true}
+  if(batch.lotDefaultVersion!==1){if(!String(batch.lot||'').trim())batch.lot=defaultLot(Date.now());batch.lotDefaultVersion=1;changed=true}
+  if(batch.productionKg==null){batch.productionKg='';changed=true}
+  return changed;
+}
 function hms(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes(),d.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':')}
 function hm(ts){if(!ts)return '—';const d=new Date(ts);return [d.getHours(),d.getMinutes()].map(n=>String(n).padStart(2,'0')).join(':')}
 function fmtDur(ms){let s=Math.max(0,Math.round(ms/1000));const m=Math.floor(s/60);s=s%60;return m+' นาที '+String(s).padStart(2,'0')+' วิ'}
@@ -676,7 +685,8 @@ function toggleEmpty(){
 }
 
 function syncInputs(){
-  ['recipe','lot','date','recorder','roomTemp','humidity'].forEach(k=>{const e=document.getElementById('f_'+k);if(e)e.value=state[k]||''});
+  if(ensureReportDefaults(state))persist();
+  ['recipe','lot','productionKg','date','recorder','roomTemp','humidity'].forEach(k=>{const e=document.getElementById('f_'+k);if(e)e.value=state[k]||''});
   document.getElementById('m_cupW').value=state.cupW||'';
   document.getElementById('m_cupGridW').value=state.cupGridW||'';
   document.getElementById('m_iceTemp').value=state.iceTemp||'';
@@ -717,7 +727,7 @@ function updateUI(){
 }
 
 (function(){
-  if(!state.date)state.date=thaiDate(Date.now());
+  if(ensureReportDefaults(state))persist();
   refreshBatchSel();syncInputs();updateUI();
   setInterval(tickClock,250);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)tickClock();});

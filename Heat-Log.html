@@ -264,7 +264,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072126E" defer></script>
+<script src="tools-shell.js?v=072126F" defer></script>
 </head>
 <body>
 <div class="sheet">
@@ -297,9 +297,9 @@
   <div class="block">
     <div class="block-t"><span class="n">1</span> ข้อมูลรายงาน</div>
     <div class="grid">
-      <div class="fld"><label for="f_date">วันที่ (อัตโนมัติ)</label><input id="f_date" type="text" readonly aria-readonly="true"></div>
+      <div class="fld"><label for="f_date">วันที่</label><input id="f_date" type="text" oninput="setF('date',this.value)"></div>
       <div class="fld"><label for="f_product">ผลิตภัณฑ์</label><input id="f_product" type="text" placeholder="เช่น เบส-รสชาติ หรือ รหัสผลิตภัณฑ์" oninput="setF('product',this.value)"></div>
-      <div class="fld"><label for="f_lot">หมายเลข lot</label><input id="f_lot" type="text" oninput="setF('lot',this.value)"></div>
+      <div class="fld"><label for="f_lot">Lot การผลิต</label><input id="f_lot" type="text" oninput="setF('lot',this.value)"></div>
       <div class="fld"><label for="f_productionKg">ปริมาณการผลิต (kg)</label><input id="f_productionKg" type="number" min="0" step="0.01" inputmode="decimal" placeholder="น้ำหนัก (kg)" oninput="setF('productionKg',this.value)"></div>
       <div class="fld full"><label for="f_recorder">ผู้บันทึก</label><input id="f_recorder" type="text" placeholder="ชื่อผู้บันทึก" oninput="setF('recorder',this.value)"></div>
     </div>

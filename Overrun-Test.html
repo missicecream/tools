@@ -328,7 +328,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072126C" defer></script>
+<script src="tools-shell.js?v=072126F" defer></script>
 </head>
 <body>
 <main class="container">
@@ -342,7 +342,7 @@
   </header>
 
   <nav class="quick-links" aria-label="ส่วนต่างๆ ของแบบบันทึก">
-    <a href="#experiment-info">ข้อมูลการทดลอง</a>
+    <a href="#experiment-info">ข้อมูลรายงาน</a>
     <a href="#before-churn">%OR ก่อนปั่น</a>
     <a href="#churning">ช่วงปั่น</a>
     <a href="#after-churn">%OR หลังปั่น</a>
@@ -353,17 +353,29 @@
     <section class="section" id="experiment-info">
       <div class="section-head">
         <span class="section-number">1</span>
-        <h2>ข้อมูลการทดลอง</h2>
+        <h2>ข้อมูลรายงาน</h2>
       </div>
       <div class="section-body">
         <div class="grid">
           <div class="field">
-            <label for="experimentDate">วันที่ทดลอง</label>
+            <label for="experimentDate">วันที่</label>
             <input id="experimentDate" data-field="experimentDate" type="date">
           </div>
           <div class="field">
-            <label for="formulaTested">สูตรที่ทดลอง</label>
-            <input id="formulaTested" data-field="formulaTested" type="text" placeholder="ชื่อสูตร / รหัสสูตร">
+            <label for="formulaTested">ผลิตภัณฑ์</label>
+            <input id="formulaTested" data-field="formulaTested" type="text" placeholder="เช่น เบส-รสชาติ หรือ รหัสผลิตภัณฑ์">
+          </div>
+          <div class="field">
+            <label for="productionLot">Lot การผลิต</label>
+            <input id="productionLot" data-field="productionLot" type="text">
+          </div>
+          <div class="field">
+            <label for="productionKg">ปริมาณการผลิต (kg)</label>
+            <input id="productionKg" data-field="productionKg" type="number" min="0" step="0.01" inputmode="decimal" placeholder="น้ำหนัก (kg)">
+          </div>
+          <div class="field">
+            <label for="recorder">ผู้บันทึก</label>
+            <input id="recorder" data-field="recorder" type="text" placeholder="ชื่อผู้บันทึก">
           </div>
           <div class="field">
             <label for="batchWeight">น้ำหนัก (กรัม)</label>
@@ -372,10 +384,6 @@
           <div class="field">
             <label for="machine">เครื่องปั่น</label>
             <input id="machine" data-field="machine" type="text" placeholder="ยี่ห้อ / รุ่น">
-          </div>
-          <div class="field">
-            <label for="recorder">ผู้บันทึก</label>
-            <input id="recorder" data-field="recorder" type="text" placeholder="ชื่อผู้บันทึก">
           </div>
         </div>
       </div>
@@ -531,6 +539,7 @@
   const fields = Array.from(document.querySelectorAll('[data-field]'));
   const saveStatus = document.getElementById('saveStatus');
   const experimentDate = document.getElementById('experimentDate');
+  const productionLot = document.getElementById('productionLot');
   const mixBefore = document.getElementById('mixBefore');
   const emptyCup = document.getElementById('emptyCup');
   const cupFullOne = document.getElementById('cupFullOne');
@@ -552,6 +561,11 @@
   function localDate() {
     const now = new Date();
     return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+
+  function defaultLot() {
+    const parts = localDate().split('-');
+    return parts[2] + parts[1] + parts[0].slice(-2) + '-';
   }
 
   function numberValue(element) {
@@ -632,6 +646,7 @@
         field.value = data[field.dataset.field] == null ? '' : String(data[field.dataset.field]);
       }
     });
+    if (!Object.prototype.hasOwnProperty.call(data, 'productionLot')) productionLot.value = defaultLot();
     if (payload.timer && typeof payload.timer === 'object') {
       timer.startedAt = Number.isFinite(Number(payload.timer.startedAt)) && Number(payload.timer.startedAt) > 0
         ? Number(payload.timer.startedAt)
@@ -657,7 +672,10 @@
     } catch (error) {
       saveStatus.textContent = 'ไม่สามารถกู้คืนข้อมูลเดิม';
     }
-    if (!restored && !experimentDate.value) experimentDate.value = localDate();
+    if (!restored) {
+      if (!experimentDate.value) experimentDate.value = localDate();
+      if (!productionLot.value) productionLot.value = defaultLot();
+    }
   }
 
   function setResultClass(warning) {
@@ -802,6 +820,7 @@
     localStorage.removeItem(STORAGE_KEY);
     fields.forEach(function (field) { field.value = ''; });
     experimentDate.value = localDate();
+    productionLot.value = defaultLot();
     timer = { startedAt: null, elapsedMs: 0 };
     renderTimer();
     calculateDetailedOverrun();
