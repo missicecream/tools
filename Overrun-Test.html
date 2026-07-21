@@ -366,6 +366,10 @@
             <input id="formulaTested" data-field="formulaTested" type="text" placeholder="ชื่อสูตร / รหัสสูตร">
           </div>
           <div class="field">
+            <label for="batchWeight">น้ำหนัก (กรัม)</label>
+            <input id="batchWeight" data-field="batchWeight" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+          </div>
+          <div class="field">
             <label for="machine">เครื่องปั่น</label>
             <input id="machine" data-field="machine" type="text" placeholder="ยี่ห้อ / รุ่น">
           </div>
@@ -383,10 +387,10 @@
         <h2>%Overrun · ก่อนปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ชั่งมิกซ์จากส่วนที่ไม่มีฟอง 1 ถ้วย · Tare ถ้วยก่อนชั่ง · บันทึกเฉพาะน้ำหนักมิกซ์</p>
+        <p class="section-note">ชั่งมิกซ์จากส่วนที่ไม่มีฟองให้เต็มภาชนะที่ใช้วัด · Tare ภาชนะก่อนชั่ง · บันทึกเฉพาะน้ำหนักมิกซ์</p>
         <div class="grid">
           <div class="field">
-            <label for="mixBefore">น้ำหนักมิกซ์ 1 ถ้วยก่อนปั่น</label>
+            <label for="mixBefore">น้ำหนักของมิกซ์เต็มภาชนะที่ใช้วัด ก่อนปั่น</label>
             <div class="input-unit">
               <input id="mixBefore" data-field="mixBefore" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>กรัม</span>
@@ -444,24 +448,24 @@
         <h2>%Overrun · หลังปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ชั่งไอศกรีมพร้อมถ้วย 2 ครั้ง ระบบหักน้ำหนักถ้วยและคำนวณอัตโนมัติ: ผลต่างไม่เกิน 5 กรัม ใช้ค่าเฉลี่ย · มากกว่า 5 กรัม ใช้ค่าที่มากกว่า</p>
+        <p class="section-note">ชั่งไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะ 2 ครั้ง ระบบหักน้ำหนักภาชนะและคำนวณอัตโนมัติ: ผลต่างไม่เกิน 5 กรัม ใช้ค่าเฉลี่ย · มากกว่า 5 กรัม ใช้ค่าที่มากกว่า</p>
         <div class="grid three">
           <div class="field">
-            <label for="emptyCup">น้ำหนักถ้วยเปล่า</label>
+            <label for="emptyCup">น้ำหนักของภาชนะที่ใช้วัด</label>
             <div class="input-unit">
               <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>กรัม</span>
             </div>
           </div>
           <div class="field">
-            <label for="cupFullOne">ไอศกรีมและถ้วย · ครั้งที่ 1</label>
+            <label for="cupFullOne">น้ำหนักของไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะที่ใช้วัด ครั่งที่ 1</label>
             <div class="input-unit">
               <input id="cupFullOne" data-field="cupFullOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>กรัม</span>
             </div>
           </div>
           <div class="field">
-            <label for="cupFullTwo">ไอศกรีมและถ้วย · ครั้งที่ 2</label>
+            <label for="cupFullTwo">น้ำหนักของไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะที่ใช้วัด ครั่งที่ 2</label>
             <div class="input-unit">
               <input id="cupFullTwo" data-field="cupFullTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>กรัม</span>
@@ -474,7 +478,7 @@
           <div class="summary-item"><span>น้ำหนักสุทธิ · ครั้งที่ 2</span><strong id="netTwo">—</strong></div>
           <div class="summary-item"><span>น้ำหนักที่ใช้คำนวณ</span><strong id="selectedNet">—</strong></div>
         </div>
-        <p class="selection-rule" id="selectionRule">กรอกน้ำหนักถ้วยและน้ำหนักที่ชั่งทั้ง 2 ครั้ง</p>
+        <p class="selection-rule" id="selectionRule">กรอกน้ำหนักภาชนะและน้ำหนักที่ชั่งทั้ง 2 ครั้ง</p>
 
         <div class="result-card" aria-live="polite">
           <span>%Overrun ของ Batch นี้</span>
@@ -498,6 +502,7 @@
               <option value="แห้ง ปกติ">แห้ง ปกติ</option>
               <option value="มีน้ำซึม เกือบปกติ">มีน้ำซึม เกือบปกติ</option>
               <option value="เปียก เหลว">เปียก เหลว</option>
+              <option value="เนื้อฟูแตกร่วน ผิดปกติ">เนื้อฟูแตกร่วน ผิดปกติ</option>
             </select>
           </div>
           <div class="field full">
@@ -681,7 +686,7 @@
     selectionRule.className = 'selection-rule';
 
     if (!(first > 0) || !(second > 0)) {
-      selectionRule.textContent = 'กรอกน้ำหนักถ้วยและน้ำหนักที่ชั่งทั้ง 2 ครั้ง';
+      selectionRule.textContent = 'กรอกน้ำหนักภาชนะและน้ำหนักที่ชั่งทั้ง 2 ครั้ง';
       clearResult('รอข้อมูลน้ำหนักก่อนและหลังปั่น');
       return;
     }
@@ -698,7 +703,7 @@
     }
 
     if (!(before > 0)) {
-      clearResult('กรอกน้ำหนักมิกซ์ 1 ถ้วยก่อนปั่น');
+      clearResult('กรอกน้ำหนักของมิกซ์เต็มภาชนะที่ใช้วัด ก่อนปั่น');
       return;
     }
 
