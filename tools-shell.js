@@ -4,7 +4,7 @@
     'ClassTimer.html': 'ClassTimer-guide.html',
     'PST-Selector.html': 'PST-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html',
-    'Heat-Log.html': 'Heat-Log-guide.html?v=072126D',
+    'Heat-Log.html': 'Heat-Log-guide.html?v=072126E',
     'Churning.html': 'Churning-guide.html',
     'Overrun-Test.html': 'Overrun-Test-guide.html?v=072126C',
     'Meltdown-Test.html': 'Meltdown-Test-guide.html'
