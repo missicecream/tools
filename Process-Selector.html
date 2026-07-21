@@ -235,7 +235,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072026C" defer></script>
+<script src="tools-shell.js?v=072126I" defer></script>
 </head>
 <body>
 <div class="container">
@@ -245,7 +245,7 @@
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Process <em>Selector</em></h1>
     <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 12 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
-    <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
+    <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html?v=072126I" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
     <div class="chart-links">
       <span class="cl-label">หรือ เลือกผังขั้นตอนการผลิตแบบสรุป (A4):</span>
       <a class="cl-btn" href="Flowchart-Home.html">📄 แบบทำทาน</a>
@@ -410,7 +410,7 @@ function refreshPrintHead(){
 
 document.querySelectorAll('[data-k]').forEach(b=>b.addEventListener('click',()=>{
   const k=b.dataset.k,v=b.dataset.v;
-  if(k==='group'&&state.purpose==='sell'&&v!=='full')return;
+  if(k==='group'&&state.purpose==='sell'&&v==='factory')return;
   state[k]=v;
   b.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
   b.classList.add('sel');
@@ -437,10 +437,10 @@ document.querySelector('[data-risky-none]').addEventListener('click',b=>{
 function update(){
   ptHardStop();
   const home=state.purpose==='home', sell=state.purpose==='sell';
-  if(sell)state.group='full';
+  if(sell&&state.group!=='full'&&state.group!=='foamy')state.group='full';
   document.getElementById('qRisky').style.display=home?'block':'none';
   document.getElementById('homeExtra').style.display=home?'block':'none';
-  document.querySelectorAll('[data-k="group"]').forEach(o=>{o.disabled=!!(sell&&o.dataset.v!=='full');o.classList.toggle('sel',state.group===o.dataset.v);});
+  document.querySelectorAll('[data-k="group"]').forEach(o=>{o.disabled=!!(sell&&o.dataset.v==='factory');o.classList.toggle('sel',state.group===o.dataset.v);});
   const none=document.querySelector('[data-risky-none]');if(none)none.classList.toggle('sel',state.riskyNone);
   const m=state.machine?PBT[state.machine]:null;
   const needProfile=!!(m&&m.type==='imm');
@@ -481,7 +481,7 @@ function render(){
   const m=PBT[state.machine];
   const pr=pbtResult(m);
   curPBT=pr;
-  const groupTxt=state.group==='full'?'รอบเต็ม':(state.group==='factory'?'ลด 1 รอบ (เครื่องปั่นโถ)':'เชอร์เบท/ซอร์เบต์ 1–2 รอบ (เครื่องปั่นโถ)');
+  const groupTxt=state.group==='full'?'รอบเต็ม':(state.group==='factory'?'ลด 1 รอบ (เครื่องปั่นโถ)':(m.type==='jar'?'เชอร์เบท/ซอร์เบต์ 1–2 รอบ (เครื่องปั่นโถ)':'เชอร์เบท/ซอร์เบต์ · เครื่องปั่นมือถือใช้รอบเต็ม'));
   let H='';
 
   // print-only header (recipe title / lot / date)
