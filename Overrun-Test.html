@@ -412,14 +412,14 @@
       <div class="section-body">
         <div class="grid">
           <div class="field">
-            <label for="entryTemp">อุณหภูมิมิกซ์ก่อนเข้าเครื่องปั่น</label>
+            <label for="entryTemp">อุณหภูมิมิกซ์ในโถเครื่องปั่นก่อนเดินเครื่องเริ่มปั่น</label>
             <div class="input-unit">
               <input id="entryTemp" data-field="entryTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>°C</span>
             </div>
           </div>
           <div class="field">
-            <label for="drawTemp">อุณหภูมิไอศกรีมตอนดึงออก</label>
+            <label for="drawTemp">อุณหภูมิไอศกรีมวัดตอนปั่นเสร็จทันที</label>
             <div class="input-unit">
               <input id="drawTemp" data-field="drawTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
               <span>°C</span>
@@ -448,7 +448,7 @@
         <h2>%Overrun · หลังปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ชั่งไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะ 2 ครั้ง ระบบหักน้ำหนักภาชนะและคำนวณอัตโนมัติ: ผลต่างไม่เกิน 5 กรัม ใช้ค่าเฉลี่ย · มากกว่า 5 กรัม ใช้ค่าที่มากกว่า</p>
+        <p class="section-note">ชั่งไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะ 2 ครั้ง ระบบหักน้ำหนักภาชนะและคำนวณอัตโนมัติ: น้ำหนักสุทธิต่างกันไม่เกิน 5% ใช้ค่าเฉลี่ย · มากกว่า 5% ใช้น้ำหนักสุทธิที่มากกว่า โดยคำนวณเปอร์เซ็นต์ความต่างเทียบกับค่าเฉลี่ยของทั้งสองครั้ง</p>
         <div class="grid three">
           <div class="field">
             <label for="emptyCup">น้ำหนักของภาชนะที่ใช้วัด</label>
@@ -692,13 +692,15 @@
     }
 
     const difference = Math.abs(first - second);
-    const selected = difference <= 5 ? (first + second) / 2 : Math.max(first, second);
+    const average = (first + second) / 2;
+    const differencePercent = (difference / average) * 100;
+    const selected = differencePercent <= 5 ? average : Math.max(first, second);
     selectedNet.textContent = formatWeight(selected);
 
-    if (difference <= 5) {
-      selectionRule.textContent = 'ผลต่าง ' + difference.toFixed(1) + ' กรัม · ใช้ค่าเฉลี่ยของน้ำหนักสุทธิทั้ง 2 ครั้ง';
+    if (differencePercent <= 5) {
+      selectionRule.textContent = 'น้ำหนักสุทธิต่างกัน ' + differencePercent.toFixed(1) + '% · ไม่เกิน 5% จึงใช้ค่าเฉลี่ยของทั้ง 2 ครั้ง';
     } else {
-      selectionRule.textContent = 'ผลต่าง ' + difference.toFixed(1) + ' กรัม · มากกว่า 5 กรัม จึงใช้ค่าน้ำหนักสุทธิที่มากกว่า';
+      selectionRule.textContent = 'น้ำหนักสุทธิต่างกัน ' + differencePercent.toFixed(1) + '% · มากกว่า 5% จึงใช้น้ำหนักสุทธิที่มากกว่า';
       selectionRule.className = 'selection-rule warning';
     }
 
