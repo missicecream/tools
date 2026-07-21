@@ -328,7 +328,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
-<script src="tools-shell.js?v=072126A" defer></script>
+<script src="tools-shell.js?v=072126B" defer></script>
 </head>
 <body>
 <main class="container">
@@ -418,20 +418,20 @@
               <span>°C</span>
             </div>
           </div>
-          <div class="field">
-            <label for="drawTemp">อุณหภูมิไอศกรีมวัดตอนปั่นเสร็จทันที</label>
-            <div class="input-unit">
-              <input id="drawTemp" data-field="drawTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
-              <span>°C</span>
-            </div>
-          </div>
           <div class="timer-card">
             <label>ระยะเวลาปั่น · บันทึกอัตโนมัติ</label>
             <div class="timer-display" id="timerDisplay">00:00:00</div>
             <div class="timer-actions">
               <button class="btn primary" id="startTimer" type="button">เริ่มปั่น</button>
-              <button class="btn" id="stopTimer" type="button" disabled>หยุดปั่น</button>
+              <button class="btn" id="stopTimer" type="button" disabled>ปั่นเสร็จ</button>
               <button class="btn" id="resetTimer" type="button">ตั้งเวลาใหม่</button>
+            </div>
+          </div>
+          <div class="field full">
+            <label for="drawTemp">อุณหภูมิไอศกรีมวัดตอนปั่นเสร็จทันที</label>
+            <div class="input-unit">
+              <input id="drawTemp" data-field="drawTemp" type="number" step="0.1" inputmode="decimal" placeholder="0.0">
+              <span>°C</span>
             </div>
           </div>
           <div class="field full">
