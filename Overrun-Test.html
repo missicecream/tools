@@ -770,10 +770,10 @@
             <label for="textureLevel">ลักษณะเนื้อโดยรวม</label>
             <select id="textureLevel" data-field="textureLevel">
               <option value="">— เลือก —</option>
-              <option value="แห้ง ปกติ">แห้ง ปกติ</option>
-              <option value="มีน้ำซึม เกือบปกติ">มีน้ำซึม เกือบปกติ</option>
-              <option value="เปียก เหลว">เปียก เหลว</option>
-              <option value="เนื้อฟูแตกร่วน ผิดปกติ">เนื้อฟูแตกร่วน ผิดปกติ</option>
+              <option value="เนื้อแห้ง ปกติ">เนื้อแห้ง ปกติ</option>
+              <option value="เนื้อแห้ง แต่ผิวมีน้ำซึมเล็กน้อย">เนื้อแห้ง แต่ผิวมีน้ำซึมเล็กน้อย</option>
+              <option value="เนื้อเปียก เหลว">เนื้อเปียก เหลว</option>
+              <option value="อื่นๆ (ดูรายละเอียดเพิ่มเติม)">อื่นๆ (ดูรายละเอียดเพิ่มเติม)</option>
             </select>
           </div>
           <div class="field full">
@@ -868,6 +868,15 @@
       normalized.data.mixWithCup = Number.isFinite(legacyMix) && legacyMix > 0 && Number.isFinite(savedCup) && savedCup > 0
         ? (legacyMix + savedCup).toFixed(1)
         : '';
+    }
+    const legacyTextureOptions = {
+      'แห้ง ปกติ': 'เนื้อแห้ง ปกติ',
+      'มีน้ำซึม เกือบปกติ': 'เนื้อแห้ง แต่ผิวมีน้ำซึมเล็กน้อย',
+      'เปียก เหลว': 'เนื้อเปียก เหลว',
+      'เนื้อฟูแตกร่วน ผิดปกติ': 'อื่นๆ (ดูรายละเอียดเพิ่มเติม)'
+    };
+    if (Object.prototype.hasOwnProperty.call(legacyTextureOptions, normalized.data.textureLevel)) {
+      normalized.data.textureLevel = legacyTextureOptions[normalized.data.textureLevel];
     }
     fields.forEach(function (field) {
       if (!Object.prototype.hasOwnProperty.call(normalized.data, field.dataset.field)) {
