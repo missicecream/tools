@@ -610,10 +610,11 @@
       padding: 0 10px 5px;
       overflow-x: auto;
       overscroll-behavior-inline: contain;
-      scrollbar-width: thin;
+      scrollbar-width: none;
       scroll-snap-type: x proximity;
       -webkit-overflow-scrolling: touch;
     }
+    .quick-links::-webkit-scrollbar { display: none; }
     .quick-links a {
       flex: 0 0 auto;
       padding: 7px 11px;
