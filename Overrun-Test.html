@@ -188,9 +188,60 @@
     line-height: 1.65;
   }
 
+  .weighing-rule {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 15px;
+    padding: 12px 14px;
+    border: 1px solid #cdd7b8;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .weighing-rule strong {
+    flex: 0 0 auto;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: var(--accent-deep);
+    color: #fff;
+    font-size: 11px;
+  }
+
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .field.full { grid-column: 1 / -1; }
+  .measurement-field {
+    position: relative;
+    padding: 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 15px;
+    background: #fffdf8;
+  }
+  .measure-step {
+    display: inline-flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    font-style: italic;
+  }
+  .measurement-field label { min-height: 42px; color: var(--ink); font-size: 13px; }
+  .field-help {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
   label {
     display: block;
     margin-bottom: 6px;
@@ -261,7 +312,7 @@
 
   .measurement-summary {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 9px;
     margin-top: 15px;
   }
@@ -359,6 +410,7 @@
     .grid, .grid.three { grid-template-columns: 1fr; }
     .field.full, .timer-card { grid-column: auto; }
     .measurement-summary { grid-template-columns: 1fr; }
+    .weighing-rule { align-items: flex-start; flex-direction: column; }
     .section-body { padding: 15px; }
     .section-head { padding: 14px 15px; }
     .section-head h2 { font-size: 19px; }
@@ -435,16 +487,25 @@
         <h2>%Overrun · บันทึกค่าก่อนปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ชั่งมิกซ์จากส่วนที่ไม่มีฟองให้เต็มภาชนะที่ใช้วัด · Tare ภาชนะก่อนชั่ง · บันทึกเฉพาะน้ำหนักมิกซ์</p>
+        <p class="section-note">ใช้ถ้วยใบเดียวกันตลอดการวัด · ก่อนวางถ้วยให้ตาชั่งแสดง 0 · ไม่ต้อง Tare ถ้วยระหว่างการชั่ง</p>
+        <div class="weighing-rule">
+          <strong>หลักเดียวกันทั้ง 4 ค่า</strong>
+          <span>บันทึกน้ำหนักตามที่ตาชั่งแสดง ระบบจะหัก นน. ถ้วยเปล่าออกจากทั้งมิกซ์และไอศกรีมให้เอง</span>
+        </div>
         <div class="grid">
-          <div class="field">
-            <label for="mixBefore">น้ำหนักของมิกซ์เต็มภาชนะที่ใช้วัด ก่อนปั่น</label>
-            <div class="input-unit">
-              <input id="mixBefore" data-field="mixBefore" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-              <span>กรัม</span>
-            </div>
+          <div class="field measurement-field">
+            <span class="measure-step" aria-hidden="true">1</span>
+            <label for="emptyCup">นน. ถ้วยเปล่าที่ใช้ (g)</label>
+            <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+            <small class="field-help">วางถ้วยเปล่าบนตาชั่ง แล้วบันทึกค่าที่แสดง</small>
           </div>
-          <div class="field">
+          <div class="field measurement-field">
+            <span class="measure-step" aria-hidden="true">2</span>
+            <label for="mixWithCup">นน. มิกซ์ก่อนปั่นรวมกับถ้วยที่ใช้ (g)</label>
+            <input id="mixWithCup" data-field="mixWithCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+            <small class="field-help">เติมมิกซ์ส่วนที่ไม่มีฟองให้เต็มถ้วย แล้วชั่งรวมถ้วย</small>
+          </div>
+          <div class="field full">
             <label for="beforeNote">หมายเหตุก่อนปั่น</label>
             <input id="beforeNote" data-field="beforeNote" type="text" placeholder="ถ้ามี">
           </div>
@@ -496,37 +557,29 @@
         <h2>%Overrun · บันทึกค่าหลังปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ชั่งไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะ 2 ครั้ง ระบบหักน้ำหนักภาชนะและคำนวณอัตโนมัติ: น้ำหนักสุทธิต่างกันไม่เกิน 5% ใช้ค่าเฉลี่ย · มากกว่า 5% ใช้น้ำหนักสุทธิที่มากกว่า โดยคำนวณเปอร์เซ็นต์ความต่างเทียบกับค่าเฉลี่ยของทั้งสองครั้ง</p>
-        <div class="grid three">
-          <div class="field">
-            <label for="emptyCup">น้ำหนักของภาชนะที่ใช้วัด</label>
-            <div class="input-unit">
-              <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-              <span>กรัม</span>
-            </div>
+        <p class="section-note">นำถ้วยใบเดิมมาชั่งไอศกรีมรวมถ้วย 2 ครั้ง · ไม่ต้อง Tare ถ้วย · ระบบหัก นน. ถ้วยเปล่าและคำนวณอัตโนมัติ</p>
+        <div class="grid">
+          <div class="field measurement-field">
+            <span class="measure-step" aria-hidden="true">3</span>
+            <label for="cupFullOne">นน. ไอศกรีมหลังปั่นรวมกับถ้วยที่ใช้ ครั้งที่ 1 (g)</label>
+            <input id="cupFullOne" data-field="cupFullOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+            <small class="field-help">บรรจุไอศกรีมให้เต็มถ้วยถึงขอบ แล้วชั่งรวมถ้วย</small>
           </div>
-          <div class="field">
-            <label for="cupFullOne">น้ำหนักของไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะที่ใช้วัด ครั่งที่ 1</label>
-            <div class="input-unit">
-              <input id="cupFullOne" data-field="cupFullOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-              <span>กรัม</span>
-            </div>
-          </div>
-          <div class="field">
-            <label for="cupFullTwo">น้ำหนักของไอศกรีมเต็มภาชนะที่ใช้วัดรวมภาชนะที่ใช้วัด ครั่งที่ 2</label>
-            <div class="input-unit">
-              <input id="cupFullTwo" data-field="cupFullTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-              <span>กรัม</span>
-            </div>
+          <div class="field measurement-field">
+            <span class="measure-step" aria-hidden="true">4</span>
+            <label for="cupFullTwo">นน. ไอศกรีมหลังปั่นรวมกับถ้วยที่ใช้ ครั้งที่ 2 (g)</label>
+            <input id="cupFullTwo" data-field="cupFullTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+            <small class="field-help">ตักรอบแรกออก เติมใหม่ให้เต็มถ้วย แล้วชั่งรวมถ้วยอีกครั้ง</small>
           </div>
         </div>
 
         <div class="measurement-summary" aria-live="polite">
-          <div class="summary-item"><span>น้ำหนักสุทธิ · ครั้งที่ 1</span><strong id="netOne">—</strong></div>
-          <div class="summary-item"><span>น้ำหนักสุทธิ · ครั้งที่ 2</span><strong id="netTwo">—</strong></div>
-          <div class="summary-item"><span>น้ำหนักที่ใช้คำนวณ</span><strong id="selectedNet">—</strong></div>
+          <div class="summary-item"><span>นน. มิกซ์สุทธิ</span><strong id="netMix">—</strong></div>
+          <div class="summary-item"><span>นน. ไอศกรีมสุทธิ · ครั้งที่ 1</span><strong id="netOne">—</strong></div>
+          <div class="summary-item"><span>นน. ไอศกรีมสุทธิ · ครั้งที่ 2</span><strong id="netTwo">—</strong></div>
+          <div class="summary-item"><span>นน. ไอศกรีมที่ใช้คำนวณ</span><strong id="selectedNet">—</strong></div>
         </div>
-        <p class="selection-rule" id="selectionRule">กรอกน้ำหนักภาชนะและน้ำหนักที่ชั่งทั้ง 2 ครั้ง</p>
+        <p class="selection-rule" id="selectionRule">กรอกข้อมูลการชั่งทั้ง 4 ค่า</p>
 
         <div class="result-card" aria-live="polite">
           <span>%Overrun ของ Batch นี้</span>
@@ -582,10 +635,11 @@
   const batchSelect = document.getElementById('batchSel');
   const experimentDate = document.getElementById('experimentDate');
   const productionLot = document.getElementById('productionLot');
-  const mixBefore = document.getElementById('mixBefore');
   const emptyCup = document.getElementById('emptyCup');
+  const mixWithCup = document.getElementById('mixWithCup');
   const cupFullOne = document.getElementById('cupFullOne');
   const cupFullTwo = document.getElementById('cupFullTwo');
+  const netMix = document.getElementById('netMix');
   const netOne = document.getElementById('netOne');
   const netTwo = document.getElementById('netTwo');
   const selectedNet = document.getElementById('selectedNet');
@@ -627,7 +681,7 @@
     data.experimentDate = localDate();
     data.productionLot = defaultLot();
     return {
-      version: 1,
+      version: 2,
       page: 'Overrun-Test',
       data: data,
       timer: { startedAt: null, elapsedMs: 0 },
@@ -638,6 +692,13 @@
   function normalizePayload(payload) {
     const normalized = payload && typeof payload === 'object' ? payload : freshPayload();
     if (!normalized.data || typeof normalized.data !== 'object') normalized.data = {};
+    if (!Object.prototype.hasOwnProperty.call(normalized.data, 'mixWithCup')) {
+      const legacyMix = Number.parseFloat(normalized.data.mixBefore);
+      const savedCup = Number.parseFloat(normalized.data.emptyCup);
+      normalized.data.mixWithCup = Number.isFinite(legacyMix) && legacyMix > 0 && Number.isFinite(savedCup) && savedCup > 0
+        ? (legacyMix + savedCup).toFixed(1)
+        : '';
+    }
     fields.forEach(function (field) {
       if (!Object.prototype.hasOwnProperty.call(normalized.data, field.dataset.field)) {
         normalized.data[field.dataset.field] = '';
@@ -650,7 +711,7 @@
     const elapsedMs = Number(normalized.timer.elapsedMs);
     normalized.timer.startedAt = Number.isFinite(startedAt) && startedAt > 0 ? startedAt : null;
     normalized.timer.elapsedMs = Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : 0;
-    normalized.version = 1;
+    normalized.version = 2;
     normalized.page = 'Overrun-Test';
     return normalized;
   }
@@ -679,7 +740,7 @@
 
     const id = newId();
     return {
-      version: 1,
+      version: 2,
       batches: { [id]: firstPayload || freshPayload() },
       order: [id],
       current: id
@@ -759,7 +820,7 @@
 
   function storedPayload() {
     return {
-      version: 1,
+      version: 2,
       page: 'Overrun-Test',
       data: currentData(),
       timer: {
@@ -871,20 +932,22 @@
   }
 
   function calculateDetailedOverrun() {
-    const before = numberValue(mixBefore);
     const cup = numberValue(emptyCup);
+    const mixFull = numberValue(mixWithCup);
     const fullOne = numberValue(cupFullOne);
     const fullTwo = numberValue(cupFullTwo);
+    const before = cup !== null && mixFull !== null ? mixFull - cup : null;
     const first = cup !== null && fullOne !== null ? fullOne - cup : null;
     const second = cup !== null && fullTwo !== null ? fullTwo - cup : null;
 
+    netMix.textContent = before !== null && before > 0 ? formatWeight(before) : '—';
     netOne.textContent = first !== null && first > 0 ? formatWeight(first) : '—';
     netTwo.textContent = second !== null && second > 0 ? formatWeight(second) : '—';
     selectedNet.textContent = '—';
     selectionRule.className = 'selection-rule';
 
     if (!(first > 0) || !(second > 0)) {
-      selectionRule.textContent = 'กรอกน้ำหนักภาชนะและน้ำหนักที่ชั่งทั้ง 2 ครั้ง';
+      selectionRule.textContent = 'กรอกข้อมูลการชั่งทั้ง 4 ค่า';
       clearResult('รอข้อมูลน้ำหนักก่อนและหลังปั่น');
       return;
     }
@@ -903,7 +966,7 @@
     }
 
     if (!(before > 0)) {
-      clearResult('กรอกน้ำหนักของมิกซ์เต็มภาชนะที่ใช้วัด ก่อนปั่น');
+      clearResult('กรอก นน. ถ้วยเปล่า และ นน. มิกซ์ก่อนปั่นรวมถ้วย');
       return;
     }
 
@@ -911,10 +974,10 @@
     detailedOverrun.textContent = overrun.toFixed(1) + '%';
     if (selected > before) {
       setResultClass(true);
-      resultMessage.textContent = 'น้ำหนักหลังปั่นมากกว่าก่อนปั่น กรุณาตรวจสอบการ Tare และปริมาตรตัวอย่าง';
+      resultMessage.textContent = 'นน. ไอศกรีมสุทธิมากกว่า นน. มิกซ์สุทธิ กรุณาตรวจสอบค่าทั้ง 4 และความเต็มของถ้วย';
     } else {
       setResultClass(false);
-      resultMessage.textContent = 'คำนวณจากน้ำหนักหลังปั่นที่ระบบเลือกตามเกณฑ์';
+      resultMessage.textContent = 'คำนวณจาก นน. มิกซ์สุทธิ และ นน. ไอศกรีมสุทธิที่ระบบเลือกตามเกณฑ์';
     }
   }
 
