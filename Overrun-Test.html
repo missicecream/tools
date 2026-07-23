@@ -417,6 +417,176 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
+<style>
+  /* Readability overrides for recording and checking experiment results. */
+  .save-status { font-size: 13px; }
+  .quick-links a { font-size: 13px; }
+
+  #experimentForm .section-note {
+    color: #4f4032;
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.75;
+  }
+  #experimentForm label {
+    margin-bottom: 8px;
+    color: #35291f;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  #experimentForm input,
+  #experimentForm select,
+  #experimentForm textarea {
+    min-height: 52px;
+    padding: 12px 14px;
+    border: 2px solid #b9aa93 !important;
+    background-color: #fff !important;
+    color: #241b14 !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    box-shadow: 0 2px 0 rgba(43, 33, 24, .04);
+  }
+  #experimentForm textarea {
+    min-height: 108px;
+    line-height: 1.65;
+  }
+  #experimentForm input::placeholder,
+  #experimentForm textarea::placeholder {
+    color: #7e705e;
+    font-weight: 400;
+    opacity: 1;
+  }
+  #experimentForm input:focus,
+  #experimentForm select:focus,
+  #experimentForm textarea:focus {
+    border-color: var(--accent-deep) !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 4px rgba(79, 99, 54, .18), 0 5px 14px rgba(43, 33, 24, .08) !important;
+  }
+
+  .weighing-rule {
+    border-width: 2px;
+    color: #3f512d;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .weighing-rule strong { font-size: 12.5px; }
+  .measurement-field {
+    padding: 16px;
+    border: 2px solid #d2c5b1;
+    background: #fffaf2;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .measurement-field:focus-within {
+    border-color: var(--accent-deep);
+    background: #f8faef;
+    box-shadow: 0 8px 20px -17px rgba(43, 33, 24, .8);
+  }
+  .measure-step {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  #experimentForm .measurement-field label {
+    min-height: 48px;
+    color: #241b14;
+    font-size: 15.5px;
+  }
+  #experimentForm .measurement-field input {
+    min-height: 60px;
+    border-color: #9f8e74 !important;
+    font-size: 21px !important;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .field-help {
+    margin-top: 9px;
+    color: #564737;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+
+  .summary-item {
+    min-height: 94px;
+    padding: 14px;
+    border: 2px solid #c6b79f;
+    background: #fff !important;
+  }
+  .summary-item span {
+    color: #403328;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .summary-item strong {
+    margin-top: 7px;
+    font-size: 26px;
+    font-weight: 700;
+  }
+  .selection-rule {
+    margin-top: 13px;
+    padding: 13px 15px;
+    border: 1px solid #cbbda8;
+    background: #e9e1d5;
+    color: #3c3025;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.65;
+  }
+  .result-card {
+    margin-top: 16px;
+    padding: 24px 18px;
+    border: 3px solid var(--accent-deep);
+    background: linear-gradient(135deg, #fff 0%, #eef2e3 100%);
+    box-shadow: 0 13px 30px -24px rgba(43, 33, 24, .8);
+  }
+  .result-card span {
+    color: #35291f;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .result-value {
+    margin-top: 8px;
+    font-size: clamp(50px, 10vw, 66px);
+    font-weight: 700;
+  }
+  .result-value.placeholder { color: #756651; }
+  .result-message {
+    margin-top: 11px;
+    color: #493b2f;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 650px) {
+    #experimentForm .measurement-field label { min-height: auto; }
+    .summary-item { min-height: 86px; }
+  }
+
+  @media print {
+    #experimentForm input,
+    #experimentForm select,
+    #experimentForm textarea,
+    #experimentForm .measurement-field,
+    .summary-item,
+    .result-card {
+      border-width: 1px !important;
+      box-shadow: none !important;
+    }
+    #experimentForm input,
+    #experimentForm select,
+    #experimentForm textarea { min-height: 42px; font-size: 13px !important; }
+    #experimentForm .measurement-field input { min-height: 46px; font-size: 16px !important; }
+    .summary-item { min-height: 68px; }
+    .summary-item strong { font-size: 20px; }
+    .result-value { font-size: 40px; }
+  }
+</style>
 <script src="tools-shell.js?v=072126H" defer></script>
 </head>
 <body>
