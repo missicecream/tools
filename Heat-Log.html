@@ -264,6 +264,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
+<link rel="stylesheet" href="tools-print.css?v=072426E">
 <script src="tools-shell.js?v=072126F" defer></script>
 </head>
 <body>
@@ -1057,22 +1058,22 @@ function buildChart(c){
 <script>
 /* โหมดพร้อมพิมพ์ — แสดงหน้าพื้นขาว ไม่มีสี (ใช้สไตล์ .cap) แล้วให้ผู้ใช้สั่งพิมพ์เอง
    ใช้การพิมพ์ของเบราว์เซอร์: ข้อความจริง ไม่ตัดคำ ไม่ซ้ำ */
-function enterPrintMode(){if(typeof refreshPrintHead==='function')refreshPrintHead();document.body.classList.add('cap');document.body.classList.add('printmode');window.scrollTo(0,0);}
-function exitPrintMode(){document.body.classList.remove('cap');document.body.classList.remove('printmode');}
+function enterPrintMode(){if(typeof refreshPrintHead==='function')refreshPrintHead();document.body.classList.add('cap','printmode','ink-saver');window.scrollTo(0,0);}
+function exitPrintMode(){document.body.classList.remove('cap','printmode','ink-saver');}
 
 /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า */
 function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
 async function sharePDFink(btn){
   /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
   const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
-  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode'), hadInk=body.classList.contains('ink-saver');
   const hides=[...document.querySelectorAll('#pmbar,.actions,.back-link')], prevD=hides.map(el=>el.style.display);
-  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode'); if(!hadInk)body.classList.remove('ink-saver');};
   try{
     await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
     await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
     if(typeof refreshPrintHead==='function')refreshPrintHead();
-    body.classList.add('cap');body.classList.add('printmode');
+    body.classList.add('cap','printmode','ink-saver');
     hides.forEach(el=>el.style.display='none');
     window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
     const target=document.querySelector('.sheet');
