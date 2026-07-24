@@ -56,6 +56,7 @@
   }
 </style>
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
+<link rel="stylesheet" href="tools-print.css?v=072426E">
 <script src="tools-shell.js?v=072026C" defer></script>
 </head>
 <body>
@@ -102,19 +103,19 @@
 </div>
 <div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
 <script>
-/* แชร์ PDF — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า (คงสีผัง) */
+/* แชร์ PDF — ปุ่มเดียว แบ่งหน้า A4 หลายหน้าแบบประหยัดหมึก */
 function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
 async function sharePDFink(btn){
   /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
   const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
-  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode');
+  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode'), hadInk=body.classList.contains('ink-saver');
   const hides=[...document.querySelectorAll('.actions,.back-link')], prevD=hides.map(el=>el.style.display);
-  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode');};
+  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode'); if(!hadInk)body.classList.remove('ink-saver');};
   try{
     await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
     await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
     if(typeof refreshPrintHead==='function')refreshPrintHead();
-    
+    body.classList.add('cap','printmode','ink-saver');
     hides.forEach(el=>el.style.display='none');
     window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
     const target=document.querySelector('.sheet');
