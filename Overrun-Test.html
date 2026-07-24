@@ -509,6 +509,108 @@
     font-weight: 500;
     line-height: 1.55;
   }
+  .measurement-list {
+    display: grid;
+    gap: 12px;
+  }
+  .measurement-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(250px, .82fr);
+    gap: 18px;
+    align-items: stretch;
+    padding: 16px;
+    border: 2px solid #d2c5b1;
+    border-radius: 15px;
+    background: #fffaf2;
+    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  .measurement-row:focus-within {
+    border-color: var(--accent-deep);
+    background: #f8faef;
+    box-shadow: 0 8px 20px -17px rgba(43, 33, 24, .8);
+  }
+  .measurement-info,
+  .measurement-entry { min-width: 0; }
+  .measurement-title {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    color: #241b14;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .measurement-title .measure-step { margin: 0; }
+  .measurement-info > .field-help { margin-left: 40px; }
+  .measurement-entry {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 18px;
+    border-left: 1px solid #ded3c2;
+  }
+  #experimentForm .measurement-entry > label {
+    margin-bottom: 8px;
+    color: #35291f;
+    font-size: 13.5px;
+  }
+  #experimentForm .measurement-entry > input {
+    min-height: 54px;
+    border-color: #9f8e74 !important;
+    font-size: 16px !important;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .weight-mode {
+    min-width: 0;
+    margin: 12px 0 0 40px;
+    padding: 0;
+    border: 0;
+  }
+  .weight-mode legend {
+    margin-bottom: 7px;
+    color: #564737;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  #experimentForm .weight-choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 7px;
+    padding: 9px 10px;
+    border: 1px solid #d3c7b5;
+    border-radius: 10px;
+    background: #fff;
+    color: #403328;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+  #experimentForm .weight-choice:last-child { margin-bottom: 0; }
+  #experimentForm .weight-choice input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+    flex: 0 0 18px;
+    margin: 1px 0 0;
+    padding: 0;
+    border: 1px solid #9f8e74 !important;
+    border-radius: 50%;
+    box-shadow: none !important;
+    accent-color: var(--accent-deep);
+  }
+  #experimentForm .weight-choice:has(input:checked) {
+    border-color: var(--accent-deep);
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    box-shadow: 0 0 0 1px var(--accent-deep);
+  }
+  .weight-choice span { min-width: 0; }
+  .mode-help { margin-top: 8px; }
 
   .summary-item {
     min-height: 94px;
@@ -717,6 +819,32 @@
       font-size: 12.5px;
       line-height: 1.45;
     }
+    .measurement-list { gap: 10px; }
+    .measurement-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 11px;
+      padding: 11px;
+      border-width: 1px;
+      border-radius: 13px;
+    }
+    .measurement-title {
+      grid-template-columns: 27px minmax(0, 1fr);
+      gap: 9px;
+      font-size: 13.5px;
+    }
+    .measurement-info > .field-help { margin-left: 36px; }
+    .weight-mode { margin: 10px 0 0 36px; }
+    .weight-mode legend { font-size: 12px; }
+    #experimentForm .weight-choice {
+      padding: 8px 9px;
+      font-size: 12.5px;
+    }
+    .measurement-entry {
+      padding: 10px 0 0;
+      border-top: 1px solid #ded3c2;
+      border-left: 0;
+    }
+    #experimentForm .measurement-entry > input { min-height: 50px; }
 
     .timer-card {
       padding: 13px;
@@ -802,6 +930,7 @@
     #experimentForm select,
     #experimentForm textarea,
     #experimentForm .measurement-field,
+    #experimentForm .measurement-row,
     .summary-item,
     .result-card {
       border-width: 1px !important;
@@ -886,23 +1015,48 @@
         <h2>%Overrun · บันทึกค่าก่อนปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">ใช้ถ้วยใบเดียวกันตลอดการวัด · ก่อนวางถ้วยให้ตาชั่งแสดง 0 · ไม่ต้อง Tare ถ้วยระหว่างการชั่ง</p>
+        <p class="section-note">บันทึกได้ทั้งน้ำหนักรวมถ้วยหรือน้ำหนักสุทธิ · เลือกรูปแบบน้ำหนักให้ตรงกับค่าที่ชั่งในแต่ละรายการ</p>
         <div class="weighing-rule">
-          <strong>หลักเดียวกันทั้ง 4 ค่า</strong>
-          <span>บันทึกน้ำหนักตามที่ตาชั่งแสดง ระบบจะหัก นน. ถ้วยเปล่าออกจากทั้งมิกซ์และไอศกรีมให้เอง</span>
+          <strong>ระบบแปลงเป็นน้ำหนักสุทธิ</strong>
+          <span>หากเลือกน้ำหนักรวมถ้วย ระบบจะหัก นน. ถ้วยเปล่าให้ หากเลือกน้ำหนักสุทธิ ระบบจะใช้ค่าที่กรอกโดยตรง</span>
         </div>
-        <div class="grid">
-          <div class="field measurement-field">
-            <span class="measure-step" aria-hidden="true">1</span>
-            <label for="emptyCup">นน. ถ้วยเปล่าที่ใช้ (g)</label>
-            <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-            <small class="field-help">วางถ้วยเปล่าบนตาชั่ง แล้วบันทึกค่าที่แสดง</small>
+        <div class="measurement-list">
+          <div class="measurement-row">
+            <div class="measurement-info">
+              <div class="measurement-title">
+                <span class="measure-step" aria-hidden="true">1</span>
+                <span>นน. ถ้วยเปล่าที่ใช้ (g)</span>
+              </div>
+              <small class="field-help">วางถ้วยเปล่าบนตาชั่ง แล้วบันทึกค่าที่แสดง</small>
+            </div>
+            <div class="measurement-entry">
+              <label for="emptyCup">บันทึกน้ำหนัก (g)</label>
+              <input id="emptyCup" data-field="emptyCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+            </div>
           </div>
-          <div class="field measurement-field">
-            <span class="measure-step" aria-hidden="true">2</span>
-            <label for="mixWithCup">นน. มิกซ์ก่อนปั่นรวมกับถ้วยที่ใช้ (g)</label>
-            <input id="mixWithCup" data-field="mixWithCup" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-            <small class="field-help">เติมมิกซ์ส่วนที่ไม่มีฟองให้เต็มถ้วย แล้วชั่งรวมถ้วย</small>
+          <div class="measurement-row">
+            <div class="measurement-info">
+              <div class="measurement-title">
+                <span class="measure-step" aria-hidden="true">2</span>
+                <span>นน. มิกซ์ก่อนปั่น</span>
+              </div>
+              <fieldset class="weight-mode">
+                <legend>เลือกรูปแบบน้ำหนักที่บันทึก</legend>
+                <label class="weight-choice">
+                  <input type="radio" name="mixWeightMode" value="gross" checked>
+                  <span>น้ำหนักรวมถ้วยที่ใช้</span>
+                </label>
+                <label class="weight-choice">
+                  <input type="radio" name="mixWeightMode" value="net">
+                  <span>น้ำหนักมิกซ์สุทธิ ไม่รวมถ้วยที่ใช้</span>
+                </label>
+              </fieldset>
+            </div>
+            <div class="measurement-entry">
+              <label for="mixWeight">บันทึกน้ำหนัก (g)</label>
+              <input id="mixWeight" data-field="mixWeight" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <small class="field-help mode-help" id="mixWeightHelp">ระบบจะหัก นน. ถ้วยเปล่าออกจากค่านี้</small>
+            </div>
           </div>
           <div class="field full">
             <label for="beforeNote">หมายเหตุก่อนปั่น</label>
@@ -956,19 +1110,55 @@
         <h2>%Overrun · บันทึกค่าหลังปั่น</h2>
       </div>
       <div class="section-body">
-        <p class="section-note">นำถ้วยใบเดิมมาชั่งไอศกรีมรวมถ้วย 2 ครั้ง · ไม่ต้อง Tare ถ้วย · ระบบหัก นน. ถ้วยเปล่าและคำนวณอัตโนมัติ</p>
-        <div class="grid">
-          <div class="field measurement-field">
-            <span class="measure-step" aria-hidden="true">3</span>
-            <label for="cupFullOne">นน. ไอศกรีมหลังปั่นรวมกับถ้วยที่ใช้ ครั้งที่ 1 (g)</label>
-            <input id="cupFullOne" data-field="cupFullOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-            <small class="field-help">บรรจุไอศกรีมให้เต็มถ้วยถึงขอบ แล้วชั่งรวมถ้วย</small>
+        <p class="section-note">บันทึกไอศกรีม 2 ครั้ง และเลือกรูปแบบน้ำหนักของแต่ละครั้งให้ตรงกับค่าที่ชั่ง · ระบบคำนวณเป็นน้ำหนักสุทธิอัตโนมัติ</p>
+        <div class="measurement-list">
+          <div class="measurement-row">
+            <div class="measurement-info">
+              <div class="measurement-title">
+                <span class="measure-step" aria-hidden="true">3</span>
+                <span>นน. ไอศกรีมหลังปั่น ครั้งที่ 1</span>
+              </div>
+              <fieldset class="weight-mode">
+                <legend>เลือกรูปแบบน้ำหนักที่บันทึก</legend>
+                <label class="weight-choice">
+                  <input type="radio" name="iceWeightModeOne" value="gross" checked>
+                  <span>น้ำหนักรวมถ้วยที่ใช้</span>
+                </label>
+                <label class="weight-choice">
+                  <input type="radio" name="iceWeightModeOne" value="net">
+                  <span>น้ำหนักไอศกรีมสุทธิ ไม่รวมถ้วยที่ใช้</span>
+                </label>
+              </fieldset>
+            </div>
+            <div class="measurement-entry">
+              <label for="iceWeightOne">บันทึกน้ำหนัก (g)</label>
+              <input id="iceWeightOne" data-field="iceWeightOne" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <small class="field-help mode-help" id="iceWeightOneHelp">ระบบจะหัก นน. ถ้วยเปล่าออกจากค่านี้</small>
+            </div>
           </div>
-          <div class="field measurement-field">
-            <span class="measure-step" aria-hidden="true">4</span>
-            <label for="cupFullTwo">นน. ไอศกรีมหลังปั่นรวมกับถ้วยที่ใช้ ครั้งที่ 2 (g)</label>
-            <input id="cupFullTwo" data-field="cupFullTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
-            <small class="field-help">ตักรอบแรกออก เติมใหม่ให้เต็มถ้วย แล้วชั่งรวมถ้วยอีกครั้ง</small>
+          <div class="measurement-row">
+            <div class="measurement-info">
+              <div class="measurement-title">
+                <span class="measure-step" aria-hidden="true">4</span>
+                <span>นน. ไอศกรีมหลังปั่น ครั้งที่ 2</span>
+              </div>
+              <fieldset class="weight-mode">
+                <legend>เลือกรูปแบบน้ำหนักที่บันทึก</legend>
+                <label class="weight-choice">
+                  <input type="radio" name="iceWeightModeTwo" value="gross" checked>
+                  <span>น้ำหนักรวมถ้วยที่ใช้</span>
+                </label>
+                <label class="weight-choice">
+                  <input type="radio" name="iceWeightModeTwo" value="net">
+                  <span>น้ำหนักไอศกรีมสุทธิ ไม่รวมถ้วยที่ใช้</span>
+                </label>
+              </fieldset>
+            </div>
+            <div class="measurement-entry">
+              <label for="iceWeightTwo">บันทึกน้ำหนัก (g)</label>
+              <input id="iceWeightTwo" data-field="iceWeightTwo" type="number" min="0" step="0.1" inputmode="decimal" placeholder="0.0">
+              <small class="field-help mode-help" id="iceWeightTwoHelp">ระบบจะหัก นน. ถ้วยเปล่าออกจากค่านี้</small>
+            </div>
           </div>
         </div>
 
@@ -978,7 +1168,7 @@
           <div class="summary-item"><span>นน. ไอศกรีมสุทธิ · ครั้งที่ 2</span><strong id="netTwo">—</strong></div>
           <div class="summary-item"><span>นน. ไอศกรีมที่ใช้คำนวณ</span><strong id="selectedNet">—</strong></div>
         </div>
-        <p class="selection-rule" id="selectionRule">กรอกข้อมูลการชั่งทั้ง 4 ค่า</p>
+        <p class="selection-rule" id="selectionRule">กรอกข้อมูลน้ำหนักก่อนและหลังปั่น</p>
 
         <div class="result-card" aria-live="polite">
           <span>%Overrun ของ Batch นี้</span>
@@ -1035,9 +1225,16 @@
   const experimentDate = document.getElementById('experimentDate');
   const productionLot = document.getElementById('productionLot');
   const emptyCup = document.getElementById('emptyCup');
-  const mixWithCup = document.getElementById('mixWithCup');
-  const cupFullOne = document.getElementById('cupFullOne');
-  const cupFullTwo = document.getElementById('cupFullTwo');
+  const mixWeight = document.getElementById('mixWeight');
+  const iceWeightOne = document.getElementById('iceWeightOne');
+  const iceWeightTwo = document.getElementById('iceWeightTwo');
+  const weightModeNames = ['mixWeightMode', 'iceWeightModeOne', 'iceWeightModeTwo'];
+  const weightModeInputs = Array.from(document.querySelectorAll('.weight-mode input[type="radio"]'));
+  const weightModeHelp = {
+    mixWeightMode: document.getElementById('mixWeightHelp'),
+    iceWeightModeOne: document.getElementById('iceWeightOneHelp'),
+    iceWeightModeTwo: document.getElementById('iceWeightTwoHelp')
+  };
   const netMix = document.getElementById('netMix');
   const netOne = document.getElementById('netOne');
   const netTwo = document.getElementById('netTwo');
@@ -1079,8 +1276,9 @@
     fields.forEach(function (field) { data[field.dataset.field] = ''; });
     data.experimentDate = localDate();
     data.productionLot = defaultLot();
+    weightModeNames.forEach(function (name) { data[name] = 'gross'; });
     return {
-      version: 2,
+      version: 3,
       page: 'Overrun-Test',
       data: data,
       timer: { startedAt: null, elapsedMs: 0 },
@@ -1088,16 +1286,34 @@
     };
   }
 
+  function migrateWeightData(data) {
+    if (!Object.prototype.hasOwnProperty.call(data, 'mixWeight')) {
+      if (Object.prototype.hasOwnProperty.call(data, 'mixWithCup')) {
+        data.mixWeight = data.mixWithCup;
+      } else {
+        const legacyMix = Number.parseFloat(data.mixBefore);
+        const savedCup = Number.parseFloat(data.emptyCup);
+        data.mixWeight = Number.isFinite(legacyMix) && legacyMix > 0 && Number.isFinite(savedCup) && savedCup > 0
+          ? (legacyMix + savedCup).toFixed(1)
+          : '';
+      }
+    }
+    if (!Object.prototype.hasOwnProperty.call(data, 'iceWeightOne')) {
+      data.iceWeightOne = data.cupFullOne == null ? '' : data.cupFullOne;
+    }
+    if (!Object.prototype.hasOwnProperty.call(data, 'iceWeightTwo')) {
+      data.iceWeightTwo = data.cupFullTwo == null ? '' : data.cupFullTwo;
+    }
+    weightModeNames.forEach(function (name) {
+      data[name] = data[name] === 'net' ? 'net' : 'gross';
+    });
+    return data;
+  }
+
   function normalizePayload(payload) {
     const normalized = payload && typeof payload === 'object' ? payload : freshPayload();
     if (!normalized.data || typeof normalized.data !== 'object') normalized.data = {};
-    if (!Object.prototype.hasOwnProperty.call(normalized.data, 'mixWithCup')) {
-      const legacyMix = Number.parseFloat(normalized.data.mixBefore);
-      const savedCup = Number.parseFloat(normalized.data.emptyCup);
-      normalized.data.mixWithCup = Number.isFinite(legacyMix) && legacyMix > 0 && Number.isFinite(savedCup) && savedCup > 0
-        ? (legacyMix + savedCup).toFixed(1)
-        : '';
-    }
+    migrateWeightData(normalized.data);
     const legacyTextureOptions = {
       'แห้ง ปกติ': 'เนื้อแห้ง ปกติ',
       'มีน้ำซึม เกือบปกติ': 'เนื้อแห้ง แต่ผิวมีน้ำซึมเล็กน้อย',
@@ -1119,7 +1335,7 @@
     const elapsedMs = Number(normalized.timer.elapsedMs);
     normalized.timer.startedAt = Number.isFinite(startedAt) && startedAt > 0 ? startedAt : null;
     normalized.timer.elapsedMs = Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : 0;
-    normalized.version = 2;
+    normalized.version = 3;
     normalized.page = 'Overrun-Test';
     return normalized;
   }
@@ -1134,6 +1350,7 @@
           if (parsed.order.length) {
             parsed.order.forEach(function (id) { parsed.batches[id] = normalizePayload(parsed.batches[id]); });
             if (!parsed.batches[parsed.current]) parsed.current = parsed.order[0];
+            parsed.version = 3;
             return parsed;
           }
         }
@@ -1148,7 +1365,7 @@
 
     const id = newId();
     return {
-      version: 2,
+      version: 3,
       batches: { [id]: firstPayload || freshPayload() },
       order: [id],
       current: id
@@ -1184,6 +1401,37 @@
   function numberValue(element) {
     const value = Number.parseFloat(element.value);
     return Number.isFinite(value) ? value : null;
+  }
+
+  function selectedWeightMode(name) {
+    const selected = document.querySelector('input[name="' + name + '"]:checked');
+    return selected && selected.value === 'net' ? 'net' : 'gross';
+  }
+
+  function restoreWeightMode(name, value) {
+    const mode = value === 'net' ? 'net' : 'gross';
+    const input = document.querySelector('input[name="' + name + '"][value="' + mode + '"]');
+    if (input) input.checked = true;
+  }
+
+  function updateWeightModeHelp() {
+    weightModeNames.forEach(function (name) {
+      const help = weightModeHelp[name];
+      if (!help) return;
+      help.textContent = selectedWeightMode(name) === 'net'
+        ? 'ระบบจะใช้ค่านี้เป็นน้ำหนักสุทธิโดยตรง'
+        : 'ระบบจะหัก นน. ถ้วยเปล่าออกจากค่านี้';
+    });
+  }
+
+  function resolveNetValue(value, mode, cup) {
+    if (value === null) return null;
+    if (mode === 'net') return value;
+    return cup !== null && cup > 0 ? value - cup : null;
+  }
+
+  function resolvedNetWeight(element, mode, cup) {
+    return resolveNetValue(numberValue(element), mode, cup);
   }
 
   function formatWeight(value) {
@@ -1223,12 +1471,15 @@
     fields.forEach(function (field) {
       data[field.dataset.field] = field.value;
     });
+    weightModeNames.forEach(function (name) {
+      data[name] = selectedWeightMode(name);
+    });
     return data;
   }
 
   function storedPayload() {
     return {
-      version: 2,
+      version: 3,
       page: 'Overrun-Test',
       data: currentData(),
       timer: {
@@ -1260,6 +1511,10 @@
     fields.forEach(function (field) {
       field.value = data[field.dataset.field] == null ? '' : String(data[field.dataset.field]);
     });
+    weightModeNames.forEach(function (name) {
+      restoreWeightMode(name, data[name]);
+    });
+    updateWeightModeHelp();
     timer = {
       startedAt: normalized.timer.startedAt,
       elapsedMs: normalized.timer.elapsedMs
@@ -1341,12 +1596,15 @@
 
   function calculateDetailedOverrun() {
     const cup = numberValue(emptyCup);
-    const mixFull = numberValue(mixWithCup);
-    const fullOne = numberValue(cupFullOne);
-    const fullTwo = numberValue(cupFullTwo);
-    const before = cup !== null && mixFull !== null ? mixFull - cup : null;
-    const first = cup !== null && fullOne !== null ? fullOne - cup : null;
-    const second = cup !== null && fullTwo !== null ? fullTwo - cup : null;
+    const mixMode = selectedWeightMode('mixWeightMode');
+    const firstMode = selectedWeightMode('iceWeightModeOne');
+    const secondMode = selectedWeightMode('iceWeightModeTwo');
+    const before = resolvedNetWeight(mixWeight, mixMode, cup);
+    const first = resolvedNetWeight(iceWeightOne, firstMode, cup);
+    const second = resolvedNetWeight(iceWeightTwo, secondMode, cup);
+    const needsCup = mixMode === 'gross' || firstMode === 'gross' || secondMode === 'gross';
+
+    updateWeightModeHelp();
 
     netMix.textContent = before !== null && before > 0 ? formatWeight(before) : '—';
     netOne.textContent = first !== null && first > 0 ? formatWeight(first) : '—';
@@ -1354,9 +1612,15 @@
     selectedNet.textContent = '—';
     selectionRule.className = 'selection-rule';
 
+    if (needsCup && !(cup > 0)) {
+      selectionRule.textContent = 'กรอก นน. ถ้วยเปล่า เพื่อแปลงน้ำหนักรวมถ้วยเป็นน้ำหนักสุทธิ';
+      clearResult('รอ นน. ถ้วยเปล่าที่ใช้');
+      return;
+    }
+
     if (!(first > 0) || !(second > 0)) {
-      selectionRule.textContent = 'กรอกข้อมูลการชั่งทั้ง 4 ค่า';
-      clearResult('รอข้อมูลน้ำหนักก่อนและหลังปั่น');
+      selectionRule.textContent = 'กรอกน้ำหนักไอศกรีมหลังปั่นทั้ง 2 ครั้ง';
+      clearResult('รอข้อมูลน้ำหนักไอศกรีมหลังปั่น');
       return;
     }
 
@@ -1374,7 +1638,7 @@
     }
 
     if (!(before > 0)) {
-      clearResult('กรอก นน. ถ้วยเปล่า และ นน. มิกซ์ก่อนปั่นรวมถ้วย');
+      clearResult('กรอก นน. มิกซ์ก่อนปั่นให้มากกว่า 0');
       return;
     }
 
@@ -1382,7 +1646,7 @@
     detailedOverrun.textContent = overrun.toFixed(1) + '%';
     if (selected > before) {
       setResultClass(true);
-      resultMessage.textContent = 'นน. ไอศกรีมสุทธิมากกว่า นน. มิกซ์สุทธิ กรุณาตรวจสอบค่าทั้ง 4 และความเต็มของถ้วย';
+      resultMessage.textContent = 'นน. ไอศกรีมสุทธิมากกว่า นน. มิกซ์สุทธิ กรุณาตรวจสอบรูปแบบน้ำหนัก ค่าที่กรอก และความเต็มของถ้วย';
     } else {
       setResultClass(false);
       resultMessage.textContent = 'คำนวณจาก นน. มิกซ์สุทธิ และ นน. ไอศกรีมสุทธิที่ระบบเลือกตามเกณฑ์';
@@ -1395,6 +1659,12 @@
       saveData();
     });
     field.addEventListener('change', function () {
+      calculateDetailedOverrun();
+      saveData();
+    });
+  });
+  weightModeInputs.forEach(function (input) {
+    input.addEventListener('change', function () {
       calculateDetailedOverrun();
       saveData();
     });
