@@ -284,7 +284,7 @@ function mrSlots(){const a=[];for(let m=5;m<=mrEnd();m+=5)a.push(m);return a}  /
 const AP_SLOTS=[10,20,30,40,50,60];                    // นาทีสังเกต ส่วนที่ 2
 const LOOKS=['ละลายปกติ','แยกเป็นน้ำใส','เป็นฟอง','จับตัวเป็นก้อน','เป็นเกล็ดน้ำแข็ง','อื่นๆ (เขียนในช่องบันทึก)'];
 
-function fresh(){return {recipe:'',lot:defaultLot(Date.now()),lotDefaultVersion:1,productionKg:'',date:thaiDate(Date.now()),recorder:'',roomTemp:'',humidity:'',
+function fresh(){return {recipe:'',lot:'',productionKg:'',date:thaiDate(Date.now()),recorder:'',roomTemp:'',humidity:'',
   cupW:'',cupGridW:'',iceTemp:'',totalW:'',mStart:null,drop:null,weights:{},mExt:false,mStop:null,
   plateW:'',plateTotalW:'',aStart:null,looks:{},lookNotes:{},note:''}}
 function newId(){return 'b'+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
@@ -315,11 +315,12 @@ function deleteBatch(){
 function resetAll(){if(!confirm('ล้างข้อมูลใน Batch นี้และเริ่มใหม่?'))return;const id=store.current;store.batches[id]=fresh();state=store.batches[id];persist();syncInputs();updateUI();refreshBatchSel();}
 
 function thaiDate(ts){return new Date(ts).toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})}
-function defaultLot(ts){const d=new Date(ts);return [d.getDate(),d.getMonth()+1,d.getFullYear()%100].map(n=>String(n).padStart(2,'0')).join('')+'-'}
+function lotExample(ts){const d=new Date(ts);return [d.getDate(),d.getMonth()+1,d.getFullYear()%100].map(n=>String(n).padStart(2,'0')).join('')+'-1'}
 function ensureReportDefaults(batch){
   let changed=false;
   if(!batch.date){batch.date=thaiDate(Date.now());changed=true}
-  if(batch.lotDefaultVersion!==1){if(!String(batch.lot||'').trim())batch.lot=defaultLot(Date.now());batch.lotDefaultVersion=1;changed=true}
+  if(batch.lotDefaultVersion===1&&/^\d{6}-$/.test(String(batch.lot||'').trim())){batch.lot='';changed=true}
+  if(Object.prototype.hasOwnProperty.call(batch,'lotDefaultVersion')){delete batch.lotDefaultVersion;changed=true}
   if(batch.productionKg==null){batch.productionKg='';changed=true}
   return changed;
 }
@@ -687,6 +688,7 @@ function toggleEmpty(){
 function syncInputs(){
   if(ensureReportDefaults(state))persist();
   ['recipe','lot','productionKg','date','recorder','roomTemp','humidity'].forEach(k=>{const e=document.getElementById('f_'+k);if(e)e.value=state[k]||''});
+  document.getElementById('f_lot').placeholder='เช่น '+lotExample(Date.now());
   document.getElementById('m_cupW').value=state.cupW||'';
   document.getElementById('m_cupGridW').value=state.cupGridW||'';
   document.getElementById('m_iceTemp').value=state.iceTemp||'';

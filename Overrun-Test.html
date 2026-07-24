@@ -464,6 +464,43 @@
     background-color: #fff !important;
     box-shadow: 0 0 0 4px rgba(79, 99, 54, .18), 0 5px 14px rgba(43, 33, 24, .08) !important;
   }
+  #experimentForm .field { min-width: 0; }
+  #experimentForm input[type="date"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  #experimentForm input[type="date"]::-webkit-date-and-time-value {
+    min-width: 0;
+    text-align: left;
+  }
+  .optional-field {
+    padding: 12px 14px;
+    border: 1px dashed #d8cdbd;
+    border-radius: 13px;
+    background: #fdfbf7;
+  }
+  #experimentForm .optional-field label {
+    color: #6c5d4c;
+    font-weight: 600;
+  }
+  .optional-label {
+    display: inline-block;
+    margin-left: 6px;
+    color: #8b7d6b;
+    font-size: 11.5px;
+    font-weight: 500;
+  }
+  #experimentForm .optional-field input,
+  #experimentForm .optional-field textarea {
+    border-width: 1px !important;
+    border-color: #d5cabb !important;
+    background-color: #fffdf9 !important;
+    color: #4f4236 !important;
+    font-weight: 400;
+    box-shadow: none;
+  }
 
   .weighing-rule {
     border-width: 2px;
@@ -764,6 +801,11 @@
       padding: 10px 12px;
     }
     #experimentForm textarea { min-height: 96px; }
+    .optional-field { padding: 10px; }
+    .optional-label {
+      display: block;
+      margin: 2px 0 0;
+    }
 
     .weighing-rule {
       display: grid;
@@ -1058,8 +1100,8 @@
               <small class="field-help mode-help" id="mixWeightHelp">ระบบจะหัก นน. ถ้วยเปล่าออกจากค่านี้</small>
             </div>
           </div>
-          <div class="field full">
-            <label for="beforeNote">หมายเหตุก่อนปั่น</label>
+          <div class="field full optional-field">
+            <label for="beforeNote">หมายเหตุก่อนปั่น <span class="optional-label">ไม่จำเป็นต้องกรอก</span></label>
             <input id="beforeNote" data-field="beforeNote" type="text" placeholder="ถ้ามี">
           </div>
         </div>
@@ -1096,8 +1138,8 @@
               <span>°C</span>
             </div>
           </div>
-          <div class="field full">
-            <label for="churningNote">บันทึกช่วงปั่นไอศกรีม</label>
+          <div class="field full optional-field">
+            <label for="churningNote">หมายเหตุช่วงปั่นไอศกรีม <span class="optional-label">ไม่จำเป็นต้องกรอก</span></label>
             <textarea id="churningNote" data-field="churningNote" placeholder="การเปลี่ยนแปลงของเนื้อ เสียงเครื่อง หรือเหตุการณ์ระหว่างปั่น"></textarea>
           </div>
         </div>
@@ -1195,8 +1237,8 @@
               <option value="อื่นๆ (ดูรายละเอียดเพิ่มเติม)">อื่นๆ (ดูรายละเอียดเพิ่มเติม)</option>
             </select>
           </div>
-          <div class="field full">
-            <label for="textureNote">รายละเอียดลักษณะเนื้อ</label>
+          <div class="field full optional-field">
+            <label for="textureNote">หมายเหตุลักษณะเนื้อ <span class="optional-label">ไม่จำเป็นต้องกรอก</span></label>
             <textarea id="textureNote" data-field="textureNote" placeholder="ความแน่น ความแห้ง การไหลตัว น้ำซึม หรือข้อสังเกตอื่น"></textarea>
           </div>
         </div>
@@ -1256,9 +1298,9 @@
     return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   }
 
-  function defaultLot() {
+  function lotExample() {
     const parts = localDate().split('-');
-    return parts[2] + parts[1] + parts[0].slice(-2) + '-';
+    return parts[2] + parts[1] + parts[0].slice(-2) + '-1';
   }
 
   function newId() {
@@ -1275,10 +1317,9 @@
     const data = {};
     fields.forEach(function (field) { data[field.dataset.field] = ''; });
     data.experimentDate = localDate();
-    data.productionLot = defaultLot();
     weightModeNames.forEach(function (name) { data[name] = 'gross'; });
     return {
-      version: 3,
+      version: 4,
       page: 'Overrun-Test',
       data: data,
       timer: { startedAt: null, elapsedMs: 0 },
@@ -1312,7 +1353,11 @@
 
   function normalizePayload(payload) {
     const normalized = payload && typeof payload === 'object' ? payload : freshPayload();
+    const sourceVersion = Number(normalized.version) || 0;
     if (!normalized.data || typeof normalized.data !== 'object') normalized.data = {};
+    if (sourceVersion < 4 && /^\d{6}-$/.test(String(normalized.data.productionLot || '').trim())) {
+      normalized.data.productionLot = '';
+    }
     migrateWeightData(normalized.data);
     const legacyTextureOptions = {
       'แห้ง ปกติ': 'เนื้อแห้ง ปกติ',
@@ -1329,13 +1374,12 @@
       }
     });
     if (!normalized.data.experimentDate) normalized.data.experimentDate = localDate();
-    if (!String(normalized.data.productionLot || '').trim()) normalized.data.productionLot = defaultLot();
     if (!normalized.timer || typeof normalized.timer !== 'object') normalized.timer = {};
     const startedAt = Number(normalized.timer.startedAt);
     const elapsedMs = Number(normalized.timer.elapsedMs);
     normalized.timer.startedAt = Number.isFinite(startedAt) && startedAt > 0 ? startedAt : null;
     normalized.timer.elapsedMs = Number.isFinite(elapsedMs) ? Math.max(0, elapsedMs) : 0;
-    normalized.version = 3;
+    normalized.version = 4;
     normalized.page = 'Overrun-Test';
     return normalized;
   }
@@ -1745,6 +1789,7 @@
     saveStatus.textContent = 'ล้างแบบฟอร์มของ Batch นี้แล้ว';
   });
 
+  productionLot.placeholder = 'เช่น ' + lotExample();
   restoreData();
   calculateDetailedOverrun();
   renderTimer();
