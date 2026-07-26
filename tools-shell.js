@@ -5,6 +5,7 @@
     'PST-Selector.html': 'PST-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html?v=072126J',
     'Heat-Log.html': 'Heat-Log-guide.html?v=072126F',
+    'Heat-Log-5Batch.html': 'Heat-Log-5Batch-guide.html?v=072626A',
     'Churning.html': 'Churning-guide.html?v=072126H',
     'Overrun-Test.html': 'Overrun-Test-guide.html?v=072126H',
     'Meltdown-Test.html': 'Meltdown-Test-guide.html?v=072126F'

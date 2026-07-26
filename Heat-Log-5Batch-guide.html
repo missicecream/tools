@@ -1,0 +1,118 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#F4ECE0">
+<meta name="description" content="คู่มือ Heat Process Log ×5 สำหรับบันทึกการให้ความร้อนพร้อมกัน 1–5 Batch">
+<title>คู่มือ Heat Process Log ×5 · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=072026C">
+<style>
+  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#766653;--muted-soft:#A79782;--line:#DCD0BD;--line-soft:#EEE5D7;--accent:#6B8E4E;--accent-deep:#4F6336;--blue:#3E73A6;--rose:#9F6251}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;padding:44px 20px 48px;background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 15% 5%,rgba(220,229,200,.5),transparent 40%),radial-gradient(circle at 88% 95%,rgba(201,120,98,.1),transparent 40%)}
+  .container{max-width:760px;margin:0 auto}
+  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:26px;padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
+  header{text-align:center;margin-bottom:28px}
+  .eyebrow{margin-bottom:12px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+  h1{margin-bottom:10px;font-family:'Fraunces',serif;font-size:clamp(30px,5vw,44px);font-weight:400;line-height:1.06;letter-spacing:-.02em}
+  h1 em{color:var(--accent-deep);font-style:italic}
+  .subtitle{max-width:620px;margin:0 auto;color:var(--muted);font-size:14px;line-height:1.7}
+  .card{margin-bottom:16px;padding:27px 26px;border:1px solid var(--line);border-radius:20px;background:var(--card);box-shadow:0 4px 24px -18px rgba(43,31,21,.25)}
+  .card h2{margin-bottom:7px;color:var(--accent-deep);font-family:'Fraunces',serif;font-size:22px;font-weight:500}
+  .lead{font-size:14px;line-height:1.75}
+  .step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+  .step:last-child{border-bottom:0}
+  .step-n{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:'Fraunces',serif;font-size:15px}
+  .step-b{flex:1;min-width:0}.step-t{margin-bottom:3px;font-size:15px;font-weight:700}.step-d{color:var(--muted);font-size:13.5px;line-height:1.65}
+  .chip{display:inline-block;padding:1px 9px;border:1px solid #c8d8b8;border-radius:999px;background:#EFF3E7;color:var(--accent-deep);font-size:12.5px;font-weight:700}
+  .tip,.warning{margin-top:10px;padding:12px 15px;border-radius:12px;font-size:13px;line-height:1.65}
+  .tip{border:1px solid #b9d3e6;background:#EAF1F7;color:#2D5474}.warning{border:1px solid #E0BDAF;background:#FBEDE7;color:#824B3D}
+  ul.notes{list-style:none;margin-top:4px}ul.notes li{position:relative;margin-bottom:8px;padding-left:18px;font-size:13.5px;line-height:1.65}ul.notes li::before{content:'•';position:absolute;left:3px;color:var(--accent);font-weight:700}
+  .states{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.state{padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:12.5px;line-height:1.55}.state b{display:block;margin-bottom:3px}.state.wait b{color:var(--muted)}.state.pass b{color:var(--accent-deep)}.state.fail b{color:var(--rose)}
+  .cta{text-align:center;margin:12px 0 5px}.cta a{display:inline-block;padding:13px 28px;border-radius:999px;background:var(--accent-deep);color:#fff;font-size:15px;font-weight:700;text-decoration:none}
+  .site-footer{margin-top:34px;color:var(--muted);font-size:12px;line-height:1.7;text-align:center}.site-footer a{color:inherit;text-decoration:underline}
+  @media(max-width:620px){body{padding:28px 12px 38px}.card{padding:22px 18px}.states{grid-template-columns:1fr}}
+</style>
+<script src="tools-shell.js?v=072626A" defer></script>
+</head>
+<body>
+<main class="container">
+  <a class="back-link" href="Heat-Log-5Batch.html">← กลับไปที่เครื่องมือ</a>
+  <header>
+    <div class="eyebrow">Miss Icecream · คู่มือการใช้งาน</div>
+    <h1>Heat Process <em>Log ×5</em></h1>
+    <p class="subtitle">คู่มือบันทึกเวลา–อุณหภูมิของการให้ความร้อนพร้อมกัน 1–5 Batch ในตารางเดียว สำหรับใช้งานบนจอ notebook</p>
+  </header>
+
+  <section class="card">
+    <h2>เครื่องมือนี้เหมาะกับงานแบบใด</h2>
+    <p class="lead">ใช้เมื่อกำลังให้ความร้อนหลาย Batch ใกล้เคียงกันและต้องการเห็นข้อมูลทุก Batch พร้อมกัน แต่ละ Batch มีชื่อ ข้อมูลผลิตภัณฑ์ โปรแกรม เกณฑ์ นาฬิกา รายการอุณหภูมิ การลดความร้อน และผลสรุปของตัวเอง จึงเริ่ม–จบไม่พร้อมกันและเลือกโปรแกรมต่างกันได้</p>
+  </section>
+
+  <section class="card">
+    <h2>ขั้นตอนการใช้งาน</h2>
+    <div class="step"><div class="step-n">1</div><div class="step-b"><div class="step-t">เลือกจำนวน Batch ที่ต้องใช้</div><div class="step-d">กดตัวเลข <b>1–5</b> ด้านบน ตารางจะแสดงเฉพาะจำนวนที่เลือก การใช้ไม่ครบ 5 Batch ไม่ถือว่าข้อมูลไม่ครบ และเอกสารพิมพ์จะแสดงเฉพาะคอลัมน์ที่เปิดอยู่</div></div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-b"><div class="step-t">ตั้งชื่อและกรอกข้อมูลแต่ละ Batch</div><div class="step-d">แก้ชื่อหัวคอลัมน์ เช่น Batch 1 หรือชื่อย่อสูตร แล้วกรอก วันที่ ผลิตภัณฑ์ Lot การผลิต ปริมาณการผลิต และผู้บันทึก ข้อมูลเหล่านี้บันทึกอัตโนมัติขณะพิมพ์</div></div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-b"><div class="step-t">เลือกโปรแกรมแยกตาม Batch</div><div class="step-d">แต่ละคอลัมน์เลือกโปรแกรมของตัวเองได้ ระบบแสดงเกณฑ์อุณหภูมิ × เวลาให้อัตโนมัติ หากเลือก “กำหนดอุณหภูมิและเวลาเอง” ให้กรอกทั้ง °C และนาทีในแถวนั้น</div></div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-b"><div class="step-t">บันทึกอุณหภูมิเป็นระยะ</div><div class="step-d">พิมพ์ค่าที่อ่านได้ในช่อง “อุณหภูมิ °C” แล้วกด <b>＋ บันทึก</b> หรือกด Enter ระบบลงเวลาให้อัตโนมัติ ค่าแรกคือเวลาเริ่มให้ความร้อน รายการแสดง <b>ค่าล่าสุดไว้บนสุด ไล่ลงไปจนถึงค่าแรก</b> บนจอจะแสดงประมาณ 6 บรรทัดแล้วเลื่อนในช่องได้ ส่วนเอกสารพิมพ์แสดงทุกรายการ</div></div></div>
+    <div class="step"><div class="step-n">5</div><div class="step-b"><div class="step-t">ติดตามนาฬิกาและเกณฑ์ของแต่ละ Batch</div><div class="step-d">เมื่อบันทึกค่าถึงเกณฑ์ ระบบเริ่มจับเวลาให้ Batch นั้นโดยอัตโนมัติ หากมีค่าภายหลังต่ำกว่าเกณฑ์ ช่วงเวลาต่อเนื่องจะถูกยกเลิกและเริ่มนับใหม่เมื่อบันทึกค่าที่ถึงเกณฑ์อีกครั้ง</div></div></div>
+    <div class="step"><div class="step-n">6</div><div class="step-b"><div class="step-t">จบการให้ความร้อน</div><div class="step-d">กด <b>จบการให้ความร้อน</b> แยกตาม Batch หากกดจบโดยยังไม่ถึงเกณฑ์ ไม่ครบเวลา หรืออุณหภูมิหลุดต่ำกว่าเกณฑ์ ผลจะแสดง “ไม่ผ่านเกณฑ์” พร้อมเหตุผล หากกดผิด ใช้ “ยกเลิก / บันทึกใหม่” ได้</div></div></div>
+    <div class="step"><div class="step-n">7</div><div class="step-b"><div class="step-t">บันทึกการลดความร้อน</div><div class="step-d">หลังจบการให้ความร้อน กด <b>เริ่มลดความร้อน</b> ใส่อุณหภูมิตอนเริ่มลดได้โดยไม่บังคับ แล้วกด <b>ถึง ≤4 °C</b> เมื่อวัดได้ 4 °C หรือต่ำกว่า ระบบคำนวณเวลาลดความร้อนให้</div></div></div>
+    <div class="step"><div class="step-n">8</div><div class="step-b"><div class="step-t">ตรวจสรุป เพิ่มหมายเหตุ และเก็บไฟล์</div><div class="step-d">ตรวจผลแยกแต่ละ Batch บันทึกเหตุการณ์ผิดปกติหรือสิ่งที่ต้องปรับ แล้วเลือกพิมพ์/PDF แนวนอน ดาวน์โหลด JSON เพื่อสำรองข้อมูล หรือนำเข้า JSON เพื่อทำงานต่อ</div></div></div>
+  </section>
+
+  <section class="card">
+    <h2>เพิ่มหรือลดจำนวน Batch ระหว่างบันทึก</h2>
+    <ul class="notes">
+      <li>หากเริ่ม 3 Batch แล้วต้องการเพิ่มเป็น 5 ให้กดเลข <b>5</b> ได้ทันที ข้อมูลและเวลาของ Batch 1–3 ไม่หาย ส่วน Batch 4–5 เปิดเป็นคอลัมน์ใหม่ว่าง ๆ</li>
+      <li>หากลดจาก 5 เหลือ 3 คอลัมน์ Batch 4–5 จะถูกซ่อน ไม่ได้ถูกลบ เมื่อกดกลับเป็น 5 ข้อมูลจะกลับมา</li>
+      <li>การเปลี่ยนจำนวนจะจัดตารางใหม่ แต่นาฬิกาของ Batch ที่เริ่มแล้วคำนวณต่อจากเวลาจริง</li>
+    </ul>
+    <div class="warning"><b>ก่อนเปลี่ยนจำนวน Batch:</b> หากพิมพ์ค่าอุณหภูมิไว้แต่ยังไม่ได้กด “＋ บันทึก” ให้กดบันทึกก่อน เพราะค่าที่ยังค้างอยู่ในช่องอุณหภูมิจะหายเมื่อตารางจัดคอลัมน์ใหม่ ช่องข้อมูลอื่น เช่น ผลิตภัณฑ์ Lot และหมายเหตุ บันทึกอัตโนมัติขณะพิมพ์แล้ว</div>
+  </section>
+
+  <section class="card">
+    <h2>ความหมายของผลสรุป</h2>
+    <div class="states">
+      <div class="state wait"><b>รอผล</b>ยังไม่ได้กดจบการให้ความร้อน หรือกำลังรอให้ถึงเกณฑ์/ครบเวลา</div>
+      <div class="state pass"><b>ผ่านเกณฑ์</b>คงอุณหภูมิถึงเกณฑ์ต่อเนื่องครบเวลาขั้นต่ำก่อนกดจบ</div>
+      <div class="state fail"><b>ไม่ผ่านเกณฑ์</b>กดจบก่อนถึงเกณฑ์ ก่อนครบเวลา หรือมีค่าต่ำกว่าเกณฑ์จนต้องเริ่มจับเวลาใหม่</div>
+    </div>
+    <div class="tip"><b>ไข่แดงแบบคัสตาร์ด:</b> ไม่จับเวลา ระบบสรุปจากอุณหภูมิสูงสุด เป้า 82 °C เพดาน 85 °C และต้องสังเกตเนื้อเคลือบหลังช้อน (nappe) ร่วมด้วย</div>
+  </section>
+
+  <section class="card">
+    <h2>ข้อมูล การสำรอง และการเริ่มใหม่</h2>
+    <ul class="notes">
+      <li>ข้อมูลบันทึกอัตโนมัติในเบราว์เซอร์ของเครื่องนี้ ไม่ได้ส่งขึ้นเซิร์ฟเวอร์ และควรกลับมาใช้ด้วยเครื่องกับเบราว์เซอร์เดิม</li>
+      <li>ข้อมูลเดิมจาก Heat Process Log รุ่น 4 Batch จะถูกอ่านเข้ารุ่น 5 Batch อัตโนมัติ</li>
+      <li>ใช้ “ดาวน์โหลดข้อมูล JSON” เพื่อสำรองหรือย้ายข้อมูล และใช้ “นำเข้าข้อมูล JSON” เพื่อเปิดข้อมูลนั้นอีกครั้ง</li>
+      <li>ปุ่ม “เริ่มใหม่ (ล้างทั้ง 5 Batch)” ลบข้อมูลของทุกคอลัมน์ ควรดาวน์โหลด JSON หรือพิมพ์ PDF ก่อนหากต้องการเก็บหลักฐาน</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>ข้อควรจำ</h2>
+    <ul class="notes">
+      <li>เครื่องมือนี้ช่วยบันทึกและคำนวณจากค่าที่กรอกกับนาฬิกาของเครื่อง ไม่แทนเครื่องวัดอุณหภูมิที่สอบเทียบหรือการตรวจรับรองอย่างเป็นทางการ</li>
+      <li>ตรวจชื่อผลิตภัณฑ์ Lot โปรแกรม และหน่วยทุกครั้งก่อนเริ่ม และตรวจแต่ละคอลัมน์ก่อนกดปุ่มเหตุการณ์</li>
+      <li>การทำขายต้องเลือกกระบวนการและเกณฑ์ที่สอดคล้องกับข้อกำหนดสำหรับผลิตภัณฑ์จริง ความปลอดภัยและการปฏิบัติตามกฎหมายเป็นความรับผิดชอบของผู้ผลิต</li>
+    </ul>
+  </section>
+
+  <div class="cta"><a href="Heat-Log-5Batch.html">เริ่มใช้งาน Heat Process Log ×5 →</a></div>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer>
+</main>
+</body>
+</html>
