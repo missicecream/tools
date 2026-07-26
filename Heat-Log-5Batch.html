@@ -1,0 +1,374 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#F4ECE0">
+<meta name="description" content="บันทึกการให้ความร้อนพร้อมกัน 1–5 Batch ในตารางเดียวสำหรับจอ notebook">
+<title>Heat Process Log ×5 — บันทึก 5 Batch · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=072026C">
+<link rel="stylesheet" href="tools-print.css?v=072426E">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-width:760px;padding:28px 20px 44px;background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.5),transparent 36%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08),transparent 38%)}
+  .sheet{width:min(100%,1480px);margin:0 auto}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:18px;padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);text-decoration:none;font-size:13px;font-weight:600}
+  header{text-align:center;margin:0 auto 20px;max-width:860px}
+  .eyebrow{margin-bottom:7px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+  h1{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,48px);font-weight:400;line-height:1.04}
+  h1 em{color:var(--accent-deep);font-style:italic}
+  .sub{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.65}
+  .guide-link{display:inline-flex;margin-top:7px;color:var(--accent-deep);font-size:13px;font-weight:600;text-decoration:none}
+
+  .toolbar{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-bottom:14px;padding:12px 15px;border:1px solid var(--line);border-radius:15px;background:rgba(255,250,242,.9);box-shadow:var(--shadow)}
+  .toolbar-title{font-weight:700;font-size:13px;color:var(--accent-deep)}
+  .count-buttons{display:flex;gap:6px}
+  .count-btn{min-width:42px;min-height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--muted);font-size:14px;font-weight:700;cursor:pointer}
+  .count-btn.active{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}
+  .toolbar-note{flex:1;min-width:260px;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .save-status{display:inline-flex;align-items:center;gap:6px;color:var(--accent-deep);font-size:12px;font-weight:600;white-space:nowrap}
+  .save-status::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+  .matrix-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:0 15px 38px -31px rgba(43,31,21,.65)}
+  .matrix{width:100%;min-width:930px;border-collapse:separate;border-spacing:0;table-layout:fixed}
+  .matrix col.label-col{width:205px}
+  .matrix th,.matrix td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);vertical-align:top}
+  .matrix tr:last-child th,.matrix tr:last-child td{border-bottom:0}
+  .matrix th:last-child,.matrix td:last-child{border-right:0}
+  .matrix thead th{position:sticky;top:0;z-index:4;padding:12px 10px;background:#F1E9DB;text-align:center}
+  .matrix thead .corner{left:0;z-index:6;color:var(--muted);font-size:12px;font-weight:600;text-align:left}
+  .row-label{position:sticky;left:0;z-index:3;padding:11px 12px;background:#FAF4E9;color:var(--ink);font-size:12.5px;font-weight:700;line-height:1.4;text-align:left}
+  .row-label small{display:block;margin-top:3px;color:var(--muted);font-size:10.5px;font-weight:400;line-height:1.4}
+  .matrix td{padding:9px;background:#FFFCF7}
+  .section-row th{position:sticky;left:0;z-index:3;padding:7px 12px;border-right:0;background:var(--accent-deep);color:#fff;font-size:12px;letter-spacing:.04em;text-align:left}
+  .section-row td{padding:7px 9px;background:var(--accent-soft);color:var(--accent-deep);font-size:11px;font-weight:600;text-align:center}
+  .batch-head{display:flex;align-items:center;justify-content:center;gap:7px}
+  .batch-head input{width:min(100%,180px);padding:7px 9px!important;border:1px solid #cfc2ae!important;border-radius:9px!important;background:#fff!important;text-align:center;font-size:14px;font-weight:700}
+  .batch-dot{width:9px;height:9px;flex:0 0 auto;border-radius:50%;background:var(--muted-soft)}
+  .batch-dot.working{background:#C77F3A}.batch-dot.done{background:var(--accent)}
+
+  .matrix input,.matrix select,.matrix textarea{width:100%;padding:8px 9px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:13px;outline:none}
+  .matrix textarea{min-height:70px;resize:vertical;line-height:1.5}
+  .matrix select{font-size:12px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .input-action{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+  .mini-btn,.event-btn{border:0;border-radius:9px;background:var(--accent-deep);color:#fff;font-family:'Sarabun',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+  .mini-btn{padding:7px 10px}.event-btn{width:100%;min-height:36px;padding:7px 9px}
+  .event-btn.heat{background:#C77F3A}.event-btn.cool{background:#3E73A6}.event-btn.finish{background:var(--rose)}
+  .event-btn:disabled{opacity:.42;cursor:not-allowed}
+  .event-time{display:block;margin-top:5px;color:var(--accent-deep);font-family:'Fraunces',serif;font-size:12px;text-align:center}
+  .undo-btn,.del-reading{border:0;background:none;color:var(--rose);font-family:'Sarabun',sans-serif;font-size:10.5px;cursor:pointer}
+  .undo-btn{display:block;margin:4px auto 0;text-decoration:underline}
+  .criteria{padding:8px;border:1px solid #cdd9b8;border-radius:9px;background:var(--accent-soft);color:var(--accent-deep);font-size:12px;font-weight:600;line-height:1.45}
+  .criteria.none{border-color:var(--line);background:#F4EEE4;color:var(--muted);font-weight:400}
+  .status-card{min-height:82px;padding:9px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--muted);font-size:11.5px;line-height:1.5;text-align:center}
+  .status-card strong{display:block;margin-bottom:2px;color:var(--ink);font-size:13px}
+  .status-card.heat{border-color:#E4C39D;background:#FBF1E7;color:#80552E}.status-card.heat strong{color:#A8612B}
+  .status-card.ok{border-color:#c8d8b8;background:#EFF3E7;color:var(--accent-deep)}.status-card.ok strong{color:var(--accent-deep)}
+  .status-card.fail{border-color:#e2beb1;background:#FBEDE7;color:var(--rose)}.status-card.fail strong{color:var(--rose)}
+  .readings{max-height:150px;overflow:auto;padding-right:2px}
+  .reading{display:grid;grid-template-columns:20px 1fr auto auto;align-items:center;gap:5px;padding:4px 1px;border-bottom:1px dashed var(--line-soft);font-size:11px}
+  .reading:last-child{border-bottom:0}.reading .num{color:var(--muted-soft)}.reading time{color:var(--muted)}.reading b{font-family:'Fraunces',serif;font-size:12px}
+  .empty{padding:5px;color:var(--muted-soft);font-size:11.5px;font-style:italic;text-align:center}
+  .summary{min-height:94px;padding:9px;border:1px solid var(--line);border-radius:10px;background:#F4EEE4;color:var(--muted);font-size:11.5px;line-height:1.5}
+  .summary strong{display:block;margin-bottom:4px;font-size:13px}.summary.pass{border-color:#c8d8b8;background:#EFF3E7;color:var(--accent-deep)}.summary.fail{border-color:#e2beb1;background:#FBEDE7;color:var(--rose)}
+
+  .actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:16px}
+  .btn{min-height:42px;padding:9px 17px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
+  .btn.primary{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}.btn.danger{color:var(--rose)}
+  .note{max-width:920px;margin:13px auto 0;color:var(--muted);font-size:11.5px;line-height:1.6;text-align:center}
+  footer{margin-top:18px;color:var(--muted-soft);font-size:10.5px;letter-spacing:.24em;text-align:center;text-transform:uppercase}
+  #importFile{display:none}
+
+  @media(max-width:980px){body{min-width:700px;padding-inline:12px}.matrix col.label-col{width:185px}.matrix{min-width:850px}}
+  @media print{
+    @page{size:A4 landscape;margin:7mm}
+    body{min-width:0;padding:0;background:#fff;font-size:8px}
+    .sheet{width:100%;max-width:none}.topbar,header .guide-link,.toolbar,.actions,.note,.tools-bottom-nav,.site-footer{display:none!important}
+    header{margin-bottom:5mm}header .eyebrow,header .sub{display:none}h1{font-size:20px}
+    .matrix-wrap{overflow:visible;border:1px solid #888;border-radius:0;box-shadow:none}
+    .matrix{min-width:0;table-layout:fixed}.matrix col.label-col{width:38mm}
+    .matrix thead th,.row-label,.section-row th{position:static}
+    .matrix th,.matrix td{padding:3px 4px!important;border-color:#999!important;font-size:7.5px!important}
+    .matrix input,.matrix select,.matrix textarea{padding:2px 3px!important;border:0!important;border-bottom:1px solid #bbb!important;border-radius:0!important;background:#fff!important;font-size:7.5px!important}
+    .matrix textarea{min-height:14mm;resize:none}.batch-head input{font-size:9px!important}
+    .event-btn,.mini-btn,.undo-btn,.del-reading{display:none!important}.event-time{margin:0;font-size:7.5px}.status-card,.criteria,.summary{min-height:0;padding:3px!important;border:1px solid #999!important;background:#fff!important;color:#111!important;font-size:7px!important}.status-card strong,.summary strong{font-size:8px}
+    .readings{max-height:none}.reading{grid-template-columns:13px 1fr auto;padding:1px 0;font-size:6.8px}.reading .del-reading{display:none}.input-action input{display:none}.input-action{display:block}.input-action::after{content:'บันทึกตามรายการด้านล่าง';color:#555;font-size:6.8px}
+    footer{display:block;margin-top:3mm;color:#333;letter-spacing:.15em}
+  }
+</style>
+<script src="tools-shell.js?v=072626A" defer></script>
+</head>
+<body>
+<main class="sheet">
+  <div class="topbar"><a class="back-link" href="index.html">← กลับหน้าหลัก</a></div>
+  <header>
+    <div class="eyebrow">Miss Icecream · Online Tools</div>
+    <h1>Heat Process <em>Log ×5</em></h1>
+    <p class="sub">บันทึกการให้ความร้อนพร้อมกัน 1–5 Batch · แต่ละ Batch อยู่ในคอลัมน์เดียว กรอกไล่ลงมาตามแถว · ออกแบบสำหรับจอ notebook</p>
+    <a class="guide-link" href="Heat-Log-5Batch-guide.html">📖 คู่มือการใช้งาน</a>
+  </header>
+
+  <section class="toolbar" aria-label="ตั้งค่าจำนวน Batch">
+    <span class="toolbar-title">จำนวน Batch ที่ต้องใช้</span>
+    <div class="count-buttons" id="countButtons"></div>
+    <span class="toolbar-note">เลือก 1–5 ได้ตามงานจริง คอลัมน์ที่ซ่อนจะเก็บข้อมูลเดิมไว้และไม่รวมในเอกสารพิมพ์</span>
+    <span class="save-status" id="saveStatus">บันทึกอัตโนมัติแล้ว</span>
+  </section>
+
+  <div class="matrix-wrap">
+    <table class="matrix" id="matrix" aria-label="แบบบันทึกการให้ความร้อน 1 ถึง 5 Batch">
+      <colgroup id="colgroup"></colgroup>
+      <thead id="matrixHead"></thead>
+      <tbody id="matrixBody"></tbody>
+    </table>
+  </div>
+
+  <div class="actions">
+    <button class="btn primary" type="button" onclick="window.print()">🖨 พิมพ์ / บันทึก PDF แนวนอน</button>
+    <button class="btn" type="button" onclick="exportJSON()">⬇ ดาวน์โหลดข้อมูล JSON</button>
+    <button class="btn" type="button" onclick="document.getElementById('importFile').click()">⬆ นำเข้าข้อมูล JSON</button>
+    <button class="btn danger" type="button" onclick="resetAll()">เริ่มใหม่ (ล้างทั้ง 5 Batch)</button>
+    <input id="importFile" type="file" accept="application/json,.json">
+  </div>
+  <p class="note">ข้อมูลบันทึกอัตโนมัติในเบราว์เซอร์ของเครื่องนี้และไม่ถูกส่งออกไปที่อื่น · การใช้เพียง 1–4 Batch ไม่ถือว่าข้อมูลไม่ครบ · ผลผ่าน/ไม่ผ่านคำนวณจากค่าที่บันทึกและนาฬิกาของเครื่อง ไม่แทนเครื่องวัดที่สอบเทียบหรือการตรวจรับรองอย่างเป็นทางการ</p>
+  <footer>Miss Icecream</footer>
+</main>
+
+<script>
+const PROGRAMS=[
+  {cat:'ผลิตเพื่อทำขาย',k:'mixAll',label:'พาสเจอไรซ์มิกซ์ไอศกรีมทั้งหมด',temp:68.5,time:30},
+  {cat:'LTLT · วัตถุดิบเสี่ยง',k:'rawMilk',label:'นมดิบ',temp:63,time:30},
+  {cat:'LTLT · วัตถุดิบเสี่ยง',k:'rawCream',label:'ครีมดิบ',temp:70,time:30},
+  {cat:'LTLT · วัตถุดิบเสี่ยง',k:'coconutLong',label:'กะทิคั้นสด',temp:70,time:30},
+  {cat:'LTLT · วัตถุดิบเสี่ยง',k:'nutMilk',label:'นมพืชจากนัท',temp:70,time:30},
+  {cat:'LTLT · วัตถุดิบเสี่ยง',k:'eggYolkLong',label:'ไข่แดง (LTLT ไม่ทำคัสตาร์ด)',temp:63,time:30},
+  {cat:'ความร้อนสูง · เวลาสั้น',k:'freshFruit',label:'ผลไม้สด',temp:70,tempHi:75,time:2},
+  {cat:'ความร้อนสูง · เวลาสั้น',k:'coconut',label:'กะทิคั้นสด',temp:80,time:2},
+  {cat:'ความร้อนสูง · เวลาสั้น',k:'mixShort',label:'ให้ความร้อนกับมิกซ์ทั้งหมด',temp:80,time:2},
+  {cat:'คัสตาร์ด',k:'custard',label:'ไข่แดงแบบทำคัสตาร์ด',temp:82,ceiling:85,noTimer:true},
+  {cat:'กำหนดเอง',k:'custom',label:'กำหนดอุณหภูมิและเวลาเอง',custom:true}
+];
+const MAX_BATCHES=5;
+const STORE_KEY='heat_log_5batch_v1';
+const LEGACY_STORE_KEY='heat_log_4batch_v1';
+const todayISO=()=>{const d=new Date(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return d.getFullYear()+'-'+m+'-'+day};
+const freshBatch=i=>({batchName:'Batch '+(i+1),date:todayISO(),product:'',lot:'',productionKg:'',recorder:'',program:'',ctemp:'',ctime:'',readings:[],endHold:null,startCool:null,coolStartTemp:'',reachCool:null,note:''});
+const freshStore=()=>({version:2,batchCount:MAX_BATCHES,batches:Array.from({length:MAX_BATCHES},(_,i)=>freshBatch(i))});
+let store=loadStore();
+let saveFlashTimer=null;
+
+function normalizeBatch(base,raw){
+  const merged=Object.assign(base,raw&&typeof raw==='object'?raw:{});
+  merged.readings=Array.isArray(merged.readings)?merged.readings.filter(r=>r&&Number.isFinite(Number(r.t))&&Number.isFinite(Number(r.temp))).map(r=>({t:Number(r.t),temp:Number(r.temp)})):[];
+  ['endHold','startCool','reachCool'].forEach(k=>merged[k]=merged[k]!=null&&Number.isFinite(Number(merged[k]))?Number(merged[k]):null);
+  return merged;
+}
+function loadStore(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY)||localStorage.getItem(LEGACY_STORE_KEY),parsed=raw&&JSON.parse(raw);
+    if(parsed&&Array.isArray(parsed.batches)){
+      const out=freshStore();
+      out.batchCount=Math.max(1,Math.min(MAX_BATCHES,Number(parsed.batchCount)||MAX_BATCHES));
+      out.batches=out.batches.map((base,i)=>normalizeBatch(base,parsed.batches[i]));
+      return out;
+    }
+  }catch(e){}
+  return freshStore();
+}
+function persist(){
+  localStorage.setItem(STORE_KEY,JSON.stringify(store));
+  const el=document.getElementById('saveStatus');
+  if(el){el.textContent='กำลังบันทึก…';clearTimeout(saveFlashTimer);saveFlashTimer=setTimeout(()=>el.textContent='บันทึกอัตโนมัติแล้ว',350);}
+}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtTime(ts){return ts?new Intl.DateTimeFormat('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date(ts)):'—'}
+function fmtDuration(ms){if(ms==null||ms<0)return '—';const s=Math.round(ms/1000),m=Math.floor(s/60);return m+':'+String(s%60).padStart(2,'0')+' นาที'}
+function hasData(b){return Boolean(b.product||b.lot||b.productionKg||b.recorder||b.program||b.readings.length||b.endHold||b.startCool||b.reachCool||b.note)}
+function criterion(b){
+  const p=PROGRAMS.find(x=>x.k===b.program);
+  if(!p)return null;
+  if(!p.custom)return p;
+  const temp=parseFloat(b.ctemp),time=parseFloat(b.ctime);
+  return Object.assign({},p,{temp,time});
+}
+function criterionText(b){
+  const c=criterion(b);
+  if(!c)return '<div class="criteria none">ยังไม่ได้เลือกโปรแกรม</div>';
+  if(c.noTimer)return '<div class="criteria">เป้า 82 °C · เพดาน 85 °C<br>ไม่จับเวลา · สังเกตเนื้อ nappe</div>';
+  if(!Number.isFinite(c.temp)||!Number.isFinite(c.time))return '<div class="criteria none">กรอกอุณหภูมิและเวลาให้ครบ</div>';
+  const range=c.tempHi?'–'+c.tempHi:'';
+  return '<div class="criteria">คงอุณหภูมิ ≥ '+esc(c.temp)+range+' °C<br>ต่อเนื่อง ≥ '+esc(c.time)+' นาที</div>';
+}
+function reachTime(b,c){
+  if(!c||!Number.isFinite(c.temp))return null;
+  let start=null;
+  [...b.readings].sort((a,z)=>a.t-z.t).forEach(r=>{if(Number(r.temp)>=c.temp){if(start==null)start=r.t}else start=null});
+  return start;
+}
+function batchState(b){if(b.reachCool)return'done';if(b.readings.length||b.endHold||b.startCool)return'working';return''}
+function input(i,field,type='text',extra=''){
+  const b=store.batches[i],value=esc(b[field]);
+  return '<input type="'+type+'" value="'+value+'" data-batch="'+i+'" data-field="'+field+'" '+extra+'>';
+}
+function optionsHTML(selected){
+  let html='<option value="">เลือกโปรแกรม…</option>',last='';
+  PROGRAMS.forEach(p=>{if(p.cat!==last){if(last)html+='</optgroup>';html+='<optgroup label="'+esc(p.cat)+'">';last=p.cat}html+='<option value="'+p.k+'"'+(p.k===selected?' selected':'')+'>'+esc(p.label)+'</option>'});
+  return html+'</optgroup>';
+}
+function cell(i,kind){
+  const b=store.batches[i],c=criterion(b);
+  if(kind==='date')return input(i,'date','date');
+  if(kind==='product')return input(i,'product','text','placeholder="เบส-รสชาติ / รหัส"');
+  if(kind==='lot')return input(i,'lot','text','placeholder="เช่น 260726-1"');
+  if(kind==='productionKg')return input(i,'productionKg','number','min="0" step="0.01" placeholder="kg"');
+  if(kind==='recorder')return input(i,'recorder','text','placeholder="ชื่อผู้บันทึก"');
+  if(kind==='program')return '<select data-batch="'+i+'" data-field="program">'+optionsHTML(b.program)+'</select>';
+  if(kind==='custom')return c&&c.custom?'<div class="pair">'+input(i,'ctemp','number','step="0.1" placeholder="°C" aria-label="อุณหภูมิที่กำหนดเอง"')+input(i,'ctime','number','step="0.1" min="0" placeholder="นาที" aria-label="เวลาที่กำหนดเอง"')+'</div>':'<div class="empty">ใช้เกณฑ์ของโปรแกรม</div>';
+  if(kind==='criterion')return criterionText(b);
+  if(kind==='status')return '<div class="status-card" data-status="'+i+'"></div>';
+  if(kind==='addTemp')return '<div class="input-action"><input type="number" step="0.1" inputmode="decimal" placeholder="อุณหภูมิ °C" data-temp-input="'+i+'"><button class="mini-btn" type="button" data-action="addTemp" data-batch="'+i+'">＋ บันทึก</button></div>';
+  if(kind==='readings'){
+    if(!b.readings.length)return '<div class="empty">ยังไม่มีข้อมูลอุณหภูมิ</div>';
+    const newestFirst=b.readings.map((r,index)=>({r,index})).reverse();
+    return '<div class="readings">'+newestFirst.map(({r,index})=>'<div class="reading"><span class="num">'+(index+1)+'</span><time>'+fmtTime(r.t)+'</time><b>'+esc(r.temp)+' °C</b><button class="del-reading" type="button" title="ลบรายการนี้" data-action="deleteReading" data-batch="'+i+'" data-index="'+index+'">ลบ</button></div>').join('')+'</div>';
+  }
+  if(kind==='endHeat')return eventControl(i,'endHold','⏹ จบการให้ความร้อน','finish',!b.readings.length);
+  if(kind==='startCool')return eventControl(i,'startCool','▶ เริ่มลดความร้อน','cool',!b.endHold);
+  if(kind==='coolTemp')return input(i,'coolStartTemp','number','step="0.1" placeholder="ไม่บังคับ · °C"');
+  if(kind==='reachCool')return eventControl(i,'reachCool','⏹ ถึง ≤4 °C','cool',!b.startCool);
+  if(kind==='summary')return summaryHTML(b);
+  if(kind==='note')return '<textarea data-batch="'+i+'" data-field="note" placeholder="เหตุการณ์ผิดปกติ / สิ่งที่ต้องปรับ">'+esc(b.note)+'</textarea>';
+  return '';
+}
+function eventControl(i,field,label,tone,disabled){
+  const b=store.batches[i],done=b[field];
+  return '<button class="event-btn '+tone+'" type="button" data-action="'+field+'" data-batch="'+i+'" '+(done||disabled?'disabled':'')+'>'+label+'</button><span class="event-time">'+(done?'✓ '+fmtTime(done):'ยังไม่บันทึก')+'</span>'+(done?'<button class="undo-btn" type="button" data-action="undoEvent" data-event="'+field+'" data-batch="'+i+'">ยกเลิก / บันทึกใหม่</button>':'');
+}
+function summaryHTML(b){
+  const c=criterion(b),rt=reachTime(b,c);
+  if(!c)return '<div class="summary"><strong>รอข้อมูล</strong>เลือกโปรแกรมก่อนเริ่มบันทึก</div>';
+  if(c.custom&&(!Number.isFinite(c.temp)||!Number.isFinite(c.time)))return '<div class="summary"><strong>รอเกณฑ์</strong>กรอกอุณหภูมิและเวลาให้ครบ</div>';
+  const cool=b.startCool&&b.reachCool?b.reachCool-b.startCool:null;
+  if(c.noTimer){
+    if(!b.readings.length)return '<div class="summary"><strong>รอข้อมูล</strong>บันทึกอุณหภูมิระหว่างทำคัสตาร์ด</div>';
+    const mx=Math.max(...b.readings.map(r=>Number(r.temp)));
+    const cls=mx>c.ceiling?'fail':(mx>=c.temp?'pass':'');
+    const title=mx>c.ceiling?'⚠ เกินเพดาน 85 °C':(mx>=c.temp?'✓ ถึงเป้า 82 °C':'ยังไม่ถึงเป้า');
+    return '<div class="summary '+cls+'"><strong>'+title+'</strong>สูงสุด '+mx+' °C'+(cool!=null?'<br>ลดถึง ≤4 °C ใช้ '+fmtDuration(cool):'')+'</div>';
+  }
+  if(b.endHold&&!rt){
+    const mx=b.readings.length?Math.max(...b.readings.map(r=>Number(r.temp))):null;
+    const reason=mx!=null&&mx>=c.temp?'มีค่าอุณหภูมิต่ำกว่า '+c.temp+' °C หลังจากถึงเกณฑ์ จึงต้องเริ่มจับเวลาใหม่':'อุณหภูมิที่บันทึกยังไม่ถึงเกณฑ์ ≥ '+c.temp+' °C';
+    return '<div class="summary fail"><strong>✗ ไม่ผ่านเกณฑ์</strong>'+reason+(cool!=null?'<br>ลดถึง ≤4 °C ใช้ '+fmtDuration(cool):'')+'</div>';
+  }
+  if(!b.endHold)return '<div class="summary"><strong>รอผล</strong>'+(rt?'ถึงเกณฑ์แล้ว · กดจบเมื่อครบเวลา':'ยังไม่ถึงเกณฑ์อุณหภูมิ')+'</div>';
+  const hold=b.endHold-rt,timeOk=hold>=c.time*60000,orderOk=hold>=0,pass=timeOk&&orderOk;
+  return '<div class="summary '+(pass?'pass':'fail')+'"><strong>'+(pass?'✓ ผ่านเกณฑ์การให้ความร้อน':'✗ ไม่ผ่านเกณฑ์')+'</strong>คงอุณหภูมิ '+fmtDuration(hold)+' / '+c.time+' นาที'+(cool!=null?'<br>ลดถึง ≤4 °C ใช้ '+fmtDuration(cool):'')+'</div>';
+}
+function statusHTML(b){
+  const c=criterion(b),rt=reachTime(b,c),last=b.readings[b.readings.length-1];
+  if(!c)return{cls:'',html:'<strong>พร้อมตั้งค่า</strong>เลือกโปรแกรมการให้ความร้อน'};
+  if(c.custom&&(!Number.isFinite(c.temp)||!Number.isFinite(c.time)))return{cls:'',html:'<strong>รอเกณฑ์</strong>กรอก °C และนาที'};
+  if(b.reachCool)return{cls:'ok',html:'<strong>✓ จบกระบวนการ</strong>ถึง ≤4 °C เวลา '+fmtTime(b.reachCool)};
+  if(b.startCool)return{cls:'heat',html:'<strong>❄ กำลังลดความร้อน</strong>เริ่ม '+fmtTime(b.startCool)+' · กดเมื่อถึง ≤4 °C'};
+  if(b.endHold)return{cls:'ok',html:'<strong>✓ จบการให้ความร้อน</strong>'+fmtTime(b.endHold)+' · เริ่มลดความร้อนได้'};
+  if(c.noTimer){
+    if(!last)return{cls:'',html:'<strong>พร้อมเริ่มคัสตาร์ด</strong>บันทึกอุณหภูมิเป็นระยะ'};
+    const mx=Math.max(...b.readings.map(r=>Number(r.temp)));
+    return{cls:mx>85?'fail':'heat',html:'<strong>สูงสุด '+mx+' °C</strong>'+(mx>=82?'ถึงเป้าแล้ว · สังเกตเนื้อ nappe':'บันทึกต่อถึงเป้า 82 °C')};
+  }
+  if(!last)return{cls:'',html:'<strong>พร้อมเริ่ม</strong>ค่าแรกที่บันทึก = เวลาเริ่มต้ม'};
+  if(!rt)return{cls:'heat',html:'<strong>ล่าสุด '+last.temp+' °C</strong>บันทึกต่อจนถึง ≥ '+c.temp+' °C'};
+  const elapsed=Date.now()-rt,remain=c.time*60000-elapsed;
+  return remain>0?{cls:'heat',html:'<strong>คงอุณหภูมิ '+fmtDuration(elapsed)+'</strong>เหลืออย่างน้อย '+fmtDuration(remain)+' · ห้ามต่ำกว่า '+c.temp+' °C'}:{cls:'ok',html:'<strong>✓ ครบเวลาขั้นต่ำแล้ว</strong>กด “จบการให้ความร้อน” ได้'};
+}
+const ROWS=[
+  {section:'1 · ข้อมูล Batch',hint:'กรอกเฉพาะ Batch ที่ใช้งานจริง'},
+  {label:'วันที่',kind:'date'},{label:'ผลิตภัณฑ์',hint:'เบส–รสชาติ หรือรหัสผลิตภัณฑ์',kind:'product'},{label:'Lot การผลิต',kind:'lot'},{label:'ปริมาณการผลิต (kg)',kind:'productionKg'},{label:'ผู้บันทึก',kind:'recorder'},
+  {section:'2 · โปรแกรมการให้ความร้อน',hint:'แต่ละ Batch เลือกคนละโปรแกรมได้'},
+  {label:'โปรแกรม',kind:'program'},{label:'กำหนดเอง',hint:'แถวนี้ใช้เมื่อเลือก “กำหนดเอง”',kind:'custom'},{label:'เกณฑ์',kind:'criterion'},
+  {section:'3 · บันทึกการให้ความร้อน',hint:'นาฬิกาของแต่ละ Batch ทำงานแยกกัน'},
+  {label:'สถานะปัจจุบัน',kind:'status'},{label:'บันทึกอุณหภูมิ',hint:'ระบบลงเวลาให้อัตโนมัติ',kind:'addTemp'},{label:'รายการอุณหภูมิ–เวลา',kind:'readings'},{label:'จบการให้ความร้อน',kind:'endHeat'},
+  {section:'4 · บันทึกการลดความร้อน',hint:'เริ่มได้หลังจบการให้ความร้อน'},
+  {label:'เริ่มลดความร้อน',kind:'startCool'},{label:'อุณหภูมิตอนเริ่มลด',hint:'ไม่บังคับ',kind:'coolTemp'},{label:'ถึง ≤4 °C',kind:'reachCool'},
+  {section:'5 · สรุปและหมายเหตุ',hint:'ผลคำนวณแยกตาม Batch'},
+  {label:'สรุปผล',kind:'summary'},{label:'บันทึกเพิ่มเติม',hint:'ไม่บังคับ',kind:'note'}
+];
+function render(){
+  document.getElementById('countButtons').innerHTML=Array.from({length:MAX_BATCHES},(_,i)=>i+1).map(n=>'<button class="count-btn '+(n===store.batchCount?'active':'')+'" type="button" data-count="'+n+'" aria-pressed="'+(n===store.batchCount)+'">'+n+'</button>').join('');
+  document.getElementById('colgroup').innerHTML='<col class="label-col">'+Array.from({length:store.batchCount},()=>'<col>').join('');
+  document.getElementById('matrixHead').innerHTML='<tr><th class="corner">รายการที่ต้องบันทึก ↓</th>'+store.batches.slice(0,store.batchCount).map((b,i)=>'<th scope="col"><div class="batch-head"><span class="batch-dot '+batchState(b)+'"></span><input aria-label="ชื่อ Batch '+(i+1)+'" value="'+esc(b.batchName)+'" data-batch="'+i+'" data-field="batchName"></div></th>').join('')+'</tr>';
+  document.getElementById('matrixBody').innerHTML=ROWS.map(r=>{
+    if(r.section)return '<tr class="section-row"><th scope="row">'+esc(r.section)+'</th>'+Array.from({length:store.batchCount},()=>'<td>'+esc(r.hint||'')+'</td>').join('')+'</tr>';
+    return '<tr><th class="row-label" scope="row">'+esc(r.label)+(r.hint?'<small>'+esc(r.hint)+'</small>':'')+'</th>'+store.batches.slice(0,store.batchCount).map((_,i)=>'<td>'+cell(i,r.kind)+'</td>').join('')+'</tr>';
+  }).join('');
+  updateStatuses();
+}
+function updateStatuses(){
+  document.querySelectorAll('[data-status]').forEach(el=>{const s=statusHTML(store.batches[Number(el.dataset.status)]);el.className='status-card '+s.cls;el.innerHTML=s.html});
+}
+function setCount(n){store.batchCount=Math.max(1,Math.min(MAX_BATCHES,n));persist();render()}
+function addTemp(i){
+  const el=document.querySelector('[data-temp-input="'+i+'"]'),value=parseFloat(el&&el.value);
+  if(!store.batches[i].program){alert('กรุณาเลือกโปรแกรมของ '+store.batches[i].batchName+' ก่อนค่ะ');return}
+  if(!Number.isFinite(value)||value<-30||value>150){alert('กรุณากรอกอุณหภูมิที่อ่านได้ให้ถูกต้องค่ะ');return}
+  store.batches[i].readings.push({t:Date.now(),temp:Math.round(value*10)/10});persist();render();
+}
+function logEvent(i,field){
+  const b=store.batches[i];
+  if(field==='endHold'&&!b.readings.length){alert('กรุณาบันทึกอุณหภูมิอย่างน้อย 1 จุดก่อนค่ะ');return}
+  if(field==='startCool'&&!b.endHold){alert('กรุณาจบการให้ความร้อนก่อนค่ะ');return}
+  if(field==='reachCool'&&!b.startCool){alert('กรุณาบันทึกเวลาเริ่มลดความร้อนก่อนค่ะ');return}
+  b[field]=Date.now();persist();render();
+}
+document.addEventListener('input',e=>{
+  const el=e.target;if(!el.dataset||el.dataset.field==null)return;
+  const i=Number(el.dataset.batch),field=el.dataset.field;if(!store.batches[i])return;
+  store.batches[i][field]=el.value;persist();
+});
+document.addEventListener('change',e=>{
+  const el=e.target;if(el.id==='importFile')return importJSON(el.files&&el.files[0]);
+  if(!el.dataset||el.dataset.field==null)return;
+  const i=Number(el.dataset.batch),field=el.dataset.field;store.batches[i][field]=el.value;persist();
+  if(field==='program'||field==='ctemp'||field==='ctime')render();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-temp-input]')){e.preventDefault();addTemp(Number(e.target.dataset.tempInput))}});
+document.addEventListener('click',e=>{
+  const count=e.target.closest('[data-count]');if(count)return setCount(Number(count.dataset.count));
+  const btn=e.target.closest('[data-action]');if(!btn)return;
+  const i=Number(btn.dataset.batch),action=btn.dataset.action;
+  if(action==='addTemp')return addTemp(i);
+  if(action==='deleteReading'){store.batches[i].readings.splice(Number(btn.dataset.index),1);persist();return render()}
+  if(action==='undoEvent'){store.batches[i][btn.dataset.event]=null;if(btn.dataset.event==='endHold'){store.batches[i].startCool=null;store.batches[i].reachCool=null}if(btn.dataset.event==='startCool')store.batches[i].reachCool=null;persist();return render()}
+  if(['endHold','startCool','reachCool'].includes(action))logEvent(i,action);
+});
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='Heat-Log-5Batch-'+todayISO()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function importJSON(file){
+  if(!file)return;
+  try{
+    const parsed=JSON.parse(await file.text());
+    if(!parsed||!Array.isArray(parsed.batches))throw new Error('รูปแบบไม่ถูกต้อง');
+    const next=freshStore();next.batchCount=Math.max(1,Math.min(MAX_BATCHES,Number(parsed.batchCount)||MAX_BATCHES));next.batches=next.batches.map((base,i)=>normalizeBatch(base,parsed.batches[i]));store=next;persist();render();
+  }catch(e){alert('นำเข้าข้อมูลไม่สำเร็จ: '+e.message)}
+  finally{document.getElementById('importFile').value=''}
+}
+function resetAll(){if(confirm('ล้างข้อมูลทั้ง 5 Batch และเริ่มใหม่ใช่ไหมคะ?')){store=freshStore();persist();render()}}
+render();setInterval(updateStatuses,1000);
+</script>
+<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--muted);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
+</body>
+</html>
