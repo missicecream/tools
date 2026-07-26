@@ -8,7 +8,7 @@
     'Heat-Log-5Batch.html': 'Heat-Log-5Batch-guide.html?v=072626A',
     'Churning.html': 'Churning-guide.html?v=072126H',
     'Overrun-Test.html': 'Overrun-Test-guide.html?v=072126H',
-    'Meltdown-Test.html': 'Meltdown-Test-guide.html?v=072126F'
+    'Meltdown-Test.html': 'Meltdown-Test-guide.html?v=072626B'
   };
 
   function makeHomeLink() {
