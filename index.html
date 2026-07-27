@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#F4ECE0">
-<meta name="description" content="เครื่องมือออนไลน์สำหรับลูกศิษย์มิสไอศกรีม ครอบคลุมการเรียน การผลิต และบันทึกผล">
+<meta name="description" content="เครื่องมือออนไลน์สำหรับลูกศิษย์มิสไอศกรีม ครอบคลุมการเรียน การผลิต บันทึกผล และการทดสอบชิม">
 <title>Miss Icecream’s Online Tools · เครื่องมือออนไลน์</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,12 @@
   .category-title{font-family:'Fraunces',serif;font-size:23px;font-weight:500;color:var(--ink)}
   .category-title span{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:var(--muted);margin-left:8px}
   .category-num{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted-soft)}
+  .tool-subgroup{margin-top:15px}
+  .tool-subgroup:first-of-type{margin-top:0}
+  .subgroup-head{margin:0 4px 9px;padding:11px 13px;border:1px solid #d7dfc7;border-radius:14px;background:var(--accent-soft)}
+  .subgroup-title{font-family:'Fraunces','Sarabun',serif;font-size:18px;font-weight:600;color:var(--accent-deep)}
+  .subgroup-title span{font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);margin-left:6px}
+  .subgroup-note{margin-top:3px;color:var(--muted);font-size:11.5px;line-height:1.55}
   .tools{display:grid;gap:11px}
   .tool-card{display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:14px;min-height:96px;padding:18px 19px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
   .tool-card:hover{transform:translateY(-2px);border-color:#9aaa78;box-shadow:0 14px 34px -24px rgba(43,31,21,.45)}
@@ -99,6 +105,7 @@
         <button class="filter-btn" type="button" data-filter="formula" aria-pressed="false">ปรับสูตร</button>
         <button class="filter-btn" type="button" data-filter="production" aria-pressed="false">การผลิต</button>
         <button class="filter-btn" type="button" data-filter="records" aria-pressed="false">บันทึกผล</button>
+        <button class="filter-btn" type="button" data-filter="sensory" aria-pressed="false">ทดสอบชิม</button>
       </div>
       <p class="sr-only" id="category-filter-status" aria-live="polite"></p>
     </nav>
@@ -133,6 +140,26 @@
         <a class="tool-card" href="Churning.html"><span class="tool-icon" aria-hidden="true">%</span><span><span class="tool-title">Overrun <em>Calculator</em></span><span class="tool-desc">คำนวณ %Overrun อย่างง่าย พร้อมทางเลือกบันทึกการทดลองอย่างละเอียด</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
         <a class="tool-card" href="Overrun-Test.html"><span class="tool-icon" aria-hidden="true">%×</span><span><span class="tool-title">Overrun <em>Experiment</em></span><span class="tool-desc">บันทึกการทดลองวัด %Overrun อย่างละเอียด รองรับการบันทึกหลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
         <a class="tool-card" href="Meltdown-Test.html"><span class="tool-icon" aria-hidden="true">◒×5</span><span><span class="tool-title">Meltdown <em>Test ×5</em></span><span class="tool-desc">บันทึกการละลายพร้อมกัน 1–5 Batch ในตารางแนวกว้าง พร้อมนาฬิกาและกราฟแยกกัน</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="category" data-category="sensory" aria-labelledby="cat-sensory">
+      <div class="category-head"><h2 class="category-title" id="cat-sensory">Sensory Evaluation <span>การทดสอบชิม</span></h2><span class="category-num">05</span></div>
+
+      <div class="tool-subgroup" aria-labelledby="sensory-internal">
+        <div class="subgroup-head"><h3 class="subgroup-title" id="sensory-internal">Internal Sensory Review <span>คณะผู้ชิมภายใน</span></h3><p class="subgroup-note">สำหรับทีมร้านหรือทีมพัฒนาผลิตภัณฑ์ที่มีประสบการณ์และผ่านการฝึกเบื้องต้น ใช้บรรยายคุณลักษณะ เทียบเป้าหมาย และค้นหาข้อบกพร่อง</p></div>
+        <div class="tools">
+          <a class="tool-card" href="Sensory-Internal-Review.html"><span class="tool-icon" aria-hidden="true">◉</span><span><span class="tool-title">Internal Sensory <em>Review</em></span><span class="tool-desc">สร้างแบบประเมินสำหรับคณะผู้ชิมภายใน พร้อมคลังคำถาม คู่มือการฝึก รหัสสุ่ม ลำดับถ่วงดุล ใบจัดเตรียม และฉลากติดถ้วย</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="tool-subgroup" aria-labelledby="sensory-consumer">
+        <div class="subgroup-head"><h3 class="subgroup-title" id="sensory-consumer">Consumer Panel <span>ผู้ชิมกลุ่มผู้บริโภค</span></h3><p class="subgroup-note">สำหรับตอบคำถามด้านการยอมรับ ความแตกต่างที่รับรู้ และตัวเลือกที่ผู้บริโภคชอบ โดยเลือกแบบทดสอบให้ตรงวัตถุประสงค์</p></div>
+        <div class="tools">
+          <a class="tool-card" href="Sensory-Acceptance.html"><span class="tool-icon" aria-hidden="true">♡</span><span><span class="tool-title">ชอบไหม · Consumer <em>Acceptance</em></span><span class="tool-desc">วัดความชอบต่อไอศกรีมและคุณลักษณะต่าง ๆ ด้วยคะแนน พร้อมคำถามความพอดี แนวโน้มซื้อ และคำตอบปลายเปิด</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          <a class="tool-card" href="Sensory-Triangle-Test.html"><span class="tool-icon" aria-hidden="true">△</span><span><span class="tool-title">ต่างกันไหม · <em>Triangle Test</em></span><span class="tool-desc">ตรวจว่าผู้ชิมรับรู้ความแตกต่างระหว่างผลิตภัณฑ์สองชนิดได้หรือไม่ โดยชิมตัวอย่างปกปิดสามถ้วย</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          <a class="tool-card" href="Sensory-Preference-Ranking.html"><span class="tool-icon" aria-hidden="true">⇅</span><span><span class="tool-title">อันไหนดีกว่า · Preference <em>Ranking</em></span><span class="tool-desc">เปรียบเทียบ 2–5 ตัวอย่างในประเด็นที่กำหนด เพื่อเรียงลำดับว่าผู้บริโภคชอบตัวอย่างใดมากกว่า</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 
