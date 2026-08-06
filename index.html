@@ -8,198 +8,307 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#F4ECE0">
-<meta name="description" content="เครื่องมือออนไลน์สำหรับลูกศิษย์มิสไอศกรีม ครอบคลุมการเรียน การผลิต บันทึกผล และแบบประเมินการทดสอบชิม">
-<title>Miss Icecream’s Online Tools · เครื่องมือออนไลน์</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F6F1E7">
+<meta name="description" content="เครื่องมือออนไลน์สำหรับวางแผน บันทึก และทดสอบการผลิตไอศกรีม">
+<title>Miss Ice Cream · เครื่องมือออนไลน์</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tools-theme.css?v=072026C">
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{min-height:100vh;padding:42px 18px 48px;background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 15% 4%,rgba(220,229,200,.52) 0%,transparent 38%),radial-gradient(circle at 88% 95%,rgba(201,120,98,.09) 0%,transparent 40%)}
-  .container{max-width:780px;margin:0 auto}
-  header{text-align:center;margin-bottom:32px}
-  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
-  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(37px,7vw,58px);line-height:1.02;letter-spacing:-.03em;margin-bottom:12px}
-  h1 em{font-style:italic;color:var(--accent-deep);font-weight:400}
-  .subtitle{color:var(--muted);font-size:15px;max-width:560px;margin:0 auto;line-height:1.75}
-  .category-filter-wrap{position:sticky;top:8px;z-index:20;margin:0 0 30px;padding:8px;border:1px solid rgba(210,198,181,.9);border-radius:18px;background:rgba(244,236,224,.94);box-shadow:0 10px 28px -24px rgba(43,31,21,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-  .category-filter{display:flex;justify-content:center;gap:8px;overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none;scroll-snap-type:x proximity}
-  .category-filter::-webkit-scrollbar{display:none}
-  .filter-btn{flex:0 0 auto;min-height:44px;padding:9px 17px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--muted);font:600 14px/1.25 'Sarabun',sans-serif;cursor:pointer;scroll-snap-align:center;transition:background .18s,border-color .18s,color .18s,box-shadow .18s,transform .18s}
-  .filter-btn:hover{border-color:#9aaa78;color:var(--accent-deep);transform:translateY(-1px)}
-  .filter-btn:focus-visible{outline:3px solid rgba(111,127,69,.25);outline-offset:2px}
-  .filter-btn.active{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff;box-shadow:0 7px 16px -11px rgba(54,69,25,.9)}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .category{margin:0 0 30px}
-  .category[hidden]{display:none!important}
-  .category-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 4px 11px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-  .category-title{font-family:'Fraunces',serif;font-size:23px;font-weight:500;color:var(--ink)}
-  .category-title span{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:var(--muted);margin-left:8px}
-  .category-num{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted-soft)}
-  .tool-subgroup{margin-top:15px}
-  .tool-subgroup:first-of-type{margin-top:0}
-  .subgroup-head{margin:0 4px 9px;padding:11px 13px;border:1px solid #d7dfc7;border-radius:14px;background:var(--accent-soft)}
-  .subgroup-title{font-family:'Fraunces','Sarabun',serif;font-size:18px;font-weight:600;color:var(--accent-deep)}
-  .subgroup-title span{font-family:'Sarabun',sans-serif;font-size:12.5px;font-weight:600;color:var(--muted);margin-left:6px}
-  .subgroup-note{margin-top:3px;color:var(--muted);font-size:11.5px;line-height:1.55}
-  .tools{display:grid;gap:11px}
-  .tool-card{display:grid;grid-template-columns:46px 1fr auto;align-items:center;gap:14px;min-height:96px;padding:18px 19px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
-  .tool-card:hover{transform:translateY(-2px);border-color:#9aaa78;box-shadow:0 14px 34px -24px rgba(43,31,21,.45)}
-  .tool-icon{display:grid;place-items:center;width:46px;height:46px;border:1px solid #d7dfc7;border-radius:14px;background:var(--accent-soft);font-size:21px}
-  .tool-title{display:block;font-family:'Fraunces',serif;font-size:21px;line-height:1.12;margin-bottom:5px}
-  .tool-title em{font-style:italic;color:var(--accent-deep)}
-  .tool-desc{display:block;font-size:13px;line-height:1.55;color:var(--muted)}
-  .tool-arrow{font-family:'Fraunces',serif;font-size:23px;color:var(--muted-soft)}
-  .coming{cursor:default;opacity:.82}
-  .coming:hover{transform:none;border-color:var(--line);box-shadow:var(--shadow)}
-  .coming .tool-icon{background:#f0eadf;border-color:var(--line)}
-  .badge{display:inline-flex;align-items:center;min-height:25px;margin-top:7px;padding:3px 9px;border-radius:999px;background:#f0eadf;border:1px solid var(--line);font-size:11.5px;font-weight:600;color:var(--rest-deep)}
-  .use-note{display:flex;gap:9px;align-items:flex-start;margin:2px 4px 30px;padding:12px 2px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px;line-height:1.65}
-  .use-note .icon{display:grid;flex:0 0 auto;place-items:center;width:20px;height:20px;margin-top:1px;border:1px solid var(--line);border-radius:50%;color:var(--accent-deep);font-family:'Fraunces',serif;font-size:12px;font-style:italic}
-  .resource-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:560px;margin:0 auto}
-  .resource-card a{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:50px;padding:11px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,250,242,.42);color:var(--muted);text-decoration:none;font-size:12.5px;font-weight:500;transition:transform .18s,border-color .18s,background .18s,color .18s}
-  .resource-card a:hover{transform:translateY(-1px);border-color:#b6c09c;background:rgba(255,250,242,.72);color:var(--accent-deep)}
-  .resource-card a:focus-visible{outline:3px solid rgba(111,127,69,.25);outline-offset:2px}
-  .resource-card a span:last-child{color:var(--accent-deep)}
-  .site-footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--muted);line-height:1.8}
-  .site-footer a{color:var(--accent-deep)}
-  @media(max-width:640px){
-    body{padding:28px 12px 38px}
-    header{margin-bottom:24px}
-    .subtitle{font-size:14px}
-    .category-filter-wrap{top:0;width:calc(100% + 24px);margin:0 -12px 26px;padding:8px 12px;border-right:0;border-left:0;border-radius:0}
-    .category-filter{max-width:none;margin:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity}
-    .filter-btn{min-height:38px;padding:7px 12px;font-size:13px}
-    .filter-btn:first-child{margin-left:auto}
-    .filter-btn:last-child{margin-right:auto}
-    .category{margin-bottom:26px}
-    .category-title{font-size:21px}
-    .tool-card{grid-template-columns:42px 1fr auto;gap:11px;min-height:92px;padding:15px 13px;border-radius:16px}
-    .tool-icon{width:42px;height:42px;border-radius:12px;font-size:19px}
-    .tool-title{font-size:19px}
-    .tool-desc{font-size:12.5px}
-    .resource-card{grid-template-columns:1fr}
+  :root{
+    --home-bg:#f6f1e7;
+    --home-surface:#fff;
+    --home-ink:#22281f;
+    --home-muted:#53604f;
+    --home-line:#c8d2c4;
+    --home-green:#2f5d3a;
+    --home-green-soft:#e7efe3;
+    --home-rose:#c7435d;
+    --home-dev:#6a4a3c;
+    --home-shadow:0 12px 30px -24px rgba(34,40,31,.5);
   }
-  @media(max-width:370px){
-    .tool-card{grid-template-columns:38px 1fr;align-items:start}
-    .tool-icon{width:38px;height:38px}
-    .tool-arrow{display:none}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-bottom:calc(128px + env(safe-area-inset-bottom))}
+  body{min-height:100vh;padding:0 14px calc(168px + env(safe-area-inset-bottom));background:var(--home-bg);color:var(--home-ink);font-family:'Sarabun',sans-serif;line-height:1.6;background-image:radial-gradient(circle at 10% 0%,rgba(231,239,227,.95),transparent 34%),radial-gradient(circle at 95% 40%,rgba(199,67,93,.045),transparent 30%)}
+  button,a{-webkit-tap-highlight-color:transparent}
+  button{font-family:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid rgba(47,93,58,.28);outline-offset:3px}
+  .home-container{width:min(100%,820px);margin:0 auto}
+  .home-hero{padding:30px 4px 25px;text-align:left}
+  .home-brand{margin-bottom:14px;color:var(--home-green);font-size:17px;font-weight:700;letter-spacing:.01em}
+  .home-brand span{font-weight:500}
+  .home-title{max-width:720px;color:var(--home-green);font-size:clamp(36px,9.2vw,64px);font-weight:700;line-height:1.12;letter-spacing:-.04em}
+  .home-title-online{display:inline-block;color:var(--home-rose);animation:online-arrive 1.05s cubic-bezier(.2,.72,.24,1) .16s backwards;transition:color .26s ease}
+  .home-title-online:hover{color:var(--home-green)}
+  .home-subtitle{max-width:650px;margin-top:13px;color:var(--home-ink);font-size:18px;font-weight:600;line-height:1.6}
+  .home-subtitle-byline{display:block;color:var(--home-green);font-size:15px;font-weight:600}
+
+  @keyframes online-arrive{
+    0%{opacity:.15;color:var(--home-green);transform:translateY(16px) scale(.96)}
+    48%{opacity:1;color:var(--home-green);transform:translateY(-2px) scale(1)}
+    100%{opacity:1;color:var(--home-rose);transform:translateY(0) scale(1)}
+  }
+
+  .start-section{margin-bottom:34px;scroll-margin-top:18px}
+  .start-heading{display:flex;align-items:center;gap:9px;margin:0 4px 13px;color:var(--home-rose);font-size:25px;font-weight:700}
+  .start-heading-mark{font-size:23px}
+  .start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .start-card{display:flex;min-height:190px;flex-direction:column;align-items:center;justify-content:space-between;padding:17px 9px 15px;border:1px solid rgba(200,210,196,.9);border-radius:18px;background:var(--home-surface);color:var(--home-green);text-align:center;text-decoration:none;box-shadow:0 12px 28px -22px rgba(34,40,31,.55);transition:transform .18s,border-color .18s,box-shadow .18s}
+  .start-card:hover{transform:translateY(-2px);border-color:#9bad98;box-shadow:0 18px 34px -24px rgba(34,40,31,.58)}
+  .start-icon{display:grid;width:64px;height:64px;place-items:center;border-radius:50%;background:#f6f5ef;color:var(--home-green);font-size:31px;font-weight:600}
+  .start-copy{display:block}
+  .start-title{display:block;font-size:21px;font-weight:700;line-height:1.25}
+  .start-desc{display:block;margin-top:3px;color:var(--home-muted);font-size:14px;font-weight:600;line-height:1.35}
+  .start-arrow{display:grid;width:44px;height:44px;place-items:center;border-radius:50%;background:var(--home-rose);color:#fff;font-size:25px;font-weight:700;line-height:1}
+
+  .directory-section{scroll-margin-top:18px}
+
+  .category{margin-bottom:32px;scroll-margin-top:18px}
+  .category-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:0 4px 12px;padding-bottom:9px;border-bottom:2px solid #9bad98}
+  .category-title{color:var(--home-ink);font-size:23px;font-weight:700;line-height:1.25}
+  .category-title span{display:block;margin-top:2px;color:var(--home-muted);font-size:14px;font-weight:500}
+  .category-num{color:var(--home-green);font-size:14px;font-weight:700;white-space:nowrap}
+  .tool-subgroup{margin-top:17px;scroll-margin-top:18px}
+  .tool-subgroup:first-of-type{margin-top:0}
+  .subgroup-head{margin:0 4px 9px;padding:10px 12px;border-left:4px solid var(--home-green);border-radius:0 10px 10px 0;background:var(--home-green-soft)}
+  .subgroup-title{color:var(--home-ink);font-size:17px;font-weight:700;line-height:1.35}
+  .subgroup-note{margin-top:2px;color:var(--home-muted);font-size:14px;line-height:1.5}
+  .tools{display:grid;gap:10px}
+  .tool-card{display:grid;grid-template-columns:48px minmax(0,1fr) 44px;align-items:center;gap:12px;min-height:104px;padding:14px;border:1px solid var(--home-line);border-radius:16px;background:var(--home-surface);color:var(--home-ink);text-decoration:none;box-shadow:var(--home-shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
+  .tool-card:hover{transform:translateY(-2px);border-color:#91a58f;box-shadow:0 16px 34px -24px rgba(34,40,31,.55)}
+  .tool-icon{display:grid;width:48px;height:48px;place-items:center;border-radius:13px;background:var(--home-green-soft);color:var(--home-green);font-size:21px;font-weight:700}
+  .tool-title{display:block;color:var(--home-green);font-size:19px;font-weight:700;line-height:1.3}
+  .tool-desc{display:-webkit-box;margin-top:3px;overflow:hidden;color:var(--home-muted)!important;font-size:15px;line-height:1.5;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+  .tool-arrow{display:grid;width:42px;height:42px;place-items:center;border-radius:50%;background:var(--home-green);color:#fff;font-size:24px;font-weight:700;line-height:1}
+  .coming{grid-template-columns:48px minmax(0,1fr);border:2px dashed #aeb7aa;background:#f1eee8;box-shadow:none;cursor:default}
+  .coming:hover{transform:none;border-color:#aeb7aa;box-shadow:none}
+  .coming .tool-icon{background:#e5dfd7;color:var(--home-dev)}
+  .coming .tool-title{color:var(--home-ink)}
+  .badge{display:inline-flex;min-height:29px;align-items:center;margin-top:8px;padding:4px 10px;border-radius:999px;background:var(--home-dev);color:#fff;font-size:13px;font-weight:700}
+
+  .use-note{display:flex;gap:10px;align-items:flex-start;margin:3px 4px 30px;padding:14px;border-radius:13px;background:var(--home-green-soft);color:#364232;font-size:14px;line-height:1.6}
+  .use-note .icon{display:grid;flex:0 0 auto;width:24px;height:24px;place-items:center;border-radius:50%;background:var(--home-green);color:#fff;font-size:13px;font-weight:700}
+  .resource-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:620px}
+  .resource-card a{display:flex;min-height:54px;align-items:center;justify-content:space-between;gap:10px;padding:12px 15px;border:1px solid var(--home-line);border-radius:13px;background:var(--home-surface);color:var(--home-green);font-size:15px;font-weight:600;text-decoration:none}
+  .resource-card a:hover{border-color:#91a58f;background:var(--home-green-soft)}
+  .site-footer{margin:36px 0 0;padding:20px 4px 36px;border-top:1px solid var(--home-line);color:var(--home-muted);font-size:13px;line-height:1.8;text-align:center}
+  .site-footer a{color:var(--home-green);font-weight:600}
+
+  .reading-panel{position:fixed;right:14px;bottom:calc(96px + env(safe-area-inset-bottom));left:14px;z-index:49;max-width:430px;margin:0 auto;padding:15px;border:1px solid #9bad98;border-radius:17px;background:#fff;box-shadow:0 18px 42px rgba(34,40,31,.22)}
+  .reading-panel[hidden]{display:none}
+  .reading-panel-title{margin-bottom:10px;color:var(--home-ink);font-size:18px;font-weight:700}
+  .reading-setting{display:grid;grid-template-columns:84px repeat(2,minmax(0,1fr));align-items:center;gap:7px;margin-top:8px}
+  .reading-setting:first-of-type{margin-top:0}
+  .reading-setting-label{color:var(--home-muted);font-size:14px;font-weight:600}
+  .reading-option{min-height:43px;padding:7px 9px;border:1px solid var(--home-line);border-radius:9px;background:var(--home-bg);color:var(--home-green);font-size:14px;font-weight:600;cursor:pointer}
+  .reading-option[aria-pressed="true"]{border-color:var(--home-green);background:var(--home-green);color:#fff}
+  .home-bottom-nav{position:fixed;right:12px;bottom:max(10px,env(safe-area-inset-bottom));left:12px;z-index:50;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:430px;min-height:76px;margin:0 auto;padding:6px;border:1px solid #aeb9aa;border-radius:20px;background:rgba(255,255,255,.98);box-shadow:0 14px 36px rgba(34,40,31,.22);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .bottom-action{display:grid;min-height:62px;place-items:center;align-content:center;gap:2px;border:0;border-radius:14px;background:transparent;color:var(--home-green);font-size:12.5px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer}
+  .bottom-action.primary{background:var(--home-green);color:#fff}
+  .bottom-icon{font-size:21px;font-weight:700;line-height:1}
+
+  body.reading-large .home-subtitle{font-size:20px}
+  body.reading-large .home-subtitle-byline{font-size:17px}
+  body.reading-large .subgroup-note,body.reading-large .tool-desc,body.reading-large .resource-card a{font-size:17px}
+  body.reading-large .start-desc{font-size:16px}
+  body.reading-large .tool-title{font-size:21px}
+  body.reading-large .tool-card{min-height:116px}
+  body.high-contrast{--home-bg:#fffdf7;--home-surface:#fff;--home-ink:#11160f;--home-muted:#30392d;--home-line:#82917f;--home-green:#173f23;--home-green-soft:#dcebd8;--home-rose:#a92242;--home-dev:#4f3026}
+
+  @media(max-width:640px){
+    body{padding-bottom:calc(168px + env(safe-area-inset-bottom))!important}
+  }
+  @media(min-width:641px){
+    html{scroll-padding-bottom:0}
+    body{padding-right:22px;padding-bottom:56px;padding-left:22px}
+    .home-hero{padding-top:50px;text-align:center}
+    .home-title{margin-right:auto;margin-left:auto}
+    .home-subtitle{margin-right:auto;margin-left:auto}
+    .start-section{margin-bottom:44px}
+    .start-grid{gap:14px}
+    .start-card{min-height:220px;padding:23px 16px 19px}
+    .start-icon{width:76px;height:76px;font-size:36px}
+    .start-title{font-size:24px}
+    .start-desc{font-size:15px}
+    .tool-card{grid-template-columns:54px minmax(0,1fr) 46px;min-height:108px;padding:16px 18px}
+    .tool-icon{width:54px;height:54px}
+    .tool-title{font-size:21px}
+    .home-bottom-nav,.reading-panel{display:none!important}
+  }
+  @media(max-width:360px){
+    body{padding-right:10px;padding-left:10px}
+    .home-title{font-size:36px}
+    .home-subtitle{font-size:16px}
+    .home-subtitle-byline{font-size:14px}
+    .start-grid{gap:6px}
+    .start-card{min-height:180px;padding-right:6px;padding-left:6px}
+    .start-icon{width:56px;height:56px;font-size:27px}
+    .start-title{font-size:19px}
+    .start-desc{font-size:13px}
+    .tool-card{grid-template-columns:44px minmax(0,1fr) 38px;gap:9px;padding:12px 10px}
+    .tool-icon{width:44px;height:44px}
+    .tool-arrow{width:38px;height:38px}
+    .bottom-action{font-size:11.5px}
+    .reading-setting{grid-template-columns:72px repeat(2,minmax(0,1fr))}
+  }
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .home-title-online{animation:none!important;transition:color .01ms}
+    .start-card,.tool-card{transition:none}
   }
 </style>
 <script src="tools-shell.js?v=072026D" defer></script>
 </head>
 <body>
-  <main class="container">
-    <header>
-      <div class="eyebrow">Miss Icecream · Online Tools</div>
-      <h1>เครื่องมือ<em>ออนไลน์</em></h1>
-      <p class="subtitle">สำหรับลูกศิษย์มิสไอศกรีม ตั้งแต่ใช้ในคลาส เลือกกระบวนการผลิต ไปจนถึงบันทึกและเปรียบเทียบผล</p>
+  <main class="home-container">
+    <header class="home-hero" id="home-top">
+      <p class="home-brand">Miss Ice Cream <span>· Online Tools</span></p>
+      <h1 class="home-title">เครื่องมือ<span class="home-title-online">ออนไลน์</span></h1>
+      <p class="home-subtitle">สำหรับลูกศิษย์คลาสไอศกรีมและเจลาโต้<span class="home-subtitle-byline">โดย อ.พรหล้า · มิสไอศกรีม</span></p>
     </header>
 
-    <nav class="category-filter-wrap" aria-label="เลือกประเภทเครื่องมือ">
-      <div class="category-filter">
-        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">ทั้งหมด</button>
-        <button class="filter-btn" type="button" data-filter="formula" aria-pressed="false">ปรับสูตร</button>
-        <button class="filter-btn" type="button" data-filter="production" aria-pressed="false">การผลิต</button>
-        <button class="filter-btn" type="button" data-filter="records" aria-pressed="false">บันทึกผล</button>
-        <button class="filter-btn" type="button" data-filter="sensory" aria-pressed="false">ทดสอบชิม</button>
-      </div>
-      <p class="sr-only" id="category-filter-status" aria-live="polite"></p>
-    </nav>
-
-    <section class="category" data-category="class" aria-labelledby="cat-class">
-      <div class="category-head"><h2 class="category-title" id="cat-class">In Class <span>ในคลาส</span></h2><span class="category-num">01</span></div>
-      <div class="tools">
-        <a class="tool-card" href="ClassTimer.html"><span class="tool-icon" aria-hidden="true">⏱</span><span><span class="tool-title">Class PBT <em>Timers</em></span><span class="tool-desc">จับเวลา PBT ของเบสในคลาสทีละช่วง ปั่น 30 วินาที พัก 10 วินาที</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+    <section class="start-section" id="start-here" aria-labelledby="start-heading">
+      <h2 class="start-heading" id="start-heading"><span class="start-heading-mark" aria-hidden="true">⚑</span>เริ่มต้นตรงนี้</h2>
+      <div class="start-grid">
+        <a class="start-card" href="#plan" data-jump-target="plan"><span class="start-icon" aria-hidden="true">⌁</span><span class="start-copy"><strong class="start-title">วางแผน</strong><span class="start-desc">สูตรและกระบวนการ</span></span><span class="start-arrow" aria-hidden="true">→</span></a>
+        <a class="start-card" href="#record" data-jump-target="record"><span class="start-icon" aria-hidden="true">▤</span><span class="start-copy"><strong class="start-title">บันทึก</strong><span class="start-desc">ระหว่างการผลิต</span></span><span class="start-arrow" aria-hidden="true">→</span></a>
+        <a class="start-card" href="#test" data-jump-target="test"><span class="start-icon" aria-hidden="true">◉</span><span class="start-copy"><strong class="start-title">ทดสอบ</strong><span class="start-desc">คุณภาพและการชิม</span></span><span class="start-arrow" aria-hidden="true">→</span></a>
       </div>
     </section>
 
-    <section class="category" data-category="formula" aria-labelledby="cat-formula">
-      <div class="category-head"><h2 class="category-title" id="cat-formula">Formula Adjustment <span>ปรับสูตร</span></h2><span class="category-num">02</span></div>
-      <div class="tools">
-        <div class="tool-card coming"><span class="tool-icon" aria-hidden="true">⌁</span><span><span class="tool-title">Formula <em>Tools</em></span><span class="tool-desc">พื้นที่สำหรับเครื่องมือปรับสูตรและคำนวณสมดุลสูตรที่จะเพิ่มในลำดับถัดไป</span><span class="badge">กำลังพัฒนา</span></span><span class="tool-arrow" aria-hidden="true">···</span></div>
-      </div>
-    </section>
-
-    <section class="category" data-category="production" aria-labelledby="cat-production">
-      <div class="category-head"><h2 class="category-title" id="cat-production">Production <span>การผลิต</span></h2><span class="category-num">03</span></div>
-      <div class="tools">
-        <a class="tool-card" href="PST-Selector.html"><span class="tool-icon" aria-hidden="true">↻</span><span><span class="tool-title">PBT <em>Selector</em></span><span class="tool-desc">เลือกลักษณะสูตรและเครื่อง เพื่อดูรอบปั่น–พักตามตาราง PBT ปัจจุบัน</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-        <a class="tool-card" href="Process-Selector.html"><span class="tool-icon" aria-hidden="true">⑫</span><span><span class="tool-title">Process <em>Selector</em></span><span class="tool-desc">ตอบเงื่อนไขการผลิต แล้วรับขั้นตอนทำไอศกรีมเฉพาะกรณีครบ 12 ขั้น</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
-    <section class="category" data-category="records" aria-labelledby="cat-records">
-      <div class="category-head"><h2 class="category-title" id="cat-records">Records <span>บันทึกผล</span></h2><span class="category-num">04</span></div>
-      <div class="tools">
-        <a class="tool-card" href="Heat-Log.html"><span class="tool-icon" aria-hidden="true">♨</span><span><span class="tool-title">Heat Process <em>Log</em></span><span class="tool-desc">บันทึกเวลา–อุณหภูมิ กราฟ และรายงาน รองรับหลาย Batch แบบเปิดดูทีละ Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-        <a class="tool-card" href="Heat-Log-5Batch.html"><span class="tool-icon" aria-hidden="true">♨×5</span><span><span class="tool-title">Heat Process <em>Log ×5</em></span><span class="tool-desc">บันทึกพร้อมกัน 1–5 Batch ในตารางแนวกว้าง กรอกไล่ลงตามแถว เหมาะสำหรับจอ notebook</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-        <a class="tool-card" href="Churning.html"><span class="tool-icon" aria-hidden="true">%</span><span><span class="tool-title">Overrun <em>Calculator</em></span><span class="tool-desc">คำนวณ %Overrun อย่างง่าย พร้อมทางเลือกบันทึกการทดลองอย่างละเอียด</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-        <a class="tool-card" href="Overrun-Test.html"><span class="tool-icon" aria-hidden="true">%×</span><span><span class="tool-title">Overrun <em>Experiment</em></span><span class="tool-desc">บันทึกการทดลองวัด %Overrun อย่างละเอียด รองรับการบันทึกหลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-        <a class="tool-card" href="Meltdown-Test.html"><span class="tool-icon" aria-hidden="true">◒×5</span><span><span class="tool-title">Meltdown <em>Test ×5</em></span><span class="tool-desc">บันทึกการละลายพร้อมกัน 1–5 Batch ในตารางแนวกว้าง พร้อมนาฬิกาและกราฟแยกกัน</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-      </div>
-    </section>
-
-    <section class="category" data-category="sensory" aria-labelledby="cat-sensory">
-      <div class="category-head"><h2 class="category-title" id="cat-sensory">Sensory Test Forms <span>แบบประเมินการทดสอบชิม</span></h2><span class="category-num">05</span></div>
-
-      <div class="tool-subgroup" aria-labelledby="sensory-internal">
-        <div class="subgroup-head"><h3 class="subgroup-title" id="sensory-internal">Internal Sensory Review <span>คณะผู้ชิมภายใน</span></h3><p class="subgroup-note">สำหรับทีมร้านหรือทีมพัฒนาผลิตภัณฑ์ที่มีประสบการณ์และผ่านการฝึกเบื้องต้น ใช้บรรยายคุณลักษณะ เทียบเป้าหมาย และค้นหาข้อบกพร่อง</p></div>
-        <div class="tools">
-          <a class="tool-card" href="Sensory-Internal-Review.html"><span class="tool-icon" aria-hidden="true">◉</span><span><span class="tool-title">Internal Sensory <em>Review</em></span><span class="tool-desc">สร้างแบบประเมินสำหรับคณะผู้ชิมภายใน พร้อมคลังคำถาม คู่มือการฝึก รหัสสุ่ม ลำดับถ่วงดุล ใบจัดเตรียม และฉลากติดถ้วย</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+    <section class="directory-section" id="tool-directory" aria-label="เครื่องมือทั้งหมด">
+      <section class="category" id="plan" aria-labelledby="cat-plan">
+        <div class="category-head"><h2 class="category-title" id="cat-plan">วางแผน <span>ปรับสูตรและเลือกกระบวนการผลิต</span></h2><span class="category-num">01</span></div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">สูตร</h3><p class="subgroup-note">ปรับสูตรและตรวจสมดุลก่อนเริ่มผลิต</p></div>
+          <div class="tools">
+            <div class="tool-card coming"><span class="tool-icon" aria-hidden="true">⌁</span><span><span class="tool-title">Formula Tools</span><span class="tool-desc">เครื่องมือปรับสูตรและคำนวณสมดุลสูตร จะแจ้งเมื่อพร้อมใช้งาน</span><span class="badge">กำลังพัฒนา</span></span></div>
+          </div>
         </div>
-      </div>
-
-      <div class="tool-subgroup" aria-labelledby="sensory-consumer">
-        <div class="subgroup-head"><h3 class="subgroup-title" id="sensory-consumer">Consumer Panel <span>ผู้ชิมกลุ่มผู้บริโภค</span></h3><p class="subgroup-note">สำหรับตอบคำถามด้านการยอมรับ ความแตกต่างที่รับรู้ และตัวเลือกที่ผู้บริโภคชอบ โดยเลือกแบบทดสอบให้ตรงวัตถุประสงค์</p></div>
-        <div class="tools">
-          <a class="tool-card" href="Sensory-Acceptance.html"><span class="tool-icon" aria-hidden="true">♡</span><span><span class="tool-title">ชอบไหม · Consumer <em>Acceptance</em></span><span class="tool-desc">วัดความชอบต่อไอศกรีมและคุณลักษณะต่าง ๆ ด้วยคะแนน พร้อมคำถามความพอดี แนวโน้มซื้อ และคำตอบปลายเปิด</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-          <a class="tool-card" href="Sensory-Triangle-Test.html"><span class="tool-icon" aria-hidden="true">△</span><span><span class="tool-title">ต่างกันไหม · <em>Triangle Test</em></span><span class="tool-desc">ตรวจว่าผู้ชิมรับรู้ความแตกต่างระหว่างผลิตภัณฑ์สองชนิดได้หรือไม่ โดยชิมตัวอย่างปกปิดสามถ้วย</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
-          <a class="tool-card" href="Sensory-Preference-Ranking.html"><span class="tool-icon" aria-hidden="true">⇅</span><span><span class="tool-title">อันไหนดีกว่า · Preference <em>Ranking</em></span><span class="tool-desc">เปรียบเทียบ 2–5 ตัวอย่างในประเด็นที่กำหนด เพื่อเรียงลำดับว่าผู้บริโภคชอบตัวอย่างใดมากกว่า</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">กระบวนการผลิต</h3><p class="subgroup-note">เลือกวิธีผลิตและลำดับงานให้เหมาะกับสูตรและเครื่อง</p></div>
+          <div class="tools">
+            <a class="tool-card" href="PST-Selector.html"><span class="tool-icon" aria-hidden="true">↻</span><span><span class="tool-title">PBT Selector</span><span class="tool-desc">เลือกสูตรและเครื่อง เพื่อดูรอบปั่น–พักตามตาราง PBT</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Process-Selector.html"><span class="tool-icon" aria-hidden="true">⑫</span><span><span class="tool-title">Process Selector</span><span class="tool-desc">ตอบเงื่อนไข แล้วรับขั้นตอนผลิตที่เหมาะกับกรณีของคุณ</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <section class="category" id="record" aria-labelledby="cat-record">
+        <div class="category-head"><h2 class="category-title" id="cat-record">บันทึก <span>ใช้ระหว่างเรียนและการผลิต</span></h2><span class="category-num">02</span></div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">ระหว่างเรียน</h3><p class="subgroup-note">จับเวลาและติดตามขั้นตอนระหว่างเรียนและสาธิต</p></div>
+          <div class="tools">
+            <a class="tool-card" href="ClassTimer.html"><span class="tool-icon" aria-hidden="true">⏱</span><span><span class="tool-title">Class PBT Timers</span><span class="tool-desc">จับเวลา PBT ในคลาส: ปั่น 30 วินาที พัก 10 วินาที</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">ระหว่างการผลิต</h3><p class="subgroup-note">บันทึกเวลา อุณหภูมิ และข้อมูลแต่ละ Batch</p></div>
+          <div class="tools">
+            <a class="tool-card" href="Heat-Log.html"><span class="tool-icon" aria-hidden="true">♨</span><span><span class="tool-title">Heat Process Log</span><span class="tool-desc">บันทึกเวลา อุณหภูมิ กราฟ และรายงานทีละ Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Heat-Log-5Batch.html"><span class="tool-icon" aria-hidden="true">♨×5</span><span><span class="tool-title">Heat Process Log ×5</span><span class="tool-desc">บันทึก 1–5 Batch พร้อมกัน เหมาะกับจอ notebook</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="category" id="test" aria-labelledby="cat-test">
+        <div class="category-head"><h2 class="category-title" id="cat-test">ทดสอบ <span>ตรวจคุณภาพและประเมินการชิม</span></h2><span class="category-num">03</span></div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">คุณภาพผลิตภัณฑ์</h3><p class="subgroup-note">วัด %Overrun และติดตามพฤติกรรมการละลาย</p></div>
+          <div class="tools">
+            <a class="tool-card" href="Churning.html"><span class="tool-icon" aria-hidden="true">%</span><span><span class="tool-title">Overrun Calculator</span><span class="tool-desc">คำนวณ %Overrun อย่างรวดเร็ว</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Overrun-Test.html"><span class="tool-icon" aria-hidden="true">%×</span><span><span class="tool-title">Overrun Experiment</span><span class="tool-desc">บันทึกการทดลองวัด %Overrun หลาย Batch</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Meltdown-Test.html"><span class="tool-icon" aria-hidden="true">◒×5</span><span><span class="tool-title">Meltdown Test ×5</span><span class="tool-desc">บันทึกการละลาย 1–5 Batch พร้อมเวลาและกราฟ</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">ทดสอบชิม · คณะผู้ชิมภายใน</h3><p class="subgroup-note">วิเคราะห์คุณลักษณะ เทียบเป้าหมาย และค้นหาข้อบกพร่อง</p></div>
+          <div class="tools">
+            <a class="tool-card" href="Sensory-Internal-Review.html"><span class="tool-icon" aria-hidden="true">◉</span><span><span class="tool-title">Internal Sensory Review</span><span class="tool-desc">สร้างแบบประเมินสำหรับทีมพัฒนา พร้อมรหัสและใบเตรียม</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="tool-subgroup">
+          <div class="subgroup-head"><h3 class="subgroup-title">ทดสอบชิม · ผู้บริโภค</h3><p class="subgroup-note">วัดความชอบ ความแตกต่าง และตัวเลือกที่ผู้บริโภคชอบ</p></div>
+          <div class="tools">
+            <a class="tool-card" href="Sensory-Acceptance.html"><span class="tool-icon" aria-hidden="true">♡</span><span><span class="tool-title">ชอบไหม · Consumer Acceptance</span><span class="tool-desc">วัดความชอบ ความพอดี แนวโน้มซื้อ และความคิดเห็น</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Sensory-Triangle-Test.html"><span class="tool-icon" aria-hidden="true">△</span><span><span class="tool-title">ต่างกันไหม · Triangle Test</span><span class="tool-desc">ตรวจว่าผู้ชิมแยกความต่างระหว่างผลิตภัณฑ์ได้หรือไม่</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+            <a class="tool-card" href="Sensory-Preference-Ranking.html"><span class="tool-icon" aria-hidden="true">⇅</span><span><span class="tool-title">อันไหนดีกว่า · Preference Ranking</span><span class="tool-desc">เรียงลำดับความชอบของตัวอย่าง 2–5 ตัวอย่าง</span></span><span class="tool-arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
     </section>
 
     <aside class="use-note" aria-label="ข้อมูลการบันทึกและส่งออก"><span class="icon" aria-hidden="true">i</span><p>ข้อมูลที่กรอกจะบันทึกไว้ในเบราว์เซอร์ของอุปกรณ์นี้ เครื่องมือที่รองรับสามารถพิมพ์หรือแชร์เป็น PDF ได้</p></aside>
 
-    <section class="category" aria-labelledby="cat-help">
+    <section class="category" id="help" aria-labelledby="cat-help">
       <div class="category-head"><h2 class="category-title" id="cat-help">Help <span>คู่มือและข้อมูล</span></h2><span class="category-num">?</span></div>
       <div class="resource-card">
         <a href="guide.html"><span>คู่มือรวมการใช้งาน</span><span aria-hidden="true">→</span></a>
-        <a href="https://www.missicecream.com" target="_blank" rel="noopener"><span>เว็บไซต์ Miss Icecream</span><span aria-hidden="true">↗</span></a>
+        <a href="https://www.missicecream.com" target="_blank" rel="noopener"><span>เว็บไซต์ Miss Ice Cream</span><span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
-    <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 072026B by Paula Kaothien</span></footer>
+    <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026A by Paula Kaothien</span></footer>
   </main>
+
+  <section class="reading-panel" id="reading-panel" hidden aria-labelledby="reading-panel-title">
+    <h2 class="reading-panel-title" id="reading-panel-title">ปรับการอ่าน</h2>
+    <div class="reading-setting"><span class="reading-setting-label">ตัวอักษร</span><button class="reading-option" type="button" data-reading-size="normal" aria-pressed="true">ปกติ</button><button class="reading-option" type="button" data-reading-size="large" aria-pressed="false">ใหญ่</button></div>
+    <div class="reading-setting"><span class="reading-setting-label">คอนทราสต์</span><button class="reading-option" type="button" data-reading-contrast="normal" aria-pressed="true">ปกติ</button><button class="reading-option" type="button" data-reading-contrast="high" aria-pressed="false">สูง</button></div>
+  </section>
+
+  <nav class="home-bottom-nav" aria-label="เมนูลัดหน้าแรก">
+    <a class="bottom-action" href="#start-here"><span class="bottom-icon" aria-hidden="true">⚑</span><span>เริ่มต้น</span></a>
+    <a class="bottom-action primary" href="#tool-directory"><span class="bottom-icon" aria-hidden="true">⌘</span><span>เครื่องมือ</span></a>
+    <a class="bottom-action" href="guide.html"><span class="bottom-icon" aria-hidden="true">?</span><span>คู่มือ</span></a>
+    <button class="bottom-action" type="button" id="reading-toggle" aria-controls="reading-panel" aria-expanded="false"><span class="bottom-icon" aria-hidden="true">Aa</span><span>การอ่าน</span></button>
+  </nav>
+
   <script>
     (() => {
-      const buttons = [...document.querySelectorAll('.filter-btn')];
-      const categories = [...document.querySelectorAll('.category[data-category]')];
-      const status = document.getElementById('category-filter-status');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      buttons.forEach((button) => {
-        button.addEventListener('click', () => {
-          const selected = button.dataset.filter;
-
-          buttons.forEach((item) => {
-            const isActive = item === button;
-            item.classList.toggle('active', isActive);
-            item.setAttribute('aria-pressed', String(isActive));
-          });
-
-          categories.forEach((category) => {
-            category.hidden = selected !== 'all' && category.dataset.category !== selected;
-          });
-
-          status.textContent = selected === 'all'
-            ? 'กำลังแสดงเครื่องมือทุกประเภท'
-            : `กำลังแสดงเครื่องมือประเภท ${button.textContent.trim()}`;
-          button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      document.querySelectorAll('[data-jump-target]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const target = document.getElementById(link.dataset.jumpTarget);
+          if (target) target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
         });
+      });
+
+      const readingPanel = document.getElementById('reading-panel');
+      const readingToggle = document.getElementById('reading-toggle');
+      const sizeButtons = [...document.querySelectorAll('[data-reading-size]')];
+      const contrastButtons = [...document.querySelectorAll('[data-reading-contrast]')];
+
+      const setSize = (size) => {
+        document.body.classList.toggle('reading-large', size === 'large');
+        sizeButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.readingSize === size)));
+        localStorage.setItem('mic-reading-size', size);
+      };
+      const setContrast = (contrast) => {
+        document.body.classList.toggle('high-contrast', contrast === 'high');
+        contrastButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.readingContrast === contrast)));
+        localStorage.setItem('mic-reading-contrast', contrast);
+      };
+
+      setSize(localStorage.getItem('mic-reading-size') === 'large' ? 'large' : 'normal');
+      setContrast(localStorage.getItem('mic-reading-contrast') === 'high' ? 'high' : 'normal');
+      sizeButtons.forEach((button) => button.addEventListener('click', () => setSize(button.dataset.readingSize)));
+      contrastButtons.forEach((button) => button.addEventListener('click', () => setContrast(button.dataset.readingContrast)));
+      readingToggle.addEventListener('click', () => {
+        const open = readingPanel.hidden;
+        readingPanel.hidden = !open;
+        readingToggle.setAttribute('aria-expanded', String(open));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !readingPanel.hidden) {
+          readingPanel.hidden = true;
+          readingToggle.setAttribute('aria-expanded', 'false');
+          readingToggle.focus();
+        }
       });
     })();
   </script>
