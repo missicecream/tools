@@ -24,8 +24,9 @@
   .contact-page .subtitle { margin-inline: auto; }
 
   .welcome-note {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    align-items: center;
     gap: 12px;
     margin-bottom: 28px;
     padding: 16px 18px;
@@ -48,6 +49,26 @@
     font-size: 18px;
     font-style: italic;
     font-weight: 700;
+  }
+  .status-action {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 15px;
+    border-radius: 12px;
+    background: var(--accent-deep);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+  }
+  .status-action:hover { background: var(--rose-deep); }
+  .status-action:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
   }
 
   .contact-section { margin-top: 30px; }
@@ -226,20 +247,12 @@
     font-size: 15px;
     line-height: 1.7;
   }
-  .source-note {
-    margin-top: 18px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.65;
-    text-align: center;
-  }
-  .source-note a { color: var(--accent-deep); font-weight: 700; }
-
   body.contact-page.reading-large .welcome-note,
   body.contact-page.reading-large .section-heading p,
   body.contact-page.reading-large .contact-copy strong,
   body.contact-page.reading-large .address-block address,
   body.contact-page.reading-large .travel-card p,
+  body.contact-page.reading-large .status-action,
   body.contact-page.reading-large .map-action {
     font-size: 17px !important;
   }
@@ -248,7 +261,15 @@
   @media (max-width: 640px) {
     .contact-page header { margin-bottom: 24px; }
     .contact-page h1 { font-size: clamp(35px, 10.4vw, 43px) !important; }
-    .welcome-note { padding: 14px; }
+    .welcome-note {
+      grid-template-columns: 32px minmax(0, 1fr);
+      align-items: start;
+      padding: 14px;
+    }
+    .status-action {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
     .contact-section { margin-top: 26px; }
     .section-heading { padding-inline: 4px; }
     .section-heading h2 { font-size: 22px; }
@@ -287,7 +308,8 @@
 
   <aside class="welcome-note">
     <span class="welcome-note-icon" aria-hidden="true">i</span>
-    <p>ทีมงานยินดีช่วยตอบคำถามและให้ข้อมูลเพิ่มเติม หากต้องการคำตอบรวดเร็ว แนะนำให้ติดต่อทาง LINE หรือโทรศัพท์ค่ะ</p>
+    <p>ทีมงานยินดีช่วยตอบคำถามและให้ข้อมูลเพิ่มเติม หากต้องการคำตอบรวดเร็ว แนะนำให้ติดต่อทาง LINE หรือโทรศัพท์ในเวลาทำการ หรือนอกเวลาทำการสามารถฝากข้อความไว้ทาง LINE หรือ Facebook ได้นะคะ</p>
+    <a class="status-action" href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">ดูสถานะเปิด–ปิดร้านจาก Google Map <span aria-hidden="true">↗</span></a>
   </aside>
 
   <section class="contact-section" aria-labelledby="contact-channels-title">
@@ -360,8 +382,8 @@
         referrerpolicy="no-referrer-when-downgrade"></iframe>
 
       <div class="map-actions">
-        <a class="map-action primary" href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">เปิดใน Google Maps <span aria-hidden="true">↗</span></a>
-        <a class="map-action" href="https://missicecream.com/b/12" target="_blank" rel="noopener">คำแนะนำการเดินทาง <span aria-hidden="true">↗</span></a>
+        <a class="map-action primary" href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">เปิดแผนที่ใน Google Maps <span aria-hidden="true">↗</span></a>
+        <a class="map-action" href="https://maps.apple.com/?q=Miss%20Icecream&amp;ll=13.7855603,100.4821959" target="_blank" rel="noopener">เปิดแผนที่ใน Apple Maps <span aria-hidden="true">↗</span></a>
       </div>
     </article>
   </section>
@@ -377,12 +399,10 @@
       </article>
       <article class="travel-card">
         <h3>เดินทางด้วยรถไฟฟ้า</h3>
-        <p>ลง MRT สถานีสิรินธร ทางออก 2B แล้วเข้าทางซอยจรัญสนิทวงศ์ 65 แยก 21 ซึ่งเหมาะกับการเดินหรือต่อวินมอเตอร์ไซค์</p>
+        <p>ลง MRT สถานีสิรินธร ทางออก 2B แล้วต่อวินมอเตอร์ไซค์เข้าทางซอยจรัญสนิทวงศ์ 65 แยก 21 ระยะทางประมาณ 1.5 กิโลเมตร ไม่แนะนำให้เดินค่ะ</p>
       </article>
     </div>
   </section>
-
-  <p class="source-note">ข้อมูลตรวจสอบจาก <a href="https://missicecream.com/contactus" target="_blank" rel="noopener">หน้าติดต่อของ Miss Icecream</a> และหน้าคำแนะนำการเดินทาง พร้อมลิงก์เปิด <a href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">Google Maps</a></p>
 
   <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026B by Paula Kaothien</span></footer>
 </main>
