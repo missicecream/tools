@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tools-theme.css?v=072026C">
+<link rel="stylesheet" href="tools-theme.css?v=082026B">
 <style>
   :root{
     --home-bg:#f6f1e7;
@@ -108,6 +108,7 @@
   .bottom-action{display:grid;min-height:62px;place-items:center;align-content:center;gap:2px;border:0;border-radius:14px;background:transparent;color:var(--home-green);font-size:12.5px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer}
   .bottom-action.primary{background:var(--home-green);color:#fff}
   .bottom-icon{font-size:21px;font-weight:700;line-height:1}
+  .bottom-icon.info-icon{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-style:italic;font-weight:700}
 
   body.reading-large .home-subtitle{font-size:20px}
   body.reading-large .home-subtitle-byline{font-size:17px}
@@ -159,7 +160,7 @@
     .start-card,.tool-card{transition:none}
   }
 </style>
-<script src="tools-shell.js?v=072026D" defer></script>
+<script src="tools-shell.js?v=082026B" defer></script>
 </head>
 <body>
   <main class="home-container">
@@ -246,7 +247,7 @@
       <div class="category-head"><h2 class="category-title" id="cat-help">Help <span>คู่มือและข้อมูล</span></h2><span class="category-num">?</span></div>
       <div class="resource-card">
         <a href="guide.html"><span>คู่มือรวมการใช้งาน</span><span aria-hidden="true">→</span></a>
-        <a href="https://www.missicecream.com" target="_blank" rel="noopener"><span>เว็บไซต์ Miss Ice Cream</span><span aria-hidden="true">↗</span></a>
+        <a href="contact.html"><span>ติดต่อมิสไอศกรีม</span><span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -262,7 +263,7 @@
   <nav class="home-bottom-nav" aria-label="เมนูลัดหน้าแรก">
     <a class="bottom-action" href="#start-here"><span class="bottom-icon" aria-hidden="true">⚑</span><span>เริ่มต้น</span></a>
     <a class="bottom-action primary" href="#tool-directory"><span class="bottom-icon" aria-hidden="true">⌘</span><span>เครื่องมือ</span></a>
-    <a class="bottom-action" href="guide.html"><span class="bottom-icon" aria-hidden="true">?</span><span>คู่มือ</span></a>
+    <a class="bottom-action" href="guide.html"><span class="bottom-icon info-icon" aria-hidden="true">i</span><span>คู่มือ</span></a>
     <button class="bottom-action" type="button" id="reading-toggle" aria-controls="reading-panel" aria-expanded="false"><span class="bottom-icon" aria-hidden="true">Aa</span><span>การอ่าน</span></button>
   </nav>
 

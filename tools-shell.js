@@ -10,6 +10,22 @@
     'Overrun-Test.html': 'Overrun-Test-guide.html?v=072126H',
     'Meltdown-Test.html': 'Meltdown-Test-guide.html?v=072626B'
   };
+  const readingSizeKey = 'mic-reading-size';
+  const readingContrastKey = 'mic-reading-contrast';
+
+  function getSavedReadingValue(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function applyReadingPreferences() {
+    if (!document.body) return;
+    document.body.classList.toggle('reading-large', getSavedReadingValue(readingSizeKey) === 'large');
+    document.body.classList.toggle('high-contrast', getSavedReadingValue(readingContrastKey) === 'high');
+  }
 
   function makeHomeLink() {
     const link = document.createElement('a');
@@ -24,7 +40,7 @@
     const link = document.createElement('a');
     link.className = 'tool-guide-link';
     link.href = href;
-    link.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">?</span><span>คู่มือ</span>';
+    link.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">i</span><span>คู่มือ</span>';
     return link;
   }
 
@@ -57,7 +73,7 @@
       const oldWrapper = guide.parentElement;
       guide.classList.add('tool-guide-link');
       guide.href = guides[page];
-      guide.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">?</span><span>คู่มือ</span>';
+      guide.innerHTML = '<span class="tools-nav-icon tools-guide-icon" aria-hidden="true">i</span><span>คู่มือ</span>';
       if (oldWrapper && oldWrapper !== topbar && oldWrapper !== container) {
         guide.remove();
         if (!oldWrapper.textContent.trim()) oldWrapper.remove();
@@ -108,8 +124,12 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
+    applyReadingPreferences();
+
     document.querySelectorAll('.eyebrow').forEach(function (node) {
-      node.textContent = 'Miss Icecream · Online Tools';
+      node.textContent = document.body.classList.contains('tools-ui-v2')
+        ? 'Miss Ice Cream · Online Tools'
+        : 'Miss Icecream · Online Tools';
     });
 
     document.querySelectorAll('a[href="/class/index.html"]').forEach(function (link) {
@@ -144,5 +164,10 @@
       audience.textContent = 'Version 072026B by Paula Kaothien';
       footer.appendChild(audience);
     });
+  });
+
+  applyReadingPreferences();
+  window.addEventListener('storage', function (event) {
+    if (event.key === readingSizeKey || event.key === readingContrastKey) applyReadingPreferences();
   });
 })();

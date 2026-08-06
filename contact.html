@@ -1,0 +1,390 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ข้อมูลติดต่อ บริษัท มิสไอศกรีม จำกัด โทร LINE อีเมล ที่อยู่ และแผนที่">
+<title>ติดต่อมิสไอศกรีม · Miss Ice Cream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body.contact-page { padding-bottom: 52px; }
+
+  .contact-page header { margin-bottom: 30px; }
+  .contact-page h1 span { color: var(--rose); }
+  .contact-page .subtitle { margin-inline: auto; }
+
+  .welcome-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fff 0%, #f9eef0 100%);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .welcome-note-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--rose);
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  .contact-section { margin-top: 30px; }
+  .section-heading { margin-bottom: 15px; }
+  .section-heading h2 {
+    color: var(--accent-deep);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .section-heading p {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .contact-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) 26px;
+    align-items: center;
+    gap: 12px;
+    min-height: 92px;
+    padding: 15px;
+    border: 1px solid var(--line);
+    border-radius: 17px;
+    background: #fff;
+    color: var(--ink);
+    text-decoration: none;
+    box-shadow: 0 14px 28px -26px rgba(34, 40, 31, .58);
+    transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .contact-card:hover {
+    border-color: var(--accent-deep);
+    transform: translateY(-2px);
+    box-shadow: 0 17px 30px -24px rgba(34, 40, 31, .52);
+  }
+  .contact-card:focus-visible,
+  .map-action:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .contact-card.primary {
+    border-color: var(--accent-deep);
+    background: var(--accent-deep);
+    color: #fff;
+  }
+  .contact-icon {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .primary .contact-icon { background: #fff; }
+  .contact-copy { min-width: 0; }
+  .contact-copy strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .contact-copy small {
+    display: block;
+    margin-top: 3px;
+    overflow-wrap: anywhere;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .primary .contact-copy small { color: rgba(255, 255, 255, .88); }
+  .contact-arrow {
+    color: var(--accent-deep);
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .primary .contact-arrow { color: #fff; }
+
+  .location-card {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 16px 34px -28px rgba(34, 40, 31, .58);
+  }
+  .address-block { padding: 20px; }
+  .address-block address {
+    color: var(--ink);
+    font-size: 16px;
+    font-style: normal;
+    line-height: 1.8;
+  }
+  .address-block address strong {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--accent-deep);
+    font-size: 18px;
+  }
+  .plus-code {
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    margin-top: 12px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .map-frame {
+    width: 100%;
+    min-height: 380px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    background: var(--accent-soft);
+  }
+  .map-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 15px;
+    border-top: 1px solid var(--line);
+  }
+  .map-action {
+    display: flex;
+    min-height: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: #fff;
+    color: var(--accent-deep);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+  }
+  .map-action.primary {
+    border-color: var(--accent-deep);
+    background: var(--accent-deep);
+    color: #fff;
+  }
+
+  .travel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .travel-card {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .72);
+  }
+  .travel-card h3 {
+    color: var(--accent-deep);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .travel-card p {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .source-note {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+    text-align: center;
+  }
+  .source-note a { color: var(--accent-deep); font-weight: 700; }
+
+  body.contact-page.reading-large .welcome-note,
+  body.contact-page.reading-large .section-heading p,
+  body.contact-page.reading-large .contact-copy strong,
+  body.contact-page.reading-large .address-block address,
+  body.contact-page.reading-large .travel-card p,
+  body.contact-page.reading-large .map-action {
+    font-size: 17px !important;
+  }
+  body.contact-page.reading-large .contact-copy small { font-size: 15px !important; }
+
+  @media (max-width: 640px) {
+    .contact-page header { margin-bottom: 24px; }
+    .contact-page h1 { font-size: clamp(35px, 10.4vw, 43px) !important; }
+    .welcome-note { padding: 14px; }
+    .contact-section { margin-top: 26px; }
+    .section-heading { padding-inline: 4px; }
+    .section-heading h2 { font-size: 22px; }
+    .contact-grid,
+    .travel-grid { grid-template-columns: 1fr; }
+    .contact-card { min-height: 82px; padding: 13px; }
+    .map-frame { min-height: 320px; }
+    .map-actions { grid-template-columns: 1fr; padding: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-card { transition: none; }
+  }
+
+  @media print {
+    .map-frame,
+    .map-actions,
+    .tools-bottom-nav { display: none !important; }
+    .contact-card,
+    .location-card,
+    .travel-card { box-shadow: none; }
+  }
+</style>
+<link rel="stylesheet" href="tools-theme.css?v=082026B">
+<script src="tools-shell.js?v=082026B" defer></script>
+</head>
+<body class="tools-ui-v2 contact-page">
+<main class="container">
+  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+
+  <header>
+    <p class="eyebrow">Miss Ice Cream · Online Tools</p>
+    <h1>ติดต่อ<span>มิสไอศกรีม</span></h1>
+    <p class="subtitle">สอบถามเรื่องคลาสเรียน สินค้า หรือการเดินทาง เลือกช่องทางที่สะดวกได้เลยค่ะ</p>
+  </header>
+
+  <aside class="welcome-note">
+    <span class="welcome-note-icon" aria-hidden="true">i</span>
+    <p>ทีมงานยินดีช่วยตอบคำถามและให้ข้อมูลเพิ่มเติม หากต้องการคำตอบรวดเร็ว แนะนำให้ติดต่อทาง LINE หรือโทรศัพท์ค่ะ</p>
+  </aside>
+
+  <section class="contact-section" aria-labelledby="contact-channels-title">
+    <div class="section-heading">
+      <h2 id="contact-channels-title">ช่องทางติดต่อ</h2>
+      <p>แตะหรือคลิกเพื่อเปิดช่องทางที่ต้องการได้ทันที</p>
+    </div>
+
+    <div class="contact-grid">
+      <a class="contact-card primary" href="https://line.me/R/ti/p/@missicecream" target="_blank" rel="noopener">
+        <span class="contact-icon" aria-hidden="true">LINE</span>
+        <span class="contact-copy"><strong>แชตทาง LINE</strong><small>@missicecream</small></span>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="contact-card" href="tel:0882058205">
+        <span class="contact-icon" aria-hidden="true">☎</span>
+        <span class="contact-copy"><strong>โทรศัพท์</strong><small>088-205-8205</small></span>
+        <span class="contact-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="contact-card" href="mailto:silverscoop@hotmail.com">
+        <span class="contact-icon" aria-hidden="true">@</span>
+        <span class="contact-copy"><strong>อีเมล</strong><small>silverscoop@hotmail.com</small></span>
+        <span class="contact-arrow" aria-hidden="true">→</span>
+      </a>
+
+      <a class="contact-card" href="https://www.facebook.com/MISSiCREAM" target="_blank" rel="noopener">
+        <span class="contact-icon" aria-hidden="true">f</span>
+        <span class="contact-copy"><strong>Facebook</strong><small>MISSiCREAM</small></span>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="contact-card" href="https://www.youtube.com/MISSiCREAM" target="_blank" rel="noopener">
+        <span class="contact-icon" aria-hidden="true">▶</span>
+        <span class="contact-copy"><strong>YouTube</strong><small>MISSiCREAM</small></span>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="contact-card" href="https://missicecream.com" target="_blank" rel="noopener">
+        <span class="contact-icon" aria-hidden="true">www</span>
+        <span class="contact-copy"><strong>เว็บไซต์</strong><small>missicecream.com</small></span>
+        <span class="contact-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="contact-section" aria-labelledby="location-title">
+    <div class="section-heading">
+      <h2 id="location-title">ที่ตั้งและแผนที่</h2>
+      <p>ตรวจเส้นทางก่อนออกเดินทาง และกดเปิดแผนที่เพื่อใช้ระบบนำทางได้ทันที</p>
+    </div>
+
+    <article class="location-card">
+      <div class="address-block">
+        <address>
+          <strong>บริษัท มิสไอศกรีม จำกัด</strong>
+          เลขที่ 164 ซอยจรัญสนิทวงศ์ 63 ถนนจรัญสนิทวงศ์<br>
+          แขวงบางบำหรุ เขตบางพลัด กรุงเทพมหานคร 10700
+        </address>
+        <span class="plus-code">Google Plus Code: QFPJ+6V Bangkok, Thailand</span>
+      </div>
+
+      <iframe
+        class="map-frame"
+        title="แผนที่บริษัท มิสไอศกรีม จำกัด"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.8901312653175!2d100.48013221483083!3d13.785496190325615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29bd51379d8e7%3A0xb227abd2f97a5baf!2sMiss+Icecream!5e0!3m2!1sen!2sth!4v1533578676038"
+        loading="lazy"
+        allowfullscreen=""
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+      <div class="map-actions">
+        <a class="map-action primary" href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">เปิดใน Google Maps <span aria-hidden="true">↗</span></a>
+        <a class="map-action" href="https://missicecream.com/b/12" target="_blank" rel="noopener">คำแนะนำการเดินทาง <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
+  </section>
+
+  <section class="contact-section" aria-labelledby="travel-title">
+    <div class="section-heading">
+      <h2 id="travel-title">วิธีมาแบบย่อ</h2>
+    </div>
+    <div class="travel-grid">
+      <article class="travel-card">
+        <h3>เดินทางด้วยรถยนต์</h3>
+        <p>แนะนำเข้าทางซอยจรัญสนิทวงศ์ 63 ซึ่งเป็นทางที่กว้างและตรงที่สุด ร้านอยู่บริเวณสุดซอย</p>
+      </article>
+      <article class="travel-card">
+        <h3>เดินทางด้วยรถไฟฟ้า</h3>
+        <p>ลง MRT สถานีสิรินธร ทางออก 2B แล้วเข้าทางซอยจรัญสนิทวงศ์ 65 แยก 21 ซึ่งเหมาะกับการเดินหรือต่อวินมอเตอร์ไซค์</p>
+      </article>
+    </div>
+  </section>
+
+  <p class="source-note">ข้อมูลตรวจสอบจาก <a href="https://missicecream.com/contactus" target="_blank" rel="noopener">หน้าติดต่อของ Miss Icecream</a> และหน้าคำแนะนำการเดินทาง พร้อมลิงก์เปิด <a href="https://g.page/MISSiCREAM?share" target="_blank" rel="noopener">Google Maps</a></p>
+
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026B by Paula Kaothien</span></footer>
+</main>
+</body>
+</html>
