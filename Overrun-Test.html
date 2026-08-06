@@ -702,44 +702,156 @@
     line-height: 1.65;
   }
 
+  /* Shared UI v2 treatment for a long-form recording tool. */
+  body.tools-ui-v2 .save-status {
+    min-height: 36px;
+    padding: 7px 12px;
+    border-color: var(--line);
+    background: #fff;
+    color: var(--accent-deep);
+    font-size: 13px;
+  }
+  body.tools-ui-v2 .quick-links a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 14px;
+    border-color: var(--line);
+    background: #fff;
+    color: var(--accent-deep);
+    font-size: 14px;
+  }
+  body.tools-ui-v2 .quick-links a:hover {
+    border-color: var(--accent-deep);
+    background: var(--accent-soft);
+  }
+  body.tools-ui-v2 .batchbar {
+    padding: 14px 16px;
+    border-left: 4px solid var(--accent-deep) !important;
+    border-radius: 16px;
+    background: #fff !important;
+  }
+  body.tools-ui-v2 .batchbar::before {
+    color: var(--muted);
+    font-size: 13px;
+  }
+  body.tools-ui-v2 .batchbar .bbtn {
+    min-height: 46px;
+    font-size: 14px;
+  }
+  body.tools-ui-v2 .section {
+    border-color: var(--line);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 14px 32px -27px rgba(34, 40, 31, .52);
+  }
+  body.tools-ui-v2 .section-head {
+    padding: 16px 18px;
+    border-color: var(--line);
+    background: linear-gradient(90deg, var(--accent-soft), #fff);
+  }
+  body.tools-ui-v2 .section-number,
+  body.tools-ui-v2 .measure-step {
+    background: var(--accent-deep);
+    font-family: 'Sarabun', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+  }
+  body.tools-ui-v2 .section-head h2 {
+    color: var(--accent-deep);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  body.tools-ui-v2 .section-body { padding: 20px; }
+  body.tools-ui-v2 .toolbar .btn {
+    min-height: 48px;
+    border-radius: 13px;
+    background: #fff;
+    color: var(--accent-deep);
+    font-size: 14px;
+  }
+  body.tools-ui-v2 .toolbar .btn.primary {
+    border-color: var(--accent-deep);
+    background: var(--accent-deep);
+    color: #fff;
+  }
+  body.tools-ui-v2 .toolbar .btn.danger,
+  body.tools-ui-v2 .toolbar .btn.danger:hover {
+    border-color: #d7aeb8;
+    background: #fff7f8;
+    color: var(--rose-deep);
+  }
+  body.tools-ui-v2 .return-simple {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--accent-deep);
+    font-size: 14px;
+  }
+  body.tools-ui-v2.reading-large .save-status,
+  body.tools-ui-v2.reading-large .quick-links a,
+  body.tools-ui-v2.reading-large .batchbar::before,
+  body.tools-ui-v2.reading-large .batchbar .bbtn,
+  body.tools-ui-v2.reading-large #experimentForm .section-note,
+  body.tools-ui-v2.reading-large #experimentForm label,
+  body.tools-ui-v2.reading-large .field-help,
+  body.tools-ui-v2.reading-large .selection-rule,
+  body.tools-ui-v2.reading-large .result-message,
+  body.tools-ui-v2.reading-large .toolbar .btn,
+  body.tools-ui-v2.reading-large .return-simple {
+    font-size: 17px !important;
+  }
+
   @media (max-width: 650px) {
     body {
-      padding: 16px 10px 34px !important;
+      padding: 20px 10px 40px !important;
     }
     .container { width: 100%; }
     header {
-      margin-bottom: 16px !important;
+      margin-bottom: 20px !important;
       padding-inline: 4px;
     }
     .eyebrow {
-      margin-bottom: 6px;
-      font-size: 10px;
-      letter-spacing: .16em;
+      margin-bottom: 8px;
+      font-size: 14px !important;
+      letter-spacing: .01em;
     }
     h1 {
       margin-bottom: 7px;
-      font-size: clamp(30px, 9vw, 36px) !important;
+      font-size: clamp(34px, 10vw, 42px) !important;
     }
     .subtitle {
       max-width: 35ch;
-      font-size: 13.5px !important;
-      line-height: 1.55 !important;
+      font-size: 16px !important;
+      line-height: 1.65 !important;
     }
     .save-status {
       margin-top: 10px;
-      padding: 5px 9px;
-      font-size: 12px;
+      padding: 7px 10px;
+      font-size: 13px;
     }
 
     .batchbar {
       gap: 8px !important;
       margin-bottom: 12px;
-      padding: 10px !important;
+      padding: 12px !important;
     }
     .batchbar select { min-height: 46px; }
+    body.tools-ui-v2 .batchbar label {
+      grid-column: 1;
+      align-self: center;
+      margin: 0;
+    }
+    body.tools-ui-v2 .batchbar select { grid-column: 2; }
     .batchbar .bbtn {
-      min-height: 42px;
-      font-size: 12.5px;
+      min-height: 46px;
+      font-size: 13.5px;
     }
     .quick-links {
       flex-wrap: nowrap;
@@ -756,8 +868,9 @@
     .quick-links::-webkit-scrollbar { display: none; }
     .quick-links a {
       flex: 0 0 auto;
-      padding: 7px 11px;
-      font-size: 12px;
+      min-height: 44px;
+      padding: 9px 12px;
+      font-size: 13px;
       scroll-snap-align: start;
     }
 
@@ -776,8 +889,8 @@
       flex-basis: 30px;
       font-size: 14px;
     }
-    .section-head h2 {
-      font-size: 18px;
+    body.tools-ui-v2 .section-head h2 {
+      font-size: 19px;
       line-height: 1.3;
     }
     .section-body { padding: 12px; }
@@ -990,7 +1103,7 @@
 <link rel="stylesheet" href="tools-print.css?v=072426E">
 <script src="tools-shell.js?v=082026B" defer></script>
 </head>
-<body>
+<body class="tools-ui-v2 tools-layout-record">
 <main class="container">
   <a class="back-link" href="Churning.html">← กลับไป Overrun Calculator</a>
 
@@ -1004,8 +1117,8 @@
   <div class="batchbar">
     <label for="batchSel">Batch:</label>
     <select id="batchSel" onchange="switchBatch(this.value)"></select>
-    <button class="bbtn new" type="button" onclick="newBatch()">➕ Batch ใหม่</button>
-    <button class="bbtn del" type="button" onclick="deleteBatch()">🗑 ลบ Batch นี้</button>
+    <button class="bbtn new" type="button" onclick="newBatch()">＋ เพิ่ม Batch</button>
+    <button class="bbtn del" type="button" onclick="deleteBatch()">ลบ Batch นี้</button>
   </div>
 
   <nav class="quick-links" aria-label="ส่วนต่างๆ ของแบบบันทึก">
@@ -1256,7 +1369,7 @@
   </div>
 
   <a class="return-simple" href="Churning.html">← กลับไปคำนวณ %Overrun แบบง่าย</a>
-  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026B by Paula Kaothien</span></footer>
 </main>
 
 <script>
