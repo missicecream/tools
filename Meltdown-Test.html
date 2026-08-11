@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <link rel="stylesheet" href="tools-print.css?v=072426E">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -120,6 +120,29 @@
     body.tools-ui-v2 .count-buttons{grid-template-columns:repeat(5,minmax(44px,1fr))}
     body.tools-ui-v2 .actions{grid-template-columns:1fr!important}
   }
+  /* Batch 4 visual system — wide quality matrix */
+  @media screen{
+    body.workflow-meltdown{background-color:#f6f1e8}
+    body.workflow-meltdown header{max-width:980px;margin-bottom:24px}
+    body.workflow-meltdown h1{font-size:clamp(40px,5vw,55px);font-weight:500}
+    body.workflow-meltdown .sub{max-width:860px;font-size:16px;line-height:1.72}
+    body.workflow-meltdown .back-link,
+    body.workflow-meltdown .sound-toggle{min-height:43px;padding:8px 16px;border-color:#d8cebe;background:#fffdf9;font-size:13.5px}
+    body.workflow-meltdown .toolbar{padding:15px 17px;border-color:#d8cebe;border-left:5px solid var(--accent-deep);border-radius:19px;background:#fffdf9;box-shadow:0 19px 42px -38px rgba(43,33,24,.68)}
+    body.workflow-meltdown .toolbar-title{font-size:15.5px}
+    body.workflow-meltdown .toolbar-note{font-size:14px;line-height:1.6}
+    body.workflow-meltdown .matrix-wrap{border-color:#d8cebe;border-radius:21px;background:#fffdf9;box-shadow:0 20px 44px -39px rgba(43,33,24,.7)}
+    body.workflow-meltdown .matrix thead th{background:#edf0e2}
+    body.workflow-meltdown .row-label{background:#f7f4ec}
+    body.workflow-meltdown .actions .btn.danger{border-color:#e3c4cb!important;background:#fff7f8!important;color:var(--rose-deep)!important}
+    body.workflow-meltdown .note{font-size:14px;line-height:1.72}
+  }
+  @media screen and (max-width:560px){
+    body.workflow-meltdown h1{font-size:42px!important}
+    body.workflow-meltdown .sub{font-size:14.5px}
+    body.workflow-meltdown .toolbar{border-radius:17px}
+    body.workflow-meltdown .matrix-wrap{border-radius:18px}
+  }
   @media print{
     body.tools-ui-v2{min-width:0;padding:0!important;background:#fff!important;font-size:7px}
     body.tools-ui-v2 .sheet{width:100%;max-width:none}
@@ -133,9 +156,9 @@
     .event-btn,.mini-btn,.undo-btn,.delete-btn{display:none!important}.event-time{margin:0;font-size:6px}.status-card,.derived,.summary{min-height:0;padding:2px!important;border:1px solid #999!important;background:#fff!important;color:#111!important;font-size:6px!important}.status-card strong,.summary strong{font-size:6.5px}.measure-list,.observe-list{max-height:none;overflow:visible}.measure,.observe{margin-bottom:2px;padding:2px;border-color:#bbb;break-inside:avoid}.measure-edit{grid-template-columns:1fr}.measure-edit input[type=time]{display:none}.measure-result,.measure-head,.observe-head{font-size:5.5px}.observe input{margin-top:1px}.chart{min-height:0}.chart-empty{padding:4px}.controls{display:none}footer.print-brand{display:block;margin-top:2mm;color:#333}
   }
 </style>
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
-<body class="tools-ui-v2 tools-layout-matrix">
+<body class="tools-ui-v2 tools-layout-matrix workflow-meltdown">
 <main class="sheet">
   <div class="topbar"><a class="back-link" href="index.html">← กลับหน้าหลัก</a><button class="sound-toggle" id="soundToggle" type="button">🔔 เสียง: เปิด</button></div>
   <header>

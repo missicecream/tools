@@ -14,22 +14,32 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body.contact-page { padding-bottom: 52px; }
+  body.contact-page { padding: 30px 18px 52px; }
+  .contact-page .container { width: min(100%, 920px); }
 
-  .contact-page header { margin-bottom: 30px; }
-  .contact-page h1 span { color: var(--rose); }
-  .contact-page .subtitle { margin-inline: auto; }
+  .contact-page header {
+    margin-bottom: 20px;
+    padding: 28px 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, .92);
+    box-shadow: 0 22px 48px -42px rgba(34, 40, 31, .68);
+  }
+  .contact-page h1 { margin-bottom: 8px; }
+  .contact-page h1 span { display: block; margin-top: 1px; color: var(--rose); }
+  .contact-page .subtitle { max-width: 680px; margin-inline: auto; }
 
   .welcome-note {
     display: grid;
     grid-template-columns: 32px minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
-    margin-bottom: 28px;
-    padding: 16px 18px;
+    margin-bottom: 30px;
+    padding: 18px 20px;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: linear-gradient(135deg, #fff 0%, #f9eef0 100%);
@@ -71,18 +81,18 @@
     outline-offset: 3px;
   }
 
-  .contact-section { margin-top: 30px; }
+  .contact-section { margin-top: 34px; }
   .section-heading { margin-bottom: 15px; }
   .section-heading h2 {
     color: var(--accent-deep);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     line-height: 1.35;
   }
   .section-heading p {
     margin-top: 4px;
     color: var(--muted);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.65;
   }
 
@@ -96,8 +106,8 @@
     grid-template-columns: 48px minmax(0, 1fr) 26px;
     align-items: center;
     gap: 12px;
-    min-height: 92px;
-    padding: 15px;
+    min-height: 98px;
+    padding: 17px;
     border: 1px solid var(--line);
     border-radius: 17px;
     background: #fff;
@@ -129,7 +139,7 @@
     border-radius: 14px;
     background: var(--accent-soft);
     color: var(--accent-deep);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
   }
   .primary .contact-icon { background: #fff; }
@@ -145,7 +155,7 @@
     margin-top: 3px;
     overflow-wrap: anywhere;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.45;
   }
   .primary .contact-copy small { color: rgba(255, 255, 255, .88); }
@@ -164,10 +174,10 @@
     background: #fff;
     box-shadow: 0 16px 34px -28px rgba(34, 40, 31, .58);
   }
-  .address-block { padding: 20px; }
+  .address-block { padding: 22px; }
   .address-block address {
     color: var(--ink);
-    font-size: 16px;
+    font-size: 17px;
     font-style: normal;
     line-height: 1.8;
   }
@@ -175,7 +185,7 @@
     display: block;
     margin-bottom: 3px;
     color: var(--accent-deep);
-    font-size: 18px;
+    font-size: 20px;
   }
   .plus-code {
     display: inline-flex;
@@ -231,20 +241,20 @@
     gap: 12px;
   }
   .travel-card {
-    padding: 18px;
+    padding: 20px;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: rgba(255, 255, 255, .72);
   }
   .travel-card h3 {
     color: var(--accent-deep);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
   }
   .travel-card p {
     margin-top: 6px;
     color: var(--muted);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.7;
   }
   body.contact-page.reading-large .welcome-note,
@@ -259,7 +269,8 @@
   body.contact-page.reading-large .contact-copy small { font-size: 15px !important; }
 
   @media (max-width: 640px) {
-    .contact-page header { margin-bottom: 24px; }
+    body.contact-page { padding: 22px 12px 44px; }
+    .contact-page header { margin-bottom: 18px; padding: 23px 16px 21px; border-radius: 22px; }
     .contact-page h1 { font-size: clamp(35px, 10.4vw, 43px) !important; }
     .welcome-note {
       grid-template-columns: 32px minmax(0, 1fr);
@@ -293,8 +304,7 @@
     .travel-card { box-shadow: none; }
   }
 </style>
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
 <body class="tools-ui-v2 contact-page">
 <main class="container">
@@ -302,7 +312,7 @@
 
   <header>
     <p class="eyebrow">Miss Ice Cream · Online Tools</p>
-    <h1>ติดต่อ<span>มิสไอศกรีม</span></h1>
+    <h1>ติดต่อ <span>มิสไอศกรีม</span></h1>
     <p class="subtitle">สอบถามเรื่องคลาสเรียน สินค้า หรือการเดินทาง เลือกช่องทางที่สะดวกได้เลยค่ะ</p>
   </header>
 
@@ -395,16 +405,16 @@
     <div class="travel-grid">
       <article class="travel-card">
         <h3>เดินทางด้วยรถยนต์</h3>
-        <p>แนะนำเข้าทางซอยจรัญสนิทวงศ์ 63 ซึ่งเป็นทางที่กว้างและตรงที่สุด ร้านอยู่บริเวณสุดซอย</p>
+        <p>แนะนำเข้าทางซอยจรัญสนิทวงศ์ 63 ซึ่งเป็นทางที่กว้างและตรงที่สุด ร้านอยู่สุดซอย เป็นบ้านหลังสุดท้ายฝั่งขวามือ</p>
       </article>
       <article class="travel-card">
         <h3>เดินทางด้วยรถไฟฟ้า</h3>
-        <p>ลง MRT สถานีสิรินธร ทางออก 2B แล้วต่อวินมอเตอร์ไซค์เข้าทางซอยจรัญสนิทวงศ์ 65 แยก 21 ระยะทางประมาณ 1.5 กิโลเมตร ไม่แนะนำให้เดินค่ะ</p>
+        <p>ลง MRT สถานีสิรินธร ทางออก 2B ระยะทางประมาณ 1.5 กิโลเมตร แนะนำให้ต่อวินมอเตอร์ไซค์ปากซอยจรัญฯ 65 แล้วเข้าทางซอยจรัญฯ 65 แยก 21 (ติดกับสุวิมลอะพาร์ตเมนต์) ไม่แนะนำให้เดิน เพราะระยะทางค่อนข้างไกล</p>
       </article>
     </div>
   </section>
 
-  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026B by Paula Kaothien</span></footer>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026K by Paula Kaothien</span></footer>
 </main>
 </body>
 </html>

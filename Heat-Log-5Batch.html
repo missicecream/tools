@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <link rel="stylesheet" href="tools-print.css?v=072426E">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -107,9 +107,9 @@
     footer{display:block;margin-top:3mm;color:#333;letter-spacing:.15em}
   }
 </style>
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
-<body>
+<body class="tools-ui-v2 tools-layout-matrix workflow-heat-5batch">
 <main class="sheet">
   <div class="topbar"><a class="back-link" href="index.html">← กลับหน้าหลัก</a></div>
   <header>
@@ -126,6 +126,7 @@
     <span class="save-status" id="saveStatus">บันทึกอัตโนมัติแล้ว</span>
   </section>
 
+  <p class="matrix-hint">↔ บนมือถือ เลื่อนภายในตารางไปทางซ้าย–ขวาเพื่อดูแต่ละ Batch</p>
   <div class="matrix-wrap">
     <table class="matrix" id="matrix" aria-label="แบบบันทึกการให้ความร้อน 1 ถึง 5 Batch">
       <colgroup id="colgroup"></colgroup>
@@ -307,7 +308,9 @@ const ROWS=[
 ];
 function render(){
   document.getElementById('countButtons').innerHTML=Array.from({length:MAX_BATCHES},(_,i)=>i+1).map(n=>'<button class="count-btn '+(n===store.batchCount?'active':'')+'" type="button" data-count="'+n+'" aria-pressed="'+(n===store.batchCount)+'">'+n+'</button>').join('');
-  document.getElementById('colgroup').innerHTML='<col class="label-col">'+Array.from({length:store.batchCount},()=>'<col>').join('');
+  const matrix=document.getElementById('matrix'),matrixMinWidth=Math.max(560,190+(store.batchCount*210));
+  matrix.style.minWidth=matrixMinWidth+'px';
+  document.getElementById('colgroup').innerHTML='<col class="label-col" style="width:190px">'+Array.from({length:store.batchCount},()=>'<col style="width:210px">').join('');
   document.getElementById('matrixHead').innerHTML='<tr><th class="corner">รายการที่ต้องบันทึก ↓</th>'+store.batches.slice(0,store.batchCount).map((b,i)=>'<th scope="col"><div class="batch-head"><span class="batch-dot '+batchState(b)+'"></span><input aria-label="ชื่อ Batch '+(i+1)+'" value="'+esc(b.batchName)+'" data-batch="'+i+'" data-field="batchName"></div></th>').join('')+'</tr>';
   document.getElementById('matrixBody').innerHTML=ROWS.map(r=>{
     if(r.section)return '<tr class="section-row"><th scope="row">'+esc(r.section)+'</th>'+Array.from({length:store.batchCount},()=>'<td>'+esc(r.hint||'')+'</td>').join('')+'</tr>';

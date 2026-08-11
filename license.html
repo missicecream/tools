@@ -13,53 +13,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <style>
-  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--muted-soft:#BFB09B;--line:#E5D9C4;--line-soft:#EFE5D2;--accent:#6B8E4E;--accent-deep:#4F6B3A;--rose:#A85B47}
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{box-sizing:border-box}
   html,body{-webkit-font-smoothing:antialiased}
-  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;min-height:100vh;padding:44px 20px 48px;
-    background-image:radial-gradient(circle at 15% 5%,rgba(220,229,200,.5)0%,transparent 40%),radial-gradient(circle at 88% 95%,rgba(201,120,98,.1)0%,transparent 40%)}
-  .container{max-width:680px;margin:0 auto}
-  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:28px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500}
-  .back-link:hover{color:var(--ink);border-color:var(--accent)}
-  .back-link .arrow{font-family:'Fraunces',serif;font-size:16px}
-  header{text-align:center;margin-bottom:30px}
-  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:500}
-  h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-.02em;margin-bottom:10px}
-  h1 em{font-style:italic;color:var(--accent-deep)}
-  .subtitle{color:var(--muted);font-size:13.5px;line-height:1.65;max-width:520px;margin:0 auto}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px 28px;box-shadow:0 4px 24px -18px rgba(43,31,21,.2)}
-  .copyline{font-family:'Fraunces',serif;font-size:17px;color:var(--accent-deep);line-height:1.5;margin-bottom:4px}
-  .arr{font-weight:600;color:#A85B47}
-  .lead{font-size:14px;color:var(--ink);line-height:1.7;margin:14px 0 4px}
-  .sec{margin-top:24px}
-  .sec h2{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-  .sec.ok h2{color:var(--accent-deep)}
-  .sec.no h2{color:var(--rose)}
-  ul{list-style:none}
-  li{position:relative;padding-left:22px;margin-bottom:10px;font-size:13.5px;line-height:1.6}
-  .ok li::before{content:'✓';position:absolute;left:2px;top:0;color:var(--accent);font-weight:700}
-  .no li::before{content:'✕';position:absolute;left:2px;top:0;color:var(--rose);font-weight:700}
-  .note{font-size:12.5px;color:var(--muted);line-height:1.6;margin-top:8px;font-style:italic;font-family:'Fraunces',serif}
-  .contact{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13.5px;line-height:1.7}
-  .contact b{font-weight:600}
-  .contact a{color:var(--accent-deep)}
-  .site-footer{margin-top:36px;text-align:center;font-size:12px;color:var(--muted);line-height:1.7}
-  .site-footer a{color:inherit;text-decoration:underline}
-  .legal{margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
-  .legal h2{font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-  .legal p{font-size:12.5px;line-height:1.65;color:var(--ink);margin-bottom:8px}
-  .legal ul{list-style:none;margin-top:6px}
-  .legal li{position:relative;padding-left:16px;margin-bottom:9px;font-size:12.5px;line-height:1.6;color:var(--ink)}
-  .legal li::before{content:'–';position:absolute;left:2px;top:0;color:var(--muted-soft)}
-  .legal .en{font-family:'Fraunces',serif;font-style:italic;color:var(--muted);font-size:12px;line-height:1.6;margin-top:6px}
+  body.license-page{min-height:100vh;margin:0;padding:30px 18px 52px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.58),transparent 34%),radial-gradient(circle at 92% 96%,rgba(201,120,98,.09),transparent 36%)}
+  .container{width:min(100%,820px);margin:0 auto}
+  .page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+  .back-link,.contact-link{display:inline-flex;min-height:42px;align-items:center;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
+  .back-link:hover,.contact-link:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+  header{margin-bottom:18px;padding:28px 24px 26px;border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.92);box-shadow:0 22px 48px -42px rgba(34,40,31,.68);text-align:center}
+  .eyebrow{margin:0 0 8px;color:var(--accent-deep);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  h1{margin:0;font-family:'Fraunces','Sarabun',serif;font-size:clamp(36px,6vw,50px);font-weight:500;line-height:1.08;letter-spacing:-.02em}
+  h1 em{display:block;margin-top:3px;color:var(--rose);font-family:'Sarabun',sans-serif;font-size:.76em;font-style:normal;font-weight:700}
+  .subtitle{max-width:620px;margin:10px auto 0;color:var(--muted);font-size:16px;line-height:1.7}
+  .card{padding:30px 32px;border:1px solid var(--line);border-radius:24px;background:#fffdf9;box-shadow:0 20px 44px -40px rgba(43,33,24,.68)}
+  .copyright-box{padding:18px 20px;border:1px solid #d3ddc9;border-radius:16px;background:var(--accent-soft)}
+  .copyline{color:var(--accent-deep);font-size:18px;font-weight:700;line-height:1.55}
+  .arr{margin-top:4px;color:var(--rose-deep);font-size:15px;font-weight:700}
+  .lead{margin:16px 0 0;color:var(--ink);font-size:16px;line-height:1.78}
+  .sec,.legal{margin-top:26px;padding:21px 22px;border:1px solid var(--line);border-radius:17px;background:#fff}
+  .sec h2,.legal h2{margin:0 0 13px;padding-bottom:10px;border-bottom:1px solid var(--line);font-size:18px;font-weight:700;line-height:1.45}
+  .sec.ok h2{color:var(--accent-deep)}.sec.no h2{color:var(--rose-deep)}.legal h2{color:var(--accent-deep)}
+  ul{margin:0;padding:0;list-style:none}
+  li{position:relative;margin-bottom:11px;padding-left:24px;color:var(--ink);font-size:15.5px;line-height:1.72}
+  li:last-child{margin-bottom:0}.ok li::before{content:'✓';position:absolute;left:1px;top:0;color:var(--accent-deep);font-weight:700}.no li::before{content:'✕';position:absolute;left:1px;top:0;color:var(--rose-deep);font-weight:700}
+  .note{margin:14px 0 0;padding:12px 14px;border-radius:12px;background:#fff3f4;color:#755b5f;font-size:14px;line-height:1.68;font-style:normal}
+  .contact{margin-top:26px;padding:19px 20px;border:1px solid #d3ddc9;border-radius:16px;background:var(--accent-soft);font-size:15.5px;line-height:1.75}.contact b{color:var(--accent-deep);font-size:17px}.contact a{color:var(--accent-deep);font-weight:700}
+  .legal p{margin:0 0 11px;color:var(--ink);font-size:15.5px;line-height:1.75}.legal ul{margin-top:8px}.legal li{padding-left:20px}.legal li::before{content:'–';position:absolute;left:2px;top:0;color:var(--muted-soft);font-weight:700}.legal .en{margin-top:10px;color:var(--muted);font-size:14px;font-style:italic;line-height:1.68}
+  .site-footer{margin-top:30px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}
+  @media(max-width:640px){body.license-page{padding:22px 12px 44px}.page-nav{align-items:stretch}.back-link,.contact-link{padding:8px 12px;font-size:12px}header{padding:23px 16px 21px;border-radius:22px}.card{padding:18px 14px;border-radius:20px}.copyright-box{padding:16px}.copyline{font-size:17px}.lead{font-size:15.5px}.sec,.legal{padding:18px 16px}.sec h2,.legal h2{font-size:17px}li,.legal p{font-size:15px}}
+  @media print{body.license-page{padding:0;background:#fff;background-image:none}.page-nav,.tools-bottom-nav{display:none!important}header,.card,.sec,.legal,.copyright-box,.contact{box-shadow:none}.card{border:0;padding:0}.site-footer{margin-top:18px}}
 </style>
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
-<body>
+<body class="tools-ui-v2 tools-layout-guide license-page">
   <div class="container">
-    <a class="back-link" href="index.html"><span class="arrow">←</span> กลับหน้าหลัก</a>
+    <nav class="page-nav" aria-label="ลิงก์หน้าเว็บไซต์"><a class="back-link" href="index.html">← กลับหน้าหลัก</a><a class="contact-link" href="contact.html">ติดต่อมิสไอศกรีม →</a></nav>
 
     <header>
       <div class="eyebrow">Miss Icecream · Online Tools</div>
@@ -68,8 +58,7 @@
     </header>
 
     <div class="card">
-      <div class="copyline">Copyright © 2026 พรหล้า ขาวเธียร (Paula Kaothien)<br>บริษัท มิสไอศกรีม จำกัด</div>
-      <div class="arr">All Rights Reserved · สงวนลิขสิทธิ์</div>
+      <div class="copyright-box"><div class="copyline">Copyright © 2026 พรหล้า ขาวเธียร (Paula Kaothien)<br>บริษัท มิสไอศกรีม จำกัด</div><div class="arr">All Rights Reserved · สงวนลิขสิทธิ์</div></div>
       <p class="lead">ลิขสิทธิ์นี้ครอบคลุม เครื่องมือ ซอฟต์แวร์ โค้ด เนื้อหาบนเว็บไซต์ ตลอดจนเอกสาร คู่มือ สื่อการสอน ภาพประกอบ ตาราง คำอธิบาย และระบบการคำนวณ/สัญลักษณ์ที่พัฒนาขึ้นประกอบการเรียนทั้งหมด ของ พรหล้า ขาวเธียร / บริษัท มิสไอศกรีม จำกัด</p>
       <p class="lead">เครื่องมือและซอฟต์แวร์ในเว็บนี้จัดทำขึ้นเพื่อใช้ประกอบการเรียน สำหรับนักเรียนที่ผ่านคลาสของอาจารย์พรหล้า ขาวเธียร เท่านั้น</p>
 

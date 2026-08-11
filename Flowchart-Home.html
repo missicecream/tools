@@ -13,99 +13,111 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <style>
-  :root{--bg:#F4ECE0;--card:#FBF6EC;--ink:#2B1F15;--muted:#8C7A66;--line:#E5D9C4;--accent:#6B8E4E;--accent-deep:#4F6B3A}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;padding:32px 18px 44px;
-    background-image:radial-gradient(circle at 12% 3%,rgba(220,229,200,.45)0%,transparent 38%),radial-gradient(circle at 90% 97%,rgba(201,120,98,.08)0%,transparent 40%);
-    -webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .sheet{max-width:760px;margin:0 auto}
-
-  .back-link{display:inline-flex;align-items:center;gap:7px;margin-bottom:20px;padding:8px 18px;background:var(--card);border:1px solid var(--line);border-radius:100px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:all .2s}
-  .back-link:hover{color:var(--ink);border-color:var(--accent)}
-
-  header{text-align:center;margin-bottom:22px}
-  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:500}
-  h1{font-family:'Fraunces',serif;font-weight:400;font-size:30px;line-height:1.1;margin-bottom:7px}
-  h1 .badge{display:inline-block;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:#fff;background:var(--accent-deep);border-radius:100px;padding:3px 14px;vertical-align:middle;margin-left:6px}
-  .sub{color:var(--muted);font-size:13px;line-height:1.5}
-
-  .flow{display:flex;flex-direction:column;align-items:stretch;gap:0}
-  .step{display:flex;align-items:stretch;gap:0;background:var(--t);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;overflow:hidden;box-shadow:0 3px 14px -12px rgba(43,31,21,.4)}
-  .num{flex-shrink:0;width:42px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;background:var(--c)}
-  .body{padding:9px 14px}
-  .t{font-size:14.5px;font-weight:600;line-height:1.25;color:var(--ink)}
-  .t .en{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:12px;color:var(--muted);margin-left:5px}
-  .d{font-size:12.5px;line-height:1.5;color:#4a3f33;margin-top:2px}
-  .d b{color:var(--c2,var(--c));font-weight:700}
-  .arrow{align-self:center;color:var(--muted);font-size:15px;line-height:1;margin:3px 0}
-
-  .actions{display:flex;justify-content:center;gap:12px;margin-top:24px}
-  .btn{padding:11px 26px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:500;border-radius:100px;cursor:pointer;transition:all .2s}
-  .btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-  footer{text-align:center;margin-top:16px;color:var(--muted);font-size:11px;letter-spacing:.25em;text-transform:uppercase}
-
+  *{box-sizing:border-box}
+  body.flowchart-page{min-height:100vh;margin:0;padding:30px 18px 50px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.58),transparent 34%),radial-gradient(circle at 92% 96%,rgba(201,120,98,.09),transparent 36%);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{width:min(100%,920px);margin:0 auto}
+  .page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+  .back-link,.switch-link{display:inline-flex;min-height:42px;align-items:center;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
+  .back-link:hover,.switch-link:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+  .hero{margin-bottom:18px;padding:27px 28px 24px;border:1px solid #d8cebe;border-radius:26px;background:rgba(255,253,249,.94);box-shadow:0 22px 48px -42px rgba(43,33,24,.7);text-align:center}
+  .eyebrow{margin-bottom:8px;color:var(--accent-deep);font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+  h1{margin:0;font-family:'Fraunces','Sarabun',serif;font-size:clamp(34px,6vw,50px);font-weight:500;line-height:1.08;letter-spacing:-.02em}
+  h1 em{display:block;margin-top:5px;color:var(--accent-deep);font-family:'Sarabun',sans-serif;font-size:.8em;font-style:normal;font-weight:700;line-height:1.15}
+  .sub{max-width:720px;margin:10px auto 0;color:var(--muted);font-size:14.5px;line-height:1.7}
+  .key-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:19px;text-align:left}
+  .key{min-width:0;padding:11px 12px;border:1px solid #d7dfca;border-radius:14px;background:var(--accent-soft)}
+  .key-label{display:block;margin-bottom:3px;color:var(--muted);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+  .key-value{display:block;color:var(--accent-deep);font-size:13.5px;font-weight:700;line-height:1.45}
+  .flow-section{margin-top:13px;padding:17px;border:1px solid #d8cebe;border-radius:22px;background:#fffdf9;box-shadow:0 18px 40px -38px rgba(43,33,24,.68)}
+  .section-head{display:flex;align-items:center;gap:10px;margin:0 2px 12px}
+  .section-kicker{display:inline-flex;min-height:27px;align-items:center;padding:3px 10px;border-radius:999px;background:var(--accent-deep);color:#fff;font-size:11px;font-weight:700}
+  .section-head h2{margin:0;color:var(--ink);font-size:16px;font-weight:700}
+  .process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .step{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);gap:11px;align-items:start;min-width:0;padding:12px 13px;border:1px solid var(--line);border-radius:15px;background:#fff;break-inside:avoid;page-break-inside:avoid}
+  .step.warm{border-color:#e6cfb3;background:#fffaf3}
+  .step.active{border-color:#c8d6b9;background:#fbfdf7}
+  .step.cool{border-color:#c9d9e2;background:#f9fcfd}
+  .step.finish{border-color:#e0d2c2;background:#fffdf9}
+  .num{display:grid;width:38px;height:38px;place-items:center;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:'Fraunces',serif;font-size:17px;font-style:italic;font-weight:600}
+  .warm .num{background:#9a673c}.cool .num{background:#55788c}.finish .num{background:#7b6b57}
+  .t{color:var(--ink);font-size:14.5px;font-weight:700;line-height:1.4}
+  .d{margin-top:3px;color:#62584b;font-size:12.5px;line-height:1.58}
+  .d b{color:var(--accent-deep);font-weight:700}.warm .d b{color:#87552f}.cool .d b{color:#365f75}.finish .d b{color:#5f503e}
+  .route-note{margin-top:13px;padding:12px 14px;border:1px solid #d6dfc8;border-radius:15px;background:var(--accent-soft);color:var(--accent-deep);font-size:12.5px;line-height:1.65;text-align:center}
+  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
+  .btn{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:9px 20px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--ink);font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer}
+  .btn.primary{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}.btn:hover{filter:brightness(.97)}
+  footer{margin-top:15px;color:var(--muted);font-size:11px;letter-spacing:.18em;text-align:center;text-transform:uppercase}
+  .site-footer{margin:28px auto 0!important;max-width:920px!important}
+  @media(max-width:700px){body.flowchart-page{padding:22px 12px 44px}.page-nav{align-items:stretch}.back-link,.switch-link{padding:8px 12px;font-size:12px}.hero{padding:23px 16px 20px;border-radius:22px}.sub{font-size:14px}.key-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow-section{padding:14px;border-radius:19px}.process-grid{grid-template-columns:1fr}.step{padding:12px}.t{font-size:15px}.d{font-size:13px}}
   @media print{
-    @page{size:A4 portrait;margin:9mm}
-    body{padding:0;background:#fff;background-image:none}
-    .sheet{max-width:100%}
-    .back-link,.actions{display:none!important}
-    header{margin-bottom:10px}
-    h1{font-size:24px}
-    .flow{gap:0}
-    .step{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
-    .num{width:36px;font-size:17px}
-    .body{padding:6px 12px}
-    .t{font-size:12.5px}
-    .d{font-size:10.5px;margin-top:1px}
-    .arrow{font-size:12px;margin:1px 0}
-    footer{margin-top:8px}
+    @page{size:A4 portrait;margin:8mm}
+    body.flowchart-page{padding:0;background:#fff;background-image:none}
+    .sheet{width:100%;max-width:none}.page-nav,.actions,.site-footer{display:none!important}
+    .hero{margin-bottom:3.2mm;padding:3.5mm 4.5mm 3.2mm;border-radius:4mm;box-shadow:none}
+    .eyebrow{margin-bottom:1mm;font-size:7pt}h1{font-size:19pt}.sub{margin-top:1.5mm;font-size:8pt;line-height:1.35}
+    .key-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5mm;margin-top:2.5mm}.key{padding:1.7mm 2mm;border-radius:2.5mm}.key-label{font-size:6pt}.key-value{font-size:7.6pt;line-height:1.25}
+    .flow-section{margin-top:2.2mm;padding:2.5mm;border-radius:3.5mm;box-shadow:none}.section-head{gap:1.5mm;margin:0 0 1.6mm}.section-kicker{min-height:5mm;padding:.5mm 2mm;font-size:6.5pt}.section-head h2{font-size:9pt}
+    .process-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5mm}.step{grid-template-columns:7mm minmax(0,1fr);gap:1.8mm;padding:1.8mm 2mm;border-radius:2.5mm}.num{width:7mm;height:7mm;font-size:9pt}.t{font-size:8.4pt;line-height:1.25}.d{margin-top:.5mm;font-size:7pt;line-height:1.35}
+    .route-note{margin-top:2.2mm;padding:1.6mm 2mm;border-radius:2.5mm;font-size:7pt;line-height:1.35}footer{margin-top:2mm;font-size:6.5pt}
   }
 </style>
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
 <link rel="stylesheet" href="tools-print.css?v=072426E">
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
-<body>
+<body class="tools-ui-v2 tools-layout-guide flowchart-page flowchart-home">
 <div class="sheet">
-  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+  <nav class="page-nav" aria-label="ลิงก์ผังขั้นตอน"><a class="back-link" href="Process-Selector.html">← Process Selector</a><a class="switch-link" href="Flowchart-Sell.html">ดูแบบทำขาย →</a></nav>
 
-  <header>
-    <div class="eyebrow">Miss Icecream · คู่มือครัว</div>
-    <h1>ทำไอศกรีม <span class="badge">แบบทำทานเอง</span></h1>
-    <p class="sub">พาสเจอไรส์เฉพาะวัตถุดิบเสี่ยง · ลดถึง ≤4 °C อย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที) · บ่ม 0–4 °C · 12 ขั้นตอน</p>
+  <header class="hero">
+    <div class="eyebrow">Miss Icecream · A4 Process Guide</div>
+    <h1>ผังขั้นตอนการผลิต <em>แบบทำทานเอง</em></h1>
+    <p class="sub">พาสเจอร์ไรส์วัตถุดิบเสี่ยงแยกก่อน รักษากลิ่นสดด้วยการเติมครีมและส่วนผสมกลิ่นรสไวต่อความร้อนระหว่างการลดความร้อน</p>
+    <div class="key-grid" aria-label="ค่าหลักที่ต้องจำ">
+      <div class="key"><span class="key-label">แยกทำละลาย S/E</span><span class="key-value">SEP 65 °C · SER 85 °C</span></div>
+      <div class="key"><span class="key-label">มิกซ์รวม</span><span class="key-value">อุ่นถึง 55 °C</span></div>
+      <div class="key"><span class="key-label">PBT ในโถ</span><span class="key-value">เริ่ม ≥45 °C · จบ ≥40 °C</span></div>
+      <div class="key"><span class="key-label">ลดความร้อน</span><span class="key-value">≤4 °C ภายใน 60 นาที</span></div>
+    </div>
   </header>
 
-  <div class="flow">
-    <div class="step" style="--c:#8C7A66;--t:#F1ECE3"><div class="num">1</div><div class="body"><div class="t">เตรียมความพร้อม</div><div class="d">ล้าง+ฆ่าเชื้ออุปกรณ์ทุกชิ้น · แต่งกาย GHP · ล้างมือ <b>≥20 วิ</b></div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#8C7A66;--t:#F1ECE3"><div class="num">2</div><div class="body"><div class="t">ชั่งตวงวัด</div><div class="d">ชั่งเป็นกรัม · ร่อนผงที่จับก้อน · ชั่งให้ครบก่อนผสม</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#C77F3A;--t:#FAEFE2"><div class="num">3</div><div class="body"><div class="t">ผสม + ให้ความร้อน</div><div class="d">พาสเจอไรส์วัตถุดิบเสี่ยงแยกก่อน → ผสม (ไม่รวมครีม/ของสดที่เก็บไว้) → อุ่น <b>68–70 °C</b> ไม่ต้องคงอุณหภูมิ</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#6B8E4E;--t:#EFF3E7"><div class="num">4</div><div class="body"><div class="t">PBT — Paula’s Blending Technique</div><div class="d">เริ่มที่ <b>68–70 °C</b> · ปั่นแรง→พักตามรอบ/เวลาของเครื่อง · ให้จบก่อนต่ำกว่า <b>58 °C</b></div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#3E73A6;--t:#E8F0F7"><div class="num">5</div><div class="body"><div class="t">ลดความร้อน</div><div class="d">ลดใจกลางมิกซ์จนได้ <b>4 °C หรือต่ำกว่าอย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที)</b> · ที่ <b>≤10 °C</b> เติมครีมแช่เย็น + ผลไม้สด/โยเกิร์ตที่เก็บไว้ แล้วคนต่อจนมิกซ์สมบูรณ์ <b>≤4 °C</b></div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#6D7FA3;--t:#EBEEF5"><div class="num">6</div><div class="body"><div class="t">บ่ม</div><div class="d">เริ่มจับเวลาเมื่อมิกซ์สมบูรณ์ <b>≤4 °C</b> · บ่ม <b>0–4 °C 4–8 ชม.</b> · ด่วน 30 นาทีได้เฉพาะ INL ≥2% · ไม่เกิน 24 ชม.</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#8A6BB0;--t:#F0EBF7"><div class="num">7</div><div class="body"><div class="t">เติมส่วนผสมก่อนปั่น</div><div class="d">เติมกลิ่นระเหยง่าย/เหล้า/สี · ชิมปรับรสด้วย CIT20/SYR เท่าที่จำเป็น · ใช้อุปกรณ์สะอาด</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#2F9E8F;--t:#E4F4F1"><div class="num">8</div><div class="body"><div class="t">ปั่นไอศกรีม</div><div class="d">ดูเนื้อ: เนียน · ฟู · ผิวแห้ง · อย่าปั่นนานเกิน (เนื้อเนย)</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#C9A227;--t:#F8F1DA"><div class="num">9</div><div class="body"><div class="t">ตักใส่ภาชนะ + Inclusion / Swirl</div><div class="d">เร็ว เบามือ · inclusion โรยสลับชั้น ไม่คน · ซอสราดไม่กวน</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#3E73A6;--t:#E8F0F7"><div class="num">10</div><div class="body"><div class="t">แช่แข็ง</div><div class="d">ถึงเป้าเร็วที่สุด · <b>−18 °C</b> (เก็บ) / <b>−14 °C</b> (เสิร์ฟ)</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#5A6BA8;--t:#EAECF7"><div class="num">11</div><div class="body"><div class="t">เก็บรักษา</div><div class="d"><b>−25 °C</b> อุณหภูมินิ่ง · อย่างน้อยไม่สูงกว่า −18 °C · ปิดผิวด้วย PE film · ใช้ FIFO</div></div></div>
-    <div class="arrow">↓</div>
-    <div class="step" style="--c:#C76B86;--t:#FAEAF0"><div class="num">12</div><div class="body"><div class="t">เสิร์ฟ</div><div class="d">temper ถึง <b>−14 °C</b> · ตักด้วยการลาก ไม่กด · เริ่มจากขอบเข้าหากลาง</div></div></div>
-  </div>
+  <section class="flow-section" aria-labelledby="home-stage-1">
+    <div class="section-head"><span class="section-kicker">ช่วงที่ 1</span><h2 id="home-stage-1">เตรียมและสร้างมิกซ์</h2></div>
+    <div class="process-grid">
+      <article class="step"><div class="num">1</div><div><div class="t">เตรียมความพร้อม</div><div class="d">ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้น · แต่งกายตาม GHP · ล้างมือ <b>≥20 วินาที</b></div></div></article>
+      <article class="step"><div class="num">2</div><div><div class="t">ชั่งตวงวัด</div><div class="d">ชั่งเป็นกรัม · ร่อนผงที่จับก้อน · ชั่งวัตถุดิบให้ครบก่อนเริ่มผสม</div></div></article>
+      <article class="step warm"><div class="num">3</div><div><div class="t">การผสมและให้ความร้อน</div><div class="d">คลุก S/E กับน้ำตาลทรายและใช้น้ำในสูตรทั้งหมดหรือบางส่วน · แนะนำน้ำตาลทราย <b>5 เท่า</b> และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ · แยกทำละลาย SEP <b>65 °C</b> / SER <b>85 °C</b> · รวมของที่เหลือ ยกเว้นครีมและส่วนผสมกลิ่นรสไวต่อความร้อน แล้วอุ่นถึง <b>55 °C</b></div></div></article>
+      <article class="step active"><div class="num">4</div><div><div class="t">Paula’s Blending Technique (PBT)</div><div class="d">ตรวจมิกซ์ในโถก่อนปั่นต้อง <b>≥45 °C</b> · ปั่นแรงสลับพักตามรอบของเครื่อง · เมื่อจบต้อง <b>≥40 °C</b></div></div></article>
+    </div>
+  </section>
+
+  <section class="flow-section" aria-labelledby="home-stage-2">
+    <div class="section-head"><span class="section-kicker">ช่วงที่ 2</span><h2 id="home-stage-2">ลดความร้อนและเตรียมมิกซ์ก่อนปั่น</h2></div>
+    <div class="process-grid">
+      <article class="step cool"><div class="num">5</div><div><div class="t">การลดความร้อน</div><div class="d">ส่วนผสมกลิ่นรสไวต่อความร้อนปกติเติมที่ <b>≤10 °C</b> · ถ้ามีกรดหรือมีปริมาณมาก เริ่มทยอยเติมที่ <b>≤20 °C</b> พร้อมค่อยๆ คนให้ทั่ว · ครีมต้องรอ <b>≤10 °C</b> · ลดมิกซ์สมบูรณ์ถึง <b>≤4 °C ภายใน 60 นาที</b></div></div></article>
+      <article class="step cool"><div class="num">6</div><div><div class="t">การบ่ม</div><div class="d">เริ่มจับเวลาเมื่อมิกซ์สมบูรณ์ <b>≤4 °C</b> · บ่ม <b>0–4 °C นาน 4–8 ชั่วโมง</b> · บ่มด่วน 30 นาทีได้เฉพาะ INL ≥2% · ไม่เกิน 24 ชั่วโมง</div></div></article>
+      <article class="step cool"><div class="num">7</div><div><div class="t">เติมส่วนผสมก่อนปั่น</div><div class="d">เติมกลิ่นระเหยง่าย เหล้า หรือสี · กรดตามสูตรต้องเติมในขั้นลดความร้อนแล้ว ขั้นนี้ปรับด้วย CIT20/SYR เพียงเล็กน้อยเท่าที่จำเป็น</div></div></article>
+    </div>
+  </section>
+
+  <section class="flow-section" aria-labelledby="home-stage-3">
+    <div class="section-head"><span class="section-kicker">ช่วงที่ 3</span><h2 id="home-stage-3">ปั่น บรรจุ แช่แข็ง และเสิร์ฟ</h2></div>
+    <div class="process-grid">
+      <article class="step finish"><div class="num">8</div><div><div class="t">ปั่นไอศกรีม</div><div class="d">ใช้ลักษณะเนื้อเป็นหลัก: เนียน · ฟู · ผิวแห้ง · อย่าปั่นนานเกินจนเกิดเนื้อเนย</div></div></article>
+      <article class="step finish"><div class="num">9</div><div><div class="t">ตักใส่ภาชนะ + Inclusion / Swirl</div><div class="d">ทำเร็วและเบามือ · inclusion โรยสลับชั้น ไม่คน · ซอสราดเป็นชั้น ไม่กวน</div></div></article>
+      <article class="step finish"><div class="num">10</div><div><div class="t">แช่แข็ง</div><div class="d">ลดถึงอุณหภูมิเป้าหมายเร็วที่สุด · <b>−18 °C</b> สำหรับเก็บ · <b>−14 °C</b> สำหรับเสิร์ฟ</div></div></article>
+      <article class="step finish"><div class="num">11</div><div><div class="t">เก็บรักษา</div><div class="d">แนะนำ <b>−25 °C</b> อุณหภูมินิ่ง · อย่างน้อยไม่สูงกว่า −18 °C · ปิดผิวด้วย PE film · ใช้ FIFO</div></div></article>
+      <article class="step finish"><div class="num">12</div><div><div class="t">เสิร์ฟ</div><div class="d">ปรับเนื้อถึง <b>−14 °C</b> · ตักด้วยการลาก ไม่กด · เริ่มจากขอบเข้าหากลาง</div></div></article>
+    </div>
+    <p class="route-note">แนวทำทานไม่ใช่การพาสเจอร์ไรส์มิกซ์รวม วัตถุดิบเสี่ยงต้องผ่านความร้อนแยกมาก่อนเสมอ</p>
+  </section>
 
   <div class="actions">
     <button class="btn" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
-    <button class="btn" onclick="window.print()">🖨 พิมพ์ A4</button>
-    <a class="btn" href="Process-Selector.html" style="text-decoration:none">กลับไปที่ Process Selector</a>
+    <button class="btn primary" onclick="window.print()">🖨 พิมพ์ A4</button>
+    <a class="btn" href="Process-Selector.html">กลับไปที่ Process Selector</a>
   </div>
   <footer>Miss Icecream</footer>
 </div>
@@ -117,7 +129,7 @@ async function sharePDFink(btn){
   /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
   const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
   const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode'), hadInk=body.classList.contains('ink-saver');
-  const hides=[...document.querySelectorAll('.actions,.back-link')], prevD=hides.map(el=>el.style.display);
+  const hides=[...document.querySelectorAll('.actions,.page-nav')], prevD=hides.map(el=>el.style.display);
   const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode'); if(!hadInk)body.classList.remove('ink-saver');};
   try{
     await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');

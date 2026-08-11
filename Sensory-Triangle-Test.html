@@ -9,13 +9,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#F4ECE0">
+<meta name="theme-color" content="#F6F1E7">
 <meta name="description" content="เครื่องมือสร้างแบบสอบถาม Triangle Test สำหรับตรวจว่าผู้ชิมรับรู้ความแตกต่างระหว่างผลิตภัณฑ์สองสูตรหรือไม่">
 <title>ต่างกันไหม · Triangle Test — Miss Icecream</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="tools-theme.css?v=082026B">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}html{-webkit-font-smoothing:antialiased}body{min-height:100vh;padding:30px 16px 48px;background:var(--bg);color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 13% 4%,rgba(220,229,200,.52),transparent 37%),radial-gradient(circle at 90% 96%,rgba(201,120,98,.09),transparent 40%)}button,input,select,textarea{font:inherit}.container{width:min(100%,960px);margin:0 auto}.topbar{display:flex;min-height:38px;flex-wrap:wrap;gap:7px}.page-help{display:inline-flex;min-height:36px;align-items:center;gap:6px;padding:6px 12px;border:1px solid #cdd6b7;border-radius:999px;background:var(--accent-soft);color:var(--accent-deep);font-size:12.5px;font-weight:700;cursor:pointer}.page-help span:first-child{display:grid;width:20px;height:20px;place-items:center;border-radius:50%;background:var(--accent-deep);color:#fff;font-size:11px}
   header{max-width:790px;margin:0 auto 22px;text-align:center}.eyebrow{margin-bottom:8px;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase}h1{font-family:'Fraunces',serif;font-size:clamp(34px,6vw,51px);font-weight:400;line-height:1.04}h1 em{color:var(--accent-deep);font-style:italic}.subtitle{max-width:710px;margin:9px auto 0;color:var(--muted);font-size:14px;line-height:1.72}.save-status{display:inline-flex;align-items:center;gap:7px;margin-top:12px;padding:6px 11px;border:1px solid #d4dcc2;border-radius:999px;background:rgba(255,253,248,.75);color:var(--accent-deep);font-size:11.5px;font-weight:600}.save-status::before{width:7px;height:7px;border-radius:50%;background:var(--accent);content:''}
@@ -39,13 +39,12 @@
     body[data-print-mode="labels"] #labelSection{display:block!important;margin:0!important;border:0!important;box-shadow:none!important}body[data-print-mode="labels"] #labelSection>.section-head,body[data-print-mode="labels"] #labelSection>.section-body>.section-note,body[data-print-mode="labels"] #labelEmpty,body[data-print-mode="labels"] #labelSection>.section-body>.preview-summary{display:none!important}body[data-print-mode="labels"] #labelSection>.section-body{padding:0!important}.label-print-sheet{display:block!important;page:labels;min-height:190mm;margin:0;padding:0;break-after:page;page-break-after:always}.label-print-sheet:last-child{break-after:auto;page-break-after:auto}.cup-label{min-height:25mm}
   }
 </style>
-<script src="tools-shell.js?v=082026B" defer></script>
+<script src="tools-shell.js?v=082026K" defer></script>
 </head>
-<body>
+<body class="tools-ui-v2 tools-layout-sensory sensory-triangle">
 <main class="container">
   <div class="topbar">
-    <button class="page-help" id="openCreatorGuide" type="button"><span aria-hidden="true">?</span><span>คู่มือผู้สร้างการทดลอง</span></button>
-    <button class="page-help" id="openTasterGuide" type="button"><span aria-hidden="true">?</span><span>คำแนะนำในการทดสอบชิม</span></button>
+    <button class="page-help" id="openCreatorGuide" type="button"><span class="info-icon" aria-hidden="true">i</span><span>คู่มือผู้สร้างการทดลอง</span></button>
   </div>
   <header><div class="eyebrow">Miss Icecream · ทดสอบชิม</div><h1>สร้างแบบสอบถาม <em>ต่างกันไหม</em></h1><p class="subtitle">Triangle Test สำหรับตรวจว่าผู้ชิมรับรู้ความแตกต่างโดยรวมระหว่างผลิตภัณฑ์สองสูตรหรือไม่ ระบบสร้างรหัสสามหลักและกระจายทั้ง 6 ลำดับการเสิร์ฟให้อัตโนมัติ</p><span class="save-status" id="saveStatus">บันทึกการตั้งค่าอัตโนมัติ</span></header>
 
@@ -84,14 +83,11 @@
   </section>
 
   <section class="section">
-    <div class="section-head"><span class="section-number">3</span><h2>สร้างและพิมพ์เอกสาร</h2></div>
+    <div class="section-head"><span class="section-number">3</span><h2>สร้างเอกสาร</h2></div>
     <div class="section-body"><p class="section-note">ระบบสร้างรหัสสามหลักใหม่สำหรับถ้วยทุกใบ พร้อมใบจัดเตรียมที่บอกว่าสูตรใดอยู่ใต้รหัสใด ห้ามแจกใบจัดเตรียมให้ผู้ชิม</p>
       <div class="actionbar">
         <button class="btn primary" id="generate" type="button">สร้างแบบสอบถามและลำดับเสิร์ฟ</button>
-        <button class="btn secondary" id="printForms" type="button" disabled>พิมพ์แบบสอบถาม / บันทึก PDF</button>
-        <button class="btn secondary" id="printTasterGuide" type="button">พิมพ์คำแนะนำ / บันทึก PDF</button>
-        <button class="btn secondary" id="printKey" type="button" disabled>พิมพ์ใบจัดเตรียม / บันทึก PDF</button>
-        <button class="btn secondary" id="printLabels" type="button" disabled>พิมพ์ฉลากติดถ้วย / บันทึก PDF</button>
+        <button class="btn secondary" id="printTasterGuide" type="button">พิมพ์คำแนะนำสำหรับผู้ชิม / PDF</button>
         <button class="btn secondary" id="downloadConfig" type="button">บันทึกการตั้งค่าและแผน (.json)</button>
         <label class="btn secondary file-label">เปิดการตั้งค่าเดิม (.json)<input id="importConfig" type="file" accept="application/json,.json"></label>
         <button class="btn danger" id="reset" type="button">เริ่มใหม่</button>
@@ -101,18 +97,18 @@
   </section>
 
   <section class="section" id="previewSection">
-    <div class="section-head"><span class="section-number">4</span><h2>ตัวอย่างแบบสอบถามสำหรับผู้ชิม</h2></div>
+    <div class="section-head"><span class="section-number">4</span><h2>ตัวอย่างแบบสอบถามสำหรับผู้ชิม</h2><button class="btn secondary section-print" id="printForms" type="button" disabled>พิมพ์แบบสอบถาม / PDF</button></div>
     <div class="section-body"><p class="section-note">บนหน้าจอแสดงชุดแรกเพื่อตรวจรูปแบบ ตอนพิมพ์หรือบันทึก PDF ระบบจะรวมครบทุกชุดที่สร้างไว้</p><div class="preview-summary" id="previewSummary"></div><div class="empty-preview" id="emptyPreview">ยังไม่ได้สร้างแบบสอบถาม<br>กรอกข้อมูลด้านบนแล้วกด “สร้างแบบสอบถามและลำดับเสิร์ฟ”</div><div id="printArea"></div></div>
   </section>
 
   <section class="section" id="prepSection">
-    <div class="section-head"><span class="section-number">5</span><h2>ใบจัดเตรียมและเฉลยสำหรับผู้จัด</h2></div>
+    <div class="section-head"><span class="section-number">5</span><h2>ตัวอย่างใบจัดเตรียมและเฉลยสำหรับผู้จัด</h2><button class="btn secondary section-print" id="printKey" type="button" disabled>พิมพ์ใบจัดเตรียม / PDF</button></div>
     <div class="section-body"><p class="section-note">ใช้จัดตัวอย่างทั้ง 3 ถ้วยพร้อมกันตามตำแหน่ง 1–2–3 และตรวจคำตอบหลังเก็บแบบสอบถาม เอกสารนี้มีชื่อสูตรจริง จึงต้องเก็บแยกจากผู้ชิม</p><div class="preview-summary" id="prepSummary"></div><div class="empty-preview" id="prepEmpty">ใบจัดเตรียมจะปรากฏหลังสร้างแบบสอบถาม</div><div id="prepArea"></div></div>
   </section>
 
   <section class="section" id="labelSection">
-    <div class="section-head"><span class="section-number">6</span><h2>ฉลากรหัสสำหรับติดถ้วย</h2></div>
-    <div class="section-body"><p class="section-note">ฉลากเรียงตามชุดและตำแหน่ง 1–2–3 ตัดตามเส้นประแล้วติดบนถ้วย แต่ละฉลากแสดงเฉพาะรหัสปกปิด หมายเลขชุด และตำแหน่ง โดยไม่แสดงชื่อสูตรหรือ A/B</p><div class="preview-summary" id="labelSummary"></div><div class="empty-preview" id="labelEmpty">ฉลากรหัสจะปรากฏหลังสร้างแบบสอบถาม</div><div id="labelArea"></div></div>
+    <div class="section-head"><span class="section-number">6</span><h2>ตัวอย่างฉลากรหัสสำหรับติดถ้วย</h2><div class="section-actions"><button class="btn secondary section-print" id="printLabels" type="button" disabled>พิมพ์ฉลากรหัส / PDF</button><button class="btn secondary section-print" id="downloadLabelsCsv" type="button" disabled>ดาวน์โหลดฉลาก (.csv)</button></div></div>
+    <div class="section-body"><p class="section-note">ฉลากเรียงตามชุดและตำแหน่ง 1–2–3 ตัดตามเส้นประแล้วติดบนถ้วย แต่ละฉลากแสดงเฉพาะรหัสปกปิด หมายเลขชุด และตำแหน่ง โดยไม่แสดงชื่อสูตรหรือ A/B ไฟล์ CSV นำไปจัดวางและพิมพ์กับกระดาษฉลากขนาดต่าง ๆ ใน Excel หรือ Word ได้</p><div class="preview-summary" id="labelSummary"></div><div class="empty-preview" id="labelEmpty">ฉลากรหัสจะปรากฏหลังสร้างแบบสอบถาม</div><div id="labelArea"></div></div>
   </section>
 
   <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer>
@@ -169,7 +165,7 @@
   function syncConfig(){for(const key of ['testName','testCode','organizer','testDate','testObjective','testMode','assessorGroup','screeningCriteria','testSetting','locationDetail','productAName','productBName','servingAmount','servingTarget','consumerInstruction'])config[key]=$(key).value.trim();config.copyCount=Math.min(150,Math.max(1,Number($('copyCount').value)||1));updateBalanceNote()}
   function fill(){for(const key of ['testName','testCode','organizer','testDate','testObjective','testMode','assessorGroup','screeningCriteria','testSetting','locationDetail','productAName','productBName','copyCount','servingAmount','servingTarget','consumerInstruction'])$(key).value=config[key];updateBalanceNote()}
   function updateBalanceNote(){const count=Math.min(150,Math.max(1,Number($('copyCount').value)||1)),remainder=count%6,complete=Math.floor(count/6);$('balanceNote').innerHTML=remainder===0?`<strong>${count} ชุด:</strong> ครบทั้ง 6 ลำดับ ลำดับละ ${count/6} ชุด`:`<strong>${count} ชุด:</strong> ครบทั้ง 6 ลำดับ ${complete} รอบ และเหลือ ${remainder} ชุด ระบบจะกระจายลำดับที่เหลือให้ใกล้เคียงกัน หากต้องการให้ทุกลำดับมีจำนวนเท่ากัน ให้ใช้จำนวนที่หารด้วย 6 ลงตัว`}
-  function clearGenerated(){if(!generated.length){saveState();return}generated=[];$('printArea').innerHTML='';$('prepArea').innerHTML='';$('labelArea').innerHTML='';$('emptyPreview').hidden=false;$('prepEmpty').hidden=false;$('labelEmpty').hidden=false;$('previewSummary').classList.remove('show');$('prepSummary').classList.remove('show');$('labelSummary').classList.remove('show');$('printForms').disabled=true;$('printKey').disabled=true;$('printLabels').disabled=true;saveState()}
+  function clearGenerated(){generated=[];$('printArea').innerHTML='';$('prepArea').innerHTML='';$('labelArea').innerHTML='';$('emptyPreview').hidden=false;$('prepEmpty').hidden=false;$('labelEmpty').hidden=false;$('previewSummary').classList.remove('show');$('prepSummary').classList.remove('show');$('labelSummary').classList.remove('show');$('printForms').disabled=true;$('printKey').disabled=true;$('printLabels').disabled=true;$('downloadLabelsCsv').disabled=true;saveState()}
   function validate(){syncConfig();const errors=[];if(!config.testName)errors.push('กรอกชื่อการทดลอง');if(!config.testCode)errors.push('กรอกรหัสการทดลอง');if(!config.testObjective)errors.push('กรอกวัตถุประสงค์การทดลอง');if(!config.testMode)errors.push('เลือกวัตถุประสงค์ทางสถิติของ Triangle Test');if(!config.assessorGroup)errors.push('เลือกกลุ่มเป้าหมายหรือประเภทผู้ประเมิน');if(!config.productAName)errors.push('กรอกชื่อหรือรหัสผลิตภัณฑ์ A');if(!config.productBName)errors.push('กรอกชื่อหรือรหัสผลิตภัณฑ์ B');if(config.productAName.toLocaleLowerCase('th')===config.productBName.toLocaleLowerCase('th'))errors.push('ชื่อหรือรหัสผลิตภัณฑ์ A และ B ต้องไม่เหมือนกัน');if(!config.consumerInstruction)errors.push('กรอกคำแนะนำสำหรับผู้ชิม');const printedText=[config.consumerInstruction,config.servingTarget].join(' ');if(FORBIDDEN_PRINT_TERMS.some((pattern)=>pattern.test(printedText)))errors.push('ข้อความที่พิมพ์ในแบบสอบถามต้องไม่มีชื่อ Miss Icecream, พรหล้า หรือ Paula Kaothien');if(errors.length)alert(errors.join('\n'));return errors.length===0}
   function makeCodes(total){const codes=new Set();while(codes.size<total)codes.add(String(100+Math.floor(Math.random()*900)));return shuffle([...codes])}
   function makeOrders(){return shuffle(ORDER_PAIRS).flatMap((pair)=>shuffle(pair).map((order)=>[...order]))}
@@ -183,6 +179,7 @@
   function generate(){if(!validate())return;generated=buildSchedule();saveState();render();$('previewSection').scrollIntoView({behavior:'smooth',block:'start'})}
   function printDocument(mode){if(!generated.length)return;document.body.dataset.printMode=mode;const originalTitle=document.title,titles={forms:'แบบทดสอบความแตกต่างของตัวอย่าง',prep:'ใบจัดเตรียมตัวอย่าง Triangle Test',labels:'ฉลากรหัสตัวอย่างสำหรับติดถ้วย'};document.title=titles[mode]||originalTitle;const restore=()=>{document.title=originalTitle;delete document.body.dataset.printMode;window.removeEventListener('afterprint',restore)};window.addEventListener('afterprint',restore,{once:true});window.print()}
   function openPrintableTasterGuide(){const steps=[...$('tasterGuide').querySelectorAll('.guide-step')].map((step)=>({number:step.querySelector('.guide-n').textContent.trim(),title:step.querySelector('strong').textContent.trim(),body:step.querySelector('p').textContent.trim()})),popup=window.open('','sensoryTasterGuide','popup,width=900,height=850,resizable=yes,scrollbars=yes');if(!popup){alert('เบราว์เซอร์ปิดกั้นหน้าต่างคำแนะนำ กรุณาอนุญาต Pop-up สำหรับหน้านี้แล้วลองอีกครั้ง');return}const stepHtml=steps.map((step)=>`<section class="step"><span>${esc(step.number)}</span><div><h2>${esc(step.title)}</h2><p>${esc(step.body)}</p></div></section>`).join('');popup.document.open();popup.document.write(`<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>คำแนะนำในการทดสอบชิม — Triangle Test</title><style>*{box-sizing:border-box}html,body{margin:0;background:#fff;color:#171512;font-family:Tahoma,Arial,sans-serif}.toolbar{position:sticky;top:0;z-index:2;display:flex;justify-content:center;gap:8px;padding:12px;border-bottom:1px solid #bbb;background:#fff}.toolbar button{min-height:40px;padding:8px 16px;border:1px solid #555;border-radius:999px;background:#fff;color:#111;font-weight:700;cursor:pointer}.toolbar button:first-child{background:#314723;color:#fff}.sheet{width:min(100% - 32px,800px);margin:0 auto;padding:30px 12px 42px}.eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em}.sheet h1{margin:7px 0 8px;font-size:28px;line-height:1.25}.intro{margin:0 0 12px;padding:12px 14px;border:1px solid #888;border-radius:8px;font-size:13px;line-height:1.7}.safety{margin:0 0 18px;padding:12px 14px;border:2px solid #7b3d31;border-radius:8px;background:#fff;color:#5d2b22;font-size:13px;line-height:1.7}.safety strong{display:block;margin-bottom:2px}.step{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:15px 0;border-bottom:1px solid #bbb;break-inside:avoid}.step>span{display:grid;width:30px;height:30px;place-items:center;border:1px solid #333;border-radius:50%;font-weight:700}.step h2{margin:1px 0 4px;font-size:16px}.step p{margin:0;font-size:13px;line-height:1.75}.footer{margin-top:22px;padding-top:10px;border-top:2px solid #333;font-size:11px;line-height:1.6;text-align:center}@page{size:A4 portrait;margin:16mm}@media print{.toolbar{display:none}.sheet{width:auto;margin:0;padding:0}.safety,.step{page-break-inside:avoid}}</style></head><body><div class="toolbar"><button id="printGuide" type="button">พิมพ์ / บันทึก PDF</button><button id="closeGuideWindow" type="button">ปิดหน้าต่าง</button></div><main class="sheet"><div class="eyebrow">เอกสารสำหรับผู้ชิม · อ่านก่อนเริ่ม</div><h1>คำแนะนำในการทดสอบชิม</h1><p class="intro">Triangle Test — คุณจะได้รับตัวอย่าง 3 ถ้วย สองถ้วยเหมือนกันและหนึ่งถ้วยแตกต่าง กรุณาชิมตามลำดับและเลือกถ้วยที่แตกต่างเพียงหนึ่งถ้วย</p><div class="safety"><strong>ความปลอดภัยก่อนชิม</strong>หากมีประวัติแพ้อาหาร มีข้อจำกัดด้านอาหาร หรือมีส่วนผสมใดที่ไม่สามารถรับประทานได้ ให้แจ้งผู้จัดก่อนและยังไม่ชิมจนกว่าจะยืนยันว่าปลอดภัยสำหรับคุณ หากเกิดอาการผิดปกติระหว่างหรือหลังชิม ให้หยุดชิมและแจ้งผู้จัดทันที</div>${stepHtml}<p class="footer">หากรู้สึกไม่พร้อมหรือไม่เข้าใจวิธีตอบ กรุณาแจ้งผู้จัดก่อนเริ่มชิม</p></main></body></html>`);popup.document.close();popup.document.getElementById('printGuide').addEventListener('click',()=>popup.print());popup.document.getElementById('closeGuideWindow').addEventListener('click',()=>popup.close());popup.opener=null;popup.focus()}
+  function downloadLabelsCsv(){if(!generated.length)return;const rows=[['ชุด','ตำแหน่ง','รหัสสามหลัก'],...generated.flatMap((packet)=>packet.items.map((item,index)=>[packet.formId,index+1,item.code]))],csv='\uFEFF'+rows.map((row)=>row.map((value)=>`"${String(value).replace(/"/g,'""')}"`).join(',')).join('\r\n'),blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=(config.testCode||'Sensory-Triangle-Test')+'-cup-labels.csv';document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
   function downloadConfig(){syncConfig();saveState();const payload={schema:SCHEMA,version:VERSION,savedAt:new Date().toISOString(),config,generated},blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download=(config.testCode||'Sensory-Triangle-Test')+'-triangle-test.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
   async function importConfig(file){if(!file)return;try{const parsed=JSON.parse(await file.text());if(parsed.schema&&parsed.schema!==SCHEMA)throw new Error('ไฟล์นี้ไม่ใช่การตั้งค่า Triangle Test');config=normalize(parsed.config||parsed);generated=normalizeSchedule(parsed.generated,config.copyCount);fill();saveState();$('printArea').innerHTML='';$('prepArea').innerHTML='';$('labelArea').innerHTML='';$('emptyPreview').hidden=!generated.length;$('prepEmpty').hidden=!generated.length;$('labelEmpty').hidden=!generated.length;$('previewSummary').classList.remove('show');$('prepSummary').classList.remove('show');$('labelSummary').classList.remove('show');$('printForms').disabled=true;$('printKey').disabled=true;$('printLabels').disabled=true;if(generated.length)render()}catch(error){alert('เปิดการตั้งค่าไม่สำเร็จ: '+error.message)}finally{$('importConfig').value=''}}
   function reset(){if(!confirm('ล้างการตั้งค่าและแผน Triangle Test แล้วเริ่มใหม่ใช่ไหมคะ?'))return;config=blankConfig();generated=[];localStorage.removeItem(STORAGE_KEY);fill();$('printArea').innerHTML='';$('prepArea').innerHTML='';$('labelArea').innerHTML='';$('emptyPreview').hidden=false;$('prepEmpty').hidden=false;$('labelEmpty').hidden=false;$('previewSummary').classList.remove('show');$('prepSummary').classList.remove('show');$('labelSummary').classList.remove('show');$('printForms').disabled=true;$('printKey').disabled=true;$('printLabels').disabled=true;$('saveStatus').textContent='เริ่มการตั้งค่าใหม่แล้ว'}
@@ -195,13 +192,14 @@
   $('printTasterGuide').addEventListener('click',openPrintableTasterGuide);
   $('printKey').addEventListener('click',()=>printDocument('prep'));
   $('printLabels').addEventListener('click',()=>printDocument('labels'));
+  $('downloadLabelsCsv').addEventListener('click',downloadLabelsCsv);
   $('downloadConfig').addEventListener('click',downloadConfig);
   $('importConfig').addEventListener('change',(event)=>importConfig(event.target.files[0]));
   $('reset').addEventListener('click',reset);
   $('openCreatorGuide').addEventListener('click',()=>openDialog('creatorGuide'));
-  $('openTasterGuide').addEventListener('click',()=>openDialog('tasterGuide'));
   document.querySelectorAll('[data-close-dialog]').forEach((button)=>button.addEventListener('click',()=>closeDialog(button.dataset.closeDialog)));
   document.querySelectorAll('dialog').forEach((dialog)=>dialog.addEventListener('click',(event)=>{if(event.target===dialog)closeDialog(dialog.id)}));
+  new MutationObserver(()=>$('downloadLabelsCsv').disabled=!generated.length).observe($('labelArea'),{childList:true});
   loadState();fill();if(generated.length)render();
 })();
 </script>
