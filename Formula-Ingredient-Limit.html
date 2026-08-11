@@ -1,0 +1,319 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="คำนวณจากวัตถุดิบที่มี ว่าจะผลิตมิกซ์ไอศกรีมได้กี่กรัมและควรใช้ตัวคูณสูตรเท่าไร">
+<title>Yield Calculator · Miss Ice Cream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
+<style>
+  *{box-sizing:border-box}
+  body.formula-limit-page{min-height:100vh;margin:0;padding:30px 18px 52px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.62),transparent 34%),radial-gradient(circle at 92% 92%,rgba(199,67,93,.055),transparent 34%)}
+  .container{width:min(100%,820px);margin:0 auto}
+  .back-link{display:inline-flex;min-height:42px;align-items:center;margin-bottom:22px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
+  .back-link:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+  .hero{margin-bottom:18px;padding:28px 25px 25px;border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.92);box-shadow:0 22px 48px -42px rgba(34,40,31,.68);text-align:center}
+  .eyebrow{margin:0 0 8px;color:var(--accent-deep);font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:none}
+  h1{max-width:700px;margin:0 auto;color:var(--accent-deep);font-family:'Sarabun',sans-serif;font-size:clamp(36px,6.5vw,54px);font-weight:700;line-height:1.13;letter-spacing:-.035em}
+  h1 .accent{color:var(--rose)}
+  .thai-title{margin:9px 0 0;color:var(--accent-deep);font-size:18px;font-weight:700;line-height:1.5}
+  .subtitle{max-width:670px;margin:12px auto 0;color:var(--muted);font-size:16px;font-weight:500;line-height:1.72}
+  .formula-chip{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:7px;margin-top:18px;padding:10px 16px;border:1px solid #cfd9c9;border-radius:999px;background:var(--accent-soft);color:var(--accent-deep);font-size:14px;font-weight:700;line-height:1.5}
+  .calculator{overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#fffdf9;box-shadow:0 20px 44px -38px rgba(43,33,24,.68)}
+  .calculator-head{padding:21px 22px 17px;border-bottom:1px solid var(--line)}
+  .calculator-head h2{margin:0;color:var(--ink);font-size:24px;font-weight:700;line-height:1.4}
+  .calculator-head p{margin:5px 0 0;color:var(--muted);font-size:15px;line-height:1.68}
+  .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:22px}
+  .field{min-width:0}.field.full{grid-column:1/-1}
+  .field label{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px;color:var(--ink);font-size:15px;font-weight:700;line-height:1.5}
+  .field label small{color:var(--muted);font-size:12px;font-weight:500}
+  .field input{width:100%;min-height:58px;padding:11px 14px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);font-family:'Sarabun',sans-serif;font-size:19px;outline:none}
+  .field input[type="number"]{padding-right:58px;font-family:'Fraunces','Sarabun',serif;font-size:25px;font-variant-numeric:tabular-nums;appearance:textfield;-moz-appearance:textfield}
+  .field input[type="number"]::-webkit-outer-spin-button,.field input[type="number"]::-webkit-inner-spin-button{margin:0;-webkit-appearance:none}
+  .number-wrap{position:relative}.unit{position:absolute;top:50%;right:14px;transform:translateY(-50%);color:var(--muted);font-size:14px;font-weight:600;pointer-events:none}
+  .field-help{margin:7px 2px 0;color:var(--muted);font-size:13px;line-height:1.58}
+  .form-message{display:none;margin:0 22px;padding:12px 14px;border:1px solid #eccbd1;border-radius:13px;background:#fff3f5;color:var(--rose-deep);font-size:14px;font-weight:600;line-height:1.6}
+  .form-message.show{display:block}
+  .autosave-note{margin:-4px 22px 20px;color:var(--muted);font-size:13px;line-height:1.6;text-align:center}
+  .btn{display:inline-flex;min-height:48px;align-items:center;justify-content:center;padding:10px 22px;border:1px solid var(--line);border-radius:999px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:700;cursor:pointer}
+  .btn.primary{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}.btn.primary:hover{background:#244e30}.btn.print{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}.btn.print:hover{background:#244e30}body.formula-limit-page .btn.reset{border-color:#d9909f!important;background:#fce9ed!important;color:var(--rose-deep)!important}body.formula-limit-page .btn.reset:hover{border-color:var(--rose-deep)!important;background:var(--rose-deep)!important;color:#fff!important}
+  .result{margin-top:18px;overflow:hidden;border:1px solid #c9d8c5;border-radius:24px;background:#fff;box-shadow:0 20px 44px -40px rgba(43,33,24,.7)}
+  .result-empty{padding:28px 22px;color:var(--muted);font-size:15px;line-height:1.7;text-align:center}
+  .result-content[hidden],.result-empty[hidden]{display:none}
+  .result-head{padding:18px 22px;border-bottom:1px solid #d6dfd2;background:var(--accent-soft);text-align:center}
+  .result-head .result-kicker{display:block;color:var(--muted);font-size:13px;font-weight:600}.result-head strong{display:block;margin-top:3px;color:var(--accent-deep);font-size:20px;line-height:1.45}
+  .result-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.75fr);gap:1px;background:#dfe6dc}
+  .result-item{min-width:0;padding:19px 12px;background:#fff;text-align:center}.result-label{display:block;color:var(--muted);font-size:12.5px;font-weight:600;line-height:1.45}.result-value{display:block;margin-top:5px;color:var(--accent-deep);font-family:'Fraunces','Sarabun',serif;font-size:clamp(27px,5vw,39px);font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.result-value small{font-family:'Sarabun',sans-serif;font-size:.42em;font-weight:700}
+  .mix-result-line{display:grid;justify-items:center;gap:3px;margin-top:5px}.mix-result-line .result-value{display:block;margin-top:0}.result-equivalent{display:block;color:var(--muted);font-size:14px;font-weight:600;line-height:1.5;font-variant-numeric:tabular-nums}.result-item.multiplier{background:#fff7f8}.result-item.multiplier .result-label{color:var(--rose-deep)}.result-item.multiplier .result-value{color:var(--rose-deep)}
+  .scale-guide{padding:20px 22px;border-top:1px solid var(--line);background:#fffdf9}.scale-guide h3{margin:0;color:var(--ink);font-size:18px;line-height:1.45}.scale-guide p{margin:7px 0 0;color:#4c5949;font-size:15px;line-height:1.72}.scale-equation{margin-top:12px;padding:13px 15px;border:1px solid #d3ddcf;border-radius:13px;background:var(--accent-soft);color:var(--accent-deep);font-size:16px;font-weight:700;line-height:1.6;text-align:center}
+  .recipe-helper{margin-top:18px;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#fffdf9;box-shadow:0 20px 44px -40px rgba(43,33,24,.7)}
+  .recipe-helper summary{display:grid;grid-template-columns:42px minmax(0,1fr) 26px;align-items:center;gap:12px;padding:18px 20px;color:var(--ink);cursor:pointer;list-style:none}.recipe-helper summary::-webkit-details-marker{display:none}.helper-icon{display:grid;width:42px;height:42px;place-items:center;border-radius:13px;background:var(--accent-soft);color:var(--accent-deep)}.table-icon{display:grid;width:22px;height:19px;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);overflow:hidden;border:2px solid currentColor;border-radius:3px}.table-icon::before{content:'';grid-column:1/-1;grid-row:1/-1;background:linear-gradient(to right,transparent calc(33.333% - 1px),currentColor calc(33.333% - 1px),currentColor calc(33.333% + 1px),transparent calc(33.333% + 1px),transparent calc(66.666% - 1px),currentColor calc(66.666% - 1px),currentColor calc(66.666% + 1px),transparent calc(66.666% + 1px)),linear-gradient(to bottom,transparent calc(33.333% - 1px),currentColor calc(33.333% - 1px),currentColor calc(33.333% + 1px),transparent calc(33.333% + 1px),transparent calc(66.666% - 1px),currentColor calc(66.666% - 1px),currentColor calc(66.666% + 1px),transparent calc(66.666% + 1px))}.helper-copy strong{display:block;color:var(--accent-deep);font-size:18px;line-height:1.45}.helper-copy small{display:block;margin-top:2px;color:var(--muted);font-size:13px;line-height:1.55}.helper-arrow{display:grid;place-items:center;color:var(--accent-deep);transition:transform .18s}.helper-arrow::before{content:'';width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px)}.recipe-helper[open] .helper-arrow{transform:rotate(180deg)}
+  .helper-body{padding:20px;border-top:1px solid var(--line);background:#fff}.helper-control{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}.helper-control label{color:var(--ink);font-size:15px;font-weight:700}.helper-control select{min-width:126px;min-height:42px;padding:7px 11px;border:1px solid var(--line);border-radius:11px;background:#fff;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:600}
+  .recipe-table{overflow:hidden;border:1px solid var(--line);border-radius:15px}.recipe-table-head,.recipe-row,.recipe-total-row{display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(120px,.8fr) minmax(120px,.8fr);align-items:stretch}.recipe-table-head{background:var(--accent-soft);color:var(--accent-deep);font-size:12.5px;font-weight:700;line-height:1.4;text-align:center}.recipe-table-head>span{display:grid;min-width:0;place-items:center;padding:9px 6px;border-left:1px solid #ced9ca}.recipe-table-head>span:first-child{border-left:0}.recipe-row{border-top:1px solid var(--line);background:#fff}.recipe-cell{display:grid;min-width:0;align-items:center;padding:5px 6px;border-left:1px solid var(--line)}.recipe-cell:first-child{border-left:0}.recipe-cell input{width:100%;min-width:0;min-height:40px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;font-family:'Sarabun',sans-serif;font-size:14px}.recipe-cell input[type="number"]{font-family:'Fraunces','Sarabun',serif;font-size:17px;font-variant-numeric:tabular-nums}.recipe-result{display:block;color:var(--accent-deep);font-family:'Fraunces','Sarabun',serif;font-size:17px;font-weight:600;line-height:1.35;text-align:center;font-variant-numeric:tabular-nums}.recipe-result.empty{color:var(--muted-soft)}.primary-ingredient-row{background:#fff7f8}.primary-ingredient-row .recipe-cell{border-color:#ecd1d7}.primary-ingredient-row input[readonly]{border-color:#e5b5bf;background:#fff0f3;color:var(--rose-deep);font-weight:700;cursor:default}.primary-ingredient-row .recipe-result{color:var(--rose-deep)}.recipe-total-row{border-top:2px solid #b9ccb5;background:var(--accent-soft);color:var(--accent-deep)}.recipe-total-cell{display:grid;min-width:0;place-items:center;padding:11px 6px;border-left:1px solid #ced9ca;font-size:14px;font-weight:700;text-align:center}.recipe-total-cell:first-child{border-left:0}.recipe-total-value{font-family:'Fraunces','Sarabun',serif;font-size:18px;font-variant-numeric:tabular-nums}.helper-note{margin:12px 2px 0;color:var(--muted);font-size:13px;line-height:1.65}
+  .bottom-actions{display:flex;justify-content:center;gap:10px;margin-top:20px}.bottom-actions .btn{min-width:190px}
+  .site-footer{margin:30px auto 0;padding:14px 16px 4px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.7;text-align:center}.site-footer a{color:inherit;text-decoration:underline}
+  @media(max-width:680px){body.formula-limit-page{padding:22px 12px 44px}.hero{padding:23px 16px 21px;border-radius:22px}.subtitle{font-size:14.5px}.formula-chip{border-radius:15px;font-size:13px}.calculator,.result,.recipe-helper{border-radius:20px}.calculator-head{padding:18px 16px 15px}.calculator-head h2{font-size:21px}.fields{grid-template-columns:1fr;gap:15px;padding:18px 16px}.field.full{grid-column:auto}.form-message{margin:0 16px}.autosave-note{margin:-2px 16px 18px}.result-grid{grid-template-columns:1fr}.result-item{padding:15px}.result-item+.result-item{border-top:1px solid #dfe6dc}.result-value{font-size:34px}.scale-guide{padding:18px 16px}.recipe-helper summary{grid-template-columns:38px minmax(0,1fr) 22px;padding:16px 14px}.helper-icon{width:38px;height:38px}.helper-copy strong{font-size:16px}.helper-body{padding:14px}.helper-control{flex-wrap:nowrap;margin-bottom:12px}.helper-control label{font-size:14px}.helper-control select{min-width:108px}.recipe-table-head,.recipe-row,.recipe-total-row{grid-template-columns:minmax(0,1.28fr) minmax(82px,.82fr) minmax(82px,.9fr)}.recipe-table-head{font-size:11px}.recipe-table-head>span{padding:7px 3px}.recipe-cell{padding:4px}.recipe-cell input{min-height:38px;padding:5px 6px;border-radius:7px;font-size:13px}.recipe-cell input[type="number"]{font-size:15px}.recipe-result{font-size:14px}.recipe-total-cell{padding:9px 3px;font-size:12px}.recipe-total-value{font-size:14px}.bottom-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-actions .btn{width:100%;min-width:0;padding-inline:10px;font-size:14px}}
+  @page{size:A4 portrait;margin:11mm}
+  @media print{html,body{background:#fff!important}body.formula-limit-page{padding:0;background:#fff;background-image:none;font-size:10pt;-webkit-print-color-adjust:exact;print-color-adjust:exact}.container{width:100%;max-width:none}.back-link,.form-actions,.bottom-actions,.tools-bottom-nav,.site-footer,.autosave-note,.field-help,.helper-control,.helper-arrow,.helper-note{display:none!important}.hero,.calculator,.result,.recipe-helper{border-color:#bfcbbb;box-shadow:none;break-inside:avoid}.hero{margin:0 0 4mm;padding:5mm;border-radius:5mm}.eyebrow{margin-bottom:1mm;font-size:8.5pt}h1{font-size:25pt}.thai-title{margin-top:1mm;font-size:12.5pt}.subtitle{margin-top:1.5mm;font-size:9.5pt;line-height:1.45}.formula-chip{margin-top:2.5mm;padding:2mm 4mm;font-size:9pt}.calculator{border-radius:4mm}.calculator-head{padding:3mm 4mm}.calculator-head h2{font-size:15pt}.calculator-head p{margin-top:1mm;font-size:9pt}.fields{grid-template-columns:1.15fr .9fr .9fr;gap:2.5mm;padding:3mm 4mm}.field.full{grid-column:auto}.field label{margin-bottom:1mm;font-size:9pt}.field label small{font-size:8pt}.field input,.field input[type="number"]{min-height:9mm;padding:1.5mm 3mm;border-radius:2mm;font-size:12pt}.unit{right:3mm;font-size:8pt}.form-message{margin:0 4mm 3mm;padding:2mm 3mm}.result{margin-top:4mm;border-radius:4mm}.result-head{padding:2.5mm 4mm}.result-head .result-kicker{font-size:8pt}.result-head strong{font-size:13pt}.result-grid{grid-template-columns:1.45fr .75fr}.result-item{padding:3mm}.result-item+.result-item{border-top:0}.result-label{font-size:8pt}.result-value{font-size:22pt}.result-equivalent{font-size:9pt}.scale-guide{padding:3mm 4mm}.scale-guide h3{font-size:12pt}.scale-guide p{margin-top:1mm;font-size:9pt;line-height:1.45}.scale-equation{margin-top:2mm;padding:2mm 3mm;font-size:10pt}.recipe-helper{margin-top:4mm;border-radius:4mm}.recipe-helper summary{grid-template-columns:8mm minmax(0,1fr);gap:2.5mm;padding:3mm 4mm}.helper-icon{width:8mm;height:8mm;border-radius:2mm}.table-icon{width:5mm;height:4.5mm}.helper-copy strong{font-size:13pt}.helper-copy small{display:none}.helper-body{padding:3mm}.recipe-table{border-radius:3mm}.recipe-table-head,.recipe-row,.recipe-total-row{grid-template-columns:1.3fr .8fr .8fr}.recipe-table-head{font-size:8pt}.recipe-table-head>span{padding:1.5mm}.recipe-cell{padding:1mm}.recipe-cell input,.recipe-cell input[type="number"]{min-height:7mm;padding:1mm 2mm;border-radius:1.5mm;font-size:10pt}.recipe-result{font-size:10pt}.recipe-row.print-empty{display:none!important}.recipe-total-cell{padding:2mm;font-size:9pt}.recipe-total-value{font-size:11pt}.result-empty{display:none!important}input::placeholder{color:transparent!important}}
+</style>
+<script src="tools-shell.js?v=082026M" defer></script>
+</head>
+<body class="tools-ui-v2 tools-layout-calculator formula-limit-page">
+<main class="container">
+  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+
+  <header class="hero">
+    <p class="eyebrow">Formula Tools · เครื่องมือที่ 1</p>
+    <h1>Yield <span class="accent">Calculator</span></h1>
+    <p class="thai-title">มีวัตถุดิบเท่านี้ ทำได้เท่าไร?</p>
+    <p class="subtitle">คำนวณจากวัตถุดิบที่มีหรืออยากใช้ให้หมด เพื่อหาน้ำหนักมิกซ์และตัวคูณสำหรับปรับสูตร</p>
+    <div class="formula-chip" aria-label="สูตรคำนวณ"><span>นน. ที่มีหรือจะใช้จริง</span><span aria-hidden="true">÷</span><span>นน. ในสูตร 1000 g (1 kg)</span><span aria-hidden="true">=</span><span>ตัวคูณสูตร</span></div>
+  </header>
+
+  <section class="calculator" aria-labelledby="calculator-title">
+    <div class="calculator-head">
+      <h2 id="calculator-title">กรอกข้อมูลวัตถุดิบ</h2>
+      <p>ใช้หน่วยกรัมทั้งสองช่อง ระบบจะคำนวณให้อัตโนมัติและแสดงผลเป็นกรัมค่ะ</p>
+    </div>
+    <form id="limitForm" novalidate>
+      <div class="fields">
+        <div class="field full">
+          <label for="ingredientName"><span>ชื่อวัตถุดิบ</span><small>ไม่บังคับ</small></label>
+          <input id="ingredientName" name="ingredientName" type="text" maxlength="80" autocomplete="off" placeholder="เช่น สตรอว์เบอร์รี นม หรือช็อกโกแลต">
+        </div>
+        <div class="field">
+          <label for="perKgWeight">น้ำหนักในสูตร 1000 g (1 kg)</label>
+          <div class="number-wrap"><input id="perKgWeight" name="perKgWeight" type="number" min="0.01" max="1000" step="any" inputmode="decimal" placeholder="เช่น 200" aria-describedby="perKgHelp"><span class="unit">g</span></div>
+          <p class="field-help" id="perKgHelp">วัตถุดิบนี้ใช้กี่กรัมในสูตรตั้งต้น 1,000 g</p>
+        </div>
+        <div class="field">
+          <label for="availableWeight">น้ำหนักที่มีหรือจะใช้จริง</label>
+          <div class="number-wrap"><input id="availableWeight" name="availableWeight" type="number" min="0.01" step="any" inputmode="decimal" placeholder="เช่น 650" aria-describedby="availableHelp"><span class="unit">g</span></div>
+          <p class="field-help" id="availableHelp">น้ำหนักวัตถุดิบที่มีอยู่ หรือปริมาณที่ต้องการใช้ทั้งหมด</p>
+        </div>
+      </div>
+      <div class="form-message" id="formMessage" role="alert"></div>
+      <p class="autosave-note">ระบบจะจำค่าที่กรอกไว้ในเบราว์เซอร์เครื่องนี้ จนกว่าจะกด “เริ่มใหม่”</p>
+    </form>
+  </section>
+
+  <section class="result" aria-live="polite" aria-labelledby="result-title">
+    <div class="result-empty" id="resultEmpty">กรอกน้ำหนักทั้งสองช่อง ระบบจะคำนวณปริมาณมิกซ์และตัวคูณสูตรให้อัตโนมัติ</div>
+    <div class="result-content" id="resultContent" hidden>
+      <div class="result-head"><span class="result-kicker" id="result-title">ผลการคำนวณ</span><strong id="resultSummary"></strong></div>
+      <div class="result-grid">
+        <div class="result-item"><span class="result-label">จะสามารถผลิตมิกซ์ได้</span><div class="mix-result-line"><strong class="result-value"><span id="resultGrams"></span> <small>g</small></strong><span class="result-equivalent">(เท่ากับ <span id="resultKg"></span> kg)</span></div></div>
+        <div class="result-item multiplier"><span class="result-label">ตัวคูณสูตร</span><strong class="result-value">×<span id="resultMultiplier"></span></strong></div>
+      </div>
+      <div class="scale-guide">
+        <h3>นำตัวเลขไปใช้กับวัตถุดิบอื่นอย่างไร?</h3>
+        <p id="scaleExplanation"></p>
+        <div class="scale-equation" id="scaleEquation"></div>
+      </div>
+    </div>
+  </section>
+
+  <details class="recipe-helper" id="recipeHelper">
+    <summary><span class="helper-icon" aria-hidden="true"><span class="table-icon"></span></span><span class="helper-copy"><strong>ช่วยคำนวณวัตถุดิบทั้งสูตร</strong><small>เลือกจำนวนวัตถุดิบ แล้วคูณทุกตัวด้วยตัวคูณสูตรโดยอัตโนมัติ</small></span><span class="helper-arrow" aria-hidden="true"></span></summary>
+    <div class="helper-body">
+      <div class="helper-control"><label for="ingredientCount">จำนวนวัตถุดิบ</label><select id="ingredientCount" aria-label="จำนวนชนิดวัตถุดิบ"></select></div>
+      <div class="recipe-table" role="table" aria-label="คำนวณวัตถุดิบทั้งสูตร">
+        <div class="recipe-table-head" role="row"><span role="columnheader">วัตถุดิบ</span><span role="columnheader">นน. ในสูตร<br>(g)</span><span role="columnheader">นน. ที่ต้องใช้<br>(g)</span></div>
+        <div id="recipeRows" role="rowgroup"></div>
+        <div class="recipe-total-row" role="row"><strong class="recipe-total-cell" role="cell">รวม</strong><strong class="recipe-total-cell recipe-total-value" id="recipeBaseTotal" role="cell">0.00</strong><strong class="recipe-total-cell recipe-total-value" id="recipeScaledTotal" role="cell">—</strong></div>
+      </div>
+      <p class="helper-note">ผลลัพธ์แต่ละแถวและยอดรวมจะเปลี่ยนทันทีเมื่อแก้ตัวคูณสูตรหรือน้ำหนักวัตถุดิบ</p>
+    </div>
+  </details>
+
+  <div class="bottom-actions"><button class="btn print" id="printButton" type="button">พิมพ์ / บันทึก PDF</button><button class="btn reset" id="resetButton" type="button">เริ่มใหม่</button></div>
+
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026M by Paula Kaothien</span></footer>
+</main>
+<script>
+(function(){
+  const form=document.getElementById('limitForm');
+  const ingredientName=document.getElementById('ingredientName');
+  const perKgWeight=document.getElementById('perKgWeight');
+  const availableWeight=document.getElementById('availableWeight');
+  const printButton=document.getElementById('printButton');
+  const resetButton=document.getElementById('resetButton');
+  const formMessage=document.getElementById('formMessage');
+  const resultEmpty=document.getElementById('resultEmpty');
+  const resultContent=document.getElementById('resultContent');
+  const resultSummary=document.getElementById('resultSummary');
+  const resultKg=document.getElementById('resultKg');
+  const resultGrams=document.getElementById('resultGrams');
+  const resultMultiplier=document.getElementById('resultMultiplier');
+  const scaleExplanation=document.getElementById('scaleExplanation');
+  const scaleEquation=document.getElementById('scaleEquation');
+  const recipeHelper=document.getElementById('recipeHelper');
+  const ingredientCount=document.getElementById('ingredientCount');
+  const recipeRows=document.getElementById('recipeRows');
+  const recipeBaseTotal=document.getElementById('recipeBaseTotal');
+  const recipeScaledTotal=document.getElementById('recipeScaledTotal');
+  const storageKey='mic-yield-calculator-v1';
+  const numberFormat=new Intl.NumberFormat('th-TH',{maximumFractionDigits:3});
+  const resultNumberFormat=new Intl.NumberFormat('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2});
+  let recipeDraftRows=[];
+  let helperOpenBeforePrint=false;
+
+  function cleanName(){return ingredientName.value.trim()||'วัตถุดิบนี้';}
+  function formatNumber(value){
+    if(value>0&&value<0.001)return value.toLocaleString('th-TH',{maximumFractionDigits:6});
+    return numberFormat.format(value);
+  }
+  function showMessage(message){formMessage.textContent=message;formMessage.classList.add('show');}
+  function clearMessage(){formMessage.textContent='';formMessage.classList.remove('show');}
+  function getMultiplier(){
+    const perKg=Number(perKgWeight.value);
+    const available=Number(availableWeight.value);
+    if(!perKgWeight.value||!availableWeight.value||!Number.isFinite(perKg)||!Number.isFinite(available)||perKg<=0||perKg>1000||available<=0)return null;
+    return available/perKg;
+  }
+  function collectRecipeRows(){
+    return Array.from(recipeRows.querySelectorAll('.recipe-row')).map(function(row){
+      return{name:row.querySelector('.recipe-name-input').value,baseWeight:row.querySelector('.recipe-base-input').value};
+    });
+  }
+  function syncRecipeDraftRows(){
+    collectRecipeRows().forEach(function(row,index){recipeDraftRows[index]=row;});
+    return recipeDraftRows;
+  }
+  function syncPrimaryIngredientRow(){
+    const firstRow=recipeRows.querySelector('.recipe-row');
+    if(!firstRow)return;
+    firstRow.querySelector('.recipe-name-input').value=ingredientName.value.trim();
+    firstRow.querySelector('.recipe-base-input').value=perKgWeight.value;
+    syncRecipeDraftRows();
+  }
+  function updateRecipeResults(){
+    const multiplier=getMultiplier();
+    let baseTotal=0;
+    let scaledTotal=0;
+    let hasWeight=false;
+    recipeRows.querySelectorAll('.recipe-row').forEach(function(row){
+      const baseInput=row.querySelector('.recipe-base-input');
+      const output=row.querySelector('.recipe-result');
+      const base=Number(baseInput.value);
+      if(baseInput.value&&Number.isFinite(base)&&base>=0){
+        hasWeight=true;
+        baseTotal+=base;
+        if(multiplier!==null){
+          const scaled=base*multiplier;
+          scaledTotal+=scaled;
+          output.textContent=resultNumberFormat.format(scaled);
+          output.classList.remove('empty');
+        }else{
+          output.textContent='—';
+          output.classList.add('empty');
+        }
+      }else{
+        output.textContent='—';
+        output.classList.add('empty');
+      }
+    });
+    recipeBaseTotal.textContent=resultNumberFormat.format(baseTotal);
+    recipeScaledTotal.textContent=multiplier!==null&&hasWeight?resultNumberFormat.format(scaledTotal):'—';
+  }
+  function renderRecipeRows(savedRows){
+    if(Array.isArray(savedRows))recipeDraftRows=savedRows.map(function(row){return{name:typeof row.name==='string'?row.name:'',baseWeight:typeof row.baseWeight==='string'?row.baseWeight:''};});
+    const count=Math.max(1,Math.min(30,Number(ingredientCount.value)||8));
+    recipeRows.innerHTML='';
+    for(let index=0;index<count;index+=1){
+      const data=recipeDraftRows[index]||{};
+      const row=document.createElement('div');
+      row.className=index===0?'recipe-row primary-ingredient-row':'recipe-row';
+      row.setAttribute('role','row');
+      const readOnly=index===0?' readonly':'';
+      row.innerHTML='<div class="recipe-cell recipe-name" role="cell"><input class="recipe-name-input" type="text" maxlength="80" autocomplete="off" aria-label="ชื่อวัตถุดิบลำดับที่ '+(index+1)+'" placeholder="'+(index===0?'วัตถุดิบที่ใช้คำนวณ':'ชื่อ (ไม่บังคับ)')+'"'+readOnly+'></div>'
+        +'<div class="recipe-cell recipe-base" role="cell"><input class="recipe-base-input" type="number" min="0" step="any" inputmode="decimal" aria-label="น้ำหนักตามสูตรของวัตถุดิบลำดับที่ '+(index+1)+'" placeholder="0"'+readOnly+'></div>'
+        +'<div class="recipe-cell recipe-output" role="cell"><output class="recipe-result empty">—</output></div>';
+      row.querySelector('.recipe-name-input').value=index===0?ingredientName.value.trim():(typeof data.name==='string'?data.name:'');
+      row.querySelector('.recipe-base-input').value=index===0?perKgWeight.value:(typeof data.baseWeight==='string'?data.baseWeight:'');
+      if(index>0)row.querySelectorAll('input').forEach(function(input){input.addEventListener('input',function(){syncRecipeDraftRows();updateRecipeResults();saveState();});});
+      recipeRows.appendChild(row);
+    }
+    updateRecipeResults();
+  }
+  function clearResult(){resultEmpty.hidden=false;resultContent.hidden=true;updateRecipeResults();}
+  function saveState(){
+    try{localStorage.setItem(storageKey,JSON.stringify({recipeLayoutVersion:2,ingredientName:ingredientName.value,perKgWeight:perKgWeight.value,availableWeight:availableWeight.value,ingredientCount:ingredientCount.value,recipeRows:syncRecipeDraftRows()}));}catch(error){}
+  }
+  function clearSavedState(){try{localStorage.removeItem(storageKey);}catch(error){}}
+  function restoreState(){
+    let saved=null;
+    try{
+      const parsed=JSON.parse(localStorage.getItem(storageKey)||'null');
+      if(parsed&&typeof parsed==='object')saved=parsed;
+    }catch(error){}
+    let savedRows=saved&&Array.isArray(saved.recipeRows)?saved.recipeRows:[];
+    let savedCount=saved?Number(saved.ingredientCount):0;
+    if(saved&&saved.recipeLayoutVersion!==2&&savedRows.some(function(row){return row&&(row.name||row.baseWeight);})){const legacyCount=savedCount||savedRows.length;savedRows=[{},...savedRows].slice(0,30);savedCount=Math.min(30,legacyCount+1);}
+    const hasSavedRecipeData=savedRows.some(function(row){return row&&(row.name||row.baseWeight);});
+    ingredientCount.value=String(Math.max(1,Math.min(30,hasSavedRecipeData?(savedCount||savedRows.length):8)));
+    renderRecipeRows(savedRows);
+    if(!saved)return;
+    ingredientName.value=typeof saved.ingredientName==='string'?saved.ingredientName:'';
+    perKgWeight.value=typeof saved.perKgWeight==='string'?saved.perKgWeight:'';
+    availableWeight.value=typeof saved.availableWeight==='string'?saved.availableWeight:'';
+    syncPrimaryIngredientRow();
+    if(perKgWeight.value&&availableWeight.value)calculate(false);else updateRecipeResults();
+  }
+  function validate(showErrors){
+    const perKg=Number(perKgWeight.value);
+    const available=Number(availableWeight.value);
+    let message='';
+    if(!perKgWeight.value||!availableWeight.value)message='กรุณากรอกน้ำหนักให้ครบทั้งสองช่อง';
+    else if(!Number.isFinite(perKg)||perKg<=0)message='น้ำหนักในสูตร 1000 g (1 kg) ต้องมากกว่า 0 g';
+    else if(perKg>1000)message='น้ำหนักวัตถุดิบในสูตร 1000 g (1 kg) ต้องไม่เกิน 1,000 g กรุณาตรวจสูตรอีกครั้ง';
+    else if(!Number.isFinite(available)||available<=0)message='น้ำหนักที่มีหรือจะใช้จริงต้องมากกว่า 0 g';
+    if(message){if(showErrors)showMessage(message);return null;}
+    clearMessage();return{perKg,available};
+  }
+  function calculate(showErrors){
+    const values=validate(showErrors);
+    if(!values){clearResult();return;}
+    const multiplier=values.available/values.perKg;
+    const mixKg=multiplier;
+    const mixGrams=mixKg*1000;
+    const displayName=cleanName();
+    const multiplierText=formatNumber(multiplier);
+    resultSummary.textContent='จาก '+displayName+' '+formatNumber(values.available)+' g';
+    resultKg.textContent=resultNumberFormat.format(mixKg);
+    resultGrams.textContent=resultNumberFormat.format(mixGrams);
+    resultMultiplier.textContent=multiplierText;
+    scaleExplanation.textContent='นำ '+multiplierText+' ไปคูณน้ำหนักวัตถุดิบทุกตัวในสูตรมิกซ์ 1000 g (1 kg) เช่น วัตถุดิบเดิม 100 g จะใช้ '+formatNumber(100*multiplier)+' g';
+    scaleEquation.textContent='นน. ในสูตร × '+multiplierText+' = นน. ที่ต้องใช้';
+    resultEmpty.hidden=true;
+    resultContent.hidden=false;
+    updateRecipeResults();
+  }
+  for(let count=1;count<=30;count+=1){
+    const option=document.createElement('option');
+    option.value=String(count);
+    option.textContent=count+' ชนิด';
+    ingredientCount.appendChild(option);
+  }
+  form.addEventListener('submit',function(event){event.preventDefault();calculate(true);});
+  [perKgWeight,availableWeight].forEach(function(input){input.addEventListener('input',function(){syncPrimaryIngredientRow();saveState();if(perKgWeight.value&&availableWeight.value)calculate(false);else{clearMessage();clearResult();}});});
+  ingredientName.addEventListener('input',function(){syncPrimaryIngredientRow();saveState();if(!resultContent.hidden)calculate(false);});
+  ingredientCount.addEventListener('change',function(){syncRecipeDraftRows();renderRecipeRows(recipeDraftRows);saveState();});
+  window.addEventListener('beforeprint',function(){helperOpenBeforePrint=recipeHelper.open;recipeHelper.open=true;recipeRows.querySelectorAll('.recipe-row').forEach(function(row,index){const name=row.querySelector('.recipe-name-input').value.trim();const base=row.querySelector('.recipe-base-input').value;row.classList.toggle('print-empty',index>0&&!name&&!base);});});
+  window.addEventListener('afterprint',function(){recipeHelper.open=helperOpenBeforePrint;recipeRows.querySelectorAll('.recipe-row').forEach(function(row){row.classList.remove('print-empty');});});
+  printButton.addEventListener('click',function(){window.print();});
+  resetButton.addEventListener('click',function(){form.reset();ingredientCount.value='8';recipeDraftRows=[];renderRecipeRows([]);recipeHelper.open=false;clearSavedState();clearMessage();clearResult();ingredientName.focus();});
+  restoreState();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือ Yield Calculator · Miss Ice Cream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
+<style>
+  *{box-sizing:border-box}
+  body.formula-limit-guide{min-height:100vh;margin:0;padding:30px 18px 52px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.62),transparent 34%),radial-gradient(circle at 92% 92%,rgba(199,67,93,.055),transparent 34%)}
+  .container{width:min(100%,820px);margin:0 auto}.back-link{display:inline-flex;min-height:42px;align-items:center;margin-bottom:22px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}.back-link:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+  .hero{margin-bottom:18px;padding:28px 24px 25px;border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.92);box-shadow:0 22px 48px -42px rgba(34,40,31,.68);text-align:center}.eyebrow{margin:0 0 8px;color:var(--accent-deep);font-size:13px;font-weight:700}.hero h1{margin:0;color:var(--accent-deep);font-family:'Sarabun',sans-serif;font-size:clamp(35px,6vw,50px);font-weight:700;line-height:1.14;letter-spacing:-.03em}.subtitle{max-width:640px;margin:10px auto 0;color:var(--muted);font-size:16px;line-height:1.72}
+  .guide-card{margin-top:14px;padding:22px;border:1px solid var(--line);border-radius:21px;background:#fffdf9;box-shadow:0 18px 40px -38px rgba(43,33,24,.68)}.guide-card h2{margin:0 0 12px;color:var(--accent-deep);font-size:23px;line-height:1.42}.guide-card h3{margin:18px 0 7px;color:var(--ink);font-size:17px;line-height:1.45}.guide-card p,.guide-card li{color:#53604f;font-size:15px;line-height:1.75}.guide-card p{margin:0}.guide-card ol,.guide-card ul{margin:0;padding-left:24px}.guide-card li+li{margin-top:8px}
+  .formula-box{padding:15px 17px;border:1px solid #ced9ca;border-radius:15px;background:var(--accent-soft);color:var(--accent-deep);font-size:16px;font-weight:700;line-height:1.68;text-align:center}.example{padding:17px 18px;border:1px solid #e2d1c9;border-radius:16px;background:#fff8f5}.example strong{color:var(--rose-deep)}.info{display:grid;grid-template-columns:32px minmax(0,1fr);gap:11px;padding:15px 16px;border:1px solid #d5dfd0;border-radius:15px;background:var(--accent-soft);color:#40503d;font-size:14px;line-height:1.72}.info-icon{display:grid;width:32px;height:32px;place-items:center;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:Georgia,serif;font-size:18px;font-style:italic;font-weight:700}
+  .site-footer{margin:30px auto 0;padding:14px 16px 4px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.7;text-align:center}.site-footer a{color:inherit;text-decoration:underline}
+  @media(max-width:640px){body.formula-limit-guide{padding:22px 12px 44px}.hero{padding:23px 16px 21px;border-radius:22px}.subtitle{font-size:14.5px}.guide-card{padding:18px 16px;border-radius:19px}.guide-card h2{font-size:21px}.info{grid-template-columns:28px minmax(0,1fr);padding:14px}.info-icon{width:28px;height:28px}}
+  @media print{body.formula-limit-guide{padding:0;background:#fff;background-image:none}.back-link,.tools-bottom-nav{display:none!important}.hero,.guide-card{box-shadow:none}}
+</style>
+<script src="tools-shell.js?v=082026M" defer></script>
+</head>
+<body class="tools-ui-v2 tools-layout-guide formula-limit-guide">
+<main class="container">
+  <a class="back-link" href="Formula-Ingredient-Limit.html">← กลับไปที่ Yield Calculator</a>
+  <header class="hero"><p class="eyebrow">คู่มือ Formula Tools</p><h1>Yield Calculator</h1><p class="subtitle">วิธีคำนวณจากวัตถุดิบที่มี เพื่อหาปริมาณมิกซ์เป็นกรัมและตัวคูณสำหรับปรับสูตรทั้งสูตร</p></header>
+
+  <section class="guide-card"><h2>เครื่องมือนี้ใช้เมื่อไร?</h2><p>ใช้เมื่อมีวัตถุดิบบางอย่างในปริมาณจำกัด หรือมีวัตถุดิบอยู่จำนวนหนึ่งและต้องการใช้ให้หมด โดยสูตรตั้งต้นต้องเป็นสูตรมิกซ์รวม 1000 g (1 kg)</p></section>
+
+  <section class="guide-card"><h2>ข้อมูลที่ต้องกรอก</h2><ol><li><strong>ชื่อวัตถุดิบ</strong> — ไม่บังคับ กรอกเพื่อให้ข้อความผลลัพธ์อ่านง่ายขึ้น</li><li><strong>น้ำหนักในสูตร 1000 g (1 kg)</strong> — วัตถุดิบนี้ใช้กี่กรัมในสูตรตั้งต้น 1,000 g</li><li><strong>น้ำหนักที่มีหรือจะใช้จริง</strong> — น้ำหนักวัตถุดิบที่มีอยู่ หรือปริมาณที่ต้องการใช้ทั้งหมด ใช้หน่วยกรัม</li></ol></section>
+
+  <section class="guide-card"><h2>หลักการคำนวณ</h2><div class="formula-box">น้ำหนักที่มีหรือจะใช้จริง ÷ น้ำหนักในสูตร 1000 g (1 kg)<br>= ตัวคูณสูตร<br><br>1000 g × ตัวคูณสูตร<br>= น้ำหนักมิกซ์ที่ผลิตได้</div><h3>ตัวคูณสัมพันธ์กับน้ำหนักมิกซ์อย่างไร?</h3><p>สูตรตั้งต้นมีขนาด 1000 g หากทำสูตร 3.25 เท่า จึงได้มิกซ์ 1000 × 3.25 = 3,250.00 g (เท่ากับ 3.25 kg)</p></section>
+
+  <section class="guide-card"><h2>วิธีนำตัวคูณไปใช้</h2><ol><li>กรอกน้ำหนักให้ครบทั้งสองช่อง ระบบจะแสดงค่า “ตัวคูณสูตร” ให้อัตโนมัติ</li><li>นำตัวคูณไปคูณน้ำหนักวัตถุดิบทุกตัวในสูตร 1000 g (1 kg)</li><li>ตรวจว่าน้ำหนักใหม่ของวัตถุดิบทุกตัวรวมกันเท่ากับน้ำหนักมิกซ์ที่เครื่องมือคำนวณให้</li></ol></section>
+
+  <section class="guide-card"><h2>ช่วยคำนวณวัตถุดิบทั้งสูตร</h2><ol><li>กดเปิดหัวข้อ “ช่วยคำนวณวัตถุดิบทั้งสูตร” ซึ่งปิดไว้ในตอนแรก</li><li>ตารางเริ่มต้นที่ 8 ชนิด และเลือกเพิ่มหรือลดได้ตั้งแต่ 1–30 ชนิด</li><li>แถวแรกสีชมพูอ่อนจะแสดงชื่อวัตถุดิบและ “นน. ในสูตร” จากช่องคำนวณหลักให้อัตโนมัติ จึงไม่ต้องกรอกซ้ำ</li><li>แถวอื่นกรอกชื่อวัตถุดิบหรือเว้นว่างไว้ก็ได้ แล้วกรอก “นน. ในสูตร” สำหรับสูตร 1000 g</li><li>คอลัมน์ “นน. ที่ต้องใช้” จะนำตัวคูณสูตรมาคูณและแสดงผลเป็นกรัมให้อัตโนมัติ</li><li>แถว “รวม” จะแสดงยอดรวมของ “นน. ในสูตร” และ “นน. ที่ต้องใช้” ไว้ตรงใต้คอลัมน์ของแต่ละค่า</li></ol><p>ข้อมูลที่กรอกไว้จะไม่หายเมื่อเพิ่มจำนวนแถว และระบบจะจำรายการวัตถุดิบพร้อมข้อมูลหลักจนกว่าจะกด “เริ่มใหม่”</p></section>
+
+  <section class="guide-card"><h2>การบันทึกอัตโนมัติ</h2><p>ค่าที่กรอกจะถูกบันทึกไว้ในเบราว์เซอร์บนอุปกรณ์เครื่องนี้ เมื่อเปิดหน้าอื่นหรือปิดหน้าแล้วกลับมา ระบบจะคืนค่าเดิมและแสดงผลคำนวณให้อัตโนมัติ ข้อมูลจะค้างอยู่จนกว่าจะกด “เริ่มใหม่” หรือล้างข้อมูลเว็บไซต์ของเบราว์เซอร์</p></section>
+
+  <section class="guide-card"><h2>พิมพ์หรือบันทึกเป็น PDF</h2><ol><li>กดปุ่ม “พิมพ์ / บันทึก PDF” ด้านล่างเครื่องมือ</li><li>ตารางวัตถุดิบจะกางอัตโนมัติ และแถวว่างจะไม่แสดงในเอกสาร</li><li>เลือกเครื่องพิมพ์เพื่อพิมพ์ลงกระดาษ หรือเลือก “Save as PDF” เพื่อบันทึกเป็นไฟล์ PDF</li></ol><p>เอกสารจัดรูปแบบสำหรับกระดาษ A4 และแสดงข้อมูลที่กรอก ผลการคำนวณ ตัวคูณสูตร และตารางวัตถุดิบค่ะ</p></section>
+
+  <section class="guide-card"><h2>ตัวอย่าง</h2><div class="example"><p>สูตรมิกซ์ 1000 g ใช้สตรอว์เบอร์รี <strong>200 g</strong> และมีสตรอว์เบอร์รี <strong>650 g</strong></p><p><strong>650 ÷ 200 = 3.25</strong> จึงทำมิกซ์ได้ <strong>3,250.00 g (เท่ากับ 3.25 kg)</strong> และใช้ตัวคูณ <strong>×3.25</strong></p><p>ถ้าสูตรเดิมใช้น้ำตาล 120 g ให้คำนวณ <strong>120 × 3.25 = 390 g</strong> แล้วทำแบบเดียวกันกับวัตถุดิบตัวอื่นทุกตัว</p></div></section>
+
+  <section class="guide-card"><h2>ก่อนกรอกน้ำหนัก</h2><div class="info"><span class="info-icon" aria-hidden="true">i</span><div><strong>ใช้น้ำหนักสุทธิที่ใส่ในมิกซ์จริง</strong><br>ถ้าวัตถุดิบต้องปอกเปลือก เอาเมล็ด กรอง หรือสะเด็ดน้ำ ให้ชั่งหลังเตรียมแล้ว ไม่ใช่น้ำหนักที่ซื้อมาก่อนเตรียม</div></div><h3>ผลลัพธ์หมายถึงอะไร?</h3><p>ผลลัพธ์คือปริมาณมิกซ์ที่วางแผนผลิตก่อนปั่น น้ำหนักผลิตภัณฑ์ที่ได้จริงอาจน้อยลงเล็กน้อยจากการติดภาชนะ การหก หรือการสูญเสียระหว่างผลิต</p></section>
+
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026M by Paula Kaothien</span></footer>
+</main>
+</body>
+</html>

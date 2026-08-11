@@ -1,6 +1,7 @@
 (function () {
   const page = location.pathname.split('/').pop() || 'index.html';
   const guides = {
+    'Formula-Ingredient-Limit.html': 'Formula-Ingredient-Limit-guide.html',
     'ClassTimer.html': 'ClassTimer-guide.html',
     'PST-Selector.html': 'PST-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html?v=072126J',
