@@ -1,0 +1,267 @@
+<!--
+  Copyright © 2026 Miss Icecream Co., Ltd. / พรหล้า ขาวเธียร (Paula Kaothien)
+  All Rights Reserved.
+  สงวนลิขสิทธิ์ — ห้ามคัดลอก ดัดแปลง หรือนำตัวเครื่องมือ/โค้ดไปใช้
+  เชิงพาณิชย์โดยไม่ได้รับอนุญาต · www.missicecream.com
+-->
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="คำนวณโซเดียมไฮโปคลอไรต์ 10% สำหรับเตรียมสารละลายคลอรีน 100 และ 200 ppm พร้อมคำแนะนำการผสมและใช้งานอย่างปลอดภัย">
+<title>Chlorine Solution Calculator · Miss Ice Cream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026M">
+<style>
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body.chlorine-page{min-height:100vh;margin:0;padding:30px 18px 52px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif}
+  .container{width:min(100%,820px);margin:0 auto}
+  .back-link{display:inline-flex;min-height:42px;align-items:center;margin-bottom:22px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
+  .back-link:hover{border-color:#287b73;color:#205f59}
+  .hero{margin-bottom:18px;padding:28px 25px 25px;border:1px solid var(--line);border-radius:26px;background:#fff;text-align:center}
+  .eyebrow{margin:0 0 8px;color:#287b73;font-size:13px;font-weight:700}
+  h1{margin:0;color:#205f59;font-family:'Sarabun',sans-serif;font-size:clamp(34px,6.5vw,52px);font-weight:700;line-height:1.13;letter-spacing:-.035em}
+  .title-accent{color:#c74363}
+  .thai-title{margin:9px 0 0;color:#205f59;font-size:19px;font-weight:700;line-height:1.5}
+  .subtitle{max-width:670px;margin:12px auto 0;color:var(--muted);font-size:15px;font-weight:500;line-height:1.72}
+  .scope-chip{display:grid;width:min(100%,720px);gap:8px;margin:17px auto 0;padding:14px 16px;border:1px solid #b9d8d3;border-radius:16px;background:#edf8f6;color:#205f59;text-align:center}
+  .formula-title{margin:0;font-size:15px;font-weight:700;line-height:1.5}
+  .formula-short{margin:0;color:#163f3b;font-size:clamp(15px,2.5vw,18px);font-weight:700;line-height:1.55}
+  .calculator{overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#fffdf9}
+  .calculator-head{padding:21px 22px 17px;border-bottom:1px solid var(--line)}
+  .calculator-head h2{margin:0;color:var(--ink);font-size:23px;line-height:1.4}
+  .calculator-head p{margin:5px 0 0;color:var(--muted);font-size:14px;line-height:1.68}
+  .section{padding:21px 22px;border-top:1px solid var(--line)}
+  .section:first-of-type{border-top:0}
+  .section-title{display:flex;align-items:flex-start;gap:10px;margin:0 0 13px;color:var(--ink);font-size:17px;line-height:1.5}
+  .section-help{margin:-5px 0 13px 38px;color:var(--muted);font-size:13px;line-height:1.6}
+  .step-n{display:grid;width:28px;height:28px;flex:0 0 28px;place-items:center;border-radius:50%;background:#d8efeb;color:#205f59;font-size:14px;font-weight:700}
+  .volume-layout{display:grid;gap:12px}
+  .field label{display:block;margin-bottom:8px;color:var(--ink);font-size:14px;font-weight:700}
+  .number-wrap{position:relative}
+  .number-wrap input{width:100%;min-height:58px;padding:11px 66px 11px 14px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);font-family:'Fraunces','Sarabun',serif;font-size:25px;font-variant-numeric:tabular-nums;outline:none;appearance:textfield}
+  .number-wrap input:focus{border-color:#287b73;box-shadow:0 0 0 3px rgba(40,123,115,.12)}
+  .unit{position:absolute;top:50%;right:14px;transform:translateY(-50%);color:var(--muted);font-size:14px;font-weight:600;pointer-events:none}
+  .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .quick button{min-height:46px;padding:8px 11px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-family:'Sarabun',sans-serif;font-weight:700;cursor:pointer}
+  .quick button:hover,.quick button[aria-pressed="true"]{border-color:#287b73;background:#edf8f6;color:#205f59}
+  .product-gate{display:grid;gap:9px}
+  .check-row{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;padding:12px 13px;border:1px solid var(--line);border-radius:13px;background:#fff;cursor:pointer}
+  .check-row:has(input:checked){border-color:#76aaa3;background:#f3faf9}
+  .check-row input{width:20px;height:20px;margin:2px 0 0;accent-color:#287b73}
+  .check-row strong{display:block;font-size:14px;line-height:1.5}
+  .check-row small{display:block;margin-top:2px;color:var(--muted);font-size:12.5px;line-height:1.55}
+  .gate-warning{margin:12px 0 0;padding:12px 14px;border-left:5px solid #d98200;border-radius:9px;background:#fff6e8;color:#7b4b00;font-size:13px;line-height:1.62}
+  .form-message{display:none;margin:0 22px 18px;padding:12px 14px;border:1px solid #e6b970;border-radius:13px;background:#fff6e8;color:#7b4b00;font-size:14px;font-weight:600;line-height:1.6}
+  .form-message.show{display:block}
+  .form-actions{display:flex;justify-content:center;gap:9px;padding:0 22px 22px}
+  .btn{display:inline-flex;min-height:48px;align-items:center;justify-content:center;padding:10px 22px;border:1px solid var(--line);border-radius:999px;font-family:'Sarabun',sans-serif;font-size:15px;font-weight:700;cursor:pointer}
+  .btn.primary{min-width:210px;border-color:#205f59;background:#287b73;color:#fff}
+  .btn.secondary{background:#fff;color:var(--muted)}
+  .result{margin-top:18px;overflow:hidden;border:1px solid #b9d8d3;border-radius:24px;background:#fff}
+  .result-empty{padding:28px 22px;color:var(--muted);font-size:15px;line-height:1.7;text-align:center}
+  .result-head{padding:18px 22px;border-bottom:1px solid #cce3df;background:#edf8f6;text-align:center}
+  .result-head small{display:block;color:var(--muted);font-size:13px;font-weight:600}
+  .result-head strong{display:block;margin-top:3px;color:#205f59;font-size:21px;line-height:1.45}
+  .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px;background:#fff}
+  .result-item{overflow:hidden;border:1px solid #cce3df;border-radius:17px;background:#fff}
+  .result-item.optional{border-color:#dfd3c2}
+  .dose-top{padding:19px 16px 16px;background:#edf8f6;text-align:center}
+  .optional .dose-top{background:#f7f1e8}
+  .mix-goal{margin:0;color:var(--ink);font-size:15px;font-weight:700;line-height:1.45}
+  .mix-goal strong{display:block;margin-top:4px;color:#205f59;font-family:'Fraunces','Sarabun',serif;font-size:clamp(29px,5vw,38px);font-weight:600;line-height:1.12}
+  .mix-goal small{display:block;margin-top:5px;color:#205f59;font-size:13px;font-weight:700}
+  .optional .mix-goal strong,.optional .mix-goal small{color:#795f3e}
+  .mix-table{overflow:hidden;margin-top:15px;border:1px solid #bedbd6;border-radius:13px;background:#fff;text-align:left}
+  .optional .mix-table{border-color:#dfd3c2}
+  .mix-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 13px}
+  .mix-row+.mix-row{border-top:1px solid #d6e6e3}
+  .optional .mix-row+.mix-row{border-top-color:#dfd3c2}
+  .mix-row span{color:var(--ink);font-size:14px;font-weight:700;line-height:1.4}
+  .mix-row output{color:#205f59;font-family:'Fraunces','Sarabun',serif;font-size:clamp(20px,4vw,27px);font-weight:600;line-height:1.15;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .mix-row.important{background:#d8efeb}
+  .optional .mix-row output{color:#795f3e}
+  .optional .mix-row.important{background:#efe4d5}
+  .dose-detail{padding:15px 16px}
+  .dose-detail p{margin:0;color:var(--ink);font-size:13.5px;line-height:1.62}
+  .dose-detail p+p{margin-top:8px}
+  .dose-detail strong{color:#205f59}
+  .optional .dose-detail strong{color:#795f3e}
+  .contact-badge{display:flex;width:max-content;max-width:100%;justify-content:center;margin:12px auto 0;padding:7px 11px;border-radius:999px;background:#d8efeb;color:#205f59;font-size:13px;font-weight:700;text-align:center}
+  .optional .contact-badge{background:#efe4d5;color:#795f3e}
+  .verify{margin:0 18px 18px;padding:14px 16px;border:2px solid #d98200;border-radius:13px;background:#fff8ed;color:#6e4300;line-height:1.62}
+  .verify strong{display:block;color:#9a5b00;font-size:15px}
+  .critical{margin-top:18px;padding:20px 22px;border:2px solid #d76a83;border-radius:22px;background:#fce9ee}
+  .critical h2{margin:0;color:#9d2947;font-size:21px}
+  .critical ul{margin:11px 0 0;padding-left:22px}
+  .critical li{margin:7px 0;color:#5f2031;font-size:14px;font-weight:600;line-height:1.62}
+  .guide{margin-top:18px;padding:22px;border:1px solid var(--line);border-radius:22px;background:#fff}
+  .guide h2{margin:0;color:var(--ink);font-size:22px}
+  .guide-intro{margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.65}
+  .mix-steps{margin:16px 0 0;padding:0;list-style:none;counter-reset:mix-step}
+  .mix-steps li{position:relative;margin:0;padding:0 0 16px 43px;counter-increment:mix-step;color:var(--ink);font-size:14px;line-height:1.68}
+  .mix-steps li:last-child{padding-bottom:0}
+  .mix-steps li::before{content:counter(mix-step);position:absolute;top:0;left:0;display:grid;width:29px;height:29px;place-items:center;border-radius:50%;background:#d8efeb;color:#205f59;font-weight:700}
+  .mix-steps strong{color:#205f59}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}
+  .info-card{padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:#fffdf9}
+  .info-card h3{margin:0 0 5px;color:#205f59;font-size:16px}
+  .info-card p{margin:0;color:var(--ink);font-size:13.5px;line-height:1.68}
+  .info-card p+p{margin-top:8px}
+  .note{margin:14px 0 0;padding:12px 14px;border-left:5px solid #287b73;border-radius:9px;background:#edf8f6;color:#205f59;font-size:13.5px;line-height:1.66}
+  .sources{margin-top:18px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:#f8f5ef}
+  .sources h2{margin:0;color:var(--ink);font-size:18px}
+  .sources ul{margin:9px 0 0;padding-left:20px}
+  .sources li{margin:5px 0;color:var(--muted);font-size:12.5px;line-height:1.62}
+  .sources a{color:#205f59}
+  .bottom-actions{display:flex;justify-content:center;margin-top:17px}
+  .site-footer{margin:30px auto 0;padding:14px 16px 4px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.7;text-align:center}
+  .site-footer a{color:inherit;text-decoration:underline}
+  @media(max-width:650px){body.chlorine-page{padding:22px 12px 44px}.hero{padding:23px 16px 21px;border-radius:22px}.result-grid,.info-grid{grid-template-columns:1fr}.calculator,.result,.critical,.guide{border-radius:20px}.section{padding:18px 16px}.form-message{margin-inline:16px}.form-actions{display:grid;grid-template-columns:1fr 1fr;padding-inline:16px}.btn.primary{min-width:0}.result-grid{padding:14px}.guide,.critical{padding:18px}.quick{grid-template-columns:1fr 1fr}}
+  @media(max-width:390px){.form-actions{grid-template-columns:1fr}.scope-chip{border-radius:14px}}
+  @page{size:A4 portrait;margin:12mm}
+  @media print{html,body{background:#fff!important}body.chlorine-page{padding:0;background:#fff}.container{width:100%;max-width:none}.back-link,.calculator,.bottom-actions,.tools-bottom-nav,.site-footer{display:none!important}.hero,.result,.critical,.guide,.sources{border-color:#999;break-inside:avoid}.hero{margin:0 0 5mm;padding:5mm}.result{margin-top:0}.result-head,.verify,.critical{background:#fff}.result-grid,.info-grid{grid-template-columns:1fr 1fr}}
+</style>
+<script src="tools-shell.js?v=082026M" defer></script>
+</head>
+<body class="tools-ui-v2 tools-layout-calculator chlorine-page">
+<main class="container">
+  <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
+
+  <header class="hero">
+    <p class="eyebrow">Process Tools · ความสะอาดและการฆ่าเชื้อ</p>
+    <h1>Chlorine Solution <span class="title-accent">Calculator</span></h1>
+    <p class="thai-title">คำนวณสารละลายคลอรีน 100 และ 200 ppm</p>
+    <p class="subtitle">สำหรับโซเดียมไฮโปคลอไรต์ 10% ที่ระบุว่าใช้กับงานอาหารได้เท่านั้น ระบุปริมาณน้ำ แล้วดูผลสำหรับ 100 และ 200 ppm พร้อมกัน</p>
+    <div class="scope-chip" aria-label="สูตรคำนวณปริมาตรโซเดียมไฮโปคลอไรต์"><p class="formula-title">สำหรับโซเดียมไฮโปคลอไรต์ 10%</p><p class="formula-short">ปริมาตรที่ใช้ = ppm × น้ำ (ลิตร) ÷ 100</p></div>
+  </header>
+
+  <section class="calculator" aria-labelledby="calculator-title">
+    <div class="calculator-head"><h2 id="calculator-title">ข้อมูลที่ใช้ผสม</h2><p>เครื่องมือนี้รองรับเฉพาะโซเดียมไฮโปคลอไรต์ 10% และไม่ใช้กับน้ำยาซักผ้าขาวที่มีน้ำหอมหรือสารเติมแต่งค่ะ</p></div>
+    <form id="chlorineForm" novalidate>
+      <div class="section">
+        <h3 class="section-title"><span class="step-n">1</span><span>ระบุปริมาณน้ำสะอาด</span></h3>
+        <p class="section-help">หากใช้กับอุปกรณ์หรือพื้นผิวสัมผัสอาหาร ให้ใช้น้ำระดับดื่มได้</p>
+        <div class="volume-layout">
+          <div class="quick" aria-label="เลือกปริมาณน้ำแบบเร็ว"><button type="button" data-liters="1">1 L</button><button type="button" data-liters="5">5 L</button><button type="button" data-liters="10">10 L</button><button type="button" data-liters="20">20 L</button></div>
+          <div class="field"><label for="waterLiters">หรือระบุปริมาณน้ำเอง</label><div class="number-wrap"><input id="waterLiters" name="waterLiters" type="number" step="any" inputmode="decimal" autocomplete="off" placeholder="ระบุเอง"><span class="unit">ลิตร</span></div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3 class="section-title"><span class="step-n">2</span><span>ตรวจฉลากโซเดียมไฮโปคลอไรต์ก่อนคำนวณ</span></h3>
+        <div class="product-gate">
+          <label class="check-row"><input id="confirmStrength" type="checkbox"><span><strong>ฉลากระบุโซเดียมไฮโปคลอไรต์ 10%</strong><small>ถ้าไม่ใช่ 10% ห้ามใช้ผลจากเครื่องมือนี้</small></span></label>
+          <label class="check-row"><input id="confirmFoodUse" type="checkbox"><span><strong>เป็นผลิตภัณฑ์สำหรับงานอาหาร และไม่มีน้ำหอมหรือสารเติมแต่ง</strong><small>ไม่ใช่น้ำยาซักผ้าขาวตามบ้านหรือผลิตภัณฑ์ชนิดข้นพิเศษ (splashless)</small></span></label>
+        </div>
+        <p class="gate-warning"><strong>ต้องใช้แถบวัดคลอรีนยืนยันทุกครั้ง</strong> เพราะความเข้มข้นจริงของโซเดียมไฮโปคลอไรต์อาจต่ำกว่า 10% และลดลงตามอายุการเก็บ</p>
+      </div>
+
+      <p class="form-message" id="formMessage" role="alert"></p>
+      <div class="form-actions"><button class="btn primary" type="submit">คำนวณปริมาณที่ต้องใช้</button><button class="btn secondary" id="resetButton" type="button">ล้างค่า</button></div>
+    </form>
+  </section>
+
+  <section class="result" id="result" aria-live="polite">
+    <div class="result-empty" id="resultEmpty">ตรวจฉลากและกรอกปริมาณน้ำ แล้วกดคำนวณค่ะ</div>
+    <div id="resultContent" hidden>
+      <div class="result-head"><small>ผลคำนวณ</small><strong>ตวงน้ำและโซเดียมไฮโปคลอไรต์ 10% ตามตาราง</strong></div>
+      <div class="result-grid">
+        <article class="result-item"><div class="dose-top"><p class="mix-goal">ต้องการผสมให้ได้<strong>น้ำคลอรีน 100 ppm</strong><small>ค่าหลัก</small></p><div class="mix-table" role="table" aria-label="ปริมาณสำหรับน้ำคลอรีน 100 ppm"><div class="mix-row" role="row"><span role="cell">ใช้น้ำสะอาด</span><output id="resultWater100" role="cell"></output></div><div class="mix-row important" role="row"><span role="cell">เติมโซเดียมไฮโปคลอไรต์ 10%</span><output id="result100" role="cell"></output></div></div></div><div class="dose-detail"><p><strong>ใช้กับ:</strong> อุปกรณ์และพื้นผิวสัมผัสอาหาร รวมถึงพื้นผิวไม่สัมผัสอาหารที่ล้างสะอาดแล้ว เช่น โต๊ะที่เช็ดล้างแล้ว</p><p>ระดับเดียวใช้ได้ทั้งสองงาน ช่วยลดโอกาสหยิบผิดถัง</p><span class="contact-badge">พื้นผิวต้องเปียกอย่างน้อย 1 นาที</span></div></article>
+        <article class="result-item optional"><div class="dose-top"><p class="mix-goal">ต้องการผสมให้ได้<strong>น้ำคลอรีน 200 ppm</strong><small>ทางเลือก</small></p><div class="mix-table" role="table" aria-label="ปริมาณสำหรับน้ำคลอรีน 200 ppm"><div class="mix-row" role="row"><span role="cell">ใช้น้ำสะอาด</span><output id="resultWater200" role="cell"></output></div><div class="mix-row important" role="row"><span role="cell">เติมโซเดียมไฮโปคลอไรต์ 10%</span><output id="result200" role="cell"></output></div></div></div><div class="dose-detail"><p><strong>ใช้กับ:</strong> พื้นผิวไม่สัมผัสอาหารโดยตรงเท่านั้น เช่น พื้น ผนัง ขาโต๊ะ และด้านนอกเครื่อง</p><p>ในเครื่องมือนี้ไม่ใช้ 200 ppm กับพื้นผิวสัมผัสอาหาร</p><span class="contact-badge">พื้นผิวต้องเปียกอย่างน้อย 1 นาที</span></div></article>
+      </div>
+      <div class="verify"><strong>ผลคำนวณยังไม่ใช่การยืนยันความเข้มข้นจริง</strong>ผสมเสร็จแล้วต้องใช้แถบวัดคลอรีนตรวจว่าได้ระดับเป้าหมายก่อนใช้งาน หากค่าไม่ตรง ห้ามใช้โดยเดาหรือเติมโซเดียมไฮโปคลอไรต์เพิ่มเอง ให้ตรวจผลิตภัณฑ์ วิธีตวง และคำแนะนำของผู้ผลิตค่ะ</div>
+    </div>
+  </section>
+
+  <section class="critical" aria-labelledby="safety-title">
+    <h2 id="safety-title">ข้อควรระวังที่สำคัญมาก</h2>
+    <ul>
+      <li>ห้ามผสมคลอรีนกับกรด แอมโมเนีย น้ำส้มสายชู น้ำยาเช็ดกระจก หรือน้ำยาทำความสะอาดชนิดใด เพราะอาจเกิดแก๊สพิษ</li>
+      <li>สวมถุงมือ ป้องกันดวงตา เปิดให้อากาศถ่ายเท และหลีกเลี่ยงการสูดดมไอระเหย</li>
+      <li>เทโซเดียมไฮโปคลอไรต์ 10% ลงในน้ำเสมอ ห้ามเทน้ำลงในผลิตภัณฑ์เข้มข้น และใช้ภาชนะพลาสติก ไม่ใช้โลหะ</li>
+      <li>ใช้เฉพาะโซเดียมไฮโปคลอไรต์ 10% สำหรับงานอาหารที่ไม่มีน้ำหอมหรือสารเติมแต่ง และยืนยันน้ำยาที่ผสมแล้วด้วยแถบวัดคลอรีนทุกครั้ง</li>
+    </ul>
+  </section>
+
+  <section class="guide" aria-labelledby="mix-title">
+    <h2 id="mix-title">ขั้นตอนการผสมอย่างละเอียดเพื่อความปลอดภัย</h2>
+    <p class="guide-intro">เตรียมเฉพาะปริมาณที่ต้องใช้ในวันนั้น และแยกอุปกรณ์ตวงสารเคมีออกจากอุปกรณ์ทำอาหารค่ะ</p>
+    <ol class="mix-steps">
+      <li><strong>อ่านฉลากและ SDS ของผลิตภัณฑ์ก่อน</strong> ตรวจว่าเป็นโซเดียมไฮโปคลอไรต์ 10% สำหรับงานอาหาร ไม่หมดอายุ ไม่มีน้ำหอม และไม่มีสารเติมแต่ง</li>
+      <li><strong>ล้างพื้นผิวก่อนฆ่าเชื้อ</strong> ขจัดเศษและคราบ ล้างด้วยน้ำยาทำความสะอาด แล้วล้างน้ำสะอาดอย่างน้อย 2 รอบ และล้างต่อจนหมดฟอง ความลื่น และคราบน้ำยา</li>
+      <li><strong>สวมถุงมือและป้องกันดวงตา</strong> ผสมในบริเวณอากาศถ่ายเท โดยไม่มีกรด แอมโมเนีย หรือผลิตภัณฑ์ทำความสะอาดอื่นอยู่ในภาชนะหรือพื้นที่ผสม</li>
+      <li><strong>ตวงน้ำสะอาดก่อน</strong> ใช้ภาชนะพลาสติกและน้ำช่วงประมาณ 24–49°C จากนั้นตวงโซเดียมไฮโปคลอไรต์ 10% ด้วยกระบอกตวงหรือไซริงก์ที่อ่านค่ามิลลิลิตรได้ชัด</li>
+      <li><strong>ค่อยๆ เทโซเดียมไฮโปคลอไรต์ลงในน้ำ</strong> ผสมเบาๆ ไม่เขย่าแรง ไม่ก้มหน้าสูดดมเหนือภาชนะ และติดฉลากถังว่า “คลอรีน” พร้อมระดับ ppm และเวลาที่ผสม</li>
+      <li><strong>ตรวจด้วยแถบวัดคลอรีนก่อนใช้</strong> ใช้แถบชนิดวัด free chlorine ที่ช่วงการวัดครอบคลุม 100 และ 200 ppm และอ่านสีภายในเวลาที่ผู้ผลิตกำหนด</li>
+      <li><strong>ทำให้พื้นผิวเปียกทั่วและคงความเปียกอย่างน้อย 1 นาที</strong> หากแห้งก่อนครบเวลาให้เติมน้ำยา แล้วปล่อยให้แห้งเอง ไม่เช็ดซ้ำและไม่ล้างน้ำออกตามโปรโตคอลนี้ เว้นแต่ฉลากผลิตภัณฑ์กำหนดต่างออกไป</li>
+    </ol>
+    <p class="note"><strong>เรื่องการล้าง 2 รอบ:</strong> จำนวนรอบเป็นเกณฑ์ปฏิบัติแบบระมัดระวังของเครื่องมือนี้ เกณฑ์ตัดสินจริงคือไม่มีฟอง ความลื่น หรือคราบดีเทอร์เจนต์เหลืออยู่ หากยังเหลือต้องล้างต่อค่ะ</p>
+  </section>
+
+  <section class="guide" aria-labelledby="use-title">
+    <h2 id="use-title">รายละเอียดการใช้งานที่มักถูกมองข้าม</h2>
+    <div class="info-grid">
+      <article class="info-card"><h3>อุณหภูมิและ pH</h3><p>สำหรับขั้นตอนนี้ใช้น้ำประมาณ 24–49°C ซึ่งครอบคลุมอุณหภูมิ 24°C ที่ตำรา Ice Cream ระบุสำหรับคลอรีนอย่างน้อย 50 ppm และอยู่ในช่วงที่ตำรา Frozen Desserts แนะนำ</p><p>pH มีผลต่อประสิทธิภาพ แต่ห้ามเติมกรดเพื่อปรับ pH เอง เพราะอาจปล่อยแก๊สคลอรีน ให้ยึดฉลากผลิตภัณฑ์ค่ะ</p></article>
+      <article class="info-card"><h3>คราบสกปรกทำให้คลอรีนเสื่อม</h3><p>คลอรีนไม่ใช่น้ำยาล้างคราบ อินทรียวัตถุและคราบอาหารกินคลอรีนอิสระ ทำให้ระดับจริงต่ำลง จึงต้องล้างก่อนเสมอ และเปลี่ยนน้ำยาทันทีเมื่อขุ่น สกปรก หรือแถบทดสอบอ่านต่ำกว่าเป้าหมาย</p></article>
+      <article class="info-card"><h3>อายุหลังผสม</h3><p>ผสมใหม่ทุกวันและทิ้งเมื่อครบ 24 ชั่วโมง แม้ยังดูใสอยู่ ควรทิ้งเร็วกว่านั้นหากมีสิ่งสกปรกปน ภาชนะเปิดรับแสง/ความร้อน หรือแถบวัดอ่านไม่ถึงค่าเป้าหมาย</p></article>
+      <article class="info-card"><h3>โซเดียมไฮโปคลอไรต์ 10% หลังเปิดขวด</h3><p>ไม่มีตัวเลขหลังเปิดที่ใช้ได้กับทุกยี่ห้อ เพราะการเสื่อมขึ้นกับความเข้มข้น อุณหภูมิ แสง ภาชนะ และสิ่งปนเปื้อน ให้เขียนวันที่เปิด ยึดวันหมดอายุบนฉลาก เก็บในขวดเดิมที่ปิดสนิท พ้นแสงและความร้อน</p><p>ตำรา Frozen Desserts ให้เกณฑ์ระมัดระวังว่า commercial bleach ที่นำมาผสมไม่ควรมีอายุเกิน 6 เดือน—หมายถึงอายุของผลิตภัณฑ์โดยรวม ไม่ใช่รับประกันว่าใช้ได้อีก 6 เดือนหลังเปิด หากผสมตามสูตรแล้ว strip ไม่ถึงเป้าหมาย ให้เปลี่ยนผลิตภัณฑ์ ไม่เติมชดเชยด้วยการเดา</p></article>
+      <article class="info-card"><h3>ใช้แถบวัดให้ถูกชนิด</h3><p>เลือกแถบวัด <strong>free chlorine</strong> ที่อ่าน 100 และ 200 ppm ได้ชัด ตรวจหลังผสม และตรวจซ้ำระหว่างใช้งานเมื่อใช้ต่อเนื่องหรือมีโอกาสปนเปื้อน แถบช่วง 0–200 ppm ใช้ยืนยันน้ำยาที่เจือจางแล้ว ไม่ได้ใช้วัดโซเดียมไฮโปคลอไรต์ 10% โดยตรง</p></article>
+      <article class="info-card"><h3>สเตนเลสและการปล่อยให้แห้ง</h3><p>คลอรีนกัดกร่อนได้ โดยเฉพาะเมื่อเข้มข้น ร้อน หรือสัมผัสนาน แช่เพียงให้ครบเวลาที่กำหนด ยกขึ้นแล้วปล่อยให้แห้งเอง ห้ามแช่อุปกรณ์สเตนเลสทิ้งไว้นานหรือข้ามคืน</p></article>
+    </div>
+  </section>
+
+  <section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">ที่มาของคำแนะนำ</h2><ul><li>ต้นฉบับหนังสือ Science of Ice Cream ของผู้เขียน: บทเครื่องมือและบทการผลิต</li><li>Goff &amp; Hartel, <em>Ice Cream</em>, 8th ed., §16.5 Sanitizing Procedures</li><li>The Culinary Institute of America, <em>Frozen Desserts</em>, pp. 46–47</li><li><a href="https://www3.epa.gov/pesticides/chem_search/ppls/000813-00015-20080718.pdf" target="_blank" rel="noopener">EPA · Sodium Hypochlorite Dilution Conversion Formula</a>: สูตรแปลง ppm ปริมาตรน้ำ และเปอร์เซ็นต์สารออกฤทธิ์</li><li><a href="https://www.fda.gov/food/fda-food-code/food-code-2022" target="_blank" rel="noopener">FDA Food Code 2022</a> และ Supplement 2024: เงื่อนไขอุณหภูมิ/pH และการใช้เครื่องมือทดสอบความเข้มข้น</li><li><a href="https://www.cdc.gov/hygiene/about/cleaning-and-disinfecting-with-bleach.html" target="_blank" rel="noopener">CDC · Cleaning and Disinfecting with Bleach</a>: ความปลอดภัย เวลาสัมผัส และอายุสารละลายหลังเจือจาง</li></ul></section>
+
+  <div class="bottom-actions"><button class="btn primary" type="button" onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></div>
+  <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 082026A by Paula Kaothien</span></footer>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  const storageKey='mic-chlorine-solution-v1';
+  const form=document.getElementById('chlorineForm');
+  const waterInput=document.getElementById('waterLiters');
+  const confirmStrength=document.getElementById('confirmStrength');
+  const confirmFoodUse=document.getElementById('confirmFoodUse');
+  const formMessage=document.getElementById('formMessage');
+  const resultEmpty=document.getElementById('resultEmpty');
+  const resultContent=document.getElementById('resultContent');
+  const numberFormat=new Intl.NumberFormat('th-TH',{maximumFractionDigits:3});
+
+  function format(value){return numberFormat.format(value);}
+  function showMessage(text){formMessage.textContent=text;formMessage.classList.add('show');}
+  function clearMessage(){formMessage.textContent='';formMessage.classList.remove('show');}
+  function clearResult(){resultEmpty.hidden=false;resultContent.hidden=true;}
+  function save(){try{localStorage.setItem(storageKey,JSON.stringify({water:waterInput.value}));}catch(error){}}
+  function restore(){try{const saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(!saved)return;if(typeof saved.water==='string')waterInput.value=saved.water;}catch(error){}}
+  function updateQuick(){document.querySelectorAll('[data-liters]').forEach(function(button){button.setAttribute('aria-pressed',String(Number(button.dataset.liters)===Number(waterInput.value)));});}
+  function calculate(){
+    clearMessage();
+    const water=Number(waterInput.value);
+    if(!waterInput.value||!Number.isFinite(water)||water<=0){showMessage('กรุณากรอกปริมาณน้ำที่มากกว่า 0 ลิตร');clearResult();return;}
+    if(!confirmStrength.checked||!confirmFoodUse.checked){showMessage('ต้องยืนยันฉลากทั้ง 2 ข้อก่อนใช้ผลคำนวณ');clearResult();return;}
+    const concentrate100=water;
+    const concentrate200=water*2;
+    document.getElementById('resultWater100').textContent=format(water)+' ลิตร';
+    document.getElementById('resultWater200').textContent=format(water)+' ลิตร';
+    document.getElementById('result100').textContent=format(concentrate100)+' มิลลิลิตร';
+    document.getElementById('result200').textContent=format(concentrate200)+' มิลลิลิตร';
+    resultEmpty.hidden=true;resultContent.hidden=false;save();
+  }
+
+  form.addEventListener('submit',function(event){event.preventDefault();calculate();});
+  form.addEventListener('change',function(){save();clearMessage();clearResult();updateQuick();});
+  waterInput.addEventListener('input',function(){save();clearMessage();clearResult();updateQuick();});
+  document.querySelectorAll('[data-liters]').forEach(function(button){button.addEventListener('click',function(){waterInput.value=button.dataset.liters;waterInput.dispatchEvent(new Event('input',{bubbles:true}));waterInput.focus();});});
+  document.getElementById('resetButton').addEventListener('click',function(){form.reset();waterInput.value='';try{localStorage.removeItem(storageKey);}catch(error){}clearMessage();clearResult();updateQuick();});
+  restore();updateQuick();
+})();
+</script>
+</body>
+</html>

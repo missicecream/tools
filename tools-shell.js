@@ -3,7 +3,7 @@
   const guides = {
     'Formula-Ingredient-Limit.html': 'Formula-Ingredient-Limit-guide.html',
     'ClassTimer.html': 'ClassTimer-guide.html',
-    'PST-Selector.html': 'PST-Selector-guide.html',
+    'PBT-Selector.html': 'PBT-Selector-guide.html',
     'Process-Selector.html': 'Process-Selector-guide.html?v=072126J',
     'Heat-Log.html': 'Heat-Log-guide.html?v=082026I',
     'Heat-Log-5Batch.html': 'Heat-Log-5Batch-guide.html?v=082026I',
