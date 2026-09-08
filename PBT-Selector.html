@@ -297,6 +297,13 @@
       <p class="subtitle">Paula’s Blending Technique · เลือกลักษณะสูตรและเครื่อง แล้วดูจำนวนรอบ เวลาปั่น และเวลาพักตามตาราง PBT ปัจจุบันค่ะ</p>
     </header>
 
+    <section class="result-card" style="text-align:left;margin-bottom:26px" aria-labelledby="temperatureTitle">
+      <h2 id="temperatureTitle" class="step-q">อุณหภูมิสำหรับ PBT</h2>
+      <p style="margin-top:12px;line-height:1.7">วัดอุณหภูมิมิกซ์ก่อนเทลงโถปั่น: แนวทำทานราว 55 °C · แนวทำขายไม่ต่ำกว่า 68.5 °C หลังพาสเจอร์ไรส์</p>
+      <p style="margin-top:10px;line-height:1.7"><strong>ทั้งสองแนวต้องปั่นให้จบขณะมิกซ์ไม่ต่ำกว่า 40 °C — เป็นเส้นที่ห้ามข้าม ไม่ใช่เป้าหมายที่ตั้งใจปั่นให้ถึง</strong></p>
+      <p style="margin-top:10px;font-size:13.5px;line-height:1.7">ถ้ามิกซ์เริ่มเหนียวหนืด ให้วัดอุณหภูมิ หากต่ำกว่า 40 °C ให้อุ่นกลับไปที่อุณหภูมิตั้งต้นของแนวที่ทำ (ทำทานราว 55 °C / ทำขายไม่ต่ำกว่า 68.5 °C) แล้วค่อยปั่นต่อ</p>
+    </section>
+
     <!-- Step 1: recipe group -->
     <div class="step" id="step1">
       <div class="step-head">
@@ -369,6 +376,14 @@
       </div>
     </div>
 
+    <div class="step hidden" id="stepWeight">
+      <div class="step-head"><span class="step-num">2.2</span><span class="step-q">น้ำหนักมิกซ์สำหรับเครื่องปั่นมือถือการค้าเล็ก</span></div>
+      <div class="opts">
+        <button class="opt" data-weight="small" type="button"><div class="opt-title">1–3 กก. (ไม่เกิน 3 กก.)</div><div class="opt-sub">2 รอบ ตามน้ำหนักมิกซ์</div></button>
+        <button class="opt" data-weight="large" type="button"><div class="opt-title">มากกว่า 3–5 กก.</div><div class="opt-sub">3 รอบ ตามน้ำหนักมิกซ์</div></button>
+      </div>
+    </div>
+
     <div class="prompt" id="prompt">ตอบคำถามด้านบนเพื่อดูคำแนะนำค่ะ</div>
 
     <!-- Result -->
@@ -434,7 +449,7 @@
     immLarge:{label:'เครื่องปั่นมือถือการค้า ใหญ่ (10–20 กก.)',type:'imm',rLow:3,rHigh:3,sLow:60,sHigh:60,restLow:10,restHigh:15}
   };
 
-  const state = { group: null, machine: null, profile: null };
+  const state = { group: null, machine: null, profile: null, weight: null };
 
   const step3 = document.getElementById('step3');
   const resultEl = document.getElementById('result');
@@ -452,6 +467,8 @@
         if (key === 'machine') {
           // ถ้าเปลี่ยนเครื่อง รีเซ็ต profile
           state.profile = null;
+          state.weight = null;
+          document.querySelectorAll('[data-weight]').forEach(o => o.classList.remove('selected'));
           document.querySelectorAll('[data-profile]').forEach(o => o.classList.remove('selected'));
         }
         update();
@@ -461,6 +478,7 @@
   bindOpts('group', 'group');
   bindOpts('machine', 'machine');
   bindOpts('profile', 'profile');
+  bindOpts('weight', 'weight');
 
   function update() {
     const m = state.machine ? DATA[state.machine] : null;
@@ -469,7 +487,9 @@
     // แสดง step 3 เฉพาะเครื่องมือถือ
     step3.classList.toggle('hidden', !needProfile);
 
-    const ready = state.group && m && (!needProfile || state.profile);
+    const needWeight = state.machine === 'immSmall';
+    document.getElementById('stepWeight').classList.toggle('hidden', !needWeight);
+    const ready = state.group && m && (!needProfile || state.profile) && (!needWeight || state.weight);
     if (!ready) {
       resultEl.classList.add('hidden');
       promptEl.style.display = 'block';
@@ -486,6 +506,7 @@
     let sec = hi ? m.sHigh : m.sLow;
     let rest = hi ? m.restHigh : m.restLow;
     let rangeText = '';
+    if (state.machine === 'immSmall') rounds = state.weight === 'small' ? 2 : 3;
 
     if (m.type === 'jar') {
       rounds = m.rHigh;
@@ -526,7 +547,8 @@
 
     // notes
     const notes = [];
-    notes.push('เริ่ม PBT เมื่อมิกซ์อยู่ที่ 68–70°C และพยายามปั่นให้จบก่อนต่ำกว่า 58°C');
+    notes.push('วัดอุณหภูมิมิกซ์ก่อนเทลงโถปั่น: แนวทำทานราว 55 °C · แนวทำขายไม่ต่ำกว่า 68.5 °C หลังพาสเจอร์ไรส์');
+    notes.push('ทั้งสองแนวต้องปั่นให้จบขณะมิกซ์ไม่ต่ำกว่า 40 °C — เป็นเส้นที่ห้ามข้าม ไม่ใช่เป้าหมายที่ตั้งใจปั่นให้ถึง');
     notes.push('ปั่นแบบสลับพัก (pulsed shear): ปั่นแรงสั้นๆ สลับพัก ไม่ปั่นต่อเนื่องรวดเดียว');
     if (m.type === 'imm') {
       notes.push('ไล่หัวปั่นให้ทั่วหม้อ ไม่ปั่นจุดเดียว');
@@ -534,7 +556,9 @@
     }
     if (m.type === 'jar' && state.group === 'factory') notes.push('ลด 1 รอบ เพราะไขมันผ่านการโฮโมจีไนซ์จากโรงงานและไม่ได้โดนความร้อนซ้ำระหว่างผลิต');
     if (m.type === 'jar' && state.group === 'foamy') notes.push('ตัวจับเวลาเริ่มที่ 2 รอบ; ถ้ายังฟูเป็นโฟมมากเกินไป ครั้งถัดไปลดเหลือ 1 รอบได้');
-    notes.push({ warn: true, text: 'ถ้ามิกซ์ต่ำกว่า 58°C หรือเริ่มหนืดจนปั่นยาก ให้อุ่นกลับก่อนปั่นรอบต่อไป' });
+    notes.push({ warn: true, text: 'ถ้ามิกซ์เริ่มเหนียวหนืด ให้วัดอุณหภูมิ หากต่ำกว่า 40 °C ให้อุ่นกลับไปที่อุณหภูมิตั้งต้นของแนวที่ทำ (ทำทานราว 55 °C / ทำขายไม่ต่ำกว่า 68.5 °C) แล้วค่อยปั่นต่อ' });
+    notes.push('เมื่อปั่นครบ มิกซ์ควรเนียนเป็นเนื้อเดียว ไม่มีชั้นน้ำมันลอยหรือก้อนของแห้ง และเทแล้วไหลเรียบสม่ำเสมอ จากนั้นเริ่มลดความร้อนทันที');
+    if (state.machine === 'immSmall') notes.push('จำนวนรอบกำหนดตามน้ำหนัก: ไม่เกิน 3 กก. ใช้ 2 รอบ / มากกว่า 3–5 กก. ใช้ 3 รอบ ส่วนเวลาพักเลือกตามขนาดชุดและความข้น');
     notes.push({ warn: true, text: 'ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้นก่อนใช้ เพราะ PBT เป็นจุดแรกที่อุปกรณ์สัมผัสมิกซ์หลังพาสเจอร์ไรส์' });
 
     const ul = document.getElementById('noteList');
@@ -548,7 +572,8 @@
   }
 
   function resetAll() {
-    state.group = null; state.machine = null; state.profile = null;
+    state.group = null; state.machine = null; state.profile = null; state.weight = null;
+    document.getElementById('stepWeight').classList.add('hidden');
     document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
     step3.classList.add('hidden');
     resultEl.classList.add('hidden');
