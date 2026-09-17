@@ -23,10 +23,10 @@
 <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
 <header class="hero"><p class="eyebrow">Miss Ice Cream · Online Tools</p><h1>Brix <span>Adjuster</span></h1><h2>ปรับ Brix น้ำผลไม้</h2><p class="subtitle">กรอกปริมาณและ Brix ที่วัดได้ แล้วดูว่าต้องเติมอะไร กี่กรัม<br>คำนวณทันที · เลือกปรับขึ้นหรือลงให้อัตโนมัติ</p></header>
 <section class="calculator" aria-label="ข้อมูลสำหรับปรับ Brix"><div class="mode" role="group" aria-label="รูปแบบน้ำหนัก"><button id="mode1" type="button" aria-pressed="true">กำหนดน้ำหนักผลไม้ที่ต้องการใช้</button><button id="mode2" type="button" aria-pressed="false">กำหนดน้ำหนักรวมหลังปรับ</button></div>
-<form id="brixForm" novalidate><div class="fields"><div class="field"><label id="amountLabel" for="amount">น้ำหนักผลไม้ที่ต้องการใช้ (กรัม)</label><input id="amount" type="number" min="0" step="any" value="400"></div><div class="field"><label for="initial">Brix ที่วัดได้ (°Bx)</label><input id="initial" type="number" min="0" max="100" step="any" value="7"></div><div class="field"><label for="target">Brix เป้าหมาย (°Bx)</label><input id="target" type="number" min="0" max="100" step="any" value="8"></div></div>
+<form id="brixForm" novalidate><div class="fields"><div class="field"><label id="amountLabel" for="amount">น้ำหนักผลไม้ที่ต้องการใช้ (กรัม)</label><input id="amount" type="number" min="0" step="any" value=""></div><div class="field"><label for="initial">Brix ที่วัดได้ (°Bx)</label><input id="initial" type="number" min="0" max="100" step="any" value=""></div><div class="field"><label for="target">Brix เป้าหมาย (°Bx)</label><input id="target" type="number" min="0" max="100" step="any" value=""></div></div>
 <p id="weightHelp" class="help"></p><div class="quick"><button id="standard" type="button">ปัดขึ้นเข้าขั้นมาตรฐาน</button><button id="twelve" type="button">เป้า 12</button></div><p class="help">ขั้นมาตรฐาน 6, 12, 18 และ 24 °Bx · ถ้าเกิน 24 จะตั้งเป้า 24 และปรับลงด้วยน้ำ</p>
-<div id="sweetenerField"><label for="sweetener">สิ่งที่เติมเพื่อปรับขึ้น</label><select id="sweetener"><option value="SYR">SYR · น้ำเชื่อมเข้มข้นมิตรผล 77 °Bx ★</option><option value="SUC">SUC · น้ำตาลทราย</option><option value="DEX">DEX · เดกซ์โตรส Monohydrate</option><option value="MIX">SUC + DEX · ผสมตามสัดส่วน</option><option value="CUS">CUS · น้ำเชื่อมอื่น</option></select><div id="ratioField" class="extra" hidden><label for="ratio">สัดส่วน DEX โดยน้ำหนัก (%)</label><input id="ratio" type="number" min="0" max="100" step="any" value="30"><p id="ratioHelp" class="help"></p></div><div id="customField" class="extra" hidden><label for="custom">Brix ของน้ำเชื่อมอื่น (°Bx)</label><input id="custom" type="number" min="0" max="100" step="any" value="65"></div></div>
-<p id="direction" class="help"></p></form></section>
+<div id="sweetenerField"><label for="sweetener">สิ่งที่เติมเพื่อปรับขึ้น</label><select id="sweetener"><option value="SYR">SYR · น้ำเชื่อมเข้มข้นมิตรผล 77 °Bx ★</option><option value="SUC">SUC · น้ำตาลทราย</option><option value="DEX">DEX · เดกซ์โตรส Monohydrate</option><option value="MIX">SUC + DEX · ผสมตามสัดส่วน</option><option value="CUS">CUS · น้ำเชื่อมอื่น</option></select><div id="ratioField" class="extra" hidden><label for="ratio">สัดส่วน DEX โดยน้ำหนัก (%)</label><input id="ratio" type="number" min="0" max="100" step="any" value="30"><p id="ratioHelp" class="help"></p></div><div id="customField" class="extra" hidden><label for="custom">Brix ของน้ำเชื่อมอื่น (°Bx)</label><input id="custom" type="number" min="0" max="100" step="any" value=""></div></div>
+<p id="direction" class="help"></p><button id="resetButton" type="button">ล้างค่า / เริ่มใหม่</button></form></section>
 <section class="result" aria-label="ผลคำนวณ" aria-live="polite" aria-atomic="true"><h2>ปริมาณที่ต้องใช้</h2><p id="message" class="status"></p><div id="resultBody" hidden><p id="mainResult" class="main-result"></p><div class="stats"><div class="stat">น้ำผลไม้<strong id="juiceResult"></strong></div><div class="stat">น้ำหนักรวมหลังปรับ<strong id="totalResult"></strong></div><div class="stat">Brix คำนวณกลับ<strong id="brixResult"></strong></div></div><p id="splitResult"></p><div id="comparison" class="note" hidden></div><p id="mixNote" class="help"></p><p class="help">ตัวเลขกรัมปัดทศนิยม 1 ตำแหน่ง · Brix คำนวณกลับจากค่าก่อนปัดเศษ<br>ผสมให้เข้ากัน แล้ววัด Brix ซ้ำเพื่อยืนยัน</p></div></section>
 <details><summary>ทำไม Brix เท่ากัน แต่ความหวานและเนื้อสัมผัสต่างกัน</summary><p>Brix นับปริมาณของแข็ง ไม่ได้บอกว่าหวานแค่ไหนหรือกดจุดเยือกแข็งเท่าไร ค่าด้านล่างเทียบต่อของแข็งเท่ากัน ส่วนผลคำนวณด้านบนเทียบจากกรัมที่เติมจริง</p><ul><li>SYR: ของแข็งเป็นซูโครส 50% กลูโคส 25% และฟรุคโตส 25% หวานประมาณ 1.06 เท่า และกดจุดเยือกแข็งประมาณ 1.45 เท่าของ SUC จึงช่วยให้เนื้อนุ่มและตักง่ายขึ้น ลดการตกผลึก เป็นของเหลวใช้ได้เลย ไม่ต้องต้ม</li><li>DEX: หวานประมาณ 0.75 เท่า แต่กดจุดเยือกแข็งประมาณ 1.90 เท่าของ SUC ใช้เมื่อต้องการคุมความแข็งโดยไม่เพิ่มความหวานมาก มีน้ำผลึก 9% จึงให้ของแข็ง 0.91 กรัมต่อวัตถุดิบ 1 กรัม</li><li>SUC + DEX: ปรับสัดส่วนเพื่อให้ได้ผลระหว่างสองชนิด</li><li>น้ำเชื่อมอื่น: แม้เป็น invert syrup ก็ต้องทราบองค์ประกอบจึงจะรู้ RS/AFP ได้ Brix ตรงไม่ได้รับประกันความหวานหรือเนื้อสัมผัส ต้องชิมยืนยัน</li></ul><p>RS คือความหวานเทียบเท่าน้ำตาลทราย · AFP คือผลกดจุดเยือกแข็งเทียบเท่าน้ำตาลทราย ค่าที่แสดงเป็นผลของสิ่งที่เติม ไม่ใช่ค่ารวมของผลไม้หรือสูตรไอศกรีม</p></details>
 <details><summary>วิธีวัดและข้อจำกัดของตัวเลข</summary><ul><li>ใช้ค่าที่วัดได้โดยตรง ไม่ต้องหักแก้กรดหรือของแข็งอื่นที่เครื่องวัดนับรวม แล้ววัดซ้ำหลังผสม ผลไม้เปรี้ยวจัดอาจอ่านสูงกว่าน้ำตาลจริงราว 1 Brix ตามคำแนะนำต้นฉบับ</li><li>เครื่องวัดใช้สเกลน้ำตาลทราย กลูโคส/ฟรุคโตสอาจอ่านต่างเล็กน้อย (ต้นฉบับระบุว่าต่ำกว่า 0.5 Brix ในช่วงที่ใช้) ไม่ต้องแก้ค่า</li><li>ใช้เครื่องวัดที่ชดเชยอุณหภูมิ (ATC) หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</li><li>น้ำตาลทรายและ DEX ต้องคนจนละลายหมดก่อนวัดซ้ำ ในน้ำเย็นจะละลายช้า</li><li>ชั่งผลไม้ น้ำเชื่อม น้ำตาล และน้ำเปล่าเป็นกรัมทั้งหมด โดยหักน้ำหนักภาชนะก่อนชั่ง</li></ul></details>
@@ -59,7 +59,7 @@ function calculateBrix({mode,amount,b0,bt,kind,custom,ratio}) {
 (()=>{
 const $=id=>document.getElementById(id), ids=['amount','initial','target','sweetener','ratio','custom'];let mode=1;
 const num=id=>$(id).value.trim()===''?NaN:Number($(id).value), f=n=>n.toLocaleString('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1});
-function update(){
+function update(save=true){
   $('mode1').setAttribute('aria-pressed',String(mode===1));$('mode2').setAttribute('aria-pressed',String(mode===2));
   $('amountLabel').textContent=mode===1?'น้ำหนักผลไม้ที่ต้องการใช้ (กรัม)':'น้ำหนักรวมหลังปรับ (กรัม)';
   const b0=num('initial'),bt=num('target'),kind=$('sweetener').value,down=Number.isFinite(b0)&&Number.isFinite(bt)&&b0>bt;
@@ -68,7 +68,9 @@ function update(){
   $('direction').textContent=down?'Brix สูงกว่าเป้า → เติมน้ำเปล่าอัตโนมัติ':'';
   $('weightHelp').textContent=mode===2?'ชั่งน้ำผลไม้ตามผลคำนวณ แล้วเติมให้ได้น้ำหนักรวมตามสูตร':'ชั่งน้ำผลไม้เป็นกรัม · เติมแล้วน้ำหนักรวมจะเพิ่มขึ้น';
   const x=calculateBrix({mode,amount:num('amount'),b0,bt,kind,custom:num('custom'),ratio:num('ratio')});
-  $('message').textContent=x.error||(x.same?'Brix ตรงเป้าแล้ว ไม่ต้องปรับ':'');$('resultBody').hidden=!!x.error;
+  const empty=['amount','initial','target'].every(id=>$(id).value.trim()==='');
+  $('message').textContent=(empty?'กรอกน้ำหนักและ Brix เพื่อเริ่มคำนวณ':x.error)||(x.same?'Brix ตรงเป้าแล้ว ไม่ต้องปรับ':'');$('resultBody').hidden=!!x.error;
+  if(x.error){['mainResult','juiceResult','totalResult','brixResult','splitResult','comparison','mixNote'].forEach(id=>$(id).textContent='');$('comparison').hidden=true;}
   if(!x.error){
     $('mainResult').textContent=x.same?'ไม่ต้องเติม': 'เติม '+x.name+' '+f(x.a)+' กรัม';
     $('juiceResult').textContent=f(x.j)+' กรัม';$('totalResult').textContent=f(x.total)+' กรัม';$('brixResult').textContent=f(x.brix)+' °Bx';
@@ -83,12 +85,18 @@ function update(){
     }
     $('mixNote').textContent=x.same?'':x.down?'ชั่งน้ำเปล่าตามกรัมที่แสดง แล้วผสมให้เข้ากัน':kind==='SYR'?'ชั่ง SYR เป็นกรัมตามผลคำนวณ':kind==='CUS'?'ผสมให้เข้ากันและชิมยืนยันความหวาน':'คนให้น้ำตาลละลายหมดก่อนวัดซ้ำ';
   }
-  try{localStorage.setItem('mic-brix-grams-v2',JSON.stringify({mode,...Object.fromEntries(ids.map(id=>[id,$(id).value]))}));}catch(e){}
+  try{if(save)localStorage.setItem('mic-brix-grams-v2',JSON.stringify({mode,...Object.fromEntries(ids.map(id=>[id,$(id).value]))}));}catch(e){}
 }
 $('brixForm').addEventListener('submit',e=>e.preventDefault());$('brixForm').addEventListener('input',update);$('brixForm').addEventListener('change',update);
 $('mode1').onclick=()=>{mode=1;update();};$('mode2').onclick=()=>{mode=2;update();};
 $('standard').onclick=()=>{const b=num('initial');if(Number.isFinite(b)&&b>=0&&b<=100){$('target').value=Math.min(24,Math.max(6,Math.ceil(b/6)*6));update();}};
 $('twelve').onclick=()=>{$('target').value='12';update();};
+$('resetButton').onclick=()=>{
+  mode=1;['amount','initial','target','custom'].forEach(id=>$(id).value='');
+  $('sweetener').value='SYR';$('ratio').value='30';
+  try{localStorage.removeItem('mic-brix-grams-v2');localStorage.removeItem('mic-brix-v1');}catch(e){}
+  update(false);$('amount').focus();
+};
 try{const s=JSON.parse(localStorage.getItem('mic-brix-grams-v2'));if(s){mode=s.mode===2?2:1;ids.forEach(id=>{if(typeof s[id]==='string')$(id).value=s[id];});if(!['SYR','SUC','DEX','MIX','CUS'].includes($('sweetener').value))$('sweetener').value='SYR';}}catch(e){}update();
 })();
 </script></body></html>
