@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือ Fruit Part Builder · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
+<link rel="stylesheet" href="guide.css">
+<style>
+  body.guide-quality{padding:30px 16px 48px;background-color:#f6f1e8;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.56),transparent 35%),radial-gradient(circle at 92% 96%,rgba(201,120,98,.09),transparent 36%)}
+  body.guide-quality .container{max-width:780px}body.guide-quality header{max-width:700px;margin:0 auto 28px}body.guide-quality h1{font-size:clamp(40px,7vw,54px);font-weight:500}body.guide-quality .subtitle{font-size:16px;line-height:1.72}
+  body.guide-quality .card{margin-bottom:16px;padding:26px 25px;border-color:#d8cebe;border-radius:21px;background:#fffdf9;box-shadow:0 18px 40px -36px rgba(43,33,24,.66)}body.guide-quality .card h2{font-size:23px}body.guide-quality .card p,body.guide-quality .card li{font-size:14.5px;line-height:1.75}
+  body.guide-quality .tip,body.guide-quality .warning{padding:13px 15px;font-size:14px;line-height:1.65}body.guide-quality .links a{min-height:52px;border-radius:15px;background:#fffdf9;font-size:14px}
+  @media(max-width:640px){body.guide-quality{padding:22px 12px 40px}body.guide-quality h1{font-size:40px}body.guide-quality .subtitle{font-size:14.5px}body.guide-quality .card{padding:21px 18px}body.guide-quality .card p,body.guide-quality .card li{font-size:14px}}
+</style>
+<script src="tools-shell.js?v=092026FruitOnly" defer></script>
+</head>
+<body class="tools-ui-v2 tools-layout-guide guide-quality guide-brix">
+<main class="container"><a class="back-link" href="Fruit-Part-Builder.html">← กลับไปที่เครื่องมือ</a>
+<header><div class="eyebrow">Miss Icecream · Online Tools</div><h1>Fruit Part <em>Builder</em></h1><p class="subtitle">คู่มือประกอบส่วนผลไม้ 500 กรัม</p></header>
+<section class="card"><h2>เครื่องมือนี้คำนวณอะไร</h2><p>ส่วนผลไม้ 500 กรัม = ผลไม้ + ตัวช่วยดัน Brix + น้ำ</p><p>ขั้น 0, 12 และ 18 หมายถึง Brix ของส่วนผลไม้รวม 500 กรัม ไม่ใช่ Brix ของผลไม้ตั้งต้น</p><div class="tip">กรอก Brix ที่วัดจากผลไม้ก่อนเติมน้ำ เครื่องมือคำนวณตัวช่วยและน้ำให้ได้ส่วนผลไม้ครบ 500 กรัม</div><p>เลือกส่วนน้ำเชื่อมตามขั้นที่แสดงจากตารางในเล่ม</p></section>
+<section class="card"><h2>วิธีใช้</h2><ol><li>ชั่งผลไม้โดยหักน้ำหนักภาชนะ แล้วกรอก “ผลไม้ที่ต้องการใช้ (กรัม)”</li><li>วัดผลไม้ก่อนเติมน้ำ แล้วกรอก “Brix ของผลไม้ที่วัดได้ (°Bx)”</li><li>เลือก “ตัวช่วยดัน Brix”: SYR · น้ำเชื่อมเข้มข้นมิตรผล, น้ำผลไม้เข้มข้น, SUC · น้ำตาลทราย หรือ อื่นๆ (กรอก Brix)</li><li>กรอก Brix ของตัวช่วยตามที่วัดได้ ค่าเริ่มต้น SYR คือ 77 °Bx ส่วนน้ำตาลทรายใช้ 100 °Bx</li><li>เลือกขั้น “อัตโนมัติ” หรือกำหนด 0 / 12 / 18</li><li>ชั่งผลไม้ ตัวช่วย และน้ำตามตาราง ผสมให้เข้ากันและละลายน้ำตาลให้หมด</li><li>วัด Brix หลังผสมเพื่อยืนยัน ±0.5 °Bx แล้วใช้ส่วนน้ำเชื่อมขั้นที่แสดงจากตารางในเล่ม</li></ol></section>
+<section class="card"><h2>อัตโนมัติเลือกขั้นอย่างไร</h2><p>Brix เมื่อเติมน้ำอย่างเดียวให้ครบ 500 กรัม = น้ำหนักผลไม้ × Brix ของผลไม้ ÷ 500</p><p>เลือกขั้นแรกใน 0, 12, 18 ที่สูงกว่าหรือเท่ากับค่านี้ ปัดขึ้นเท่านั้น หากเกิน 18 ต้องลดผลไม้ ไม่มีการปรับลงเป็น 18 อัตโนมัติ</p><p>ตัวอย่าง: ผลไม้ 300 กรัมที่ 8 °Bx เมื่อเติมน้ำอย่างเดียวจะเป็น 4.8 °Bx จึงเลือกขั้น 12 หากใช้ SYR 85 °Bx ให้เติม SYR 42.4 กรัม และน้ำ 157.6 กรัม</p><p>ชา 500 กรัมที่ 0 °Bx เลือกขั้น 0 ไม่ต้องเติมตัวช่วยหรือน้ำ</p><div class="warning">หากผลไม้ก่อนเติมน้ำมี Brix เท่ากับขั้น ก็ยังต้องใช้สมดุลมวล เช่น ผลไม้ 300 กรัมที่ 12 °Bx เติมน้ำอย่างเดียวจนครบ 500 กรัมจะเหลือ 7.2 °Bx ไม่ใช่ 12 °Bx</div></section>
+<section class="card"><h2>อ่านผลคำนวณ</h2><p>ตารางเรียง ผลไม้ · ตัวช่วย · น้ำ · รวม 500 กรัม ตามด้วย “Brix ที่ควรอ่านได้หลังผสม” และ “ใช้ส่วนน้ำเชื่อมขั้น … จากตารางในเล่ม”</p><p>น้ำหนักแสดงทศนิยม 1 ตำแหน่ง คำนวณจากค่าก่อนปัดเศษ ผลบวกของตัวเลขที่ปัดแล้วอาจคลาดเล็กน้อย จึงต้องวัดซ้ำหลังผสม</p><p>ค่าเปรียบเทียบความหวานและการกดจุดเยือกแข็งอยู่ในหัวข้อย่อ/ขยาย เป็นผลของตัวช่วยที่เติมเท่านั้น</p></section>
+<section class="card"><h2>เมื่อเครื่องมือแจ้งข้อผิดพลาด</h2><ul><li>ผลไม้เกินเพดาน: ลดผลไม้ตามน้ำหนักสูงสุดที่แสดง</li><li>ผลไม้เกินเพดานของขั้นนี้: ลดผลไม้หรือเลือกขั้นถัดไป</li><li>ผลไม้เต็มส่วนแล้ว ไม่มีที่ให้ตัวช่วย — ลดผลไม้ หรือใช้กฎการไล่ระดับระหว่างสูตรในเล่ม</li><li>น้ำหนักผลไม้ต้องมากกว่า 0 และส่วนผลไม้รวมไม่เกิน 500 กรัม Brix ผลไม้ต้องอยู่ในช่วง 0–100</li><li>เมื่อต้องเติมตัวช่วย Brix ของตัวช่วยต้องมากกว่า 0 ถึง 100</li></ul><p>น้ำหนักสูงสุดแสดงเป็นกรัมเต็มโดยปัดลง เพื่อไม่ให้ชั่งเกินเพดาน</p></section>
+<section class="card"><h2>การวัดและค่าวัตถุดิบ</h2><ul><li>น้ำผลไม้เข้มข้น: กรดเข้มข้นตามไปด้วย ให้เลือกส่วนน้ำเชื่อมจากรสหลังผสมแล้ว</li><li>Brix สูงมาก (SYR / น้ำผลไม้เข้มข้น) วัดยาก ให้เจือ 1:1 โดยน้ำหนัก แล้วคูณ 2</li><li>วัดขวดจริง: เจือ 1:1 โดยน้ำหนัก แล้ว ×2</li><li>ใช้เครื่องวัดที่ชดเชยอุณหภูมิ (ATC) หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</li><li>DEX monohydrate: TS 91% · RS 0.7273 · AFP 1.727 · หวานประมาณ 0.80 เท่าของน้ำตาลทรายต่อของแข็ง</li><li>SYR อ้างอิง 77 °Bx: RS 0.820 · AFP 1.120 ล็อตอื่นประมาณตามสัดส่วน Brix ล็อต ÷ 77 โดยสมมติองค์ประกอบน้ำตาลเดิม ต่างเฉพาะความเข้มข้น</li><li>น้ำผลไม้เข้มข้น: RS 1.113 · AFP 1.629 ต่อกรัมของแข็ง</li></ul></section>
+<section class="card"><h2>ล้างค่า / เริ่มใหม่</h2><p>ล้างช่องกรอก ผลคำนวณ และข้อมูลที่บันทึกไว้ คืนขั้น “อัตโนมัติ” และ SYR 77 °Bx เครื่องมือจำค่าในเบราว์เซอร์นี้ ตรวจค่า Brix ของผลไม้และตัวช่วยทุกครั้งที่เปลี่ยนล็อต</p></section>
+<section class="card"><h2>ที่มา</h2><p>ค่าวัตถุดิบอ้างอิง MR v8.9.0</p></section>
+<div class="links"><a href="Fruit-Part-Builder.html">เปิด Fruit Part Builder <span>→</span></a><a href="guide.html">คู่มือรวม <span>→</span></a></div><footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 092026 Fruit Part Builder by Paula Kaothien</span></footer></main></body></html>
