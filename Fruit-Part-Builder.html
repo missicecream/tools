@@ -40,11 +40,20 @@
 </section>
 <section id="productionStep" class="workflow-step" aria-labelledby="productionTitle"><h2 id="productionTitle" class="step-heading"><span class="step-number">2</span><span>คำนวณปริมาณผลิตจริง</span></h2><p class="step-intro">ขยายสูตรจากขั้นที่ 1 ตามสัดส่วนเดิม เพื่อให้ Brix คงเดิม</p>
 <div class="calculator"><p id="productionPending" class="status">ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน แล้วเลือกปริมาณผลิต</p><fieldset id="productionControls" disabled><legend>คำนวณจากอะไร</legend><div class="mode production-modes" role="group" aria-label="วิธีคำนวณปริมาณผลิต"><button type="button" data-production-mode="mix" aria-pressed="true">กำหนดน้ำหนักมิกซ์ที่ต้องการผลิต</button><button type="button" data-production-mode="fruitPart" aria-pressed="false">กำหนดน้ำหนักส่วนผลไม้ที่ต้องการผลิต</button><button type="button" data-production-mode="fruit" aria-pressed="false">ใช้ผลไม้ที่มีทั้งหมด</button></div><div id="mixWeightField"><label for="mixWeight">น้ำหนักมิกซ์ที่ต้องการผลิต (กรัม)</label><input id="mixWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 5,000"></div><div id="fruitPartWeightField" hidden><label for="fruitPartWeight">น้ำหนักส่วนผลไม้ที่ต้องการผลิต (กรัม)</label><input id="fruitPartWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 1,550"></div><div id="availableFruitField" hidden><label for="availableFruit">น้ำหนักผลไม้ที่มีทั้งหมด (กรัม)</label><input id="availableFruit" type="number" min="0" step="any" inputmode="decimal" placeholder="ชั่งก่อนเติมตัวช่วยและน้ำ"></div><p id="productionHelp" class="help"></p></fieldset></div>
-<section class="result production-result" aria-label="น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง" aria-live="polite" aria-atomic="true"><h3>น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง</h3><p id="productionMessage" class="status"></p><div id="productionResult" hidden><div class="recipe-row"><span id="productionTotalLabel">ทำมิกซ์ได้รวม</span><strong id="scaledMix"></strong></div><p id="scaleFactor" class="help"></p><table class="recipe-table"><caption>ส่วนผลไม้สำหรับการผลิตครั้งนี้</caption><tbody><tr><th scope="row">ผลไม้</th><td id="scaledFruit"></td></tr><tr><th scope="row" id="scaledBoosterLabel">ตัวช่วย</th><td id="scaledBooster"></td></tr><tr><th scope="row">น้ำ</th><td id="scaledWater"></td></tr></tbody><tfoot><tr><th scope="row">รวมส่วนผลไม้</th><td id="scaledFruitPart"></td></tr></tfoot></table><p id="scaledBrix" class="status"></p><div id="bookPreparation" class="book-preparation"><strong id="bookWeight"></strong><p id="productionBookStep"></p><p class="help">ใช้สูตรและกฎการขยายปริมาณจากตารางในเล่ม</p></div><p id="productionRounding" class="help">ตัวเลขแสดงทศนิยม 1 ตำแหน่ง คำนวณจากค่าก่อนปัดเศษ · น้ำหนักมิกซ์ก่อนการสูญเสียระหว่างผลิต</p></div></section></section>
-<section class="calculator"><h2>วัด Brix จริงแล้วคลาดเคลื่อนมากเกินไป?</h2><p>หลังผสมให้เข้ากัน หากวัดยืนยันแล้ว Brix ยังคลาดเคลื่อนจากเป้าหมายเกินช่วง ±0.5 °Bx ให้ปรับอีกครั้งด้วย Brix Blender</p><p class="help">ใช้ส่วนผลไม้ที่ผสมแล้วเป็น A กรอก Brix ที่วัดจริงและน้ำหนักที่เหลือจริง ส่วน B เลือกเป็นน้ำหรือตัวช่วยตามทิศทางที่ต้องปรับ หลังเติม น้ำหนักรวมจะเพิ่มขึ้น ให้ชั่งส่วนผลไม้หลังปรับตามปริมาณที่สูตรต้องการ</p><a class="next-step" href="Brix-Blender.html">ปรับ Brix ด้วยการผสม A + B →</a></section>
+<section class="result production-result" aria-label="น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง" aria-live="polite" aria-atomic="true"><h3>น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง</h3><p id="productionMessage" class="status"></p><div id="productionResult" hidden><div class="recipe-row"><span id="productionTotalLabel">ทำมิกซ์ได้รวม</span><strong id="scaledMix"></strong></div><p id="scaleFactor" class="help"></p><table class="recipe-table"><caption>ส่วนผลไม้สำหรับการผลิตครั้งนี้</caption><tbody><tr><th scope="row">ผลไม้</th><td id="scaledFruit"></td></tr><tr><th scope="row" id="scaledBoosterLabel">ตัวช่วย</th><td id="scaledBooster"></td></tr><tr><th scope="row">น้ำ</th><td id="scaledWater"></td></tr></tbody><tfoot><tr><th scope="row">รวมส่วนผลไม้</th><td id="scaledFruitPart"></td></tr></tfoot></table><p id="scaledBrix" class="status"></p><div id="bookPreparation" class="book-preparation"><strong id="bookWeight"></strong><p id="productionBookStep"></p><p class="help">ใช้สูตรและกฎการขยายปริมาณจากตารางในเล่ม</p></div><p id="productionRounding" class="help">ตัวเลขแสดงทศนิยม 1 ตำแหน่ง คำนวณจากค่าก่อนปัดเศษ · น้ำหนักมิกซ์ก่อนการสูญเสียระหว่างผลิต</p><a class="next-step" href="#correctionStep">ผสมแล้ววัด Brix · ไปขั้นที่ 3 เพื่อปรับแก้ ↓</a></div></section></section>
+<section id="correctionStep" class="workflow-step" aria-labelledby="correctionTitle"><h2 id="correctionTitle" class="step-heading"><span class="step-number">3</span><span>ปรับ Brix หลังผสม</span></h2><p class="step-intro">ผสมแล้ววัด Brix จริง หากคลาดเคลื่อนมากเกินไป เช่น เกิน ±0.5 °Bx ให้คำนวณปรับอีกครั้งตรงนี้</p>
+<section class="calculator"><p id="correctionSource" class="help"></p><p id="correctionPending" class="status">คำนวณปริมาณผลิตในขั้นที่ 2 ให้ครบก่อน เพื่อดึงน้ำหนักส่วนผลไม้มาใช้</p><fieldset id="correctionControls" disabled><legend>ข้อมูลสำหรับปรับหลังผสม</legend><p class="help">เติมข้อมูลจากขั้นก่อนหน้าไว้ให้แล้ว ทุกช่องแก้ได้ตามที่ใช้จริง</p><div class="fields">
+<div class="field"><label for="correctionName">ชื่อส่วนผสมที่ต้องการปรับ</label><input id="correctionName" type="text" maxlength="100" value="ส่วนผลไม้ที่ผสมแล้ว"></div>
+<div class="field"><label for="correctionWeight">น้ำหนักส่วนผลไม้ที่ต้องการปรับ (กรัม)</label><input id="correctionWeight" type="number" min="0" step="any" inputmode="decimal"><p class="help">ค่าเริ่มต้นคือน้ำหนักส่วนผลไม้จากขั้นที่ 2 หากติดชามหรือตักออกไปแล้ว ให้แก้เป็นน้ำหนักที่เหลือจริง</p></div>
+<div class="field"><label for="correctionMeasured">Brix ที่วัดจริงหลังผสม (°Bx)</label><input id="correctionMeasured" type="number" min="0" max="100" step="any" inputmode="decimal" placeholder="กรอกค่าที่วัดจริง"></div>
+<div class="field"><label for="correctionTarget">Brix เป้าหมายหลังปรับ (°Bx)</label><input id="correctionTarget" type="number" min="0" max="100" step="any" inputmode="decimal"></div></div>
+<label for="correctionBooster">ตัวช่วยดัน Brix เมื่อวัดได้ต่ำกว่าเป้าหมาย</label><select id="correctionBooster"><option value="SYR">SYR · น้ำเชื่อมเข้มข้นมิตรผล</option><option value="CON">น้ำผลไม้เข้มข้น</option><option value="SUC">SUC · น้ำตาลทราย</option><option value="OTHER">อื่นๆ</option></select>
+<div class="extra"><label for="correctionBoosterBrix">Brix ของตัวช่วยที่ใช้ปรับ (°Bx)</label><input id="correctionBoosterBrix" type="number" min="0" max="100" step="any" inputmode="decimal"></div><p class="help">ถ้าวัดได้สูงกว่าเป้าหมาย จะคำนวณเติมน้ำ 0 °Bx ถ้าต่ำกว่า จะใช้ตัวช่วยและค่า Brix ที่ระบุข้างบน</p><button id="reloadCorrection" type="button">ดึงข้อมูลจากขั้นที่ 1–2 ใหม่</button><p class="help">ปุ่มนี้คืนข้อมูลเริ่มต้นและล้าง Brix ที่วัดจริง เพื่อเริ่มตรวจชุดใหม่</p></fieldset></section>
+<section class="result" aria-live="polite" aria-atomic="true"><h3>น้ำหนักที่ต้องใช้เพื่อปรับ Brix</h3><p id="correctionMessage" class="status"></p><div id="correctionResult" hidden><table class="recipe-table"><tbody><tr><th id="correctionOriginalLabel" scope="row">ส่วนผลไม้ที่ผสมแล้ว</th><td id="correctionOriginalWeight"></td></tr><tr><th id="correctionAddLabel" scope="row">สิ่งที่ต้องเติม</th><td id="correctionAddWeight"></td></tr></tbody><tfoot><tr><th scope="row">รวมหลังปรับ</th><td id="correctionTotal"></td></tr></tfoot></table><p id="correctionBrixResult" class="fixed-total"></p><p id="correctionAction" class="help"></p><p class="help">ใช้หลักสมดุลเดียวกับ Pearson Square โดยคงน้ำหนักส่วนผสมที่มี แล้วหาน้ำหนักที่ต้องเติม คำนวณจากค่าก่อนปัดเศษ แสดงน้ำหนักทศนิยม 1 ตำแหน่ง</p><p class="help">การเติมทำให้น้ำหนักรวมเพิ่มขึ้น ผสมให้เข้ากัน วัด Brix ยืนยัน แล้วชั่งส่วนผลไม้ตามน้ำหนักที่สูตรต้องใช้</p><p id="correctionTargetNote" class="help"></p></div></section>
+<p class="help">ต้องการผสมวัตถุดิบสองชนิดแบบอิสระ? <a class="back-link" href="Brix-Blender.html">เปิด Brix Blender แบบแยก →</a></p></section>
 <details><summary>เทียบความหวานและการกดจุดเยือกแข็งกับน้ำตาลทราย</summary><div id="comparison"></div><p class="help">ค่าของตัวช่วยที่เติมเท่านั้น ไม่ใช่ค่ารวมของสูตร</p></details>
 <details><summary>การวัดและข้อควรรู้</summary><ul><li>น้ำผลไม้เข้มข้น: กรดเข้มข้นตามไปด้วย ให้เลือกส่วนน้ำเชื่อมจากรสหลังผสมแล้ว</li><li>Brix สูงมาก (SYR / น้ำผลไม้เข้มข้น) วัดยาก ให้เจือ 1:1 โดยน้ำหนัก แล้วคูณ 2</li><li>ใช้เครื่องวัดที่ชดเชยอุณหภูมิ (ATC) หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</li><li>ผสมให้เข้ากันและละลายน้ำตาลให้หมดก่อนวัดยืนยัน ±0.5 °Bx</li></ul></details>
-<details><summary>ค่าวัตถุดิบและหลักการคำนวณ</summary><p>ใช้ผลไม้มากที่สุด: หาน้ำหนักผลไม้สูงสุดที่ยังได้ขั้นที่เลือก โดยผลไม้ + ตัวช่วย + น้ำ รวม 500 กรัม หากเลือกอัตโนมัติ เปรียบเทียบขั้น 0 / 12 / 18 แล้วเลือกขั้นที่ใช้ผลไม้ได้มากที่สุด หากเท่ากันเลือกขั้นต่ำกว่า</p><p>ปริมาณผลิตจริง: ตัวคูณ = น้ำหนักมิกซ์ที่ต้องการ ÷ 1,000 หรือ น้ำหนักผลไม้ที่มี ÷ น้ำหนักผลไม้ตั้งต้นจากขั้นที่ 1 แล้วคูณวัตถุดิบทุกตัวด้วยตัวคูณเดียวกัน</p><p>ขั้นของสูตรหมายถึง Brix ของส่วนผลไม้รวม 500 กรัม</p><p>Brix เมื่อเติมน้ำอย่างเดียว = น้ำหนักผลไม้ × Brix ผลไม้ ÷ 500<br>ตัวช่วย = (500 × ขั้น − น้ำหนักผลไม้ × Brix ผลไม้) ÷ Brix ตัวช่วย<br>น้ำ = 500 − ผลไม้ − ตัวช่วย</p><ul><li>DEX monohydrate: TS 91% · RS 0.7273 · AFP 1.727 · หวานประมาณ 0.80 เท่าของน้ำตาลทรายต่อของแข็ง</li><li>SYR อ้างอิง 77 °Bx: RS 0.820 · AFP 1.120 ต่อกรัมวัตถุดิบ ล็อตอื่นประมาณ RS = 0.820 × (Brix ล็อต ÷ 77) และ AFP = 1.120 × (Brix ล็อต ÷ 77) โดยสมมติองค์ประกอบน้ำตาลเดิม ต่างเฉพาะความเข้มข้น</li><li>น้ำผลไม้เข้มข้น: RS 1.113 · AFP 1.629 ต่อกรัมของแข็ง</li></ul><p class="source">ค่าวัตถุดิบอ้างอิง MR v8.9.0</p></details>
+<details><summary>ค่าวัตถุดิบและหลักการคำนวณ</summary><p>ใช้ผลไม้มากที่สุด: หาน้ำหนักผลไม้สูงสุดที่ยังได้ขั้นที่เลือก โดยผลไม้ + ตัวช่วย + น้ำ รวม 500 กรัม หากเลือกอัตโนมัติ เปรียบเทียบขั้น 0 / 12 / 18 แล้วเลือกขั้นที่ใช้ผลไม้ได้มากที่สุด หากเท่ากันเลือกขั้นต่ำกว่า</p><p>ปริมาณผลิตจริง: ตัวคูณ = น้ำหนักมิกซ์ที่ต้องการ ÷ 1,000 หรือ น้ำหนักส่วนผลไม้ที่ต้องการ ÷ 500 หรือ น้ำหนักผลไม้ที่มี ÷ น้ำหนักผลไม้ตั้งต้นจากขั้นที่ 1 แล้วคูณวัตถุดิบทุกตัวด้วยตัวคูณเดียวกัน</p><p>ขั้นของสูตรหมายถึง Brix ของส่วนผลไม้รวม 500 กรัม</p><p>Brix เมื่อเติมน้ำอย่างเดียว = น้ำหนักผลไม้ × Brix ผลไม้ ÷ 500<br>ตัวช่วย = (500 × ขั้น − น้ำหนักผลไม้ × Brix ผลไม้) ÷ Brix ตัวช่วย<br>น้ำ = 500 − ผลไม้ − ตัวช่วย</p><ul><li>DEX monohydrate: TS 91% · RS 0.7273 · AFP 1.727 · หวานประมาณ 0.80 เท่าของน้ำตาลทรายต่อของแข็ง</li><li>SYR อ้างอิง 77 °Bx: RS 0.820 · AFP 1.120 ต่อกรัมวัตถุดิบ ล็อตอื่นประมาณ RS = 0.820 × (Brix ล็อต ÷ 77) และ AFP = 1.120 × (Brix ล็อต ÷ 77) โดยสมมติองค์ประกอบน้ำตาลเดิม ต่างเฉพาะความเข้มข้น</li><li>น้ำผลไม้เข้มข้น: RS 1.113 · AFP 1.629 ต่อกรัมของแข็ง</li></ul><p class="source">ค่าวัตถุดิบอ้างอิง MR v8.9.0</p></details>
 <footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 092026 Fruit Part Builder by Paula Kaothien</span></footer></main>
 <script>
 'use strict';
@@ -106,9 +115,22 @@ function scaleFruitPart(recipe,{basis,amount}){
  if(!Object.values(result).every(Number.isFinite)||result.mix<=0)return {error:'ปริมาณมากเกินกว่าจะคำนวณได้ กรุณาตรวจน้ำหนักอีกครั้ง'};
  return result;
 }
+function correctFruitBrix({weight,measured,target,boosterBrix}){
+ if(!Number.isFinite(weight)||weight<=0)return {error:'กรอกน้ำหนักส่วนผลไม้ที่ต้องการปรับให้มากกว่า 0 กรัม'};
+ if(![measured,target].every(v=>Number.isFinite(v)&&v>=0&&v<=100))return {error:'กรอก Brix ที่วัดจริงและเป้าหมายให้ครบ โดยใช้ค่าตั้งแต่ 0 ถึง 100'};
+ if(measured===target)return {weight,added:0,total:weight,target,material:'none'};
+ const material=measured>target?'water':'booster',addBrix=material==='water'?0:boosterBrix;
+ if(material==='water'&&target===0)return {error:'เติมน้ำไม่สามารถทำให้ส่วนผสมที่มี Brix มากกว่า 0 ลดลงเป็น 0 °Bx ได้พอดี กรุณาตรวจเป้าหมาย'};
+ if(material==='booster'&&(!Number.isFinite(addBrix)||addBrix>100||addBrix<=target))return {error:'Brix ของตัวช่วยต้องสูงกว่าเป้าหมายและไม่เกิน 100 °Bx จึงจะปรับขึ้นได้'};
+ const added=weight*((target-measured)/(addBrix-target)),total=weight+added;
+ if(!Number.isFinite(added)||!Number.isFinite(total)||added<0)return {error:'น้ำหนักมากเกินกว่าจะคำนวณได้ กรุณาตรวจน้ำหนักและ Brix อีกครั้ง'};
+ return {weight,added,total,target,material};
+}
 (()=>{
  const $=id=>document.getElementById(id),key='mic-fruit-part-builder-v3';
  const fields=['fruit','fruitBrix','booster','syrBrix','conBrix','otherBrix','mixWeight','fruitPartWeight','availableFruit'];
+ const correctionFields=['correctionName','correctionWeight','correctionMeasured','correctionTarget','correctionBooster','correctionBoosterBrix'];
+ let correctionOverrides={},correctionSignature=null,correctionDefaults=null;
  let step='auto',fruitMode='maximum',productionMode='mix',pendingSuggestion=null;
  const num=id=>$(id).value.trim()===''?NaN:Number($(id).value);
  const f=n=>n.toLocaleString('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1});
@@ -121,7 +143,7 @@ function scaleFruitPart(recipe,{basis,amount}){
   const scaled=scaleFruitPart(recipe,{basis:productionMode,amount:num({mix:'mixWeight',fruitPart:'fruitPartWeight',fruit:'availableFruit'}[productionMode])});
   $('productionResult').hidden=!!scaled.error;
   $('productionMessage').textContent=scaled.error?(valid?scaled.error:'ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน'):'';
-  if(scaled.error){['scaledMix','scaleFactor','scaledFruit','scaledBooster','scaledWater','scaledFruitPart','scaledBrix','bookWeight','productionBookStep'].forEach(id=>$(id).textContent='');return;}
+  if(scaled.error){['scaledMix','scaleFactor','scaledFruit','scaledBooster','scaledWater','scaledFruitPart','scaledBrix','bookWeight','productionBookStep'].forEach(id=>$(id).textContent='');return scaled;}
   const partOnly=productionMode==='fruitPart';
   $('productionTotalLabel').textContent=partOnly?'ผลิตส่วนผลไม้รวม':'ทำมิกซ์ได้รวม';
   $('scaledMix').textContent=f(partOnly?scaled.fruitPart:scaled.mix)+' กรัม';
@@ -133,6 +155,32 @@ function scaleFruitPart(recipe,{basis,amount}){
   $('scaledBrix').textContent='Brix ของส่วนผลไม้คงเดิม = '+f(scaled.target)+' °Bx (วัดยืนยัน ±0.5)';
   $('bookWeight').textContent=partOnly?'':'เตรียมส่วนน้ำเชื่อมอีก '+f(scaled.bookPart)+' กรัม';
   $('productionBookStep').textContent=partOnly?'':'ใช้ส่วนน้ำเชื่อมขั้น '+scaled.target+' จากตารางในเล่ม';
+  return scaled;
+ }
+ function updateCorrection(scaled,recipe,booster,ba){
+  const valid=scaled&&!scaled.error;
+  const signature=JSON.stringify({recipe,scaled,booster,ba,productionMode});
+  if(correctionSignature!==null&&correctionSignature!==signature)$('correctionMeasured').value='';
+  correctionSignature=signature;
+  $('correctionControls').disabled=!valid;$('correctionPending').hidden=!!valid;
+  correctionDefaults=valid?{correctionName:'ส่วนผลไม้ที่ผสมแล้ว',correctionWeight:String(scaled.fruitPart),correctionTarget:String(scaled.target),correctionBooster:booster,correctionBoosterBrix:Number.isFinite(ba)?String(ba):''}:null;
+  if(valid){
+   Object.entries(correctionDefaults).forEach(([id,value])=>{if(!correctionOverrides[id])$(id).value=value;});
+   $('correctionSource').textContent=(productionMode==='mix'?'ดึงน้ำหนักมิกซ์ '+f(scaled.mix)+' ÷ 2 = ส่วนผลไม้ ':productionMode==='fruitPart'?'ดึงน้ำหนักส่วนผลไม้ที่ต้องการผลิต: ':'ดึงน้ำหนักส่วนผลไม้ที่คำนวณจากผลไม้ที่มี: ')+f(scaled.fruitPart)+' กรัม · เป้าหมาย '+f(scaled.target)+' °Bx'+(Object.keys(correctionOverrides).length?' · ช่องที่แก้เองยังคงค่าของคุณ กดดึงข้อมูลใหม่เมื่อต้องการกลับไปใช้ค่าจากสูตร':'');
+  }else{
+   $('correctionSource').textContent='';
+   ['correctionWeight','correctionTarget','correctionBoosterBrix'].forEach(id=>{if(!correctionOverrides[id])$(id).value='';});
+  }
+  const r=valid?correctFruitBrix({weight:num('correctionWeight'),measured:num('correctionMeasured'),target:num('correctionTarget'),boosterBrix:num('correctionBoosterBrix')}):{error:'คำนวณขั้นที่ 1–2 ให้ครบก่อน แล้วกรอก Brix ที่วัดจริงหลังผสม'};
+  $('correctionResult').hidden=!!r.error;$('correctionMessage').textContent=r.error||'';
+  if(r.error){['correctionOriginalLabel','correctionOriginalWeight','correctionAddLabel','correctionAddWeight','correctionTotal','correctionBrixResult','correctionAction','correctionTargetNote'].forEach(id=>$(id).textContent='');return;}
+  const name=$('correctionName').value.trim()||'ส่วนผลไม้ที่ผสมแล้ว';
+  const additive=r.material==='water'?'น้ำ':r.material==='none'?'ไม่ต้องเติม':$('correctionBooster').selectedOptions[0].textContent;
+  $('correctionOriginalLabel').textContent=name;$('correctionOriginalWeight').textContent=f(r.weight)+' กรัม';
+  $('correctionAddLabel').textContent=r.material==='none'?additive:'เติม '+additive;$('correctionAddWeight').textContent=f(r.added)+' กรัม';
+  $('correctionTotal').textContent=f(r.total)+' กรัม';$('correctionBrixResult').textContent='Brix หลังปรับตามการคำนวณ = '+num('correctionTarget')+' °Bx';
+  $('correctionAction').textContent=r.material==='none'?'Brix ที่วัดได้ตรงเป้าหมายแล้ว จึงไม่ต้องเติมน้ำหรือตัวช่วย':r.material==='water'?'วัดได้สูงกว่าเป้าหมาย จึงเติมน้ำ 0 °Bx เพื่อลด Brix':'วัดได้ต่ำกว่าเป้าหมาย จึงเติม '+additive+' ที่ '+num('correctionBoosterBrix')+' °Bx เพื่อเพิ่ม Brix';
+  $('correctionTargetNote').textContent=r.target!==scaled.target?'คุณแก้ Brix เป้าหมายจากสูตรตั้งต้น ตรวจขั้นของสูตรในเล่มให้ตรงกับ Brix ใหม่ก่อนนำไปใช้':'';
  }
  function update(save=true){
   document.querySelectorAll('[data-fruit-mode]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.fruitMode===fruitMode)));
@@ -183,10 +231,14 @@ function scaleFruitPart(recipe,{basis,amount}){
   }else{
    ['fruitResult','boosterResult','waterResult','brixResult','bookStep','maximumNote'].forEach(id=>$(id).textContent='');$('comparison').textContent='กรอกข้อมูลให้ครบเพื่อดูค่าเปรียบเทียบ';
   }
-  updateProduction(originalResult,$('boosterLabel').textContent);
+  const scaled=updateProduction(originalResult,$('boosterLabel').textContent);
+  updateCorrection(scaled,originalResult,booster,ba);
   if(pendingSuggestion){$('productionPending').textContent='เลือก “ใช้ปริมาณสูงสุดนี้” ในขั้นที่ 1 หรือแก้ปริมาณผลไม้ให้ใช้ได้ก่อน';$('productionMessage').textContent='สูตรแนะนำยังไม่ได้ถูกเลือกใช้';}else{$('productionPending').textContent='ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน แล้วเลือกปริมาณผลิต';}
-  if(save)try{localStorage.setItem(key,JSON.stringify({step,fruitMode,productionMode,...Object.fromEntries(fields.map(id=>[id,$(id).value]))}));}catch(e){}
+  if(save)try{localStorage.setItem(key,JSON.stringify({step,fruitMode,productionMode,correction:{overrides:correctionOverrides,signature:correctionSignature,values:Object.fromEntries(correctionFields.map(id=>[id,$(id).value]))},...Object.fromEntries(fields.map(id=>[id,$(id).value]))}));}catch(e){}
  }
+ correctionFields.filter(id=>id!=='correctionBooster').forEach(id=>$(id).addEventListener('input',()=>{if(id!=='correctionMeasured')correctionOverrides[id]=true;update();}));
+ $('correctionBooster').addEventListener('change',()=>{correctionOverrides.correctionBooster=true;correctionOverrides.correctionBoosterBrix=true;const value=$('correctionBooster').value;$('correctionBoosterBrix').value=correctionDefaults&&value===correctionDefaults.correctionBooster?correctionDefaults.correctionBoosterBrix:value==='SUC'?'100':value==='SYR'?'77':'';update();});
+ $('reloadCorrection').onclick=()=>{correctionOverrides={};$('correctionMeasured').value='';update();$('correctionMeasured').focus();};
  $('useMaximum').onclick=()=>{if(!pendingSuggestion)return;fruitMode='maximum';update();$('nextStepLink').focus();};
  document.querySelectorAll('[data-fruit-mode]').forEach(el=>el.onclick=()=>{fruitMode=el.dataset.fruitMode;update();});
  document.querySelectorAll('[data-production-mode]').forEach(el=>el.onclick=()=>{productionMode=el.dataset.productionMode;update();});
@@ -194,12 +246,18 @@ function scaleFruitPart(recipe,{basis,amount}){
  $('fruitForm').addEventListener('submit',e=>e.preventDefault());
  $('fruitForm').addEventListener('input',()=>update());$('fruitForm').addEventListener('change',()=>update());
  document.querySelectorAll('[data-step]').forEach(el=>el.onclick=()=>{step=el.dataset.step;update();});
- $('resetButton').onclick=()=>{step='auto';fruitMode='maximum';productionMode='mix';fields.forEach(id=>$(id).value='');$('booster').value='SYR';$('syrBrix').value='77';try{[key,'mic-fruit-part-builder-v2','mic-fruit-part-builder-v1','mic-brix-grams-v2','mic-brix-v1'].forEach(k=>localStorage.removeItem(k));}catch(e){}update(false);$('fruitBrix').focus();};
+ $('resetButton').onclick=()=>{correctionOverrides={};correctionSignature=null;correctionDefaults=null;correctionFields.forEach(id=>$(id).value='');$('correctionName').value='ส่วนผลไม้ที่ผสมแล้ว';$('correctionBooster').value='SYR';step='auto';fruitMode='maximum';productionMode='mix';fields.forEach(id=>$(id).value='');$('booster').value='SYR';$('syrBrix').value='77';try{[key,'mic-fruit-part-builder-v2','mic-fruit-part-builder-v1','mic-brix-grams-v2','mic-brix-v1'].forEach(k=>localStorage.removeItem(k));}catch(e){}update(false);$('fruitBrix').focus();};
  try{const current=localStorage.getItem(key);const saved=JSON.parse(current||localStorage.getItem('mic-fruit-part-builder-v2')||'null');if(saved&&typeof saved==='object'){
   if(['auto','0','12','18'].includes(saved.step))step=saved.step;
   fruitMode=['maximum','manual'].includes(saved.fruitMode)?saved.fruitMode:current?'maximum':'manual';
   if(['mix','fruitPart','fruit'].includes(saved.productionMode))productionMode=saved.productionMode;
   fields.forEach(id=>{if(typeof saved[id]==='string')$(id).value=saved[id];});
+  if(saved.correction&&typeof saved.correction==='object'){
+   const savedCorrection=saved.correction;
+   correctionSignature=typeof savedCorrection.signature==='string'?savedCorrection.signature:null;
+   correctionFields.forEach(id=>{if(typeof savedCorrection.values?.[id]==='string')$(id).value=savedCorrection.values[id];if(id!=='correctionMeasured'&&savedCorrection.overrides?.[id]===true)correctionOverrides[id]=true;});
+   if(!['SYR','SUC','CON','OTHER'].includes($('correctionBooster').value)){delete correctionOverrides.correctionBooster;$('correctionBooster').value='SYR';}
+  }
   if(!['SYR','SUC','CON','OTHER'].includes($('booster').value))$('booster').value='SYR';
  }}catch(e){}$('comparison').textContent='กรอกข้อมูลเพื่อดูค่าเปรียบเทียบ';update(false);
 })();
