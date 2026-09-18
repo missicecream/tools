@@ -1,6 +1,7 @@
 (function () {
   const page = location.pathname.split('/').pop() || 'index.html';
   const guides = {
+    'Brix-Blender.html': 'Brix-Blender-guide.html',
     'Fruit-Part-Builder.html': 'Fruit-Part-Builder-guide.html',
     'Formula-Ingredient-Limit.html': 'Formula-Ingredient-Limit-guide.html',
     'ClassTimer.html': 'ClassTimer-guide.html',

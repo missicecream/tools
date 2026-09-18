@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือ Brix Blender · Miss Icecream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tools-theme.css?v=082026K">
+<link rel="stylesheet" href="guide.css">
+<style>
+  body.guide-quality{padding:30px 16px 48px;background-color:#f6f1e8;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.56),transparent 35%),radial-gradient(circle at 92% 96%,rgba(201,120,98,.09),transparent 36%)}
+  body.guide-quality .container{max-width:780px}body.guide-quality header{max-width:700px;margin:0 auto 28px}body.guide-quality h1{font-size:clamp(40px,7vw,54px);font-weight:500}body.guide-quality .subtitle{font-size:16px;line-height:1.72}
+  body.guide-quality .card{margin-bottom:16px;padding:26px 25px;border-color:#d8cebe;border-radius:21px;background:#fffdf9;box-shadow:0 18px 40px -36px rgba(43,33,24,.66)}body.guide-quality .card h2{font-size:23px}body.guide-quality .card p,body.guide-quality .card li{font-size:14.5px;line-height:1.75}
+  body.guide-quality .tip,body.guide-quality .warning{padding:13px 15px;font-size:14px;line-height:1.65}body.guide-quality .links a{min-height:52px;border-radius:15px;background:#fffdf9;font-size:14px}
+  @media(max-width:640px){body.guide-quality{padding:22px 12px 40px}body.guide-quality h1{font-size:40px}body.guide-quality .subtitle{font-size:14.5px}body.guide-quality .card{padding:21px 18px}body.guide-quality .card p,body.guide-quality .card li{font-size:14px}}
+</style>
+<script src="tools-shell.js?v=092026BrixBlender" defer></script>
+</head>
+<body class="tools-ui-v2 tools-layout-guide guide-quality guide-brix">
+<main class="container"><a class="back-link" href="Brix-Blender.html">← กลับไปที่เครื่องมือ</a><header><div class="eyebrow">Miss Icecream · Online Tools</div><h1>Brix <em>Blender</em></h1><p class="subtitle">คู่มือผสม A + B ให้ได้ Brix เป้าหมาย</p></header>
+<section class="card"><h2>ขั้นที่ 1 — หาอัตราส่วน</h2><p>กรอก Brix ของ A และ B ที่วัดจริง แล้วกรอกเป้าหมายที่อยู่ระหว่างสองค่านี้ A จะมีค่ามากกว่าหรือน้อยกว่า B ก็ได้</p><p>หลัก Pearson Square ใช้ผลต่างแนวทแยง: ส่วนของ A = |Brix B − เป้าหมาย| และส่วนของ B = |Brix A − เป้าหมาย| เครื่องหมาย | | หมายถึงใช้ผลต่างเป็นบวก</p><div class="tip">A 8 °Bx + B 20 °Bx → เป้าหมาย 12 °Bx<br>ส่วนของ A = 20 − 12 = 8<br>ส่วนของ B = 12 − 8 = 4<br>ใช้ A : B = 8 : 4 หรือ 2 : 1 โดยน้ำหนัก</div><p>ค่าเป้าหมายใกล้วัตถุดิบฝั่งไหน จะใช้วัตถุดิบฝั่งนั้นมากกว่า สัดส่วนนี้คงเดิมไม่ว่าจะผลิตมากหรือน้อย</p></section>
+<section class="card"><h2>ขั้นที่ 2 — เลือกน้ำหนักที่รู้</h2><ul><li><strong>กำหนดน้ำหนักส่วนผสมรวม:</strong> ต้องการรวม 600 กรัมในตัวอย่างข้างต้น ใช้ A 400 กรัม และ B 200 กรัม</li><li><strong>กำหนดน้ำหนัก A ที่ต้องการใช้:</strong> มี A 300 กรัม ต้องเติม B 150 กรัม รวม 450 กรัม</li><li><strong>กำหนดน้ำหนัก B ที่ต้องการใช้:</strong> มี B 100 กรัม ต้องเติม A 200 กรัม รวม 300 กรัม</li></ul><p>กรอกเฉพาะน้ำหนักตามตัวเลือกที่ใช้ เครื่องมือคำนวณใหม่ทันทีเมื่อเปลี่ยน Brix หรือน้ำหนัก</p><p>ตรวจกลับได้ด้วย (น้ำหนัก A × Brix A + น้ำหนัก B × Brix B) ÷ น้ำหนักรวม คำนวณจากค่าก่อนปัดเศษ น้ำหนักแสดงทศนิยม 1 ตำแหน่ง</p></section>
+<section class="card"><h2>แก้ Brix ของส่วนผลไม้ที่ผสมแล้ว</h2><p>หากวัดยืนยันแล้วคลาดเคลื่อนเกินช่วงที่ยอมรับได้ เช่น เกิน ±0.5 °Bx ให้ใช้ส่วนผสมเดิมเป็น A และกรอก Brix ที่วัดจริง ชั่งน้ำหนักที่เหลือจริง แล้วเลือก “กำหนดน้ำหนัก A ที่ต้องการใช้”</p><ul><li>สูงไป: เติม B ที่มี Brix ต่ำกว่าเป้าหมาย เช่น น้ำ 0 °Bx</li><li>ต่ำไป: เติม B ที่มี Brix สูงกว่าเป้าหมาย เช่น น้ำเชื่อมตามค่า Brix ของล็อตจริง</li></ul><div class="tip">ตัวอย่างลด Brix: A 500 กรัมที่ 14 °Bx ใช้ B เป็นน้ำ 0 °Bx ต้องการ 12 °Bx → เติมน้ำประมาณ 83.3 กรัม ได้รวม 583.3 กรัม<br>ตัวอย่างเพิ่ม Brix: A 500 กรัมที่ 10 °Bx ใช้ B เป็นน้ำเชื่อม 85 °Bx ต้องการ 12 °Bx → เติมน้ำเชื่อมประมาณ 13.7 กรัม ได้รวม 513.7 กรัม</div><p>ผสมให้เข้ากันแล้ววัดยืนยันอีกครั้ง การเติมทำให้น้ำหนักเพิ่มขึ้น จึงต้องชั่งส่วนผลไม้หลังปรับตามน้ำหนักที่สูตรต้องการ</p></section>
+<section class="card"><h2>กรณีที่ต้องตรวจค่า</h2><ul><li>Brix ทุกค่าต้องอยู่ในช่วง 0–100 และน้ำหนักต้องมากกว่า 0</li><li>เป้าหมายนอกช่วง A–B ทำไม่ได้ด้วยวัตถุดิบสองชนิดนี้ ต้องเปลี่ยนวัตถุดิบหรือเป้าหมาย</li><li>เป้าหมายเท่ากับ A หรือ B ใช้ด้านนั้นเพียงอย่างเดียว อีกด้านเป็น 0 กรัม หากระบุน้ำหนักด้านที่ต้องเป็น 0 เครื่องมือจะแจ้งให้แก้</li><li>A และ B มี Brix เท่ากัน การผสมไม่เปลี่ยน Brix ถ้าตรงเป้าหมายอยู่แล้วใช้สัดส่วนใดก็ได้ แต่ไม่สามารถคำนวณอัตราส่วนเฉพาะจาก Brix</li></ul></section>
+<section class="card"><h2>การวัดและการบันทึก</h2><p>ชั่งทุกอย่างเป็นกรัม แบบจำลองใช้ Brix เป็นสัดส่วนของแข็งที่ละลายตามน้ำหนัก ค่าอ่านจริงของวัตถุดิบต่างชนิดอาจคลาดเคลื่อน จึงต้องวัดหลังผสม ใช้เครื่อง ATC หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</p><p>สำหรับ Brix สูง ให้เจือ 1:1 โดยน้ำหนักแล้วคูณค่าที่วัดด้วย 2 ก่อนกรอก</p><p>เครื่องมือจำค่าบนเบราว์เซอร์นี้ ปุ่ม “ล้างค่า / เริ่มใหม่” ล้างข้อมูลและผลลัพธ์ แล้วกลับไปเลือกน้ำหนักรวม</p></section>
+<section class="card"><h2>ที่มาของหลักการ</h2><p>ประยุกต์หลักการผสมสองวัตถุดิบและผลต่างแนวทแยงจาก <a href="https://www.extension.colostate.edu/docs/pubs/livestk/01618.pdf">Colorado State University Extension — Formulating Rations With the Pearson Square</a> โดยใช้ Brix ของวัตถุดิบทั้งสองบนฐานน้ำหนักเดียวกัน</p></section>
+<div class="links"><a href="Brix-Blender.html">เปิด Brix Blender <span>→</span></a><a href="Fruit-Part-Builder.html">Fruit Part Builder <span>→</span></a><a href="guide.html">คู่มือรวม <span>→</span></a></div><footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></footer></main></body></html>
