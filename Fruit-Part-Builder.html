@@ -141,7 +141,7 @@ function correctFruitBrix({weight,measured,target,boosterBrix}){
   $('productionControls').disabled=!valid;$('productionPending').hidden=!!valid;
   $('mixWeightField').hidden=productionMode!=='mix';$('fruitPartWeightField').hidden=productionMode!=='fruitPart';$('availableFruitField').hidden=productionMode!=='fruit';
   document.querySelectorAll('[data-production-mode]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.productionMode===productionMode)));
-  $('productionHelp').textContent=productionMode==='mix'?'น้ำหนักมิกซ์รวมทั้งส่วนผลไม้และส่วนน้ำเชื่อม':productionMode==='fruitPart'?'น้ำหนักรวมของผลไม้ + ตัวช่วย + น้ำ หลังผสม เช่น ต้องการเผื่อให้พอใช้ ให้กรอก 1,550 กรัม เครื่องมือจะขยายสูตรให้รวมได้ตามนี้ ก่อนการสูญเสียระหว่างผสม':'กรอกน้ำหนักผลไม้ก่อนเติมตัวช่วยและน้ำ เพื่อใช้ผลไม้ที่มีให้หมดตามสูตรขั้นที่ 1';
+  $('productionHelp').textContent=productionMode==='mix'?'กรอกน้ำหนักมิกซ์รวม (g) ที่ต้องการผลิต':productionMode==='fruitPart'?'น้ำหนักรวมของผลไม้ + ตัวช่วย + น้ำ หลังผสม เช่น ต้องการเผื่อให้พอใช้ ให้กรอก 1,550 กรัม เครื่องมือจะขยายสูตรให้รวมได้ตามนี้ ก่อนการสูญเสียระหว่างผสม':'กรอกน้ำหนักผลไม้ก่อนเติมตัวช่วยและน้ำ เพื่อใช้ผลไม้ที่มีให้หมดตามสูตรขั้นที่ 1';
   const scaled=scaleFruitPart(recipe,{basis:productionMode,amount:num({mix:'mixWeight',fruitPart:'fruitPartWeight',fruit:'availableFruit'}[productionMode])});
   $('productionResult').hidden=!!scaled.error;
   $('productionMessage').textContent=scaled.error?(valid?scaled.error:'ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน'):'';
