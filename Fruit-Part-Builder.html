@@ -35,7 +35,7 @@
 <section class="result" aria-live="polite" aria-atomic="true" aria-label="ผลคำนวณ"><h3 id="baseResultTitle">สูตรตั้งต้น: ส่วนผลไม้ 500 กรัม</h3><p class="help">สูตรนี้สำหรับมิกซ์ 1,000 กรัม · ยังไม่ใช่น้ำหนักผลิตจริง</p><p id="message" class="status">กรอกน้ำหนักและ Brix ของผลไม้เพื่อเริ่มคำนวณ</p><p id="recommendationIntro" class="recommendation-intro" hidden></p><div id="resultBody" hidden>
 <table class="recipe-table"><caption class="help">ชั่งทุกอย่างเป็นกรัม</caption><tbody><tr><th scope="row">ผลไม้</th><td id="fruitResult"></td></tr><tr><th scope="row" id="boosterLabel">ตัวช่วย</th><td id="boosterResult"></td></tr><tr><th scope="row">น้ำ</th><td id="waterResult"></td></tr></tbody><tfoot><tr><th scope="row">รวม</th><td>500.0 กรัม</td></tr></tfoot></table>
 <p id="brixResult" class="status"></p>
-<p id="bookStep" class="fixed-total"></p><p id="maximumNote" class="help"></p><button id="useMaximum" class="use-maximum" type="button" hidden>ใช้ปริมาณสูงสุดนี้</button><p id="recommendationHelp" class="help" hidden>ค่าที่กรอกยังคงเดิม เลือกใช้สูตรแนะนำนี้ หรือกลับไปแก้ปริมาณผลไม้ ก่อนคำนวณปริมาณผลิตจริง</p><a id="nextStepLink" class="next-step" href="#productionStep">ไปขั้นที่ 2 · คำนวณปริมาณผลิตจริง ↓</a>
+<p id="bookStep" class="fixed-total"></p><p id="maximumNote" class="help"></p><button id="useMaximum" class="use-maximum" type="button" hidden>ใช้ปริมาณสูงสุดนี้</button><p id="recommendationHelp" class="help" hidden>ค่าที่กรอกยังคงเดิม เลือกใช้สูตรแนะนำนี้ หรือกลับไปแก้ปริมาณผลไม้ ก่อนคำนวณปริมาณผลิตจริง</p>
 </div></section>
 </section>
 <section id="productionStep" class="workflow-step" aria-labelledby="productionTitle"><h2 id="productionTitle" class="step-heading"><span class="step-number">2</span><span>คำนวณปริมาณผลิตจริง</span></h2><p class="step-intro">ขยายสูตรจากขั้นที่ 1 ตามสัดส่วนเดิม เพื่อให้ Brix คงเดิม</p>
@@ -205,7 +205,6 @@ function correctFruitBrix({weight,measured,target,boosterBrix}){
   $('message').classList.toggle('limit-message',!!pendingSuggestion);
   $('message').textContent=originalResult.error?(!$('fruitBrix').value&&(fruitMode==='maximum'||!$('fruit').value)?(fruitMode==='maximum'?'กรอก Brix ของผลไม้และตัวช่วย เพื่อหาปริมาณผลไม้สูงสุด':'กรอกน้ำหนักและ Brix ของผลไม้เพื่อเริ่มคำนวณ'):originalResult.error):'';
   $('recommendationIntro').hidden=!pendingSuggestion;$('useMaximum').hidden=!pendingSuggestion;$('recommendationHelp').hidden=!pendingSuggestion;
-  $('nextStepLink').hidden=!!pendingSuggestion;
   $('recommendationIntro').textContent='';
   if(pendingSuggestion){
    const reason=originalResult.reason==='weight-cap'?(num('fruit')>500?'น้ำหนักผลไม้อย่างเดียวก็เกินส่วนผลไม้ที่กำหนดไว้ 500 กรัม':'เมื่อรวมตัวช่วยที่ต้องเติมแล้ว จะเกินน้ำหนักส่วนผลไม้ 500 กรัม'):'ปริมาณนี้มีของแข็งจากผลไม้มากเกินกว่าจะได้ Brix ตามขั้นที่ใช้ ภายในส่วนผลไม้ 500 กรัม';
@@ -245,7 +244,7 @@ function correctFruitBrix({weight,measured,target,boosterBrix}){
  correctionFields.filter(id=>id!=='correctionBooster').forEach(id=>$(id).addEventListener('input',()=>{if(id!=='correctionMeasured')correctionOverrides[id]=true;if(id==='correctionBoosterBrix')correctionOverrides.correctionBooster=true;update();}));
  $('correctionBooster').addEventListener('change',()=>{correctionOverrides.correctionBooster=true;correctionOverrides.correctionBoosterBrix=true;const value=$('correctionBooster').value;$('correctionBoosterBrix').value=value==='WATER'?'0':value===$('booster').value?(value==='SUC'?'100':$({SYR:'syrBrix',CON:'conBrix',OTHER:'otherBrix'}[value]).value):value==='SUC'?'100':value==='SYR'?'77':'';update();});
  $('reloadCorrection').onclick=()=>{correctionOverrides={};$('correctionMeasured').value='';update();$('correctionMeasured').focus();};
- $('useMaximum').onclick=()=>{if(!pendingSuggestion)return;fruitMode='maximum';update();$('nextStepLink').focus();};
+ $('useMaximum').onclick=()=>{if(!pendingSuggestion)return;fruitMode='maximum';update();document.querySelector('[data-production-mode][aria-pressed="true"]').focus();};
  document.querySelectorAll('[data-fruit-mode]').forEach(el=>el.onclick=()=>{fruitMode=el.dataset.fruitMode;update();});
  document.querySelectorAll('[data-production-mode]').forEach(el=>el.onclick=()=>{productionMode=el.dataset.productionMode;update();});
  ['mixWeight','fruitPartWeight','availableFruit'].forEach(id=>$(id).addEventListener('input',()=>update()));
