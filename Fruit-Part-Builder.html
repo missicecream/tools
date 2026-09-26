@@ -270,28 +270,49 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   const actualTotal=pass?r.weight:enteredAdded!==''?r.weight+num('correctionAddedActual'):null;
   const reportName=value=>value===names.SYR?'SYR':value===names.SUC?'SUC':value;
   const actualBoosterName=reportName($('actualBoosterName').value.trim()||'ตัวช่วย');
+  const ingredient=(label,brix,weight)=>'- '+label+' ('+(Number.isFinite(brix)?bx(brix)+' °Bx':'ไม่ระบุ Brix')+') '+f(weight)+' กรัม';
+  // Ingredient totals are reconstructed only for the homogeneous mixture remaining for correction.
+  const retained=r.weight/actual.total;
+  const correctionAmount=pass?0:enteredAdded!==''?num('correctionAddedActual'):r.added;
+  let finalBooster=num('actualBooster')*retained,finalWater=num('actualWater')*retained;
+  const sameBooster=reportName(additive)===actualBoosterName&&num('correctionBoosterBrix')===num('actualBoosterBrix');
+  if(water)finalWater+=correctionAmount;
+  else if(sameBooster)finalBooster+=correctionAmount;
+  const extraIngredient=!water&&!sameBooster&&correctionAmount>0?ingredient(reportName(additive)+' ที่เติมเพิ่ม',num('correctionBoosterBrix'),correctionAmount):'';
   const log=[
    ['บันทึกการปรับส่วนของผลไม้',name==='ส่วนผลไม้ที่ผสมแล้ว'?'':name],
-   ['1. สูตรที่แนะนำจากเครื่องมือ',
-    'ผลไม้ '+f(scaled.fruit)+' กรัม · '+reportName(names[booster])+' '+f(scaled.booster)+' กรัม · น้ำ '+f(scaled.water)+' กรัม',
-    'รวม '+f(scaled.fruitPart)+' กรัม · เป้าหมาย '+bx(scaled.target)+' °Bx'],
-   ['2. ผสมจริงและวัดได้',
-    'ผลไม้ '+$('actualFruit').value+' กรัม ('+$('actualFruitBrix').value+' °Bx)',
-    actualBoosterName+' '+$('actualBooster').value+' กรัม'+(num('actualBooster')>0?' ('+$('actualBoosterBrix').value+' °Bx)':''),
-    'น้ำ '+$('actualWater').value+' กรัม · รวม '+f(actual.total)+' กรัม',
-    Math.abs(actual.total-r.weight)>1e-8?'เหลือสำหรับปรับ '+f(r.weight)+' กรัม':'',
-    'Brix คาดการณ์ '+actual.expected.toFixed(2)+' °Bx · วัดครั้งที่ 1: '+$('correctionMeasured').value+' °Bx',
-    r.needsSecond?'วัดครั้งที่ 2: '+$('correctionMeasured2').value+' °Bx (ใช้ค่านี้คำนวณ)':'',
-    r.caution?'⚠ ค่าครั้งที่ 2 ยังต่างจากค่าคาดการณ์เกิน 1.0 °Bx ให้แจ้งผู้คุมก่อนปรับ':''],
+   ['1. ตั้งสูตรต่อมิกซ์ 1,000 กรัม',
+    'Brix เป้าหมาย '+bx(recipe.target)+' °Bx',
+    ingredient('ผลไม้',num('fruitBrix'),recipe.fruit),
+    ingredient(reportName(names[booster]),ba,recipe.booster),
+    ingredient('น้ำ',0,recipe.water),
+    'รวมส่วนผลไม้ 500.0 กรัม'],
+   ['2. สูตรที่ผสมจริง',
+    'Brix เป้าหมาย '+bx(scaled.target)+' °Bx',
+    ingredient('ผลไม้',num('actualFruitBrix'),num('actualFruit')),
+    ingredient(actualBoosterName,num('actualBoosterBrix'),num('actualBooster')),
+    ingredient('น้ำ',0,num('actualWater')),
+    'ผล',
+    '  Brix คาดการณ์ '+actual.expected.toFixed(2)+' °Bx',
+    '  Brix ที่วัดได้หลังผสม '+$('correctionMeasured').value+' °Bx'+(r.needsSecond?' (ครั้งที่ 1)':''),
+    r.needsSecond?'  วัดซ้ำ '+$('correctionMeasured2').value+' °Bx (ครั้งที่ 2 ใช้ค่านี้ปรับ)':'',
+    '  น้ำหนักรวม '+f(actual.total)+' กรัม',
+    r.caution?'  ⚠ ค่าครั้งที่ 2 ยังต่างจากค่าคาดการณ์เกิน 1.0 °Bx ให้แจ้งผู้คุมก่อนปรับ':''],
    ['3. การปรับบริกซ์',
-    pass?'ผ่านช่วงเป้าหมาย '+bx(target)+' ±0.5 °Bx ไม่ต้องปรับ':'เป้าหมาย '+bx(target)+' °Bx · ใช้ '+reportName(additive)+' ('+$('correctionBoosterBrix').value+' °Bx)',
-    pass?'':'เครื่องมือแนะนำ: เติม '+reportName(additive)+' เพิ่ม '+f(r.added)+' กรัม',
+    'Brix เป้าหมาย '+bx(target)+' °Bx',
+    pass?'ผ่านช่วง ±0.5 °Bx ไม่ต้องปรับ':'เครื่องมือแนะนำ: เติม '+reportName(additive)+' เพิ่ม '+f(r.added)+' กรัม',
     pass?'':'ผู้ใช้บันทึกว่าเติมเพิ่มจริง: '+(enteredAdded===''?'ยังไม่บันทึก':enteredAdded+' กรัม'),
-    pass?'':'ผลไม้ต่อ 500 กรัม: '+f(beforeFruit)+' → '+f(afterFruit)+' กรัมตามแผน (ประมาณ)'],
-   ['4. ผลหลังปรับ',
-    pass?'ไม่ได้ปรับ · ใช้ค่าวัดเดิม '+(r.needsSecond?$('correctionMeasured2').value:$('correctionMeasured').value)+' °Bx':'Brix วัดหลังปรับ: '+(enteredFinal===''?'ยังไม่บันทึก':enteredFinal+' °Bx'),
-    pass?'น้ำหนักรวม '+f(actualTotal)+' กรัม':actualTotal!==null?'น้ำหนักรวมหลังปรับ '+f(actualTotal)+' กรัม (จากน้ำหนักที่เติมจริง)':'น้ำหนักรวมหลังปรับตามแผน '+f(r.total)+' กรัม',
-    pass?'':enteredAdded===''?'Brix คาดการณ์ตามแผน '+bx(r.target)+' °Bx (ยังไม่ใช่ผลวัดจริง)':'']
+    Math.abs(actual.total-r.weight)>1e-8?'ใช้ส่วนผสมที่เหลือ '+f(r.weight)+' กรัม (ประมาณสัดส่วนเมื่อผสมเป็นเนื้อเดียวกัน)':'',
+    pass?'ส่วนผสมที่ใช้':actualTotal===null?'ส่วนผสมหลังปรับตามแผน':'ส่วนผสมหลังปรับตามน้ำหนักที่เติมจริง',
+    ingredient('ผลไม้',num('actualFruitBrix'),num('actualFruit')*retained),
+    ingredient(actualBoosterName,num('actualBoosterBrix'),finalBooster),
+    ingredient('น้ำ',0,finalWater),
+    extraIngredient,
+    pass?'':'ผลไม้ต่อ 500 กรัม: '+f(beforeFruit)+' → '+f(afterFruit)+' กรัมตามแผน (ประมาณ)',
+    'ผล',
+    pass?'  ไม่ได้ปรับ · ใช้ค่าวัดเดิม '+(r.needsSecond?$('correctionMeasured2').value:$('correctionMeasured').value)+' °Bx':'  Brix ที่วัดได้หลังปรับ '+(enteredFinal===''?'ยังไม่บันทึก':enteredFinal+' °Bx'),
+    '  '+(pass?'น้ำหนักรวม '+f(actualTotal)+' กรัม':actualTotal!==null?'น้ำหนักรวม '+f(actualTotal)+' กรัม (จากน้ำหนักที่เติมจริง)':'น้ำหนักรวมตามแผน '+f(r.total)+' กรัม'),
+    !pass&&actualTotal===null?'  Brix คาดการณ์ตามแผน '+bx(r.target)+' °Bx':'']
   ].map(section=>section.filter(Boolean).join('\n')).join('\n\n');
   $('correctionRecord').value=log;
  }
@@ -397,3 +418,5 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
 <!-- บันทึกการเปลี่ยนแปลง 092026b: เพิ่มน้ำหนักชั่งจริงและ Brix คาดการณ์ ตรวจวัดซ้ำเมื่อห่างเกิน 1.0 °Bx ช่วงผ่าน ±0.5 เตือนสัดส่วนผลไม้และยืนยันก่อนเติมน้ำ แบ่งส่วน 500 กรัมและคัดลอกบันทึก แยกค่าคำนวณจากค่าที่วัดจริง สูตรขั้นที่ 1–2 คงเดิม -->
 
 <!-- 2026-09-26: จัดบันทึกการปรับส่วนของผลไม้เป็น 4 ส่วน แยกสูตรแนะนำ ชั่งและวัดจริง การปรับ และผลหลังปรับ โดยไม่เปลี่ยนสูตรคำนวณ -->
+
+<!-- 2026-09-26: บันทึก 3 ส่วนใช้รูปแบบเป้าหมาย / วัตถุดิบพร้อม Brix / ผลให้ตรงกัน สูตรตั้งต้นต่อมิกซ์ 1,000 กรัม แยกส่วนผสมหลังปรับตามแผนกับตามน้ำหนักเติมจริง -->
