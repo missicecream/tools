@@ -64,7 +64,7 @@
 <div id="dilutionWarning" class="correction-caution" hidden><p id="dilutionText"></p><p id="waterAlternative" hidden>ทางเลือก: หยุดการเติมและแจ้งผู้คุมเพื่อพิจารณาค่าที่วัดได้ ก่อนตัดสินใจใช้ส่วนผสมนี้</p><button id="confirmWater" type="button" hidden>เข้าใจแล้ว คำนวณน้ำ</button></div>
 <div id="correctionResult" hidden><p id="correctionAction" class="correction-action"></p><table class="recipe-table"><tbody><tr><th id="correctionOriginalLabel" scope="row"></th><td id="correctionOriginalWeight"></td></tr><tr><th id="correctionAddLabel" scope="row"></th><td id="correctionAddWeight"></td></tr></tbody><tfoot><tr><th scope="row">รวมหลังปรับตามที่คำนวณ</th><td id="correctionTotal"></td></tr></tfoot></table><p id="correctionBrixResult" class="fixed-total"></p><p id="smallAdditionNote" class="help"></p><p class="help">ผสมให้เข้ากันแล้ววัดยืนยัน ก่อนชั่งส่วนผลไม้ตามน้ำหนักที่สูตรต้องใช้ ปริมาณเติมและผลรวมนี้เป็นค่าคำนวณ ยังไม่ใช่บันทึกว่าชั่งเติมจริงแล้ว</p></div>
 <p id="portionResult" class="fixed-total" hidden></p><p id="correctionTargetNote" class="help"></p>
-<div id="correctionRecordPanel" hidden><h3>บันทึกการปรับส่วนของผลไม้</h3><p class="help">สำหรับรายงานการทำสูตร ตรวจข้อมูลชั่งจริงก่อนคัดลอก กรอกปริมาณเติมจริงและ Brix หลังปรับเมื่อทำแล้ว ช่องที่ยังไม่กรอกจะแสดงว่า “ยังไม่บันทึก”</p><label for="correctionAddedActual">น้ำหนักตัวช่วยที่เติมจริง (กรัม) — ถ้าเติมแล้ว</label><input id="correctionAddedActual" type="number" min="0" step="any" inputmode="decimal"><label for="correctionFinalMeasured">Brix ที่วัดได้จริงหลังปรับ (°Bx) — ถ้าวัดแล้ว</label><input id="correctionFinalMeasured" type="number" min="0" max="100" step="any" inputmode="decimal"><p id="recordError" class="help"></p><button id="copyCorrection" type="button">คัดลอกบันทึก</button><p id="copyStatus" class="help" role="status"></p><label for="correctionRecord">ตัวอย่างบันทึกที่จะคัดลอก</label><textarea id="correctionRecord" class="correction-record" rows="18" readonly></textarea></div></section>
+<div id="correctionRecordPanel" hidden><h3>บันทึกการปรับส่วนของผลไม้</h3><p class="help">สำหรับรายงานการทำสูตร ตรวจข้อมูลชั่งจริงก่อนคัดลอก กรอกปริมาณเติมจริงและ Brix หลังปรับเมื่อทำแล้ว ช่องที่ยังไม่กรอกจะแสดงว่า “ยังไม่บันทึก”</p><label for="correctionAddedActual">น้ำหนักที่เติมเพิ่มเพื่อปรับ Brix จริง (กรัม)</label><input id="correctionAddedActual" type="number" min="0" step="any" inputmode="decimal" aria-describedby="correctionAddedHelp"><p id="correctionAddedHelp" class="help">กรอกเฉพาะน้ำหนักตัวช่วยหรือน้ำที่เติมเพิ่มในครั้งนี้ ไม่ใช่น้ำหนักรวมหลังผสม หากยังไม่ได้เติม ให้เว้นว่าง</p><label for="correctionFinalMeasured">Brix ที่วัดได้จริงหลังปรับ (°Bx) — ถ้าวัดแล้ว</label><input id="correctionFinalMeasured" type="number" min="0" max="100" step="any" inputmode="decimal"><p id="recordError" class="help"></p><button id="copyCorrection" type="button">คัดลอกบันทึก</button><p id="copyStatus" class="help" role="status"></p><label for="correctionRecord">ตัวอย่างบันทึกที่จะคัดลอก</label><textarea id="correctionRecord" class="correction-record" rows="18" readonly></textarea></div></section>
 <p class="help">ต้องการผสมวัตถุดิบสองชนิดแบบอิสระ? <a class="back-link" href="Brix-Blender.html">เปิด Brix Blender แบบแยก →</a></p></section>
 <details><summary>เทียบความหวานและการกดจุดเยือกแข็งกับน้ำตาลทราย</summary><div id="comparison"></div><p class="help">ค่าของตัวช่วยที่เติมเท่านั้น ไม่ใช่ค่ารวมของสูตร</p></details>
 <details><summary>การวัดและข้อควรรู้</summary><ul><li>น้ำผลไม้เข้มข้น: กรดเข้มข้นตามไปด้วย ให้เลือกส่วนน้ำเชื่อมจากรสหลังผสมแล้ว</li><li>Brix สูงมาก (SYR / น้ำผลไม้เข้มข้น) วัดยาก ให้เจือ 1:1 โดยน้ำหนัก แล้วคูณ 2</li><li>ใช้เครื่องวัดที่ชดเชยอุณหภูมิ (ATC) หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</li><li>ผสมให้เข้ากันและละลายน้ำตาลให้หมดก่อนวัดยืนยัน ±0.5 °Bx</li></ul></details>
@@ -256,8 +256,7 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
    const delta=5/(r.weight+5)*(num('correctionBoosterBrix')-r.measured);
    $('smallAdditionNote').textContent='สำหรับชุดนี้ เติม '+additive+' 5.0 กรัม จะเปลี่ยน Brix ตามการคำนวณประมาณ '+Math.abs(delta).toLocaleString('th-TH',{maximumFractionDigits:3})+' °Bx จึงควรชั่งตามผลคำนวณหลังยืนยันค่าที่วัดแล้ว';
   }
-  const portions=fruitPortions(r.total);
-  $('portionResult').hidden=false;$('portionResult').textContent=(r.state==='pass'?'น้ำหนักส่วนผสมที่มี':'หลังปรับตามที่คำนวณ น้ำหนักรวม')+' = '+f(r.total)+' กรัม → แบ่งได้ '+portions.count.toLocaleString('th-TH')+' ส่วน ส่วนละ 500 กรัม เหลือ '+f(portions.remainder)+' กรัม (แบ่งจากค่าก่อนปัดเศษ)';
+  $('portionResult').hidden=false;$('portionResult').textContent=(r.state==='pass'?'น้ำหนักส่วนผสมที่มี':'หลังปรับตามที่คำนวณ น้ำหนักรวม')+' = '+f(r.total)+' กรัม';
   $('correctionTargetNote').textContent=target!==scaled.target?'คุณแก้เป้าหมายจากสูตรตั้งต้น ตรวจขั้นในเล่มให้ตรงกับ Brix ใหม่ก่อนใช้':'';
   $('correctionRecordPanel').hidden=false;
   $('correctionAddedActual').disabled=r.state==='pass';$('correctionFinalMeasured').disabled=r.state==='pass';
@@ -269,10 +268,8 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   if(invalidAdded||invalidFinal)return;
   const pass=r.state==='pass';
   const actualTotal=pass?r.weight:enteredAdded!==''?r.weight+num('correctionAddedActual'):null;
-  const actualParts=actualTotal===null?null:fruitPortions(actualTotal);
   const reportName=value=>value===names.SYR?'SYR':value===names.SUC?'SUC':value;
   const actualBoosterName=reportName($('actualBoosterName').value.trim()||'ตัวช่วย');
-  const portionLine=(total,parts)=>'รวม '+f(total)+' กรัม · แบ่งได้ '+parts.count.toLocaleString('th-TH')+' ส่วน × 500 กรัม เหลือ '+f(parts.remainder)+' กรัม';
   const log=[
    ['บันทึกการปรับส่วนของผลไม้',name==='ส่วนผลไม้ที่ผสมแล้ว'?'':name],
    ['1. สูตรที่แนะนำจากเครื่องมือ',
@@ -288,11 +285,12 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
     r.caution?'⚠ ค่าครั้งที่ 2 ยังต่างจากค่าคาดการณ์เกิน 1.0 °Bx ให้แจ้งผู้คุมก่อนปรับ':''],
    ['3. การปรับบริกซ์',
     pass?'ผ่านช่วงเป้าหมาย '+bx(target)+' ±0.5 °Bx ไม่ต้องปรับ':'เป้าหมาย '+bx(target)+' °Bx · ใช้ '+reportName(additive)+' ('+$('correctionBoosterBrix').value+' °Bx)',
-    pass?'':'แนะนำให้เติม '+f(r.added)+' กรัม · เติมจริง: '+(enteredAdded===''?'ยังไม่บันทึก':enteredAdded+' กรัม'),
+    pass?'':'เครื่องมือแนะนำ: เติม '+reportName(additive)+' เพิ่ม '+f(r.added)+' กรัม',
+    pass?'':'ผู้ใช้บันทึกว่าเติมเพิ่มจริง: '+(enteredAdded===''?'ยังไม่บันทึก':enteredAdded+' กรัม'),
     pass?'':'ผลไม้ต่อ 500 กรัม: '+f(beforeFruit)+' → '+f(afterFruit)+' กรัมตามแผน (ประมาณ)'],
    ['4. ผลหลังปรับ',
     pass?'ไม่ได้ปรับ · ใช้ค่าวัดเดิม '+(r.needsSecond?$('correctionMeasured2').value:$('correctionMeasured').value)+' °Bx':'Brix วัดหลังปรับ: '+(enteredFinal===''?'ยังไม่บันทึก':enteredFinal+' °Bx'),
-    pass?portionLine(actualTotal,actualParts):actualParts?'ตามน้ำหนักเติมจริง: '+portionLine(actualTotal,actualParts)+' (ก่อนสูญเสียเพิ่มเติม)':'ตามแผน: '+portionLine(r.total,portions),
+    pass?'น้ำหนักรวม '+f(actualTotal)+' กรัม':actualTotal!==null?'น้ำหนักรวมหลังปรับ '+f(actualTotal)+' กรัม (จากน้ำหนักที่เติมจริง)':'น้ำหนักรวมหลังปรับตามแผน '+f(r.total)+' กรัม',
     pass?'':enteredAdded===''?'Brix คาดการณ์ตามแผน '+bx(r.target)+' °Bx (ยังไม่ใช่ผลวัดจริง)':'']
   ].map(section=>section.filter(Boolean).join('\n')).join('\n\n');
   $('correctionRecord').value=log;
