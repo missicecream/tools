@@ -239,9 +239,11 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   if(r.error||r.state==='remeasure'){$('correctionMessage').textContent=r.error||'รอ Brix ที่วัดได้จริงครั้งที่ 2 ก่อนแสดงปริมาณเติม';return;}
   const name=$('correctionName').value.trim()||'ส่วนผลไม้ที่ผสมแล้ว';
   const additive=water?'น้ำ':$('correctionBooster').selectedOptions[0].textContent;
-  const addedName={WATER:'น้ำ',SYR:'SYR',CON:'น้ำผลไม้เข้มข้น',SUC:'น้ำตาลทราย (SUC)',OTHER:'ตัวช่วยอื่น ๆ ที่เลือก'}[$('correctionBooster').value];
-  $('correctionAddedLabel').textContent='น้ำหนัก'+(water?'':' ')+addedName+(water?'ที่':' ที่')+'เติมเพิ่มจริง (กรัม)';
-  $('correctionAddedHelp').textContent='กรอกเฉพาะน้ำหนัก'+(water?'':' ')+addedName+(water?'ที่':' ที่')+'เติมเพิ่มในครั้งนี้ ไม่ใช่น้ำหนักรวมหลังผสม หากยังไม่ได้เติม ให้เว้นว่าง';
+  const addedName={WATER:'น้ำ',SYR:'SYR',CON:'น้ำผลไม้เข้มข้น',SUC:'น้ำตาลทราย (SUC)',OTHER:'ตัวช่วยอื่น ๆ'}[$('correctionBooster').value];
+  const addedWeightName='น้ำหนัก'+($('correctionBooster').value==='SYR'?' ':'')+addedName;
+  const addedJoin=['WATER','CON'].includes($('correctionBooster').value)?'ที่':' ที่';
+  $('correctionAddedLabel').textContent=addedWeightName+addedJoin+'เติมเพิ่มจริง (กรัม)';
+  $('correctionAddedHelp').textContent='กรอกเฉพาะ'+addedWeightName+addedJoin+'เติมเพิ่มในครั้งนี้ ไม่ใช่น้ำหนักรวมหลังผสม หากยังไม่ได้เติม ให้เว้นว่าง';
   const beforeFruit=actual.fruitFraction*500;
   const afterFruit=actual.fruitFraction*r.weight/r.total*500;
   planSignature=JSON.stringify({signature,values:correctionFields.filter(id=>!['correctionAddedActual','correctionFinalMeasured'].includes(id)).map(id=>$(id).value)});
