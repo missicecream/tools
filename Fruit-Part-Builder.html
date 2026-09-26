@@ -29,11 +29,13 @@ body.reading-large .workflow-step input[type="number"]{font-size:25px!important}
 <script src="tools-shell.js?v=092026FruitOnly" defer></script></head>
 <body class="tools-ui-v2 tools-layout-calculator brix-page"><main class="container">
 <a class="back-link" href="index.html">← กลับหน้าหลัก</a>
-<header class="hero"><p class="eyebrow">Miss Ice Cream · Online Tools</p><h1>Fruit Part <span>Builder</span></h1><h2>ประกอบส่วนผลไม้ 500 กรัม</h2><p class="subtitle">ส่วนผลไม้ 500 กรัม = ผลไม้ + ตัวช่วยดัน Brix + น้ำ</p><p class="help">ขั้น = Brix ของส่วนผลไม้รวม 500 กรัม ไม่ใช่ Brix ของผลไม้ตั้งต้น</p></header>
-<section class="workflow-step" aria-labelledby="recipeStepTitle"><h2 id="recipeStepTitle" class="step-heading"><span class="step-number">1</span><span>ตั้งสูตรต่อมิกซ์ 1,000 กรัม</span></h2><p class="step-intro">เลือกปริมาณผลไม้ แล้วดูสูตรส่วนผลไม้รวม 500 กรัม</p><section class="calculator" aria-label="ข้อมูลส่วนผลไม้"><form id="fruitForm" novalidate>
-<label for="fruitName">ชื่อผลไม้หรือเครื่องดื่มที่ใช้ (ไม่บังคับ)</label><input id="fruitName" type="text" maxlength="80" placeholder="เช่น สตรอว์เบอร์รี น้ำมะพร้าว ชา" aria-describedby="fruitNameHelp"><p id="fruitNameHelp" class="help">ใช้แสดงชื่อในผลคำนวณและบันทึก โดยกรอก Brix จากค่าที่วัดได้จริง</p>
-<fieldset><legend>ต้องการใช้ผลไม้แบบไหน</legend><div class="mode" role="group" aria-label="วิธีเลือกปริมาณผลไม้"><button type="button" data-fruit-mode="maximum" aria-pressed="true">ใช้ผลไม้มากที่สุดเท่าที่ทำได้</button><button type="button" data-fruit-mode="manual" aria-pressed="false">กำหนดน้ำหนักของผลไม้ที่ต้องใช้</button></div><p id="fruitModeHelp" class="help"></p></fieldset>
-<div class="fields"><div class="field" id="fruitWeightField" hidden><label for="fruit">น้ำหนักผลไม้ที่ต้องการใช้ต่อมิกซ์ 1,000 กรัม (กรัม)</label><input id="fruit" type="number" min="0" max="500" step="any" inputmode="decimal"></div><div class="field"><label for="fruitBrix">Brix ของผลไม้ที่วัดได้ (°Bx)</label><input id="fruitBrix" type="number" min="0" max="100" step="any" inputmode="decimal"></div></div>
+<header class="hero"><p class="eyebrow">Miss Ice Cream · Online Tools</p><h1>Fruit Part <span>Builder</span></h1><h2>ประกอบส่วนผลไม้ 500 กรัม</h2><p id="heroSubtitle" class="subtitle">ส่วนผลไม้ 500 กรัม = ผลไม้ + ตัวช่วยดัน Brix + น้ำ</p><p id="heroStepNote" class="help">ขั้น = Brix ของส่วนผลไม้รวม 500 กรัม ไม่ใช่ Brix ของผลไม้ตั้งต้น</p></header>
+<section class="workflow-step" aria-labelledby="recipeStepTitle"><h2 id="recipeStepTitle" class="step-heading"><span class="step-number">1</span><span>ตั้งสูตรต่อมิกซ์ 1,000 กรัม</span></h2><p id="recipeIntro" class="step-intro">เลือกปริมาณผลไม้ แล้วดูสูตรส่วนผลไม้รวม 500 กรัม</p><section class="calculator" aria-label="ข้อมูลส่วนผลไม้"><form id="fruitForm" novalidate>
+<label for="fruitName">ชื่อผลไม้หรือน้ำชงที่ใช้ (ไม่บังคับ)</label><input id="fruitName" type="text" maxlength="80" placeholder="เช่น สตรอว์เบอร์รี น้ำมะพร้าว ชา" aria-describedby="fruitNameHelp"><p id="fruitNameHelp" class="help">ใช้แสดงชื่อในผลคำนวณและบันทึก โดยกรอก Brix จากค่าที่วัดได้จริง</p>
+<fieldset><legend>เลือกโหมดผลไม้ / น้ำชง</legend><div class="mode production-modes" role="group" aria-label="ชนิดวัตถุดิบ"><button type="button" data-ingredient-mode="fruit" aria-pressed="true">ผลไม้ · รวมเครื่องดื่มที่มีน้ำตาล</button><button type="button" data-ingredient-mode="infuse" aria-pressed="false">น้ำชง · ชา กาแฟ ดอกไม้ สมุนไพรที่ไม่เติมความหวาน</button></div><p id="ingredientScopeNote" class="note">ทั้งสองโหมดใช้กับวัตถุดิบที่ไม่มีสารให้ความหวานแทนน้ำตาลเป็นส่วนผสม เครื่องมือนี้ไม่คำนวณความหวานจากสารกลุ่มนั้น จึงไม่ควรใช้ผลคำนวณกับเครื่องดื่มที่เติมสารให้ความหวานแทนน้ำตาล</p><p id="sweetenedInfuseHelp" class="help">น้ำชงที่เติมน้ำตาลทรายหรือน้ำเชื่อมแล้ว ให้ใช้โหมดผลไม้ ไม่จำเป็นต้องเป็นขั้น 12 เสมอ ผลคำนวณเป็นค่าประมาณ เพราะ Brix รวมทั้งน้ำตาลและสารสกัด</p><p id="infuseHelp" class="help" hidden>ใช้ของเหลวที่เตรียมความเข้มข้นพร้อมใช้ตามสูตรแล้ว 500 กรัม โดยใช้ขั้นสูตร 0 · หากมีน้ำตาลจากวัตถุดิบหรือเติมความหวาน เช่น น้ำมะพร้าว น้ำอ้อย น้ำผลไม้ หรือชาหวาน ให้ใช้โหมดผลไม้</p></fieldset>
+<fieldset id="fruitOptions"><legend>ต้องการใช้ผลไม้แบบไหน</legend><div class="mode" role="group" aria-label="วิธีเลือกปริมาณผลไม้"><button type="button" data-fruit-mode="maximum" aria-pressed="true">ใช้ผลไม้มากที่สุดเท่าที่ทำได้</button><button type="button" data-fruit-mode="manual" aria-pressed="false">กำหนดน้ำหนักของผลไม้ที่ต้องใช้</button></div><p id="fruitModeHelp" class="help"></p></fieldset>
+<div id="fruitInputFields" class="fields"><div class="field" id="fruitWeightField" hidden><label for="fruit">น้ำหนักผลไม้ที่ต้องการใช้ต่อมิกซ์ 1,000 กรัม (กรัม)</label><input id="fruit" type="number" min="0" max="500" step="any" inputmode="decimal"></div><div class="field"><label for="fruitBrix">Brix ของผลไม้ที่วัดได้ (°Bx)</label><input id="fruitBrix" type="number" min="0" max="100" step="any" inputmode="decimal"></div></div>
+<div id="infuseBrixField" class="extra" hidden><label for="infuseBrix">Brix ของของเหลวที่วัดได้ (°Bx) — ไม่บังคับ</label><input id="infuseBrix" type="number" min="0" max="100" step="any" inputmode="decimal" aria-describedby="infuseBrixHelp"><p id="infuseBrixHelp" class="help">ถ้าไม่มีเครื่องวัด เว้นว่างได้ ค่านี้เก็บเป็นข้อมูล ไม่ใช้เลือกขั้นความหวาน และไม่สั่งเจืออัตโนมัติ</p></div>
 <p class="fixed-total">ส่วนผลไม้รวม 500 กรัม</p>
 <div id="boosterFields"><label for="booster">ตัวช่วยดัน Brix</label><select id="booster"><option value="SYR">SYR · น้ำเชื่อมเข้มข้นมิตรผล</option><option value="CON">น้ำผลไม้เข้มข้น</option><option value="SUC">SUC · น้ำตาลทราย</option><option value="OTHER">อื่นๆ (กรอก Brix)</option></select>
 <div id="syrField" class="extra"><label for="syrBrix">Brix ของ SYR ล็อตที่ใช้ (°Bx)</label><input id="syrBrix" type="number" min="0" max="100" step="any" value="77"><p class="help">วัดขวดจริง: เจือ 1:1 โดยน้ำหนัก แล้ว ×2</p></div>
@@ -47,9 +49,10 @@ body.reading-large .workflow-step input[type="number"]{font-size:25px!important}
 <p id="bookStep" class="fixed-total"></p><p id="maximumNote" class="help"></p><button id="useMaximum" class="use-maximum" type="button" hidden>ใช้ปริมาณสูงสุดนี้</button><p id="recommendationHelp" class="help" hidden>ค่าที่กรอกยังคงเดิม เลือกใช้สูตรแนะนำนี้ หรือกลับไปแก้ปริมาณผลไม้ ก่อนคำนวณปริมาณผลิตจริง</p>
 </div></section>
 </section>
-<section id="productionStep" class="workflow-step" aria-labelledby="productionTitle"><h2 id="productionTitle" class="step-heading"><span class="step-number">2</span><span>คำนวณปริมาณผลิตจริง</span></h2><p class="step-intro">ขยายสูตรจากขั้นที่ 1 ตามสัดส่วนเดิม เพื่อให้ Brix คงเดิม</p>
-<div class="calculator"><p id="productionPending" class="status">ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน แล้วเลือกปริมาณผลิต</p><fieldset id="productionControls" disabled><legend>คำนวณจากอะไร</legend><div class="mode production-modes" role="group" aria-label="วิธีคำนวณปริมาณผลิต"><button type="button" data-production-mode="mix" aria-pressed="true">กำหนดน้ำหนักมิกซ์ที่ต้องการผลิต</button><button type="button" data-production-mode="fruitPart" aria-pressed="false">กำหนดน้ำหนักส่วนผลไม้ที่ต้องการผลิต</button><button type="button" data-production-mode="fruit" aria-pressed="false">ใช้ผลไม้ที่มีทั้งหมด</button></div><div id="mixWeightField"><label for="mixWeight">น้ำหนักมิกซ์ที่ต้องการผลิต (กรัม)</label><input id="mixWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 5,000"></div><div id="fruitPartWeightField" hidden><label for="fruitPartWeight">น้ำหนักส่วนผลไม้ที่ต้องการผลิต (กรัม)</label><input id="fruitPartWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 505"></div><div id="availableFruitField" hidden><label for="availableFruit">น้ำหนักผลไม้ที่มีทั้งหมด (กรัม)</label><input id="availableFruit" type="number" min="0" step="any" inputmode="decimal" placeholder="ชั่งก่อนเติมตัวช่วยและน้ำ"></div><p id="productionHelp" class="help"></p></fieldset></div>
-<section class="result production-result" aria-label="น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง" aria-live="polite" aria-atomic="true"><h3>น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง</h3><p id="productionMessage" class="status"></p><div id="productionResult" hidden><div class="recipe-row"><span id="productionTotalLabel">ทำมิกซ์ได้รวม</span><strong id="scaledMix"></strong></div><p id="scaleFactor" class="help"></p><table class="recipe-table"><caption>ส่วนผลไม้สำหรับการผลิตครั้งนี้</caption><tbody><tr><th scope="row" id="scaledFruitLabel">ผลไม้</th><td id="scaledFruit"></td></tr><tr><th scope="row" id="scaledBoosterLabel">ตัวช่วย</th><td id="scaledBooster"></td></tr><tr><th scope="row">น้ำ</th><td id="scaledWater"></td></tr></tbody><tfoot><tr><th scope="row">รวมส่วนผลไม้</th><td id="scaledFruitPart"></td></tr></tfoot></table><p id="scaledBrix" class="status"></p><div id="bookPreparation" class="book-preparation"><strong id="bookWeight"></strong><p id="productionBookStep"></p><p class="help">ใช้สูตรและกฎการขยายปริมาณจากตารางในเล่ม</p></div><p id="productionRounding" class="help">ตัวเลขแสดงทศนิยม 1 ตำแหน่ง คำนวณจากค่าก่อนปัดเศษ · น้ำหนักมิกซ์ก่อนการสูญเสียระหว่างผลิต</p></div></section></section>
+<section id="productionStep" class="workflow-step" aria-labelledby="productionTitle"><h2 id="productionTitle" class="step-heading"><span class="step-number">2</span><span>คำนวณปริมาณผลิตจริง</span></h2><p id="productionIntro" class="step-intro">ขยายสูตรจากขั้นที่ 1 ตามสัดส่วนเดิม เพื่อให้ Brix คงเดิม</p>
+<div class="calculator"><p id="productionPending" class="status">ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน แล้วเลือกปริมาณผลิต</p><fieldset id="productionControls" disabled><legend>คำนวณจากอะไร</legend><div class="mode production-modes" role="group" aria-label="วิธีคำนวณปริมาณผลิต"><button type="button" data-production-mode="mix" aria-pressed="true">กำหนดน้ำหนักมิกซ์ที่ต้องการผลิต</button><button type="button" data-production-mode="fruitPart" aria-pressed="false">กำหนดน้ำหนักส่วนผลไม้ที่ต้องการผลิต</button><button type="button" data-production-mode="fruit" aria-pressed="false">ใช้ผลไม้ที่มีทั้งหมด</button></div><div id="mixWeightField"><label for="mixWeight">น้ำหนักมิกซ์ที่ต้องการผลิต (กรัม)</label><input id="mixWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 5,000"></div><div id="fruitPartWeightField" hidden><label for="fruitPartWeight">น้ำหนักส่วนผลไม้ที่ต้องการผลิต (กรัม)</label><input id="fruitPartWeight" type="number" min="0" step="any" inputmode="decimal" placeholder="เช่น 505"></div><div id="availableFruitField" hidden><label id="availableFruitLabel" for="availableFruit">น้ำหนักผลไม้ที่มีทั้งหมด (กรัม)</label><input id="availableFruit" type="number" min="0" step="any" inputmode="decimal" placeholder="ชั่งก่อนเติมตัวช่วยและน้ำ"></div><p id="productionHelp" class="help"></p></fieldset></div>
+<section class="result production-result" aria-label="น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง" aria-live="polite" aria-atomic="true"><h3>น้ำหนักที่ต้องชั่งสำหรับการผลิตจริง</h3><p id="productionMessage" class="status"></p><div id="productionResult" hidden><div class="recipe-row"><span id="productionTotalLabel">ทำมิกซ์ได้รวม</span><strong id="scaledMix"></strong></div><p id="scaleFactor" class="help"></p><table class="recipe-table"><caption>ส่วนผลไม้สำหรับการผลิตครั้งนี้</caption><tbody><tr><th scope="row" id="scaledFruitLabel">ผลไม้</th><td id="scaledFruit"></td></tr><tr><th scope="row" id="scaledBoosterLabel">ตัวช่วย</th><td id="scaledBooster"></td></tr><tr><th scope="row">น้ำ</th><td id="scaledWater"></td></tr></tbody><tfoot><tr><th scope="row">รวมส่วนผลไม้</th><td id="scaledFruitPart"></td></tr></tfoot></table><p id="scaledBrix" class="status"></p><div id="bookPreparation" class="book-preparation"><strong id="bookWeight"></strong><p id="productionBookStep"></p><p class="help">ใช้สูตรและกฎการขยายปริมาณจากตารางในเล่ม</p></div><p id="productionRounding" class="help">ตัวเลขแสดงทศนิยม 1 ตำแหน่ง คำนวณจากค่าก่อนปัดเศษ · น้ำหนักมิกซ์ก่อนการสูญเสียระหว่างผลิต</p><div id="infuseRecordPanel" hidden><h3>บันทึกแผนส่วนของน้ำชง</h3><p class="help">สรุปสูตรและน้ำหนักที่ต้องชั่ง ยังไม่ใช่บันทึกน้ำหนักที่ชั่งจริง</p><button id="copyInfuseRecord" type="button">คัดลอกบันทึก</button><p id="infuseCopyStatus" class="help" role="status"></p><label for="infuseRecord">ตัวอย่างบันทึกที่จะคัดลอก</label><textarea id="infuseRecord" class="correction-record" rows="12" readonly></textarea></div></div></section></section>
+<section id="infuseCorrectionNotice" class="workflow-step" hidden><h2 class="step-heading"><span class="step-number">3</span><span>ปรับ Brix หลังผสม</span></h2><p class="fixed-total">โหมดน้ำชงใช้ขั้นสูตร 0 โดยไม่ปรับค่าที่เครื่องอ่านให้เป็น 0 °Bx</p><p class="help">เตรียมความเข้มข้นตามสูตรก่อนใช้ บันทึกค่าที่วัดได้เป็นข้อมูลประกอบได้จากขั้นที่ 1 และคัดลอกแผนการผลิตได้จากขั้นที่ 2</p></section>
 <section id="correctionStep" class="workflow-step" aria-labelledby="correctionTitle"><h2 id="correctionTitle" class="step-heading"><span class="step-number">3</span><span>ปรับ Brix หลังผสม</span></h2><p class="step-intro">หาก Brix ที่วัดจริงคลาดเคลื่อนมากเกินไป เช่น เกิน ±0.5 °Bx ให้คนให้ทั่วแล้ววัดใหม่อีกครั้ง หากยังคลาดเคลื่อนมากจริง จึงค่อยปรับ</p>
 <section class="calculator"><p id="correctionSource" class="help"></p><p id="correctionPending" class="status">คำนวณปริมาณผลิตในขั้นที่ 2 ให้ครบก่อน</p><fieldset id="correctionControls" disabled><legend>ตรวจส่วนผสมที่ชั่งและวัดจริง</legend>
 <label for="correctionName">ชื่อส่วนผสมที่ต้องการปรับ</label><input id="correctionName" type="text" maxlength="100" value="ส่วนผลไม้ที่ผสมแล้ว">
@@ -75,12 +78,18 @@ body.reading-large .workflow-step input[type="number"]{font-size:25px!important}
 <p id="portionResult" class="fixed-total" hidden></p><p id="correctionTargetNote" class="help"></p>
 <div id="correctionRecordPanel" hidden><h3>บันทึกการปรับส่วนของผลไม้</h3><p class="help">สำหรับรายงานการทำสูตร ตรวจข้อมูลชั่งจริงก่อนคัดลอก กรอกปริมาณเติมจริงและ Brix หลังปรับเมื่อทำแล้ว ช่องที่ยังไม่กรอกจะแสดงว่า “ยังไม่บันทึก”</p><label id="correctionAddedLabel" for="correctionAddedActual">น้ำหนักตัวช่วยที่เติมเพิ่มจริง (กรัม)</label><input id="correctionAddedActual" type="number" min="0" step="any" inputmode="decimal" aria-describedby="correctionAddedHelp"><p id="correctionAddedHelp" class="help">กรอกเฉพาะน้ำหนักตัวช่วยหรือน้ำที่เติมเพิ่มในครั้งนี้ ไม่ใช่น้ำหนักรวมหลังผสม หากยังไม่ได้เติม ให้เว้นว่าง</p><label for="correctionFinalMeasured">Brix ที่วัดได้จริงหลังปรับ (°Bx) — ถ้าวัดแล้ว</label><input id="correctionFinalMeasured" type="number" min="0" max="100" step="any" inputmode="decimal"><p id="recordError" class="help"></p><button id="copyCorrection" type="button">คัดลอกบันทึก</button><p id="copyStatus" class="help" role="status"></p><label for="correctionRecord">ตัวอย่างบันทึกที่จะคัดลอก</label><textarea id="correctionRecord" class="correction-record" rows="18" readonly></textarea></div></section>
 <p class="help">ต้องการผสมวัตถุดิบสองชนิดแบบอิสระ? <a class="back-link" href="Brix-Blender.html">เปิด Brix Blender แบบแยก →</a></p></section>
-<details><summary>เทียบความหวานและการกดจุดเยือกแข็งกับน้ำตาลทราย</summary><div id="comparison"></div><p class="help">ค่าของตัวช่วยที่เติมเท่านั้น ไม่ใช่ค่ารวมของสูตร</p></details>
+<div id="fruitReferenceNotes"><details><summary>เทียบความหวานและการกดจุดเยือกแข็งกับน้ำตาลทราย</summary><div id="comparison"></div><p class="help">ค่าของตัวช่วยที่เติมเท่านั้น ไม่ใช่ค่ารวมของสูตร</p></details>
 <details><summary>การวัดและข้อควรรู้</summary><ul><li>น้ำผลไม้เข้มข้น: กรดเข้มข้นตามไปด้วย ให้เลือกส่วนน้ำเชื่อมจากรสหลังผสมแล้ว</li><li>Brix สูงมาก (SYR / น้ำผลไม้เข้มข้น) วัดยาก ให้เจือ 1:1 โดยน้ำหนัก แล้วคูณ 2</li><li>ใช้เครื่องวัดที่ชดเชยอุณหภูมิ (ATC) หรือวัดที่ 20 °C ตัวอย่างต้องเป็นน้ำใส ไม่มีเนื้อหรือฟอง</li><li>ผสมให้เข้ากันและละลายน้ำตาลให้หมดก่อนวัดยืนยัน ±0.5 °Bx</li></ul></details>
 <details><summary>ค่าวัตถุดิบและหลักการคำนวณ</summary><p>ใช้ผลไม้มากที่สุดเท่าที่ทำได้: หาน้ำหนักผลไม้สูงสุดที่ยังได้ขั้นที่เลือก โดยผลไม้ + ตัวช่วย + น้ำ รวม 500 กรัม หากเลือกอัตโนมัติ เปรียบเทียบขั้น 0 / 12 / 18 แล้วเลือกขั้นที่ใช้ผลไม้ได้มากที่สุด หากเท่ากันเลือกขั้นต่ำกว่า</p><p>ปริมาณผลิตจริง: ตัวคูณ = น้ำหนักมิกซ์ที่ต้องการ ÷ 1,000 หรือ น้ำหนักส่วนผลไม้ที่ต้องการ ÷ 500 หรือ น้ำหนักผลไม้ที่มี ÷ น้ำหนักผลไม้ตั้งต้นจากขั้นที่ 1 แล้วคูณวัตถุดิบทุกตัวด้วยตัวคูณเดียวกัน</p><p>ขั้นของสูตรหมายถึง Brix ของส่วนผลไม้รวม 500 กรัม</p><p>Brix เมื่อเติมน้ำอย่างเดียว = น้ำหนักผลไม้ × Brix ผลไม้ ÷ 500<br>ตัวช่วย = (500 × ขั้น − น้ำหนักผลไม้ × Brix ผลไม้) ÷ Brix ตัวช่วย<br>น้ำ = 500 − ผลไม้ − ตัวช่วย</p><ul><li>DEX monohydrate: TS 91% · RS 0.7273 · AFP 1.727 · หวานประมาณ 0.80 เท่าของน้ำตาลทรายต่อของแข็ง</li><li>SYR อ้างอิง 77 °Bx: RS 0.820 · AFP 1.120 ต่อกรัมวัตถุดิบ ล็อตอื่นประมาณ RS = 0.820 × (Brix ล็อต ÷ 77) และ AFP = 1.120 × (Brix ล็อต ÷ 77) โดยสมมติองค์ประกอบน้ำตาลเดิม ต่างเฉพาะความเข้มข้น</li><li>น้ำผลไม้เข้มข้น: RS 1.113 · AFP 1.629 ต่อกรัมของแข็ง</li></ul><p class="source">ค่าวัตถุดิบอ้างอิง MR v8.9.0</p></details>
-<footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 092026b Fruit Part Builder by Paula Kaothien</span></footer></main>
+</div><footer class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a><br><span class="tools-audience">Version 092026c Fruit Part Builder by Paula Kaothien</span></footer></main>
 <script>
 'use strict';
+function infusePart({brix}){
+ const missing=brix===null||brix===undefined||(typeof brix==='string'&&brix.trim()==='');
+ const measuredBrix=missing?null:typeof brix==='number'?brix:typeof brix==='string'?Number(brix):NaN;
+ if(measuredBrix!==null&&(!Number.isFinite(measuredBrix)||measuredBrix<0||measuredBrix>100))return {error:'กรุณากรอก Brix ของของเหลวระหว่าง 0–100 หรือเว้นว่างหากไม่ได้วัด'};
+ return {fruit:500,booster:0,water:0,target:0,measuredBrix};
+}
 function buildFruitPart({fruit,brix,boosterBrix,step='auto'}){
  if(!Number.isFinite(fruit)||fruit<=0||!Number.isFinite(brix)||brix<0||brix>100)return {error:'กรุณากรอกน้ำหนักผลไม้มากกว่า 0 และ Brix ระหว่าง 0–100'};
  if(!['auto','0','12','18'].includes(step))return {error:'กรุณาเลือกขั้น อัตโนมัติ, 0, 12 หรือ 18'};
@@ -175,8 +184,8 @@ function reviewFruitCorrection({actual,weight,first,second,target,boosterBrix}){
 function fruitPortions(total){const count=Math.floor(total/500);return {count,remainder:total-count*500};}
 (()=>{
  const $=id=>document.getElementById(id),key='mic-fruit-part-builder-v3';
- const fields=['fruitName','fruit','fruitBrix','booster','syrBrix','conBrix','otherBrix','mixWeight','fruitPartWeight','availableFruit'];
- const fruitName=()=>$('fruitName').value.trim().slice(0,80)||'ผลไม้';
+ const fields=['infuseBrix','fruitName','fruit','fruitBrix','booster','syrBrix','conBrix','otherBrix','mixWeight','fruitPartWeight','availableFruit'];
+ const fruitName=()=>$('fruitName').value.trim().slice(0,80)||(ingredientMode==='infuse'?'น้ำชง':'ผลไม้');
  const mixtureName=()=>$('fruitName').value.trim()?fruitName()+'ที่ผสมแล้ว':'ส่วนผลไม้ที่ผสมแล้ว';
  const actualFields=['actualFruit','actualBooster','actualWater','actualFruitBrix','actualBoosterBrix','actualBoosterName'];
  const readingFields=['correctionMeasured','correctionMeasured2','correctionAddedActual','correctionFinalMeasured'];
@@ -184,9 +193,58 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
  let correctionOverrides={},correctionSignature=null,correctionDefaults=null,waterApproval=null,planSignature=null;
  const bx=n=>n.toLocaleString('th-TH',{maximumFractionDigits:6});
  const clearReadings=()=>{readingFields.forEach(id=>$(id).value='');waterApproval=null;};
+ let ingredientMode='fruit';
  let step='auto',fruitMode='maximum',productionMode='mix',pendingSuggestion=null;
  const num=id=>$(id).value.trim()===''?NaN:Number($(id).value);
  const f=n=>n.toLocaleString('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1});
+ const modeCopyIds=['heroSubtitle','heroStepNote','recipeIntro','productionIntro','fruitNameHelp','availableFruitLabel'];
+ const fruitCopy=Object.fromEntries(modeCopyIds.map(id=>[id,$(id).textContent]));
+ function saveState(){
+  try{localStorage.setItem(key,JSON.stringify({ingredientMode,step,fruitMode,productionMode,correction:{reviewVersion:1,overrides:correctionOverrides,signature:correctionSignature,values:Object.fromEntries(correctionFields.map(id=>[id,$(id).value]))},...Object.fromEntries(fields.map(id=>[id,$(id).value]))}));}catch(e){}
+ }
+ function syncIngredientMode(){
+  const infuse=ingredientMode==='infuse';
+  document.querySelectorAll('[data-ingredient-mode]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.ingredientMode===ingredientMode)));
+  ['fruitOptions','fruitInputFields','boosterFields','stepField','fruitReferenceNotes','correctionStep'].forEach(id=>$(id).hidden=infuse);
+  ['infuseHelp','infuseBrixField','infuseCorrectionNotice'].forEach(id=>$(id).hidden=!infuse);
+  $('infuseRecordPanel').hidden=true;$('infuseRecord').value='';$('infuseCopyStatus').textContent='';
+  const infuseCopy={heroSubtitle:'ส่วนของน้ำชง 500 กรัม = ของเหลวที่เตรียมความเข้มข้นพร้อมใช้แล้ว',heroStepNote:'ขั้นสูตร 0 สำหรับโหมดน้ำชง ไม่ได้หมายความว่าเครื่องต้องอ่านได้ 0 °Bx',recipeIntro:'ใช้น้ำชงหรือน้ำสกัดที่เตรียมพร้อมใช้ 500 กรัมต่อมิกซ์ 1,000 กรัม',productionIntro:'ขยายปริมาณน้ำชงที่เตรียมพร้อมใช้ตามสูตรจากขั้นที่ 1',fruitNameHelp:'ใช้แสดงชื่อในผลคำนวณและบันทึก เช่น ชาดำ กาแฟ หรือเก๊กฮวย',availableFruitLabel:'น้ำหนักน้ำชงที่เตรียมพร้อมใช้ทั้งหมด (กรัม)'};
+  modeCopyIds.forEach(id=>$(id).textContent=infuse?infuseCopy[id]:fruitCopy[id]);
+  document.querySelector('[data-production-mode="fruit"]').textContent=infuse?'ใช้น้ำชงที่เตรียมไว้ทั้งหมด':'ใช้ผลไม้ที่มีทั้งหมด';
+  $('availableFruit').placeholder=infuse?'ชั่งของเหลวที่เตรียมพร้อมใช้แล้ว':'ชั่งก่อนเติมตัวช่วยและน้ำ';
+ }
+ function updateInfuse(save){
+  pendingSuggestion=null;
+  const recipe=infusePart({brix:$('infuseBrix').validity.badInput?NaN:$('infuseBrix').value});
+  const valid=!recipe.error;
+  ['recommendationIntro','useMaximum','recommendationHelp'].forEach(id=>$(id).hidden=true);
+  $('recommendationIntro').textContent='';$('message').classList.remove('limit-message');
+  $('message').textContent=recipe.error||'';$('resultBody').hidden=!valid;
+  $('baseResultTitle').textContent='สูตรตั้งต้น: ส่วนของน้ำชง 500 กรัม';
+  ['fruitResult','boosterResult','waterResult','brixResult','bookStep','maximumNote'].forEach(id=>$(id).textContent='');
+  if(valid){
+   $('fruitResult').textContent='500.0 กรัม';$('boosterLabel').textContent='ตัวช่วย';$('boosterResult').textContent='0.0 กรัม';$('waterResult').textContent='0.0 กรัม';
+   $('brixResult').textContent='ขั้นสูตร 0 · ไม่เติมตัวช่วย ไม่เติมน้ำ';
+   $('maximumNote').textContent=recipe.measuredBrix===null?'Brix ที่วัดได้: ไม่ได้ระบุ': 'Brix ที่วัดได้ '+bx(recipe.measuredBrix)+' °Bx — เก็บเป็นข้อมูล ไม่ใช้ค่านี้เลือกขั้นความหวาน';
+   $('bookStep').textContent='ใช้ส่วนน้ำเชื่อมขั้น 0 จากตารางในเล่ม';
+  }
+  const scaled=updateProduction(recipe,'ตัวช่วย');
+  if(productionMode==='fruit')$('productionHelp').textContent='กรอกน้ำหนักน้ำชงที่เตรียมความเข้มข้นพร้อมใช้แล้ว เพื่อใช้ของเหลวทั้งหมด';
+  $('productionPending').textContent='ตรวจ Brix ของน้ำชงให้ถูกต้อง หรือเว้นว่างหากไม่ได้วัด';
+  $('correctionControls').disabled=true;$('correctionRecord').value='';$('copyStatus').textContent='';planSignature=null;waterApproval=null;
+  if(!scaled.error){
+   $('scaledBrix').textContent='ใช้ขั้นสูตร 0 · ไม่ปรับค่าที่เครื่องอ่านให้เป็น 0 °Bx';
+   $('infuseRecordPanel').hidden=false;
+   const reading=recipe.measuredBrix===null?'ไม่ได้ระบุ':bx(recipe.measuredBrix)+' °Bx';
+   $('infuseRecord').value=[
+    'บันทึกแผนส่วนของน้ำชง · '+fruitName(),
+    '1. ตั้งสูตรต่อมิกซ์ 1,000 กรัม\nขั้นสูตร 0\n- '+fruitName()+'ที่เตรียมพร้อมใช้ 500.0 กรัม\n- ตัวช่วย 0.0 กรัม\n- น้ำเติมเพิ่ม 0.0 กรัม\nBrix ที่วัดได้: '+reading,
+    '2. ปริมาณที่ต้องชั่งสำหรับการผลิต\n- '+fruitName()+' '+f(scaled.fruit)+' กรัม\n- ตัวช่วย 0.0 กรัม\n- น้ำเติมเพิ่ม 0.0 กรัม\nรวมส่วนของน้ำชง '+f(scaled.fruitPart)+' กรัม'+(productionMode==='fruitPart'?'':'\nสำหรับมิกซ์ '+f(scaled.mix)+' กรัม\nเตรียมส่วนน้ำเชื่อมขั้น 0 อีก '+f(scaled.bookPart)+' กรัมจากตารางในเล่ม'),
+    'ค่านี้เป็นแผนการชั่ง · Brix ที่ระบุเก็บเป็นข้อมูล ไม่ใช้เลือกขั้นความหวานหรือปรับให้เป็น 0 °Bx'
+   ].join('\n\n');
+  }
+  if(save)saveState();
+ }
  function updateProduction(recipe,boosterLabel){
   const valid=recipe&&!recipe.error;
   $('productionControls').disabled=!valid;$('productionPending').hidden=!!valid;
@@ -333,9 +391,11 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   $('correctionRecord').value=log;
  }
  function update(save=true){
+  syncIngredientMode();
   ['fruitResultLabel','scaledFruitLabel'].forEach(id=>$(id).textContent=fruitName());
   $('actualFruitLabel').textContent=fruitName()+'ที่ชั่งจริง (กรัม)';
   $('actualFruitBrixLabel').textContent='Brix ของ'+fruitName()+'ที่ใช้ (°Bx)';
+  if(ingredientMode==='infuse'){updateInfuse(save);return;}
   document.querySelectorAll('[data-fruit-mode]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.fruitMode===fruitMode)));
   $('fruitWeightField').hidden=fruitMode==='maximum';
   $('fruitModeHelp').textContent=fruitMode==='maximum'?'คำนวณน้ำหนักผลไม้สูงสุดที่ใส่ได้ โดยผลไม้ ตัวช่วย และน้ำ รวม 500 กรัม':'กำหนดน้ำหนักผลไม้ในสูตรตั้งต้น เหมาะกับการคุมรสหรือต้นทุน';
@@ -386,7 +446,7 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   const scaled=updateProduction(originalResult,$('boosterLabel').textContent);
   updateCorrection(scaled,originalResult,booster,ba);
   if(pendingSuggestion){$('productionPending').textContent='เลือก “ใช้ปริมาณสูงสุดนี้” ในขั้นที่ 1 หรือแก้ปริมาณผลไม้ให้ใช้ได้ก่อน';$('productionMessage').textContent='สูตรแนะนำยังไม่ได้ถูกเลือกใช้';}else{$('productionPending').textContent='ตั้งสูตรในขั้นที่ 1 ให้ครบก่อน แล้วเลือกปริมาณผลิต';}
-  if(save)try{localStorage.setItem(key,JSON.stringify({step,fruitMode,productionMode,correction:{reviewVersion:1,overrides:correctionOverrides,signature:correctionSignature,values:Object.fromEntries(correctionFields.map(id=>[id,$(id).value]))},...Object.fromEntries(fields.map(id=>[id,$(id).value]))}));}catch(e){}
+  if(save)saveState();
  }
  function invalidateCorrection(id){
   waterApproval=null;
@@ -406,6 +466,18 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
   try{await navigator.clipboard.writeText(log);if($('correctionRecord').value===log)$('copyStatus').textContent='คัดลอกบันทึกแล้ว';}
   catch(e){if($('correctionRecord').value===log){$('correctionRecord').focus();$('correctionRecord').select();$('copyStatus').textContent='คัดลอกอัตโนมัติไม่ได้ เลือกข้อความไว้ให้แล้ว กรุณาคัดลอกด้วยตนเอง';}}
  };
+ document.querySelectorAll('[data-ingredient-mode]').forEach(el=>el.onclick=()=>{
+  if(ingredientMode===el.dataset.ingredientMode)return;
+  ingredientMode=el.dataset.ingredientMode;
+  clearReadings();correctionOverrides={};correctionSignature=null;correctionDefaults=null;planSignature=null;
+  correctionFields.forEach(id=>$(id).value='');$('correctionBooster').value='SYR';
+  update();
+ });
+ $('copyInfuseRecord').onclick=async()=>{
+  const log=$('infuseRecord').value;if(!log||ingredientMode!=='infuse')return;
+  try{await navigator.clipboard.writeText(log);if($('infuseRecord').value===log)$('infuseCopyStatus').textContent='คัดลอกบันทึกแล้ว';}
+  catch(e){if($('infuseRecord').value===log){$('infuseRecord').focus();$('infuseRecord').select();$('infuseCopyStatus').textContent='คัดลอกอัตโนมัติไม่ได้ เลือกข้อความไว้ให้แล้ว กรุณาคัดลอกด้วยตนเอง';}}
+ };
  $('reloadCorrection').onclick=()=>{correctionOverrides={};clearReadings();update();$('correctionMeasured').focus();};
  $('useMaximum').onclick=()=>{if(!pendingSuggestion)return;fruitMode='maximum';update();document.querySelector('[data-production-mode][aria-pressed="true"]').focus();};
  document.querySelectorAll('[data-fruit-mode]').forEach(el=>el.onclick=()=>{fruitMode=el.dataset.fruitMode;update();});
@@ -414,8 +486,9 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
  $('fruitForm').addEventListener('submit',e=>e.preventDefault());
  $('fruitForm').addEventListener('input',()=>update());$('fruitForm').addEventListener('change',()=>update());
  document.querySelectorAll('[data-step]').forEach(el=>el.onclick=()=>{step=el.dataset.step;update();});
- $('resetButton').onclick=()=>{waterApproval=null;correctionOverrides={};correctionSignature=null;correctionDefaults=null;correctionFields.forEach(id=>$(id).value='');$('correctionName').value='ส่วนผลไม้ที่ผสมแล้ว';$('correctionBooster').value='SYR';step='auto';fruitMode='maximum';productionMode='mix';fields.forEach(id=>$(id).value='');$('booster').value='SYR';$('syrBrix').value='77';try{[key,'mic-fruit-part-builder-v2','mic-fruit-part-builder-v1','mic-brix-grams-v2','mic-brix-v1'].forEach(k=>localStorage.removeItem(k));}catch(e){}update(false);$('fruitBrix').focus();};
+ $('resetButton').onclick=()=>{ingredientMode='fruit';waterApproval=null;correctionOverrides={};correctionSignature=null;correctionDefaults=null;correctionFields.forEach(id=>$(id).value='');$('correctionName').value='ส่วนผลไม้ที่ผสมแล้ว';$('correctionBooster').value='SYR';step='auto';fruitMode='maximum';productionMode='mix';fields.forEach(id=>$(id).value='');$('booster').value='SYR';$('syrBrix').value='77';try{[key,'mic-fruit-part-builder-v2','mic-fruit-part-builder-v1','mic-brix-grams-v2','mic-brix-v1'].forEach(k=>localStorage.removeItem(k));}catch(e){}update(false);$('fruitBrix').focus();};
  try{const current=localStorage.getItem(key);const saved=JSON.parse(current||localStorage.getItem('mic-fruit-part-builder-v2')||'null');if(saved&&typeof saved==='object'){
+  if(saved.ingredientMode==='infuse')ingredientMode='infuse';
   if(['auto','0','12','18'].includes(saved.step))step=saved.step;
   fruitMode=['maximum','manual'].includes(saved.fruitMode)?saved.fruitMode:current?'maximum':'manual';
   if(['mix','fruitPart','fruit'].includes(saved.productionMode))productionMode=saved.productionMode;
@@ -441,3 +514,5 @@ function fruitPortions(total){const count=Math.floor(total/500);return {count,re
 <!-- 2026-09-26: บันทึก 3 ส่วนใช้รูปแบบเป้าหมาย / วัตถุดิบพร้อม Brix / ผลให้ตรงกัน สูตรตั้งต้นต่อมิกซ์ 1,000 กรัม แยกส่วนผสมหลังปรับตามแผนกับตามน้ำหนักเติมจริง -->
 
 <!-- 2026-09-26: เพิ่มชื่อผลไม้หรือเครื่องดื่มแบบไม่บังคับ ใช้ในตารางผลลัพธ์และบันทึก จำค่าและล้างค่าร่วมกับสูตรเดิม -->
+
+<!-- 092026c: เพิ่มโหมดน้ำชงแยกจากโหมดผลไม้ ใช้ขั้นสูตร 0 โดยเก็บ Brix เป็นข้อมูล ไม่บังคับเจือ ขยายปริมาณและคัดลอกแผนจากขั้นที่ 2 ปิดขั้นที่ 3 เฉพาะโหมดน้ำชง ฟังก์ชันคำนวณเดิมและขั้นแก้ Brix เดิมไม่เปลี่ยน -->
