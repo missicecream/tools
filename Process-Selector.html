@@ -248,26 +248,27 @@
     <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 12 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
     <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
     <div class="chart-links">
-      <span class="cl-label">หรือ เลือกผังขั้นตอนการผลิตแบบสรุป (A4):</span>
-      <a class="cl-btn" href="Flowchart-Home.html?v=so-sh-20261001">📄 แบบทำทาน</a>
-      <a class="cl-btn" href="Flowchart-Sell.html?v=so-sh-20261001">📄 แบบทำขาย</a>
+      <span class="cl-label">เลือกผังขั้นตอนการผลิตแบบสรุป:</span>
+      <a class="cl-btn" href="Flowchart-Home.html?v=20261003">📱 ทำทาน · มือถือ/แท็บเล็ต</a>
+      <a class="cl-btn" href="Flowchart-Sell.html?v=20261003">📱 ทำขาย · มือถือ/แท็บเล็ต</a>
+      <a class="cl-btn" href="Flowchart-Print.html?v=20261003">🖨 ผังรวม · 2 หน้า A4</a>
     </div>
   </header>
 
   <div class="setup">
-    <div class="q" id="qBase">
-      <div class="q-label">1. ประเภทเบส <span class="en">Base</span></div>
-      <div class="opts">
-        <button class="opt" data-k="base" data-v="icecream" type="button"><b>ไอศกรีมเบสนมหรือเบสพืช</b><span class="s">ทำ PBT ตามลักษณะสูตรและเครื่องปั่น</span></button>
-        <button class="opt" data-k="base" data-v="sorbet" type="button"><b>ซอร์เบต์ (SO)</b><span class="s">ข้าม PBT ใช้การคนแทน · แนะนำบ่มสั้นราว 30 นาที</span></button>
-        <button class="opt" data-k="base" data-v="sherbet" type="button"><b>เชอร์เบท (SH)</b><span class="s">มีนม · ข้าม PBT ใช้การคนแทน · แนะนำบ่มสั้นราว 30 นาที</span></button>
-      </div>
-    </div>
     <div class="q">
-      <div class="q-label">2. ผลิตเพื่ออะไร? <span class="en">Purpose</span></div>
+      <div class="q-label">1. ผลิตเพื่ออะไร? <span class="en">Purpose</span></div>
       <div class="opts">
         <button class="opt" data-k="purpose" data-v="home" type="button"><b>ทำทานเอง</b><span class="s">ฆ่าเชื้อเฉพาะวัตถุดิบเสี่ยง + เติมครีม/ส่วนผสมสดระหว่างลดความร้อน</span></button>
         <button class="opt" data-k="purpose" data-v="sell" type="button"><b>ทำขาย / เพื่อจำหน่าย</b><span class="s">พาสเจอร์ไรส์มิกซ์รวม · เลือกวิธีบ่มตามประเภทเบส</span></button>
+      </div>
+    </div>
+    <div class="q" id="qBase">
+      <div class="q-label">2. ประเภทเบส <span class="en">Base</span></div>
+      <div class="opts">
+        <button class="opt" data-k="base" data-v="icecream" type="button"><b>เบสทั่วไป (นม · โยเกิร์ต · กะทิ · นมพืช)</b><span class="s">ทำ PBT ตามลักษณะสูตรและเครื่องปั่น</span></button>
+        <button class="opt" data-k="base" data-v="sherbet" type="button"><b>เชอร์เบท (มีนม)</b><span class="s">ไม่ทำ PBT ใช้การคนแทน · แนะนำบ่มสั้นราว 30 นาที</span></button>
+        <button class="opt" data-k="base" data-v="sorbet" type="button"><b>ซอร์เบต์ (ไม่มีนม)</b><span class="s">ไม่ทำ PBT ใช้การคนแทน · แนะนำบ่มสั้นราว 30 นาที</span></button>
       </div>
     </div>
 
@@ -287,7 +288,7 @@
       <div class="risky-grp">กลุ่มรักษากลิ่นรสสด — ให้ความร้อนสั้นระดับนาที</div>
       <div class="opts">
         <button class="opt chk" data-multi="risky" data-v="freshFruit" type="button">ผลไม้สด (ยกเว้นเบอร์รี)</button>
-        <button class="opt chk" data-multi="risky" data-v="berries" type="button">เบอร์รีทั้งสดและแช่แข็ง</button>
+        <button class="opt chk" data-multi="risky" data-v="berries" type="button">เบอร์รี (สดและแช่แข็ง)</button>
         <button class="opt chk" data-multi="risky" data-v="freshCoconut" type="button">กะทิคั้นสด</button>
         <button class="opt chk" data-multi="risky" data-v="eggCustard" type="button">ไข่แดงแบบทำคัสตาร์ด (82–85 °C)</button>
       </div>
@@ -348,7 +349,7 @@
       <div class="q">
         <div class="q-label">8. มีส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมระหว่างลดความร้อนไหม? <span class="en">Delicate add-ins</span></div>
         <div class="opts">
-          <button class="opt" data-k="delicate" data-v="yes" type="button"><b>มี</b><span class="s">ปกติเติมเมื่อมิกซ์เย็นถึง ≤10 °C; ถ้ามีกรดหรือมีปริมาณมาก เริ่มทยอยเติมได้ตั้งแต่ ≤20 °C</span></button>
+          <button class="opt" data-k="delicate" data-v="yes" type="button"><b>มี</b><span class="s">ของเปรี้ยว ข้น หรือกลิ่นรสไวต่อความร้อน ค่อยๆ เติมได้ตั้งแต่ราว 20 °C พร้อมคนให้กระจายทั่ว</span></button>
           <button class="opt" data-k="delicate" data-v="no" type="button"><b>ไม่มี</b><span class="s">ทำ active cooling ปกติ</span></button>
         </div>
       </div>
@@ -367,7 +368,7 @@
   <div id="result"></div>
 
   <footer>
-    <p class="ref">อ้างอิง: บทที่ 4 การผลิตไอศกรีมในสเกลเล็ก · ปรับปรุง 1 ตุลาคม 2026</p>
+    <p class="ref">อ้างอิง: บทที่ 4 การผลิตไอศกรีมในสเกลเล็ก · ปรับปรุง 3 ตุลาคม 2026</p>
     <p class="brand">Miss Icecream</p>
   </footer>
 </div>
@@ -388,7 +389,8 @@ const RISKY={
   nutMilk:{t:'นมพืชจากนัท (อัลมอนด์/เม็ดมะม่วงหิมพานต์)',h:'คั้นเองโดยไม่ต้ม จึงต้องฆ่าเชื้อเอง: <span class="chip">70 °C / 30 นาที</span> → ลด <span class="chip warm">&lt;4 °C</span> ทันที'},
   eggYolk:{t:'ไข่แดง (แบบ LTLT ไม่ทำคัสตาร์ด)',h:'ไข่ยังเหลว: LTLT <span class="chip">63 °C / 30 นาที</span> คนตลอด → ลด <span class="chip warm">&lt;4 °C</span> ทันที • สะดวกสุด: ใช้ไข่แดงพาสเจอไรส์สำเร็จรูป'},
   // กลุ่มรักษากลิ่นรสสด — ให้ความร้อนสั้นระดับนาที
-  freshFruit:{t:'ผลไม้สด (ยกเว้นเบอร์รี)',h:'ปรับ/เทียบ Brix ก่อนเสมอ แล้วเลือก: <b>ไม่ผ่านความร้อน</b> (กลิ่นสดสุด — ใช้ของสะอาด+น้ำต้มสุกเย็น, ทำขณะเย็น, ใช้ทันทีหรือเก็บ ≤24 ชม.) หรือ <b>ผ่านความร้อน</b> <span class="chip">70–75 °C / 2 นาที</span> → ลด <span class="chip warm">&lt;4 °C</span> ทันที (ปรับ Brix ก่อนต้ม) • ผลไม้ที่ต้มแล้วเสียกลิ่น (มะม่วง/ลำไย) ใช้ IQF แทนได้'},
+  freshFruit:{t:'ผลไม้สด (ยกเว้นเบอร์รี)',h:'ปรับ/เทียบ Brix ก่อนเสมอ แล้วเลือก: <b>ไม่ผ่านความร้อน</b> (กลิ่นสดสุด — ใช้ของสะอาด+น้ำต้มสุกเย็น, ทำขณะเย็น, ใช้ทันทีหรือเก็บ ≤24 ชม.) หรือ <b>ผ่านความร้อน</b> <span class="chip">70–75 °C / 2 นาที</span> → ลด <span class="chip warm">&lt;4 °C</span> ทันที (ปรับ Brix ก่อนต้ม) • ผลไม้ที่ต้มแล้วเสียกลิ่น (มะม่วง/ลำไย) ใช้ IQF จากแหล่งที่เชื่อถือได้แทนได้ ละลายในตู้เย็น 0–4 °C (ไม่ละลายที่อุณหภูมิห้อง ไม่แช่น้ำ) • เบอร์รีใช้หัวข้อเบอร์รีแยก'},
+  berries:{t:'เบอร์รี (สดและแช่แข็ง)',h:'ความเสี่ยงหลักคือไวรัส (โนโรไวรัส · ไวรัสตับอักเสบเอ) ซึ่งการล้างช่วยได้จำกัด และ 70–75 °C / 2 นาทีแบบผลไม้สดทั่วไปไม่พอ • หลัก: เลือกจากแหล่งที่เชื่อถือได้ ล้างเบอร์รีสดให้สะอาดโดยผ่านน้ำมากๆ • ถ้าไม่มั่นใจในแหล่งที่มา หรือมีกลุ่มเปราะบาง: ปรับ/เทียบ Brix ก่อน แล้ว<b>ต้มจนเดือดราว <span class="chip">1 นาที</span></b> (ทางเลือกเสริม ไม่บังคับ) → ลด <span class="chip warm">&lt;4 °C</span> ทันที • ต้มแล้วถ้าต้องการให้หวานตรงสูตร ชั่งก่อน–หลัง เติมน้ำต้มสุกคืน'},
   freshCoconut:{t:'กะทิคั้นสด (รักษากลิ่น — 80 °C / 2 นาที)',h:'แบบให้ความร้อนสั้น เน้นรักษากลิ่น: <span class="chip">80 °C / 2 นาที</span> คนตลอด (กันก้นไหม้+ไขมันแยกชั้น) → ลด <span class="chip warm">&lt;4 °C</span> ให้เร็วที่สุด เป้า 5 นาที เพื่อรักษากลิ่น'},
   eggCustard:{t:'ไข่แดงแบบทำคัสตาร์ด (82–85 °C)',h:'ตั้งไฟอ่อน คนตลอด ให้ถึง <span class="chip">82–85 °C</span> จนถึงจุดเคลือบหลังช้อน (nappe) — <b>ไม่จับเวลา</b> ใช้สังเกตเนื้อ → ลด <span class="chip warm">&lt;4 °C</span> ทันที (รักษากลิ่นรส ได้เนื้อคัสตาร์ด)'},
   // ฆ่าเชื้อในตัวอยู่แล้ว
@@ -400,7 +402,19 @@ const state={base:null,purpose:null,risky:new Set(),riskyNone:false,group:null,m
 let curPBT=null;
 const SAVE_KEY='pbt_process_selector_v2';
 function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify({...state,risky:[...state.risky],stab:[...state.stab]}));}catch(e){}}
-function load(){try{const s=localStorage.getItem(SAVE_KEY);if(!s)return;const o=JSON.parse(s);Object.assign(state,o);state.risky=new Set(o.risky||[]);state.riskyNone=!!o.riskyNone;state.stab=new Set(o.stab||[]);if(!['icecream','sorbet','sherbet'].includes(state.base)){state.base=null;if(o.group==='foamy'){state.group=null;state.aging=null;}}}catch(e){}}
+function load(){
+  try{
+    const saved=localStorage.getItem(SAVE_KEY);if(!saved)return;
+    const o=JSON.parse(saved);Object.assign(state,o);
+    state.risky=new Set(o.risky||[]);state.riskyNone=!!o.riskyNone;state.stab=new Set(o.stab||[]);
+    // รุ่นก่อนมีคำถามประเภทเบส: สูตรที่ไม่ใช่ foamy ให้ใช้เบสทั่วไป
+    if(!Object.prototype.hasOwnProperty.call(o,'base')&&o.group!=='foamy')state.base='icecream';
+    if(!['icecream','sorbet','sherbet'].includes(state.base)){
+      state.base=null;
+      if(o.group==='foamy'){state.group=null;state.aging=null;}
+    }
+  }catch(e){}
+}
 
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function setTitle(v){state.title=v;refreshPrintHead();save();}
@@ -452,7 +466,6 @@ function update(){
   document.getElementById('qRisky').style.display=home?'block':'none';
   document.getElementById('homeExtra').style.display=home&&!fruit?'block':'none';
   ['qGroup','qMachine'].forEach(id=>document.getElementById(id).style.display=fruit?'none':'block');
-  document.getElementById('qStab').style.display=home&&fruit?'none':'block';
   document.getElementById('quickTitle').textContent=fruit?'บ่มสั้นราว 30 นาที (แนะนำ)':'บ่มด่วน 30 นาที';
   document.getElementById('quickHint').textContent=fruit?'สำหรับซอร์เบต์/เชอร์เบท ไม่ขึ้นกับปริมาณอินูลิน · บ่มที่ 0–4 °C':'เฉพาะสูตรที่มีอินูลิน (INL) ≥2% และยอมรับว่าเนื้ออาจด้อยกว่าบ่มเต็มเล็กน้อย';
   document.querySelectorAll('[data-k="aging"]').forEach(o=>o.classList.toggle('sel',state.aging===o.dataset.v));
@@ -464,7 +477,7 @@ function update(){
 
   const ready=state.base&&state.purpose&&(fruit||(state.group&&m&&(!needProfile||state.profile)));
   const res=document.getElementById('result'), prompt=document.getElementById('prompt');
-  prompt.textContent=fruit?'เลือกจุดประสงค์การผลิตในข้อ 2 เพื่อดูขั้นตอนค่ะ':'ตอบข้อ 1, 2, 4 และ 5 ให้ครบ — ถ้าใช้เครื่องปั่นมือถือ ให้ตอบข้อ 5.1 เพิ่มด้วยค่ะ';
+  prompt.textContent=fruit?'เลือกจุดประสงค์การผลิตในข้อ 1 เพื่อดูขั้นตอนค่ะ':'ตอบข้อ 1, 2, 4 และ 5 ให้ครบ — ถ้าใช้เครื่องปั่นมือถือ ให้ตอบข้อ 5.1 เพิ่มด้วยค่ะ';
   if(!ready){res.innerHTML='';prompt.style.display='block';return;}
   prompt.style.display='none';
   res.innerHTML=render();
@@ -494,7 +507,7 @@ function render(){
   const home=state.purpose==='home';
   const m=PBT[state.machine];
   const fruit=state.base==='sorbet'||state.base==='sherbet';
-  const baseTxt=state.base==='sorbet'?'ซอร์เบต์ (SO)':state.base==='sherbet'?'เชอร์เบท (SH)':'ไอศกรีมเบสนมหรือเบสพืช';
+  const baseTxt=state.base==='sorbet'?'ซอร์เบต์ (ไม่มีนม)':state.base==='sherbet'?'เชอร์เบท (มีนม)':'เบสทั่วไป (นม · โยเกิร์ต · กะทิ · นมพืช)';
   const pr=fruit?null:pbtResult(m);
   curPBT=pr;
   const groupTxt=fruit?'ข้าม PBT · ใช้การคนแทน':state.group==='factory'?'ลด 1 รอบ (เครื่องปั่นโถ)':'รอบเต็ม';
@@ -540,15 +553,14 @@ function render(){
   // 3
   const hasCold=state.stab.has('cold'), has65=state.stab.has('65'), has85=state.stab.has('85'), allStab=(!hasCold&&!has65&&!has85);
   let s3='';
-  if(!(home&&fruit)){
-    s3+='<p><b>หลักการกลาง:</b> คลุกของแห้งให้เข้ากัน • แยกทำละลาย S/E ตามอุณหภูมิของแต่ละเกรด แล้วจึงรวมเข้ากับมิกซ์ เพื่อลดการจับตัวเป็นเม็ดสาคูและช่วยให้กระจายทั่ว</p><ul>';
-    if(hasCold||allStab) s3+='<li><b>กัวกัม แซนแทนกัม และเซลลูโลสกัม:</b> ละลายในน้ำเย็นได้ ไม่ต้องแยกต้ม แต่ยังต้องคลุกน้ำตาลและกระจายให้ทั่วกันจับก้อน</li>';
-    if(has65||allStab) s3+='<li><b>SEP หรือเกรดที่กำหนด 65 °C:</b> คลุกแห้งกับน้ำตาลทรายและทำละลายด้วยน้ำในสูตร หรือใช้เพียงน้ำตาลทรายและน้ำบางส่วนของสูตร แนะนำน้ำตาลทราย <span class="chip">5 เท่า</span> ของน้ำหนัก S/E และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ แล้วแยกทำละลายที่ <span class="chip">65 °C</span></li>';
-    if(has85||allStab) s3+='<li><b>SER หรือเกรดที่กำหนด 85 °C:</b> คลุกแห้งกับน้ำตาลทรายและทำละลายด้วยน้ำในสูตร หรือใช้เพียงน้ำตาลทรายและน้ำบางส่วนของสูตร แนะนำน้ำตาลทราย <span class="chip">5 เท่า</span> ของน้ำหนัก S/E และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ แล้วแยกทำละลายที่ <span class="chip">85 °C</span> • ชั่งเติมน้ำชดเชยส่วนที่ระเหย</li>';
-    s3+='</ul>';
-  }
+  s3+='<p><b>หลักการกลาง:</b> คลุกของแห้งให้เข้ากัน • '+(home&&state.base==='sorbet'?'ทำละลาย S/E พร้อมของแห้งและน้ำตามวิธีซอร์เบต์ด้านล่าง':'แยกทำละลาย S/E ตามอุณหภูมิของแต่ละเกรด แล้วจึงรวมเข้ากับมิกซ์')+' เพื่อลดการจับตัวเป็นเม็ดสาคูและช่วยให้กระจายทั่ว</p><ul>';
+  const dexNote=' • ถ้าน้ำตาลทรายในสูตรไม่ถึง 5 เท่าของ S/E ให้แบ่งเดกซ์โทรสในสูตรมาคลุกเพิ่มจนครบ แล้วรีบทำละลายทันที เพราะเดกซ์โทรสดูดความชื้นได้ดี';
+  if(hasCold||allStab) s3+='<li><b>กัวกัม แซนแทนกัม และเซลลูโลสกัม:</b> ละลายในน้ำเย็นได้ ไม่ต้องแยกต้ม แต่ยังต้องคลุกน้ำตาลและกระจายให้ทั่วกันจับก้อน</li>';
+  if(has65||allStab) s3+='<li><b>SEP หรือเกรดที่กำหนด 65 °C:</b> คลุกแห้งกับน้ำตาลทรายและทำละลายด้วยน้ำในสูตร หรือใช้เพียงน้ำตาลทรายและน้ำบางส่วนของสูตร แนะนำน้ำตาลทราย <span class="chip">5 เท่า</span> ของน้ำหนัก S/E และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ แล้ว'+(home&&state.base==='sorbet'?'':'แยก')+'ทำละลายที่ <span class="chip">65 °C</span>'+dexNote+'</li>';
+  if(has85||allStab) s3+='<li><b>SER หรือเกรดที่กำหนด 85 °C:</b> คลุกแห้งกับน้ำตาลทรายและทำละลายด้วยน้ำในสูตร หรือใช้เพียงน้ำตาลทรายและน้ำบางส่วนของสูตร แนะนำน้ำตาลทราย <span class="chip">5 เท่า</span> ของน้ำหนัก S/E และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ แล้ว'+(home&&state.base==='sorbet'?'':'แยก')+'ทำละลายที่ <span class="chip">85 °C</span> • ชั่งเติมน้ำชดเชยส่วนที่ระเหย'+dexNote+'</li>';
+  s3+='</ul>';
   s3+='<ul><li><b>ผลไม้:</b> ล้างผิวก่อนปอก → บดละเอียด → ปรับ/เทียบ Brix</li></ul>';
-  s3+='<div class="sub"><div class="sub-t">เบอร์รีทั้งสดและแช่แข็ง — ใช้ทั้งแนวทำทานและทำขาย</div><p>เลือกจากแหล่งที่เชื่อถือได้ และล้างเบอร์รีสดให้สะอาดโดยผ่านน้ำมากๆ หากไม่มั่นใจในแหล่งที่มา หรือมีกลุ่มเปราะบางร่วมรับประทาน ให้ต้มจนเดือดและคงไว้ราว <span class="chip">1 นาที</span> เป็นทางเลือกเสริม ก่อนนำมาผสม • ปรับ/เทียบ Brix ก่อนต้ม ชั่งน้ำหนักแล้วเติมน้ำต้มสุกคืนส่วนที่ระเหย จากนั้นลดอุณหภูมิให้ต่ำกว่า 4 °C ทันที</p><p>การล้างช่วยลดไวรัสได้จำกัด และการต้ม 70–75 °C / 2 นาทีแบบผลไม้ทั่วไปไม่พอสำหรับความเสี่ยงนี้ • แนวทำขายยังต้องพาสเจอร์ไรส์มิกซ์รวมตามขั้นตอน</p></div>';
+  s3+='<div class="sub"><div class="sub-t">'+RISKY.berries.t+'</div><p>'+RISKY.berries.h+'</p></div>';
   if(home){
     s3+='<div class="branch-tag">ทำทาน — ฆ่าเชื้อวัตถุดิบเสี่ยงแยกก่อน</div>';
     if(state.riskyNone){
@@ -561,29 +573,29 @@ function render(){
     } else {
       s3+='<p style="color:var(--muted)">ยังไม่ได้เลือกวัตถุดิบเสี่ยงในข้อ 3 — ถ้ามี เลือกไว้เพื่อดูวิธีฆ่าเชื้อแต่ละตัวค่ะ</p>';
     }
-    if(fruit){
-      s3+='<p><b>ต้มเฉพาะส่วนน้ำเชื่อม:</b> คลุกน้ำตาลกับสารทำให้คงตัว เติมน้ำในสูตร แล้วต้มคนจนถึง <span class="chip">85 °C</span> ให้สารทำให้คงตัวละลายเต็มที่ ยกลง ชั่งแล้วเติมน้ำที่ระเหยคืนให้ครบน้ำหนัก</p>';
-      if(state.base==='sherbet')s3+='<p><b>เชอร์เบท:</b> เติมนมและนมผงลงไปได้เลยหลังยกลง ตีให้ละลายเข้ากัน</p>';
-      s3+='<p><b>ส่วนผลไม้ไม่ต้มรวมในหม้อน้ำเชื่อม</b> เตรียมตามวิธีของผลไม้แต่ละชนิดด้านบน แล้วเติมระหว่างลดความร้อนในขั้นที่ 5 • ข้าม PBT ใช้การคนให้ทั่วแทน</p>';
+    if(state.base==='sorbet'){
+      s3+='<p><b>ซอร์เบต์:</b> คลุก S/E กับน้ำตาลทราย เติมของแห้งที่เหลือและน้ำ แล้วต้มจนถึงอุณหภูมิทำละลายของ S/E ที่เลือกใช้ (SER <span class="chip">85 °C</span> · SEP <span class="chip">65 °C</span> หรือตามที่ผู้ผลิตระบุ) ยกลงแล้วเติมน้ำที่ระเหยไปคืนให้ครบน้ำหนัก <b>ไม่ต้องอุ่นซ้ำ</b> · ผลไม้สดไม่ต้มรวม เก็บไว้เติมในขั้นที่ 5</p>';
     }else{
-    s3+='<p><b>ผสม + ให้ความร้อน:</b> รวม S/E ที่แยกทำละลายแล้วกับของแห้ง ของเหลว และวัตถุดิบเสี่ยงที่จัดการแล้วส่วนที่เหลือ <b>ยกเว้นครีมและส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมระหว่างการลดความร้อน</b> แล้วอุ่นมิกซ์ถึง <span class="chip">55 °C</span> เพื่อให้ละลายเข้าเนื้อ ไม่ต้องคงอุณหภูมิ • ขั้นนี้ไม่ใช่การพาสเจอร์ไรส์ วัตถุดิบเสี่ยงจึงต้องฆ่าเชื้อแยกมาก่อนเสมอ</p>';
+      s3+='<p><b>ผสม + ให้ความร้อน:</b> รวม S/E ที่แยกทำละลายแล้วกับของแห้ง ของเหลว และวัตถุดิบเสี่ยงที่จัดการแล้วส่วนที่เหลือ <b>ยกเว้นครีมและส่วนผสมกลิ่นรสไวต่อความร้อนที่เก็บไว้เติมระหว่างการลดความร้อน</b> แล้วอุ่นมิกซ์ถึง <span class="chip">55 °C</span> เพื่อให้ละลายเข้าเนื้อ ไม่ต้องคงอุณหภูมิ • ขั้นนี้ไม่ใช่การพาสเจอร์ไรส์ วัตถุดิบเสี่ยงจึงต้องฆ่าเชื้อแยกมาก่อนเสมอ</p>';
+      if(state.base==='sherbet')s3+='<p><b>เชอร์เบท:</b> ละลาย S/E กับน้ำตาลทรายและน้ำ · คลุกของแห้งที่เหลือกับนมผงแล้วละลายด้วยนมสด · รวมกันแล้วอุ่นให้ถึงราว <span class="chip">55 °C</span> · ผลไม้สดไม่ต้มรวม เก็บไว้เติมในขั้นที่ 5</p>';
     }
   } else {
     s3+='<div class="branch-tag">ทำขาย — พาสเจอไรส์ทั้งหมด</div>';
+    if(fruit)s3+='<p><b>เชอร์เบท/ซอร์เบต์:</b> เตรียมส่วนน้ำเชื่อม S/E (และส่วนนมสำหรับเชอร์เบท) แบบเดียวกับทำทาน แล้วรวมผลไม้ลงไปพาสเจอร์ไรส์พร้อมกัน</p>';
     s3+='<ul>'
       +'<li>ผสมทุกอย่าง<b>รวมครีม + วัตถุดิบเสี่ยง + ผลไม้ (ปรับ Brix แล้ว)</b> — พาสเจอร์ไรส์มิกซ์รวมผลไม้; เบอร์รีให้พิจารณาต้มแยกตามคำแนะนำด้านบนก่อน</li>'
       +'<li>เติมกลิ่น/สี/รสที่ทนความร้อนให้ครบในขั้นนี้ (ปรับให้เข้มกว่าที่ต้องการเล็กน้อย)</li>'
       +'</ul>'
       +'<div class="sub"><div class="sub-t">พาสเจอไรส์ LTLT</div><p>'
       +'ให้ความร้อน <span class="chip">68.5 °C</span> ค้าง <span class="chip">≥30 นาที</span> คนสม่ำเสมอ • วัดที่จุดเย็นสุด (กลางหม้อ) • เริ่มจับเวลาเมื่อถึง 68.5 °C, ถ้าตกต่ำกว่าเกณฑ์ต้อง<b>เริ่มนับใหม่</b> • ใช้ bain-marie / sous vide ช่วยคุมอุณหภูมิ'
-      +'</p><p class="warn" style="color:var(--rose-deep)">เก็บบันทึกอุณหภูมิและเวลาทุกครั้ง (หลักฐานความปลอดภัย)</p></div>'
+      +'</p><p class="warn" style="color:var(--rose-deep)">เก็บบันทึกอุณหภูมิและเวลาทุกครั้ง (หลักฐานความปลอดภัย)</p><p><b>เบอร์รี:</b> แนะนำต้มจนเดือดราว 1 นาทีก่อนนำมารวมเป็นทางเลือกเสริม ยกเว้นเมื่อมั่นใจในแหล่งที่มา เพราะเกณฑ์พาสเจอร์ไรส์ตามประกาศกระทรวงสาธารณสุขออกแบบมาเพื่อควบคุมแบคทีเรีย และยังไม่มีข้อมูลยืนยันว่าลดไวรัสในผลไม้ได้เพียงพอ</p></div>'
       +'<p style="color:var(--muted);font-size:12.5px">HTST 80 °C ≥25 วินาที ใช้เฉพาะสเกลใหญ่ที่มีเครื่องคุมอุณหภูมิแม่นยำ • '+(fruit?'จบ LTLT แล้วคนให้ทั่ว ข้าม PBT และเข้าสู่ขั้นลดความร้อน':'จบ LTLT แล้วเข้า PBT ต่อขณะที่มิกซ์ยังร้อน')+'</p>';
   }
   H+=step('3','การผสมและให้ความร้อน','Mixing & Heating',s3);
 
   // 4 — PBT
   if(fruit){
-    H+=step('4','คนให้ทั่วแทนการทำ PBT','Stirring','<p><b>ซอร์เบต์และเชอร์เบทข้าม PBT</b> ใช้การคนให้ส่วนผสมกระจายทั่วเป็นเนื้อเดียว แล้วเข้าสู่ขั้นลดความร้อน</p>');
+    H+=step('4','ผสมให้เข้ากัน (ไม่ทำ PBT)','Stirring','<p><b>ไม่ทำ PBT</b> — เบสกลุ่มนี้แทบไม่มีไขมันให้ลดขนาด การปั่นหลายรอบตีอากาศเข้าไปมาก เนื้อฟูเป็นโฟม รสผลไม้จาง สีซีด • ให้คนด้วยตะกร้อมือหรือไม้พายจนเนื้อเดียวกันทั่วทั้งหม้อ • ถ้าของแห้งยังละลายไม่ทั่ว ใช้เครื่องปั่นช่วยผสมสั้นๆ ราว <span class="chip">30 วินาที</span> ได้ โดยเฉพาะเชอร์เบทที่มีนมผง (ใช้ได้ทั้งเครื่องปั่นมือถือและโถ)'+(home?'':' • <b>ทำขาย:</b> ทำในจังหวะนี้ คือหลังพาสเจอร์ไรส์ ขณะยังร้อน')+' • เชอร์เบทจะฟูกว่าซอร์เบต์บ้างเพราะมีโปรตีนนม ซึ่งเป็นธรรมชาติของเบสนี้</p>');
   }else{
     let s4='<p><b>Paula’s Blending Technique (PBT)</b> ลดขนาดเม็ดไขมันและกระจายของแห้งด้วยการปั่นสลับพัก • ตรวจอุณหภูมิมิกซ์ในโถก่อนเริ่มปั่น ต้อง<b>ไม่ต่ำกว่า</b> <span class="chip">45 °C</span></p>';
     s4+='<div class="pst-metrics"><div class="m"><div class="big">'+pr.r+'</div><div class="lbl">รอบ</div></div>'
@@ -625,24 +637,21 @@ function render(){
   }
 
   // 5 — Cooling
-  const delicate=state.delicate==='yes'||state.risky.has('freshFruit')||state.risky.has('berries');
+  const delicate=(home&&fruit)||state.delicate==='yes'||state.risky.has('freshFruit')||state.risky.has('berries');
   let s5='<div class="branch-tag">'+(home?(fruit?'ทำทาน — เติมส่วนผลไม้ระหว่างลดความร้อน':'ทำทาน — เติมครีม/ส่วนผสมสดระหว่างลดความร้อน'):'ทำขาย — ส่วนผสมหลักผ่านพาสเจอร์ไรส์มาแล้ว')+'</div>';
-  s5+='<p>หลังจบ'+(fruit?'ขั้นให้ความร้อน':' PBT')+' ให้ลดอุณหภูมิที่<b>ใจกลางมิกซ์</b>ลงจนได้ <span class="chip">4 °C หรือต่ำกว่า</span> อย่างเร็วที่สุด <b>(ช้าสุดไม่เกิน 60 นาที)</b> แล้วจึงเริ่มขั้นบ่ม</p>';
+  s5+='<p>หลังจบ'+(fruit?'ขั้นผสม':' PBT')+' ให้ลดอุณหภูมิที่<b>ใจกลางมิกซ์</b>ลงจนได้ <span class="chip">4 °C หรือต่ำกว่า</span> อย่างเร็วที่สุด <b>(ช้าสุดไม่เกิน 60 นาที)</b> แล้วจึงเริ่มขั้นบ่ม</p>';
   s5+='<div class="sub"><div class="sub-t">วิธีลดความร้อนที่ใช้ได้</div><ul>'
     +'<li><b>อ่างน้ำแข็ง + คนต่อเนื่อง</b> ในชามสเตนเลส เตรียมน้ำแข็งราว 1.5 เท่าของน้ำหนักมิกซ์</li>'
     +'<li><b>ถุงแบนหนา ≤2 ซม. ฝังน้ำแข็ง</b> ไล่อากาศ ปิดสนิท และให้น้ำแข็งล้อมทุกด้าน</li>'
     +'<li><b>Blast Freezer โหมด chill</b> ในถาดสเตนเลสตื้น ≤3 ซม. ปิดผิวด้วยฟิล์ม</li>'
     +'<li class="warn">ห้ามแช่ช่องแช่แข็งโดยตรง เพราะผิวอาจเป็นน้ำแข็งก่อนใจกลางเย็นถึง 4 °C</li></ul></div>';
-  if(home&&fruit){
-    s5+='<div class="sub"><div class="sub-t">เติมส่วนผลไม้ระหว่างลดความร้อน</div><p>เริ่มเติมส่วนผลไม้ได้ตั้งแต่ราว <span class="chip">20 °C</span> • เชอร์เบทให้ค่อยๆ เทพร้อมคนเพื่อให้กรดกระจายตัวในเบสที่มีนม ส่วนซอร์เบต์เทได้เร็วกว่าเพราะไม่มีโปรตีนนม</p><p>เมื่อส่วนผสมครบแล้ว คนและลดความร้อนต่อจนมิกซ์สมบูรณ์ได้ <span class="chip">≤4 °C</span> อย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที) แล้วจึงเริ่มบ่ม</p></div>';
+  if(home&&delicate){
+    s5+='<div class="sub"><div class="sub-t">ส่วนผสมกลิ่นรสไวต่อความร้อน</div><ul>'
+      +'<li><b>ของเปรี้ยว ข้น หรือกลิ่นรสไวต่อความร้อน เช่น ผลไม้ ค่อยๆ เติมได้ตั้งแต่ราว <span class="chip">20 °C</span></b> พร้อมคนให้กระจายทั่ว (ถ้ามีนมในเบส ให้เทเป็นสายเล็กๆ ลงตรงจุดที่กำลังคน · ของเปรี้ยวจัดให้เจือจางกับมิกซ์เย็น <span class="chip">3–4 เท่า</span> ก่อน)</li>'
+      +'<li><b>ครีมแช่เย็น เติมที่ไม่เกิน <span class="chip">10 °C</span> เท่านั้น</b> เพื่อรักษาผลึกไขมันที่เกิดขึ้นระหว่างแช่เย็น</li>'
+      +'</ul><p>เมื่อส่วนผสมครบแล้ว คนและลดความร้อนต่อจนมิกซ์สมบูรณ์ได้ <span class="chip">≤4 °C</span> อย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที) แล้วจึงเริ่มบ่ม — 20 °C และ 10 °C เป็นจุดเติม ไม่ใช่จุดเริ่มบ่ม</p></div>';
   }
   if(home&&!fruit){
-    if(delicate){
-      s5+='<div class="sub"><div class="sub-t">ส่วนผสมกลิ่นรสไวต่อความร้อน</div><ul>'
-        +'<li><b>กรณีทั่วไป:</b> เติมเมื่อมิกซ์เย็นถึง <span class="chip">≤10 °C</span> แล้วคนให้กระจายทั่ว</li>'
-        +'<li><b>ถ้ามีกรดหรือมีปริมาณมาก:</b> เริ่มทยอยเติมได้ตั้งแต่มิกซ์เย็นถึง <span class="chip">≤20 °C</span> โดยค่อยๆ เติมพร้อมคนให้กระจายทั่ว แล้วลดความร้อนต่อ</li>'
-        +'</ul></div>';
-    }
     s5+='<div class="sub"><div class="sub-t">ครีม — เติมเมื่อมิกซ์เย็นถึง <span class="chip">≤10 °C</span> เท่านั้น</div><ul>';
     if(state.cream==='yes')s5+='<li>เติม<b>ครีมพาสเจอร์ไรส์ที่แช่เย็นมาแล้วอย่างน้อย 8 ชั่วโมง</b> คนให้กระจายทั่ว</li>';
     else s5+='<li style="color:var(--muted)">สูตรนี้ไม่มีครีมแช่เย็น → ข้ามการเติมครีม</li>';
@@ -650,7 +659,7 @@ function render(){
     s5+='</ul><p><b>หลังเติมส่วนผสมทั้งหมดครบ คนต่อจนมิกซ์สมบูรณ์ได้ 4 °C หรือต่ำกว่าอย่างเร็วที่สุด (ช้าสุดไม่เกิน 60 นาที)</b> — 20 °C และ 10 °C เป็นจุดเติม ไม่ใช่จุดเริ่มบ่ม</p></div>';
   }
   s5+='<div class="sub"><div class="sub-t">เวลาตัวอย่าง: อ่างน้ำแข็ง + คนต่อเนื่อง</div>'
-    +'<table class="ftable"><thead><tr><th>น้ำหนักมิกซ์</th><th>เวลาหลังจบ'+(fruit?'ขั้นให้ความร้อน':' PBT')+' จนได้ 4 °C หรือต่ำกว่า</th></tr></thead><tbody>'
+    +'<table class="ftable"><thead><tr><th>น้ำหนักมิกซ์</th><th>เวลาหลังจบ'+(fruit?'ขั้นผสม':' PBT')+' จนได้ 4 °C หรือต่ำกว่า</th></tr></thead><tbody>'
     +'<tr><td>1 กก.</td><td class="t">ประมาณ 30–45 นาที</td></tr><tr><td>2 กก.</td><td class="t">ประมาณ 45–60 นาที</td></tr><tr><td>5 กก.</td><td class="t">ต้องแบ่งภาชนะ เพื่อให้แต่ละส่วนเย็นถึงเป้าภายในไม่เกิน 60 นาที</td></tr>'
     +'</tbody></table></div>';
   H+=step('5','การลดความร้อน','Cooling',s5);
@@ -659,7 +668,7 @@ function render(){
   const quickAging=state.aging==='quick'||(fruit&&!state.aging);
   let s6='<p>เริ่มจับเวลาบ่มเมื่อ<b>มิกซ์สมบูรณ์ทั้งสูตร</b>เย็นถึง <span class="chip">≤4 °C</span> แล้วเท่านั้น • บ่มในภาชนะปิดสนิทที่ <span class="chip">0–4 °C</span></p>';
   if(fruit){
-    s6+='<p><b>ซอร์เบต์และเชอร์เบทแนะนำบ่มสั้นราว 30 นาทีเป็นหลัก ไม่ขึ้นกับปริมาณอินูลิน</b> เพราะต้องการอากาศน้อย หากจำเป็นต้องบ่มนาน ใช้เพดานเดียวกับเบสอื่น ไม่เกิน 24 ชั่วโมง</p>';
+    s6+='<p><b>บ่มสั้นราว 30 นาทีเป็นหลัก</b> ที่ 0–4 °C (ไม่ขึ้นกับเงื่อนไขอินูลิน) เพราะเบสกลุ่มนี้ต้องการอากาศน้อย ไม่ต้องพึ่งไขมันที่ตกผลึก สิ่งที่ต้องการคือให้สารทำให้คงตัวดูดน้ำจนมิกซ์หนืดพอ • บ่มนานได้ เพดาน 24 ชั่วโมงเหมือนเบสอื่น</p>';
   }
   if(quickAging&&fruit){
     s6+='<div class="sub"><div class="sub-t">บ่มสั้นราว <span class="chip">30 นาที</span></div><p>รักษามิกซ์ที่ 0–4 °C ในภาชนะปิดสนิทตลอดช่วงบ่ม</p></div>';
@@ -674,8 +683,9 @@ function render(){
   // 7 — Final additions
   let s7='<p>หลังบ่ม เติมเฉพาะส่วนที่ต้องการเก็บกลิ่นสดหรือใช้ชิมปรับรสครั้งสุดท้าย:</p><ul>'
     +'<li>กลิ่นสกัด/น้ำมันหอมระเหย เหล้าหรือแอลกอฮอล์ (ใส่น้อย) และสีปรับเฉดขั้นสุดท้าย</li>'
-    +'<li>ส่วนผสมเปรี้ยวตามสูตร เช่น ผลไม้หรือโยเกิร์ต แนวทำทานเติมระหว่างลดความร้อนตามขั้นที่ 5 • กรดซิตริกให้เติมหลังลดความร้อนแล้วในรูปสารละลาย C20 ในขั้นนี้ และปรับหวานด้วย SYR เล็กน้อยเท่าที่จำเป็น</li>'
-    +'<li><b>ของที่เติมขั้นนี้ต้องปลอดภัยพอจะกินได้โดยไม่ผ่านความร้อน</b></li>'
+    +'<li>ส่วนผสมเปรี้ยวตามสูตร เช่น ผลไม้หรือโยเกิร์ต แนวทำทานเติมระหว่างลดความร้อนตามขั้นที่ 5 • กรดซิตริกให้เติมหลังลดความร้อนแล้วในรูป <b>C20 (สารละลายกรดซิตริก 20%)</b> ในขั้นนี้ และปรับหวานด้วย SYR เล็กน้อยเท่าที่จำเป็น</li>'
+    +'<li><b>ส่วนผสมที่เติมในขั้นนี้ต้องปลอดภัยพอจะกินได้โดยไม่ผ่านความร้อน เพราะหลังจากนี้ไม่มีขั้นฆ่าเชื้ออีก</b></li>'
+    +(state.base==='sorbet'?'':'<li>ถ้าเบสมีนม ให้ค่อยๆ เทกรดเป็นสายเล็กๆ พร้อมคนให้กระจายทั่ว</li>')
     +'<li>ใช้ภาชนะ ช้อน และทัพพีสะอาด เพราะขั้นนี้อยู่หลังการฆ่าเชื้อแล้ว</li>'
     +'<li>หลายสูตรแทบไม่มีอะไรต้องทำ เพียงชิมยืนยันแล้วเข้าเครื่องปั่น</li></ul>';
   H+=step('7','เติมส่วนผสมก่อนปั่น','Final Additions Before Churning',s7);
