@@ -38,10 +38,21 @@
   h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(32px,5vw,48px);line-height:1.05;letter-spacing:-.02em;margin-bottom:10px}
   h1 em{font-style:italic;color:var(--accent-deep)}
   .subtitle{color:var(--muted);font-size:14px;max-width:560px;margin:0 auto;line-height:1.65}
-  .chart-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:16px}
-  .chart-links .cl-label{font-size:13px;color:var(--muted)}
-  .chart-links .cl-btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:600;color:var(--accent-deep);background:#EFF3E7;border:1px solid #cfe0bf;border-radius:100px;padding:7px 16px;transition:all .2s}
-  .chart-links .cl-btn:hover{background:var(--accent-deep);color:#fff;border-color:var(--accent-deep);transform:translateY(-1px)}
+  [hidden]{display:none!important}
+  .entry-choices{margin:0 0 28px}
+  .entry-choices h2{font-size:19px;margin:0 0 12px;color:var(--accent-deep)}
+  .entry-option{display:grid;grid-template-columns:36px minmax(0,1fr)18px;align-items:center;gap:12px;width:100%;margin-top:12px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--accent-deep);text-align:left;text-decoration:none;line-height:1.5;font-family:'Sarabun',sans-serif;cursor:pointer}
+  .entry-option:hover{border-color:var(--accent-deep);background:#fff}
+  .entry-option:focus-visible{outline:3px solid var(--accent-deep);outline-offset:4px}
+  .entry-option[aria-expanded="true"]{border-color:var(--accent-deep);background:#e8f0e3}
+  .entry-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:#e7efe3;font-size:21px}
+  .entry-option strong{display:block;font-size:18px;font-weight:700}
+  .entry-desc{display:block;margin-top:5px;font-size:14px;color:var(--muted);font-weight:400}
+  .entry-arrow{font-size:22px}.entry-ready{background:#fffaf1}.entry-ready .entry-icon{background:#f4e7d0;color:#8b6533}
+  .selector-heading{font-size:19px;color:var(--accent-deep);margin:0 0 12px;scroll-margin-top:20px}
+  body.cap .entry-choices,body.cap .selector-heading{display:none!important}
+  @media print{.entry-choices,.selector-heading{display:none!important}}
+  @media(max-width:520px){.entry-option{padding:18px 15px;gap:10px}.entry-option strong{font-size:17px}}
 
   /* setup */
   .setup{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 22px;margin-bottom:8px;box-shadow:0 4px 24px -18px rgba(43,31,21,.2)}
@@ -245,16 +256,26 @@
   <header>
     <div class="eyebrow">Miss Icecream · Online Tools</div>
     <h1>Process <em>Selector</em></h1>
-    <p class="subtitle">เลือกเงื่อนไขการผลิตของคุณ แล้วดูกระบวนการทำไอศกรีมทั้ง 12 ขั้นแบบเฉพาะของคุณ — มีอุณหภูมิ เวลา และคำเตือนครบ ดูตามทำได้จริงตอนผลิตค่ะ (อ้างอิงบทที่ 4)</p>
+    <p class="subtitle">เลือกสร้างผังตามเงื่อนไขการผลิตของคุณ หรือเปิดผังสำเร็จรูปเพื่อดูภาพรวม (อ้างอิงบทที่ 4)</p>
     <p class="subtitle" style="margin-top:7px"><a href="Process-Selector-guide.html" style="color:var(--accent-deep);font-weight:600;text-decoration:none">📖 คู่มือการใช้งาน</a></p>
-    <div class="chart-links">
-      <span class="cl-label">เลือกผังขั้นตอนการผลิตแบบสรุป:</span>
-      <a class="cl-btn" href="Flowchart-Home.html?v=20261003">📱 ทำทาน · มือถือ/แท็บเล็ต</a>
-      <a class="cl-btn" href="Flowchart-Sell.html?v=20261003">📱 ทำขาย · มือถือ/แท็บเล็ต</a>
-      <a class="cl-btn" href="Flowchart-Print.html?v=20261003">🖨 ผังรวม · 2 หน้า A4</a>
-    </div>
   </header>
 
+  <nav class="entry-choices" aria-labelledby="entry-heading">
+    <h2 id="entry-heading">เลือกวิธีดูขั้นตอนการผลิต</h2>
+    <button class="entry-option" id="open-selector" type="button" aria-expanded="false" aria-controls="selector-workspace">
+      <span class="entry-icon" aria-hidden="true">⚙</span>
+      <span><strong>สร้างผังตามเงื่อนไขการผลิต</strong><span class="entry-desc">ใช้ Process Selector · ตอบคำถามเพื่อแสดงขั้นตอนเฉพาะของคุณ พร้อมอุณหภูมิ เวลา และข้อควรระวัง</span></span>
+      <span class="entry-arrow" aria-hidden="true">↓</span>
+    </button>
+    <a class="entry-option entry-ready" href="Flowchart-Choose.html?v=20261003C">
+      <span class="entry-icon" aria-hidden="true">▤</span>
+      <span><strong>เลือกผังสำเร็จรูป</strong><span class="entry-desc">ผังสำหรับอ่านหรือพิมพ์ แยกจาก Process Selector · เปิดเลือกแบบทำทาน ทำขาย หรือ A4 ได้เลย</span></span>
+      <span class="entry-arrow" aria-hidden="true">→</span>
+    </a>
+  </nav>
+
+  <section id="selector-workspace" aria-labelledby="selector-heading" hidden>
+  <h2 id="selector-heading" class="selector-heading" tabindex="-1">ระบุเงื่อนไขการผลิตของคุณ</h2>
   <div class="setup">
     <div class="q">
       <div class="q-label">1. ผลิตเพื่ออะไร? <span class="en">Purpose</span></div>
@@ -366,6 +387,7 @@
   <div class="prompt" id="prompt">เลือกประเภทเบสและจุดประสงค์การผลิตก่อนค่ะ</div>
 
   <div id="result"></div>
+  </section>
 
   <footer>
     <p class="ref">อ้างอิง: บทที่ 4 การผลิตไอศกรีมในสเกลเล็ก · ปรับปรุง 3 ตุลาคม 2026</p>
@@ -965,6 +987,25 @@ async function sharePDFink(btn){
   }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
   finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
 }
+</script>
+<script>
+// เปิดคำถามเมื่อเลือกสร้างผังเฉพาะ โดยเก็บคำตอบเดิมไว้ตามระบบ autosave
+(function(){
+  const button=document.getElementById('open-selector');
+  const workspace=document.getElementById('selector-workspace');
+  function openSelector(moveFocus){
+    workspace.hidden=false;
+    button.setAttribute('aria-expanded','true');
+    if(moveFocus){
+      history.replaceState(null,'',location.pathname+location.search+'#custom');
+      const heading=document.getElementById('selector-heading');
+      heading.focus({preventScroll:true});
+      heading.scrollIntoView({block:'start'});
+    }
+  }
+  button.addEventListener('click',()=>openSelector(true));
+  if(location.hash==='#custom')openSelector(false);
+})();
 </script>
 <div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
 </body>
