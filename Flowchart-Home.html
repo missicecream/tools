@@ -9,166 +9,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ผังทำไอศกรีม · ทำทานเอง · Miss Icecream</title>
+<title>ผังขั้นตอนการผลิต · ทำทานเอง · Miss Icecream</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="tools-theme.css?v=082026K">
-<style>
-  *{box-sizing:border-box}
-  body.flowchart-page{min-height:100vh;margin:0;padding:30px 18px 50px;background:#f6f1e8;color:var(--ink);font-family:'Sarabun',sans-serif;background-image:radial-gradient(circle at 10% 3%,rgba(220,229,200,.58),transparent 34%),radial-gradient(circle at 92% 96%,rgba(201,120,98,.09),transparent 36%);-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .sheet{width:min(100%,920px);margin:0 auto}
-  .page-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
-  .back-link,.switch-link{display:inline-flex;min-height:42px;align-items:center;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--muted);font-size:13px;font-weight:600;text-decoration:none}
-  .back-link:hover,.switch-link:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
-  .hero{margin-bottom:18px;padding:27px 28px 24px;border:1px solid #d8cebe;border-radius:26px;background:rgba(255,253,249,.94);box-shadow:0 22px 48px -42px rgba(43,33,24,.7);text-align:center}
-  .eyebrow{margin-bottom:8px;color:var(--accent-deep);font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
-  h1{margin:0;font-family:'Fraunces','Sarabun',serif;font-size:clamp(34px,6vw,50px);font-weight:500;line-height:1.08;letter-spacing:-.02em}
-  h1 em{display:block;margin-top:5px;color:var(--accent-deep);font-family:'Sarabun',sans-serif;font-size:.8em;font-style:normal;font-weight:700;line-height:1.15}
-  .sub{max-width:720px;margin:10px auto 0;color:var(--muted);font-size:14.5px;line-height:1.7}
-  .key-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:19px;text-align:left}
-  .key{min-width:0;padding:11px 12px;border:1px solid #d7dfca;border-radius:14px;background:var(--accent-soft)}
-  .key-label{display:block;margin-bottom:3px;color:var(--muted);font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
-  .key-value{display:block;color:var(--accent-deep);font-size:13.5px;font-weight:700;line-height:1.45}
-  .flow-section{margin-top:13px;padding:17px;border:1px solid #d8cebe;border-radius:22px;background:#fffdf9;box-shadow:0 18px 40px -38px rgba(43,33,24,.68)}
-  .section-head{display:flex;align-items:center;gap:10px;margin:0 2px 12px}
-  .section-kicker{display:inline-flex;min-height:27px;align-items:center;padding:3px 10px;border-radius:999px;background:var(--accent-deep);color:#fff;font-size:11px;font-weight:700}
-  .section-head h2{margin:0;color:var(--ink);font-size:16px;font-weight:700}
-  .process-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-  .step{position:relative;display:grid;grid-template-columns:38px minmax(0,1fr);gap:11px;align-items:start;min-width:0;padding:12px 13px;border:1px solid var(--line);border-radius:15px;background:#fff;break-inside:avoid;page-break-inside:avoid}
-  .step.warm{border-color:#e6cfb3;background:#fffaf3}
-  .step.active{border-color:#c8d6b9;background:#fbfdf7}
-  .step.cool{border-color:#c9d9e2;background:#f9fcfd}
-  .step.finish{border-color:#e0d2c2;background:#fffdf9}
-  .num{display:grid;width:38px;height:38px;place-items:center;border-radius:50%;background:var(--accent-deep);color:#fff;font-family:'Fraunces',serif;font-size:17px;font-style:italic;font-weight:600}
-  .warm .num{background:#9a673c}.cool .num{background:#55788c}.finish .num{background:#7b6b57}
-  .t{color:var(--ink);font-size:14.5px;font-weight:700;line-height:1.4}
-  .d{margin-top:3px;color:#62584b;font-size:12.5px;line-height:1.58}
-  .d b{color:var(--accent-deep);font-weight:700}.warm .d b{color:#87552f}.cool .d b{color:#365f75}.finish .d b{color:#5f503e}
-  .route-note{margin-top:13px;padding:12px 14px;border:1px solid #d6dfc8;border-radius:15px;background:var(--accent-soft);color:var(--accent-deep);font-size:12.5px;line-height:1.65;text-align:center}
-  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:20px}
-  .btn{display:inline-flex;min-height:44px;align-items:center;justify-content:center;padding:9px 20px;border:1px solid var(--line);border-radius:999px;background:#fffdf9;color:var(--ink);font-family:'Sarabun',sans-serif;font-size:13.5px;font-weight:700;text-decoration:none;cursor:pointer}
-  .btn.primary{border-color:var(--accent-deep);background:var(--accent-deep);color:#fff}.btn:hover{filter:brightness(.97)}
-  footer{margin-top:15px;color:var(--muted);font-size:11px;letter-spacing:.18em;text-align:center;text-transform:uppercase}
-  .site-footer{margin:28px auto 0!important;max-width:920px!important}
-  @media(max-width:700px){body.flowchart-page{padding:22px 12px 44px}.page-nav{align-items:stretch}.back-link,.switch-link{padding:8px 12px;font-size:12px}.hero{padding:23px 16px 20px;border-radius:22px}.sub{font-size:14px}.key-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.flow-section{padding:14px;border-radius:19px}.process-grid{grid-template-columns:1fr}.step{padding:12px}.t{font-size:15px}.d{font-size:13px}}
-  @media print{
-    @page{size:A4 portrait;margin:8mm}
-    body.flowchart-page{padding:0;background:#fff;background-image:none}
-    .sheet{width:100%;max-width:none}.page-nav,.actions,.site-footer{display:none!important}
-    .hero{margin-bottom:3.2mm;padding:3.5mm 4.5mm 3.2mm;border-radius:4mm;box-shadow:none}
-    .eyebrow{margin-bottom:1mm;font-size:7pt}h1{font-size:19pt}.sub{margin-top:1.5mm;font-size:8pt;line-height:1.35}
-    .key-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5mm;margin-top:2.5mm}.key{padding:1.7mm 2mm;border-radius:2.5mm}.key-label{font-size:6pt}.key-value{font-size:7.6pt;line-height:1.25}
-    .flow-section{margin-top:2.2mm;padding:2.5mm;border-radius:3.5mm;box-shadow:none}.section-head{gap:1.5mm;margin:0 0 1.6mm}.section-kicker{min-height:5mm;padding:.5mm 2mm;font-size:6.5pt}.section-head h2{font-size:9pt}
-    .process-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5mm}.step{grid-template-columns:7mm minmax(0,1fr);gap:1.8mm;padding:1.8mm 2mm;border-radius:2.5mm}.num{width:7mm;height:7mm;font-size:9pt}.t{font-size:8.4pt;line-height:1.25}.d{margin-top:.5mm;font-size:7pt;line-height:1.35}
-    .route-note{margin-top:2.2mm;padding:1.6mm 2mm;border-radius:2.5mm;font-size:7pt;line-height:1.35}footer{margin-top:2mm;font-size:6.5pt}
-  }
-</style>
+<link rel="stylesheet" href="process-flow.css?v=20261003">
 <link rel="stylesheet" href="tools-print.css?v=072426E">
 <script src="tools-shell.js?v=082026K" defer></script>
+<script src="process-flow.js?v=20261003" defer></script>
 </head>
-<body class="tools-ui-v2 tools-layout-guide flowchart-page flowchart-home">
-<div class="sheet">
-  <nav class="page-nav" aria-label="ลิงก์ผังขั้นตอน"><a class="back-link" href="Process-Selector.html?v=so-sh-20261001">← Process Selector</a><a class="switch-link" href="Flowchart-Sell.html">ดูแบบทำขาย →</a></nav>
-
+<body class="tools-ui-v2 flowchart-page" data-route="home">
+<main class="sheet">
+  <nav class="topbar" aria-label="ผังขั้นตอนการผลิต">
+    <a class="back-link" href="Process-Selector.html?v=20261003">← Process Selector</a>
+    <a class="route-link" href="Flowchart-Sell.html?v=20261003">ดูแบบทำขาย →</a>
+  </nav>
   <header class="hero">
-    <div class="eyebrow">Miss Icecream · A4 Process Guide</div>
-    <h1>ผังขั้นตอนการผลิต <em>แบบทำทานเอง</em></h1>
-    <p class="sub">พาสเจอร์ไรส์วัตถุดิบเสี่ยงแยกก่อน รักษากลิ่นสดด้วยการเติมครีมและส่วนผสมกลิ่นรสไวต่อความร้อนระหว่างการลดความร้อน</p>
-    <div class="key-grid" aria-label="ค่าหลักที่ต้องจำ">
-      <div class="key"><span class="key-label">แยกทำละลาย S/E</span><span class="key-value">SEP 65 °C · SER 85 °C</span></div>
-      <div class="key"><span class="key-label">มิกซ์รวมเบสทั่วไป</span><span class="key-value">อุ่นถึง 55 °C</span></div>
-      <div class="key"><span class="key-label">PBT (ยกเว้น SO/SH)</span><span class="key-value">เริ่ม ≥45 °C · จบ ≥40 °C</span></div>
-      <div class="key"><span class="key-label">ลดความร้อน</span><span class="key-value">≤4 °C ภายใน 60 นาที</span></div>
-    </div>
+    <p class="eyebrow">Miss Icecream · บทที่ 4</p>
+    <h1>ผังขั้นตอนการผลิต <span>แบบทำทานเอง</span></h1>
+    <p class="intro">ไล่ตามเลขขั้นจากบนลงล่าง เลือกประเภทเบสเพื่อดูวิธีที่ใช้กับสูตรของคุณ</p>
+    <nav class="version-nav" aria-label="เลือกวิธีดูผัง">
+      <span aria-current="page">อ่านบนมือถือ / แท็บเล็ต</span>
+      <a href="Flowchart-Print.html?v=20261003">ผังรวม 2 หน้า A4 ↗</a>
+    </nav>
   </header>
-
-  <section class="flow-section" aria-labelledby="home-stage-1">
-    <div class="section-head"><span class="section-kicker">ช่วงที่ 1</span><h2 id="home-stage-1">เตรียมและสร้างมิกซ์</h2></div>
-    <div class="process-grid">
-      <article class="step"><div class="num">1</div><div><div class="t">เตรียมความพร้อม</div><div class="d">ล้างและฆ่าเชื้ออุปกรณ์ทุกชิ้น · แต่งกายตาม GHP · ล้างมือ <b>≥20 วินาที</b></div></div></article>
-      <article class="step"><div class="num">2</div><div><div class="t">ชั่งตวงวัด</div><div class="d">ชั่งเป็นกรัม · ร่อนผงที่จับก้อน · ชั่งวัตถุดิบให้ครบก่อนเริ่มผสม</div></div></article>
-      <article class="step warm"><div class="num">3</div><div><div class="t">การผสมและให้ความร้อน</div><div class="d">คลุก S/E กับน้ำตาลทรายและใช้น้ำในสูตรทั้งหมดหรือบางส่วน · แนะนำน้ำตาลทราย <b>5 เท่า</b> และใช้น้ำหรือของเหลวในสูตรให้เพียงพอที่จะต้มทำละลายได้โดยไม่ไหม้ · แยกทำละลาย SEP <b>65 °C</b> / SER <b>85 °C</b> · รวมของที่เหลือ ยกเว้นครีมและส่วนผสมกลิ่นรสไวต่อความร้อน แล้วอุ่นถึง <b>55 °C</b><br><b>ซอร์เบต์/เชอร์เบท:</b> ต้มเฉพาะส่วนน้ำเชื่อม <b>85 °C</b> เติมน้ำระเหยคืน · เชอร์เบทเติมนมและนมผงหลังยกลง · ผลไม้ไม่ต้มรวม</div></div></article>
-      <article class="step active"><div class="num">4</div><div><div class="t">Paula’s Blending Technique (PBT)</div><div class="d"><b>ซอร์เบต์/เชอร์เบท: ข้าม PBT ใช้การคนแทน</b><br>เบสอื่นตรวจมิกซ์ในโถก่อนปั่นต้อง <b>≥45 °C</b> · ปั่นแรงสลับพักตามรอบของเครื่อง · เมื่อจบต้อง <b>≥40 °C</b></div></div></article>
+  <section class="base-picker" aria-labelledby="base-heading">
+    <h2 id="base-heading">เลือกประเภทเบส</h2>
+    <div class="base-buttons" role="group" aria-labelledby="base-heading">
+      <button type="button" data-base="icecream" aria-pressed="true">เบสทั่วไป<small>นม · โยเกิร์ต · กะทิ · นมพืช</small></button>
+      <button type="button" data-base="sherbet" aria-pressed="false">เชอร์เบท<small>มีนม</small></button>
+      <button type="button" data-base="sorbet" aria-pressed="false">ซอร์เบต์<small>ไม่มีนม</small></button>
     </div>
+    <p id="base-status" role="status" aria-live="polite"></p>
   </section>
-
-  <section class="flow-section" aria-labelledby="home-stage-2">
-    <div class="section-head"><span class="section-kicker">ช่วงที่ 2</span><h2 id="home-stage-2">ลดความร้อนและเตรียมมิกซ์ก่อนปั่น</h2></div>
-    <div class="process-grid">
-      <article class="step cool"><div class="num">5</div><div><div class="t">การลดความร้อน</div><div class="d">หลังให้ความร้อนหรือ PBT · <b>ผลไม้ SO/SH เริ่มเติมราว 20 °C</b> เชอร์เบทค่อยๆ เทพร้อมคน · ส่วนผสมกลิ่นรสไวต่อความร้อนทั่วไปเติมที่ <b>≤10 °C</b> · ถ้ามีกรดหรือมีปริมาณมาก เริ่มทยอยเติมที่ <b>≤20 °C</b> พร้อมค่อยๆ คนให้ทั่ว · ครีมต้องรอ <b>≤10 °C</b> · ลดมิกซ์สมบูรณ์ถึง <b>≤4 °C ภายใน 60 นาที</b></div></div></article>
-      <article class="step cool"><div class="num">6</div><div><div class="t">การบ่ม</div><div class="d">เริ่มจับเวลาเมื่อมิกซ์สมบูรณ์ <b>≤4 °C</b> · บ่ม <b>0–4 °C นาน 4–8 ชั่วโมง</b> · เบสทั่วไปบ่มด่วน 30 นาทีเฉพาะ INL ≥2% · <b>SO/SH แนะนำบ่มสั้นราว 30 นาที ไม่ขึ้นกับอินูลิน</b> · ทุกเบสไม่เกิน 24 ชั่วโมง</div></div></article>
-      <article class="step cool"><div class="num">7</div><div><div class="t">เติมส่วนผสมก่อนปั่น</div><div class="d">เติมกลิ่นระเหยง่าย เหล้า หรือสี · ปรับเปรี้ยวด้วยสารละลาย C20 หลังลดความร้อน และปรับหวานด้วย SYR เล็กน้อย · <b>ของที่เติมต้องปลอดภัยพอจะกินได้โดยไม่ผ่านความร้อน</b></div></div></article>
-    </div>
-  </section>
-
-  <section class="flow-section" aria-labelledby="home-stage-3">
-    <div class="section-head"><span class="section-kicker">ช่วงที่ 3</span><h2 id="home-stage-3">ปั่น บรรจุ แช่แข็ง และเสิร์ฟ</h2></div>
-    <div class="process-grid">
-      <article class="step finish"><div class="num">8</div><div><div class="t">ปั่นไอศกรีม</div><div class="d">ใช้ลักษณะเนื้อเป็นหลัก: เนียน · ฟู · ผิวแห้ง · อย่าปั่นนานเกินจนเกิดเนื้อเนย</div></div></article>
-      <article class="step finish"><div class="num">9</div><div><div class="t">ตักใส่ภาชนะ + Inclusion / Swirl</div><div class="d">ทำเร็วและเบามือ · inclusion โรยสลับชั้น ไม่คน · ซอสราดเป็นชั้น ไม่กวน</div></div></article>
-      <article class="step finish"><div class="num">10</div><div><div class="t">แช่แข็ง</div><div class="d">ลดถึงอุณหภูมิเป้าหมายเร็วที่สุด · <b>−18 °C</b> สำหรับเก็บ · <b>−14 °C</b> สำหรับเสิร์ฟ</div></div></article>
-      <article class="step finish"><div class="num">11</div><div><div class="t">เก็บรักษา</div><div class="d">แนะนำ <b>−25 °C</b> อุณหภูมินิ่ง · อย่างน้อยไม่สูงกว่า −18 °C · ปิดผิวด้วย PE film · ใช้ FIFO</div></div></article>
-      <article class="step finish"><div class="num">12</div><div><div class="t">เสิร์ฟ</div><div class="d">ตู้ตัก <b>−12 ถึง −16 °C</b> · ปรับเนื้อราว <b>−14 °C</b> · ตักด้วยการลาก ไม่กด · เริ่มจากขอบเข้าหากลาง</div></div></article>
-    </div>
-    <p class="route-note">แนวทำทานไม่ได้พาสเจอร์ไรส์มิกซ์รวม ให้เตรียมวัตถุดิบเสี่ยงแยกตามชนิด · <b>เบอร์รีสดและแช่แข็ง:</b> เลือกแหล่งที่เชื่อถือได้ ล้างเบอร์รีสดให้สะอาด หากไม่มั่นใจหรือมีกลุ่มเปราะบาง ต้มเดือดราว 1 นาทีเป็นทางเลือกเสริม แล้วลดความร้อนทันที</p>
-  </section>
-
-  <div class="actions">
-    <button class="btn" onclick="sharePDFink(this)">📤 แชร์ PDF</button>
-    <button class="btn primary" onclick="window.print()">🖨 พิมพ์ A4</button>
-    <a class="btn" href="Process-Selector.html?v=so-sh-20261001">กลับไปที่ Process Selector</a>
-  </div>
-  <footer>Miss Icecream</footer>
-</div>
-<div class="site-footer" style="margin:30px auto 0;max-width:760px;padding:14px 16px 4px;border-top:1px solid var(--line,#E5D9C4);text-align:center;font-size:12px;color:var(--muted,#8C7A66);line-height:1.7">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html" style="color:inherit;text-decoration:underline">เงื่อนไขการใช้งาน</a></div>
-<script>
-/* แชร์ PDF — ปุ่มเดียว แบ่งหน้า A4 หลายหน้าแบบประหยัดหมึก */
-function _ld(src){return new Promise((res,rej)=>{if([...document.scripts].some(s=>s.src===src))return res();const s=document.createElement('script');s.src=src;s.onload=()=>res();s.onerror=()=>rej(new Error('โหลดไลบรารีไม่ได้ (ต้องมีอินเทอร์เน็ต)'));document.head.appendChild(s);});}
-async function sharePDFink(btn){
-  /* แชร์ PDF (โหมดพิมพ์เอกสาร) — ปุ่มเดียว แบ่งหน้า A4 หลายหน้า ตัดตรงรอยต่อกล่อง (อ่านง่าย ไม่ตัดคำ) */
-  const ot=btn?btn.textContent:''; if(btn){btn.disabled=true;btn.textContent='กำลังสร้าง PDF…';}
-  const body=document.body, hadCap=body.classList.contains('cap'), hadPM=body.classList.contains('printmode'), hadInk=body.classList.contains('ink-saver');
-  const hides=[...document.querySelectorAll('.actions,.page-nav')], prevD=hides.map(el=>el.style.display);
-  const undo=()=>{hides.forEach((el,i)=>el.style.display=prevD[i]); if(!hadCap)body.classList.remove('cap'); if(!hadPM)body.classList.remove('printmode'); if(!hadInk)body.classList.remove('ink-saver');};
-  try{
-    await _ld('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-    await _ld('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-    if(typeof refreshPrintHead==='function')refreshPrintHead();
-    body.classList.add('cap','printmode','ink-saver');
-    hides.forEach(el=>el.style.display='none');
-    window.scrollTo(0,0); await new Promise(r=>setTimeout(r,60));
-    const target=document.querySelector('.sheet');
-    const canvas=await html2canvas(target,{scale:2,backgroundColor:'#ffffff',useCORS:true});
-    const tr=target.getBoundingClientRect(), sc=canvas.height/tr.height;
-    let bs=[0];
-    target.querySelectorAll('.step').forEach(el=>{ if(getComputedStyle(el).display==='none')return; const b=Math.round((el.getBoundingClientRect().bottom-tr.top)*sc); if(b>4&&b<canvas.height-4)bs.push(b); });
-    bs.push(canvas.height); bs=[...new Set(bs)].sort((a,b)=>a-b);
-    undo();
-    const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
-    const pw=210, ph=297, m=8, iw=pw-2*m, uh=ph-2*m, mmPerPx=iw/canvas.width, pageMaxPx=uh/mmPerPx;
-    let pages=[], start=0, i=1;
-    while(i<bs.length){
-      if(bs[i]-start<=pageMaxPx){ i++; continue; }
-      let cut=bs[i-1]; if(cut<=start)cut=Math.min(start+Math.floor(pageMaxPx),canvas.height);
-      pages.push([start,cut]); start=cut;
-    }
-    if(start<canvas.height)pages.push([start,canvas.height]);
-    for(let p=0;p<pages.length;p++){
-      const y0=pages[p][0], hpx=pages[p][1]-y0; if(hpx<=0)continue;
-      const pc=document.createElement('canvas'); pc.width=canvas.width; pc.height=hpx;
-      pc.getContext('2d').drawImage(canvas,0,y0,canvas.width,hpx,0,0,canvas.width,hpx);
-      if(p>0)pdf.addPage();
-      pdf.addImage(pc.toDataURL('image/jpeg',0.92),'JPEG',m,m,iw,hpx*mmPerPx);
-    }
-    let name='Flowchart-Home.pdf';
-    
-    const blob=pdf.output('blob'), file=new File([blob],name,{type:'application/pdf'});
-    if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'ผังทำไอศกรีม (ทำทานเอง)'});}
-    else{const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
-  }catch(e){ undo(); if(!(e&&e.name==='AbortError'))alert('สร้าง/แชร์ PDF ไม่สำเร็จ: '+((e&&e.message)||e)); }
-  finally{ if(btn){btn.disabled=false;btn.textContent=ot;} }
-}
-</script>
+  <nav class="phase-nav" aria-label="ข้ามไปช่วงการผลิต">
+    <a href="#phase-1">1–4 เตรียมและผสม</a><a href="#phase-2">5–7 เตรียมก่อนปั่น</a><a href="#phase-3">8–12 ปั่นจนถึงเสิร์ฟ</a>
+  </nav>
+  <div id="flow-content"></div>
+  <noscript><p>กรุณาเปิด JavaScript เพื่อดูผังขั้นตอนการผลิตค่ะ</p></noscript>
+  <div class="actions"><a class="button primary" href="Flowchart-Print.html?v=20261003">เปิดแบบพิมพ์ A4</a><a class="button" href="Process-Selector.html?v=20261003">ดูรายละเอียดใน Process Selector</a></div>
+  <footer class="source-note">อ้างอิงบทที่ 4 และแผนผังในต้นฉบับ · ปรับปรุง 3 ตุลาคม 2026</footer>
+</main>
+<div class="site-footer">Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved. · <a href="license.html">เงื่อนไขการใช้งาน</a></div>
 </body>
 </html>
