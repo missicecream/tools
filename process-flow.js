@@ -1,6 +1,6 @@
 /* Copyright © 2026 Miss Icecream Co., Ltd. All Rights Reserved.
    Source: 04_Production.docx, embedded แผนผังที่ 4 (pages 2–3),
-   and ProcessSelector-ChangeSpec-2026-10-03.md. Shared by screen and A4 views. */
+   and ProcessSelector-ChangeSpec-2026-10-12.md. Shared by screen and A4 views. */
 (function () {
   'use strict';
   const bases = {icecream:'เบสทั่วไป', sherbet:'เชอร์เบท (มีนม)', sorbet:'ซอร์เบต์ (ไม่มีนม)'};
@@ -47,10 +47,16 @@
   }
   function readingBody(step,route,base){
     let content=list(step.common);
-    if(step.n===3)content+=list(step[route])+mixing(step,route,base);
+    if(step.n===3){
+      const preparation=route==='home'&&base==='sorbet'?['ฆ่าเชื้อวัตถุดิบเสี่ยงแยกก่อน · เก็บผลไม้ไว้เติมในขั้นที่ 5']:step[route];
+      content+=list(preparation)+mixing(step,route,base);
+    }
     if(step.n===3&&route==='sell'&&base==='icecream')content+='<p class="base-note">'+custardNote+'</p>';
     if(step.n===4)content=base==='icecream'?list(step[route==='home'?'generalHome':'generalSell'].concat(step.general)):list(step.fruit.concat(route==='sell'?['ทำหลังพาสเจอร์ไรส์ ขณะมิกซ์ยังร้อน']:[]));
-    if(step.n===5)content='<p class="start-note">หลังจบ'+(base==='icecream'?' PBT':'ขั้นผสม')+'</p>'+content+list(step[route]);
+    if(step.n===5){
+      const cooling=route==='home'&&base==='sorbet'?[step.home[0],acid,'คนต่อจนมิกซ์สมบูรณ์ทั้งสูตรถึง <b>≤4 °C</b> แล้วจึงเริ่มบ่ม']:step[route];
+      content='<p class="start-note">หลังจบ'+(base==='icecream'?' PBT':'ขั้นผสม')+'</p>'+content+list(cooling);
+    }
     if(step.n===6)content+=list(step[base==='icecream'?'general':'fruit'])+(base==='icecream'?'<p class="base-note">'+(route==='sell'?'ทำขายควรบ่มตามปกติ':'ถ้าไขมันผ่านความร้อนทั้งหมด ควรบ่มตามปกติ')+' · ใช้บ่มสั้นเฉพาะเมื่อจำเป็น</p>':'');
     if(step.n===7&&base==='sorbet')content=list(step.common.filter(t=>!t.startsWith('เบสที่มีนม')));
     return content;
