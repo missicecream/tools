@@ -6,7 +6,7 @@
     'Formula-Ingredient-Limit.html': 'Formula-Ingredient-Limit-guide.html',
     'ClassTimer.html': 'ClassTimer-guide.html',
     'PBT-Selector.html': 'PBT-Selector-guide.html',
-    'Process-Selector.html': 'Process-Selector-guide.html?v=072126J',
+    'Process-Selector.html': 'Process-Selector-guide.html?v=20261012',
     'Heat-Log.html': 'Heat-Log-guide.html?v=082026I',
     'Heat-Log-5Batch.html': 'Heat-Log-5Batch-guide.html?v=082026I',
     'Churning.html': 'Churning-guide.html?v=082026J',
